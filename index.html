@@ -32,7 +32,14 @@
         .fade-up.visible { opacity: 1; transform: translateY(0); }
         .nav-scrolled { background: rgba(5, 5, 5, 0.95); border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-top: 1rem !important; padding-bottom: 1rem !important; }
         .work-card { overflow: hidden; position: relative; }
-        .work-img { transition: transform 0.7s ease; width: 100%; height: 100%; object-fit: contain; background: #080808; }
+        .work-img { 
+            width: 100%; 
+            height: auto; 
+            aspect-ratio: 16 / 9;
+            object-fit: cover; 
+            display: block;
+            background: #000;
+        }
         .work-card:hover .work-img { transform: scale(1.08); }
         .divider-gold { height: 1px; background: linear-gradient(90deg, transparent, #b38728, transparent); width: 100%; margin: 2rem 0; opacity: 0.5; }
     </style>
@@ -97,7 +104,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Case 1 -->
                 <div class="glass-panel p-5 rounded-sm fade-up group">
-                    <div class="relative aspect-video mb-4 overflow-hidden">
+                    <div class="relative overflow-hidden rounded-sm mb-4">
                         <img src="img/1655.jpg" alt="BMW" class="work-img grayscale group-hover:grayscale-0 transition duration-700">
                         <div class="absolute bottom-3 right-3 px-3 py-1 bg-black/90 backdrop-blur-md border border-white/5 text-[7px] text-gray-500 uppercase">Privacy Shield</div>
                         <div class="absolute top-2 left-2 bg-black/80 px-2 py-1 text-[10px] text-gold-primary">SUCCESS</div>
@@ -111,7 +118,7 @@
                 </div>
                 <!-- Case 2 -->
                 <div class="glass-panel p-5 rounded-sm fade-up group">
-                    <div class="relative aspect-video mb-4 overflow-hidden">
+                    <div class="relative overflow-hidden rounded-sm mb-4">
                         <img src="img/1711.JPG" alt="Benz" class="work-img grayscale group-hover:grayscale-0 transition duration-700">
                         <div class="absolute bottom-3 right-3 px-3 py-1 bg-black/90 backdrop-blur-md border border-white/5 text-[7px] text-gray-500 uppercase">Privacy Shield</div>
                         <div class="absolute top-2 left-2 bg-black/80 px-2 py-1 text-[10px] text-gold-primary">SUCCESS</div>
@@ -125,7 +132,7 @@
                 </div>
                 <!-- Case 3 -->
                 <div class="glass-panel p-5 rounded-sm fade-up group">
-                    <div class="relative aspect-video mb-4 overflow-hidden">
+                    <div class="relative overflow-hidden rounded-sm mb-4">
                         <img src="img/1726.JPG" alt="Toyota" class="work-img grayscale group-hover:grayscale-0 transition duration-700">
                         <div class="absolute bottom-3 right-3 px-3 py-1 bg-black/90 backdrop-blur-md border border-white/5 text-[7px] text-gray-500 uppercase">Privacy Shield</div>
                         <div class="absolute top-2 left-2 bg-black/80 px-2 py-1 text-[10px] text-gold-primary">SUCCESS</div>
@@ -139,7 +146,7 @@
                 </div>
                 <!-- Case 4 -->
                 <div class="glass-panel p-5 rounded-sm fade-up group">
-                    <div class="relative aspect-video mb-4 overflow-hidden">
+                    <div class="relative overflow-hidden rounded-sm mb-4">
                         <img src="img/20240224_Taichung_Lexus.jpg" alt="Lexus" class="work-img grayscale group-hover:grayscale-0 transition duration-700">
                         <div class="absolute bottom-3 right-3 px-3 py-1 bg-black/90 backdrop-blur-md border border-white/5 text-[7px] text-gray-500 uppercase">Privacy Shield</div>
                         <div class="absolute top-2 left-2 bg-black/80 px-2 py-1 text-[10px] text-gold-primary">SUCCESS</div>
