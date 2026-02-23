@@ -1,0 +1,12 @@
+﻿
+
+    目錄: C:\Users\ottoy\Desktop
+
+
+Mode                 LastWriteTime         Length Name                                                                 
+----                 -------------         ------ ----                                                                 
+d-----         2026/2/22  上午 03:51                極致核心                                                                 
+-a----         2026/2/22  下午 04:38            352 litellm_config.yaml                                                  
+-a----         2025/8/27  下午 08:43           2240 Raid Shadow Legends.lnk                                              
+
+
