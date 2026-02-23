@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "date": "2026.02.23",
+    "location": "台中",
+    "brand": "BMW",
+    "type": "鑰匙全丟現場再生",
+    "desc": "專業 OBD 數據解碼，免拖吊現場直接發動。極致核心工藝，確保晶片匹配穩定可靠。",
+    "img": "img/1655.jpg",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 2,
+    "date": "2026.02.22",
+    "location": "彰化",
+    "brand": "Benz",
+    "type": "晶片鑰匙備份",
+    "desc": "原廠級設備匹配，智能感應鑰匙精準再生。極致核心 (ProCore) 為您的愛車保留第二份安全。",
+    "img": "img/1711.JPG",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 3,
+    "date": "2026.02.21",
+    "location": "南投",
+    "brand": "Toyota",
+    "type": "智能鑰匙全丟救援",
+    "desc": "中彰投全區緊急支援，不分車款晶片數據重構。極致核心，隨時守護您的駕駛權限。",
+    "img": "img/1726.JPG",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 4,
+    "date": "2026.02.24",
+    "location": "台中",
+    "brand": "Lexus",
+    "type": "智能鑰匙全丟",
+    "desc": "現場數據重寫，無損開啟車門。極致核心確保每一把鑰匙都如同原廠般流暢。",
+    "img": "img/20240224_Taichung_Lexus.jpg",
+    "tag": "SUCCESS"
+  }
+]
