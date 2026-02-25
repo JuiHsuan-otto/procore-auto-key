@@ -1,0 +1,43 @@
+{
+    "keys": [
+        {
+            "key": "AIzaSyD7oR7kFiO9Ny94NfrwON4dB_rhv0rU7w8",
+            "model": "gemini-flash",
+            "project": "procore",
+            "weight": 1.0
+        },
+        {
+            "key": "AIzaSyDuGIGMKlZnl7Pfbq9QVv4F4SLsHZUYDQE",
+            "model": "gemini-flash",
+            "project": "procore",
+            "weight": 1.0
+        },
+        {
+            "key": "claude-v3-sonnet-20240221",
+            "model": "claude-sonnet",
+            "project": "procore",
+            "weight": 0.5
+        },
+        {
+            "key": "AIzaSyA5j9gC_Cc_dF5EXyzQhBMrGvJ1mgWEN6s",
+            "model": "gemini-flash",
+            "project": "hibou",
+            "weight": 1.0
+        }
+    ],
+    "health_check": {
+        "cooldown_minutes": 2,
+        "max_errors": 3,
+        "error_threshold": 5
+    },
+    "projects": {
+        "procore": {
+            "priority": "high",
+            "reserved_quota": 0.3
+        },
+        "hibou": {
+            "priority": "normal",
+            "reserved_quota": 0.2
+        }
+    }
+}
