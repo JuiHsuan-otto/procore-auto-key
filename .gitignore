@@ -1,0 +1,12 @@
+api_keys_config.json
+api_usage.log
+api_health.log
+logs/
+__pycache__/
+*.bak
+*.bak.html
+claude_integration/
+verify_all_keys.py
+verify_sitemap.py
+node_modules/
+.openclaw/
