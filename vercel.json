@@ -1,0 +1,20 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/article-skoda-kodiaq-yunlin-rescue", "destination": "/article-skoda-kodiaq-yunlin-rescue.html" },
+    { "source": "/article-vw-t5-kaohsiung-rescue", "destination": "/article-vw-t5-kaohsiung-rescue.html" },
+    { "source": "/article-honda-fit-tanaka-rescue", "destination": "/article-honda-fit-tanaka-rescue.html" },
+    { "source": "/article-vw-golf-dadu-service", "destination": "/article-vw-golf-dadu-service.html" },
+    { "source": "/article-lexus-taichung-service", "destination": "/article-lexus-taichung-service.html" },
+    { "source": "/article-bmw-fem-advanced-tech", "destination": "/article-bmw-fem-advanced-tech.html" },
+    { "source": "/article-bmw-gseries-keyless-rescue", "destination": "/article-bmw-gseries-keyless-rescue.html" },
+    { "source": "/article-toyota-rav4-linkou-rescue", "destination": "/article-toyota-rav4-linkou-rescue.html" },
+    { "source": "/article-lost-key-comparison", "destination": "/article-lost-key-comparison.html" },
+    { "source": "/article-keyless-troubleshooting", "destination": "/article-keyless-troubleshooting.html" },
+    { "source": "/article-decoding-equipment", "destination": "/article-decoding-equipment.html" },
+    { "source": "/article-us-car-market-tech", "destination": "/article-us-car-market-tech.html" },
+    { "source": "/article-vw-pointer-xianxi-rescue", "destination": "/article-vw-pointer-xianxi-rescue.html" },
+    { "source": "/blog", "destination": "/blog.html" }
+  ]
+}
