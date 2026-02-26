@@ -7,12 +7,42 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-deep: #020202; --gold: #D4AF37; }
+        :root { --bg-deep: #020202; --gold: #D4AF37; --gold-soft: rgba(212, 175, 55, 0.3); }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; }
         .text-gold-gradient { background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         nav { background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .hero-section { background: radial-gradient(circle at center, rgba(26, 26, 26, 0.5) 0%, rgba(2, 2, 2, 1) 100%), url('img/bmw_fem_board.jpg'); background-size: cover; background-position: center; }
         .tech-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.15; mix-blend-mode: overlay; }
+        
+        /* 視覺總監限定：實績牆精密樣式 */
+        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        .showcase-item { 
+            position: relative; 
+            aspect-ratio: 1/1; 
+            overflow: hidden; 
+            cursor: pointer; 
+            border: 1px solid var(--gold-soft); 
+            border-radius: 4px;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: #000;
+        }
+        .showcase-item img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            filter: saturate(1.1) contrast(1.05); /* 增強專業色彩 */
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .showcase-item:hover { 
+            border-color: var(--gold); 
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 25px rgba(212,175,55,0.25);
+        }
+        .showcase-item:hover img { transform: scale(1.1); }
+        .showcase-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+            opacity: 0.8;
+        }
+
         .gold-btn { background: var(--gold); color: black; padding: 1.2rem 2.5rem; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.85rem; font-weight: 800; transition: all 0.3s; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
         .gold-btn:hover { box-shadow: 0 0 40px rgba(212,175,55,0.5); transform: scale(1.05); }
         .tag-badge { border: 1px solid rgba(212,175,55,0.4); padding: 4px 12px; border-radius: 100px; font-size: 10px; color: var(--gold); letter-spacing: 2px; }
@@ -31,100 +61,88 @@
         </div>
     </nav>
 
-    <!-- 強化後的 Hero Section -->
+    <!-- Hero Section -->
     <section class="relative h-screen flex flex-col items-center justify-center text-center px-6 hero-section">
         <video class="tech-video-bg" autoplay loop muted playsinline>
             <source src="vid/bmw_tech.mp4" type="video/mp4">
         </video>
-        
         <div class="relative z-10 w-full max-w-4xl">
             <div class="flex justify-center gap-4 mb-8">
                 <span class="tag-badge">免拖吊現場發動</span>
                 <span class="tag-badge">各系車款解碼</span>
                 <span class="tag-badge">全台 24H 支援</span>
             </div>
-            
             <h1 class="font-cinzel text-5xl md:text-8xl font-bold tracking-[0.1em] mb-4 text-white">PROCORE</h1>
             <h2 class="text-xl md:text-3xl font-bold text-gold-gradient mb-12 tracking-[0.2em]">汽車晶片鑰匙全丟救援職人</h2>
-            
-            <p class="text-gray-400 max-w-2xl mx-auto mb-16 text-sm md:text-lg leading-loose font-light">
-                當您遺失最後一把鑰匙時，我們為您免除漫長的官方等待與昂貴拖吊。<br>
-                現場讀取底層加密數據，即刻恢復您的駕駛權限。
-            </p>
-            
-            <div class="flex flex-col md:flex-row gap-6 justify-center px-4">
-                <a href="tel:0909277670" class="gold-btn w-full md:w-80">
-                    立即撥打救援電話
-                </a>
-                <a href="https://line.me/ti/p/chingweida" class="border border-white/20 hover:bg-white/5 text-white font-bold py-4 px-12 rounded tracking-widest transition">
-                    LINE 線上諮詢
-                </a>
+            <div class="flex flex-col md:flex-row gap-6 justify-center px-4 mt-8">
+                <a href="tel:0909277670" class="gold-btn w-full md:w-80">立即撥打救援電話</a>
+                <a href="https://line.me/ti/p/chingweida" class="border border-white/20 hover:bg-white/5 text-white font-bold py-4 px-12 rounded tracking-widest transition">LINE 線上諮詢</a>
             </div>
         </div>
     </section>
 
-    <!-- 實績展示 (保持美化後的樣式) -->
+    <!-- 實績展示：視覺細節大回歸 -->
     <section class="py-32 bg-black">
-        <div class="max-w-7xl mx-auto px-6 mb-20 text-center">
-            <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block font-bold">Field Ops Showcase</span>
-            <h2 class="text-3xl md:text-5xl font-bold font-cinzel">近期救援紀錄</h2>
+        <div class="max-w-7xl mx-auto px-6 mb-20 flex justify-between items-end">
+            <div>
+                <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-2 block font-bold">Field Operations</span>
+                <h2 class="text-3xl font-bold font-cinzel tracking-wider">實戰任務展示</h2>
+            </div>
+            <a href="/cases" class="text-[10px] text-gray-500 hover:text-white transition tracking-widest uppercase border-b border-gray-800 pb-2">Explore All Cases →</a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6 max-w-7xl mx-auto">
-            <div class="relative aspect-square overflow-hidden group cursor-pointer border border-white/5" onclick="location.href='/article-benz-fbs3-xindian-rescue'">
-                <img src="img/benz_xindian_fbs3.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/50 group-hover:bg-black/10"></div>
+        <div class="showcase-grid max-w-7xl mx-auto px-6">
+            <!-- 實績項目 1 -->
+            <div class="showcase-item group" onclick="location.href='/article-benz-fbs3-xindian-rescue'">
+                <img src="img/benz_xindian_fbs3.jpg" alt="新店賓士救援">
+                <div class="showcase-overlay"></div>
                 <div class="absolute bottom-6 left-6 text-left">
-                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold">新店</p>
-                    <h3 class="text-white font-bold text-base">Benz FBS3 全丟</h3>
+                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-1">新店救援</p>
+                    <h3 class="text-white font-bold text-lg">Mercedes-Benz</h3>
                 </div>
             </div>
-            <div class="relative aspect-square overflow-hidden group cursor-pointer border border-white/5" onclick="location.href='/article-bmw-fem-advanced-tech'">
-                <img src="img/bmw_front_keys.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/50 group-hover:bg-black/10"></div>
+            <!-- 實績項目 2 -->
+            <div class="showcase-item group" onclick="location.href='/article-bmw-fem-advanced-tech'">
+                <img src="img/bmw_front_keys.jpg" alt="BMW 技術解碼">
+                <div class="showcase-overlay"></div>
                 <div class="absolute bottom-6 left-6 text-left">
-                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold">竹北</p>
-                    <h3 class="text-white font-bold text-base">BMW G-Series</h3>
+                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-1">技術實錄</p>
+                    <h3 class="text-white font-bold text-lg">BMW G-Series</h3>
                 </div>
             </div>
-            <div class="relative aspect-square overflow-hidden group cursor-pointer border border-white/5" onclick="location.href='/article-nissan-kicks-zhongke-rescue'">
-                <img src="img/nissan_kicks_zhongke_real.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/50 group-hover:bg-black/10"></div>
+            <!-- 實績項目 3 -->
+            <div class="showcase-item group" onclick="location.href='/article-nissan-kicks-zhongke-rescue'">
+                <img src="img/nissan_kicks_zhongke_real.jpg" alt="中科 Kicks 救援">
+                <div class="showcase-overlay"></div>
                 <div class="absolute bottom-6 left-6 text-left">
-                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold">中科</p>
-                    <h3 class="text-white font-bold text-base">Nissan Kicks</h3>
+                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-1">中科現場</p>
+                    <h3 class="text-white font-bold text-lg">Nissan Kicks</h3>
                 </div>
             </div>
-            <div class="relative aspect-square overflow-hidden group cursor-pointer border border-white/5" onclick="location.href='/article-mazda-wufeng-rescue'">
-                <img src="img/mazda_cx5_wufeng_real.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/50 group-hover:bg-black/10"></div>
+            <!-- 實績項目 4 -->
+            <div class="showcase-item group" onclick="location.href='/article-mazda-wufeng-rescue'">
+                <img src="img/mazda_cx5_wufeng_real.jpg" alt="霧峰 Mazda 救援">
+                <div class="showcase-overlay"></div>
                 <div class="absolute bottom-6 left-6 text-left">
-                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold">霧峰</p>
-                    <h3 class="text-white font-bold text-base">Mazda CX-5</h3>
+                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-1">霧峰旗艦</p>
+                    <h3 class="text-white font-bold text-lg">Mazda CX-5</h3>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 恢復 QA 區塊 (Expert FAQ) -->
+    <!-- 常見問題 Q&A -->
     <section class="py-32 bg-zinc-900/40 border-y border-white/5">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="text-3xl font-bold font-cinzel text-center mb-16">常見問題 Q&A</h2>
             <div class="space-y-8">
                 <div class="border-b border-white/10 pb-8 cursor-pointer group" onclick="location.href='/article-lost-key-comparison'">
                     <h3 class="text-gold text-lg font-bold mb-4 group-hover:translate-x-2 transition">Q1. 鑰匙全丟一定要拖回原廠嗎？</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">不需要。極致核心具備原廠級解碼器材，可到府現場讀取電腦數據並完成鑰匙匹配，讓您免除數週的待料期與昂貴拖吊費。</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">不需要。極致核心具備專業級高階器材，可到府現場讀取數據並完成匹配，免除拖吊費與待料期。</p>
                 </div>
                 <div class="border-b border-white/10 pb-8 cursor-pointer group" onclick="location.href='/article-decoding-equipment'">
                     <h3 class="text-gold text-lg font-bold mb-4 group-hover:translate-x-2 transition">Q2. 配製的新鑰匙跟原廠的一樣嗎？</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">是的。我們採用高品質晶片與專業同步工法，確保感應、開門、發動功能與原車完全一致，且施工過程不傷原車防盜模組。</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">是的。我們採用高品質晶片，確保感應、開門、發動功能與原車完全一致，不傷原車防盜模組。</p>
                 </div>
-                <div class="pb-8 cursor-pointer group" onclick="location.href='/article-keyless-troubleshooting'">
-                    <h3 class="text-gold text-lg font-bold mb-4 group-hover:translate-x-2 transition">Q3. Keyless 感應不到時，是壞了嗎？</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">不一定。可能是電池耗盡、電路受潮或天線異常。我們提供專業級診斷服務，能精準找出故障點並現場修復。</p>
-                </div>
-            </div>
-            <div class="mt-16 text-center">
-                <a href="/blog" class="text-xs text-gray-500 uppercase tracking-widest hover:text-white transition">查看更多技術分析文章 →</a>
             </div>
         </div>
     </section>
