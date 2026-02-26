@@ -3,74 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技術專欄 | 極致核心 ProCore | 專業汽車解碼與知識庫</title>
+    <title>職人技術專欄 | 極致核心 ProCore | 汽車晶片與解碼專家觀點</title>
+    <meta name="description" content="極致核心專業技術部落格。深入探討汽車晶片鑰匙遺失處理、Keyless 系統維修、高階進口車解碼工藝等專業知識。我們以數據與工藝守護您的駕駛權限。">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.7); --gold: #D4AF37; }
+        :root {
+            --bg-deep: #050505;
+            --glass: rgba(20, 20, 20, 0.6);
+            --gold-primary: #D4AF37;
+            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+        }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
-        .blog-card { background: var(--glass); backdrop-filter: blur(12px); border-left: 2px solid rgba(255,255,255,0.05); padding: 2.5rem; transition: all 0.3s; }
-        .blog-card:hover { border-left: 2px solid var(--gold); background: rgba(30, 30, 30, 0.6); }
+        .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; }
+        .glass-panel { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+        .divider-gold { height: 1px; background: linear-gradient(90deg, transparent, #b38728, transparent); width: 100%; opacity: 0.5; }
     </style>
 </head>
 <body class="antialiased">
+    <!-- 導航列 -->
     <nav class="py-8 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="/" class="font-cinzel text-2xl text-white font-bold tracking-widest">PROCORE</a>
-            <div class="space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
-                <a href="/blog" class="text-gold border-b border-gold pb-1">技術專欄</a>
-                <a href="/cases" class="text-gray-400 hover:text-white transition">實戰案例</a>
-                <a href="/" class="text-gray-400 hover:text-white transition">返回首頁</a>
-            </div>
+            <a href="index.html" class="group">
+                <h1 class="font-cinzel text-2xl text-white font-bold tracking-widest group-hover:text-gold-lux transition">PROCORE</h1>
+                <span class="text-[10px] text-gray-400 tracking-[0.4em] uppercase block">Technical Journal</span>
+            </a>
+            <a href="index.html" class="text-xs font-bold tracking-widest text-gray-400 hover:text-white transition uppercase">← Back to Services</a>
         </div>
     </nav>
 
+    <!-- 頁首標題 -->
     <header class="py-20 text-center">
-        <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block">Knowledge Base</span>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 font-cinzel">Technical Journal</h2>
-        <p class="text-gray-500 font-light max-w-2xl mx-auto text-sm md:text-base">深入探討汽車電子防盜核心，解密鑰匙全丟後的底層重構工藝。</p>
+        <div class="max-w-3xl mx-auto px-6">
+            <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-4 block text-center">Knowledge Base</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">職人觀點．技術專欄</h2>
+            <p class="text-gray-500 font-light leading-loose text-sm md:text-base">
+                這裏不僅記錄了我們的解碼工藝，更是我們對汽車電子安全的深度思考。<br>
+                每一篇文章，都旨在為車主提供最專業的解決方案。
+            </p>
+        </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 pb-32 space-y-8">
-        <div id="blog-list" class="space-y-6">
-            <!-- 由 JS 生成 -->
+    <!-- 文章清單容器 -->
+    <main class="max-w-7xl mx-auto px-6 pb-32">
+        <div id="blog-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <!-- 由 JavaScript 動態載入內容 -->
         </div>
     </main>
+
+    <footer class="py-12 border-t border-white/5 text-center">
+        <p class="text-gray-600 text-[10px] tracking-widest uppercase">© 2026 PROCORE AUTO KEY. Expert in Automotive Decoding.</p>
+    </footer>
 
     <script>
         const blogData = [
             {
+                "id": 1,
+                "date": "2026.02.23",
+                "category": "價值分析",
+                "title": "汽車晶片鑰匙遺失怎麼辦？找原廠還是找專業鎖匠最划算？",
+                "summary": "專業分析汽車鑰匙全丟後的處理方案，對比原廠與專業鎖匠的成本、時間與穩定性，提供最經濟高效的選擇。",
+                "link": "article-lost-key-comparison.html"
+            },
+            {
+                "id": 2,
+                "date": "2026.02.22",
+                "category": "技術維修",
+                "title": "2026 智慧型免鑰匙啟動系統 (Keyless) 常見故障與維修指南",
+                "summary": "深入剖析LF低頻訊號干擾、BCM模組數據偏移等深層故障原因。極致核心教您如何精準定位故障。",
+                "link": "article-keyless-troubleshooting.html"
+            },
+            {
+                "id": 3,
+                "date": "2026.02.21",
                 "category": "設備解析",
-                "title": "為什麼專業解碼需要高階診斷系統？",
-                "summary": "剖析資深職人專用設備的重要性。從 128 位元加密到雙向授權驗證，解析為何複製鑰匙不只是拷貝資料。",
-                "link": "/article-decoding-equipment"
-            },
-            {
-                "category": "維修指南",
-                "title": "Keyless 智慧鑰匙常見故障診斷流程",
-                "summary": "感應不到鑰匙、按鍵失靈？專業技師帶您從電路板微動開關到天線阻值，完整診斷 Keyless 系統。",
-                "link": "/article-keyless-troubleshooting"
-            },
-            {
-                "category": "成本分析",
-                "title": "2026 鑰匙全丟救援：官方通路與專業現場配製成本比較",
-                "summary": "針對進口車主最關心的費用問題，分析時間、拖吊及料件成本，幫您做出最明智的選擇。",
-                "link": "/article-lost-key-comparison"
-            },
-            {
-                "category": "市場趨勢",
-                "title": "美系車零關稅時代：Ford 等車款的防盜技術挑戰",
-                "summary": "美系車款即將迎來高峰，深入解析 PATS 等防盜系統的解碼應對策略。",
-                "link": "/article-us-car-market-tech"
+                "title": "為什麼專業汽車鑰匙拷貝需要用到昂貴的解碼設備？",
+                "summary": "解析 BMW G-Series 與賓士 FBS4 等高階加密系統。極致核心重金引進全球頂規設備，確保數據讀寫安全。",
+                "link": "article-decoding-equipment.html"
             }
         ];
 
-        document.getElementById('blog-list').innerHTML = blogData.map(item => `
-            <div class="blog-card rounded-sm">
-                <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">${item.category}</span>
-                <h3 class="text-white font-bold text-xl mb-4">${item.title}</h3>
-                <p class="text-gray-500 text-sm leading-loose mb-6">${item.summary}</p>
-                <a href="${item.link}" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">Read Article →</a>
+        const container = document.getElementById('blog-list');
+        container.innerHTML = blogData.map(item => `
+            <div class="glass-panel p-10 rounded-sm hover:border-gold-primary/40 transition duration-500 group flex flex-col h-full shadow-2xl">
+                <div class="flex justify-between items-start mb-8">
+                    <span class="text-[10px] text-gold-primary border border-gold-primary/30 px-3 py-1 tracking-widest uppercase">${item.category}</span>
+                    <span class="text-[10px] text-gray-600 font-cinzel">${item.date}</span>
+                </div>
+                <h3 class="text-white font-bold text-xl mb-6 leading-snug group-hover:text-gold-lux transition duration-300">${item.title}</h3>
+                <p class="text-gray-500 text-sm leading-loose mb-10 flex-grow">${item.summary}</p>
+                <a href="${item.link}" class="text-[10px] text-white border-b border-white/20 pb-2 self-start hover:border-gold-primary hover:text-gold-primary transition duration-300 tracking-[0.2em] uppercase">Read Article →</a>
             </div>
         `).join('');
     </script>
