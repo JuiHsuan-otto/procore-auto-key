@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>職人技術專欄 | 極致核心 ProCore | 汽車晶片與解碼專家觀點</title>
-    <meta name="description" content="極致核心專業技術部落格。深入探討汽車晶片鑰匙遺失處理、Keyless 系統維修、高階進口車解碼工藝等專業知識。我們以數據與工藝守護您的駕駛權限。">
+    <meta name="description" content="極致核心專業技術部落格。深入探討汽車晶片鑰匙遺失處理、Keyless 系統維修、高階進口車解碼工藝。">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -17,75 +17,101 @@
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
         .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; }
         .glass-panel { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
-        .divider-gold { height: 1px; background: linear-gradient(90deg, transparent, #b38728, transparent); width: 100%; opacity: 0.5; }
     </style>
 </head>
 <body class="antialiased">
-    <!-- 導航列 -->
     <nav class="py-8 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="group">
+            <a href="/" class="group">
                 <h1 class="font-cinzel text-2xl text-white font-bold tracking-widest group-hover:text-gold-lux transition">PROCORE</h1>
                 <span class="text-[10px] text-gray-400 tracking-[0.4em] uppercase block">Technical Journal</span>
             </a>
-            <a href="index.html" class="text-xs font-bold tracking-widest text-gray-400 hover:text-white transition uppercase">← Back to Services</a>
+            <a href="/" class="text-xs font-bold tracking-widest text-gray-400 hover:text-white transition uppercase">← Back to Services</a>
         </div>
     </nav>
 
-    <!-- 頁首標題 -->
     <header class="py-20 text-center">
         <div class="max-w-3xl mx-auto px-6">
             <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-4 block text-center">Knowledge Base</span>
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">職人觀點．技術專欄</h2>
             <p class="text-gray-500 font-light leading-loose text-sm md:text-base">
-                這裏不僅記錄了我們的解碼工藝，更是我們對汽車電子安全的深度思考。<br>
-                每一篇文章，都旨在為車主提供最專業的解決方案。
+                我們記錄每一次解碼挑戰，將技術轉化為您重獲駕駛權限的保障。
             </p>
         </div>
     </header>
 
-    <!-- 文章清單容器 -->
     <main class="max-w-7xl mx-auto px-6 pb-32">
         <div id="blog-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            <!-- 由 JavaScript 動態載入內容 -->
+            <!-- 由 JS 動態生成 -->
         </div>
     </main>
 
     <footer class="py-12 border-t border-white/5 text-center">
-        <p class="text-gray-600 text-[10px] tracking-widest uppercase">© 2026 PROCORE AUTO KEY. Expert in Automotive Decoding.</p>
+        <p class="text-gray-600 text-[10px] tracking-widest uppercase">© 2026 PROCORE AUTO KEY.</p>
     </footer>
 
     <script>
         const blogData = [
             {
-                "id": 1,
-                "date": "2026.02.23",
-                "category": "價值分析",
-                "title": "汽車晶片鑰匙遺失怎麼辦？找原廠還是找專業鎖匠最划算？",
-                "summary": "專業分析汽車鑰匙全丟後的處理方案，對比原廠與專業鎖匠的成本、時間與穩定性，提供最經濟高效的選擇。",
-                "link": "article-lost-key-comparison.html"
+                "date": "2026.02.26",
+                "category": "新店救援",
+                "title": "台北新店賓士 FBS3 智慧鑰匙全丟：EIS 模組數據重構實錄",
+                "summary": "直擊新店現場：針對 Mercedes-Benz 經典 FBS3 系統進行底層數據採集，1小時內恢復雙鑰匙發動權限。",
+                "link": "/article-benz-fbs3-xindian-rescue"
             },
             {
-                "id": 2,
-                "date": "2026.02.22",
-                "category": "技術維修",
-                "title": "2026 智慧型免鑰匙啟動系統 (Keyless) 常見故障與維修指南",
-                "summary": "深入剖析LF低頻訊號干擾、BCM模組數據偏移等深層故障原因。極致核心教您如何精準定位故障。",
-                "link": "article-keyless-troubleshooting.html"
+                "date": "2026.02.26",
+                "category": "底層工藝",
+                "title": "BMW FEM/BDC 底層解碼工藝：從電路板到數據重構的全紀錄",
+                "summary": "深入防盜模組核心，直擊 EEPROM 數據讀寫與晶片級解碼，展現極致核心在歐系車電子系統的深層功底。",
+                "link": "/article-bmw-fem-advanced-tech"
             },
             {
-                "id": 3,
-                "date": "2026.02.21",
-                "category": "設備解析",
-                "title": "為什麼專業汽車鑰匙拷貝需要用到昂貴的解碼設備？",
-                "summary": "解析 BMW G-Series 與賓士 FBS4 等高階加密系統。極致核心重金引進全球頂規設備，確保數據讀寫安全。",
-                "link": "article-decoding-equipment.html"
+                "date": "2026.02.26",
+                "category": "線西救援",
+                "title": "彰化線西 VW Pointer 小獵犬鑰匙全丟：引擎電腦底層解碼發動",
+                "summary": "面對經典車款的挑戰，展示如何拆解引擎電腦並讀取晶片數據，在線西現場重構 Pointer 防盜授權。",
+                "link": "/article-vw-pointer-xianxi-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "高雄救援",
+                "title": "高雄福斯 VW T5 晶片鑰匙全丟救援實錄",
+                "summary": "為商旅車主爭分奪秒，高雄現場完成福斯 T5 數據重構與鑰匙匹配，免拖吊、極速復工。",
+                "link": "/article-vw-t5-kaohsiung-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "台中新增",
+                "title": "2020 VW Golf 智能鑰匙新增實錄：台中大肚現場匹配",
+                "summary": "為 2020 年式福斯 Golf 進行 MQB 系統智能鑰匙新增，現場 30 分鐘完工。",
+                "link": "/article-vw-golf-dadu-service"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "彰化救援",
+                "title": "彰化田中 Honda Fit 智能鑰匙全丟救援實錄",
+                "summary": "記錄在彰化田中現場完成的 Honda Fit 數據重構，實現免拖吊、當場發動的極速救援。",
+                "link": "/article-honda-fit-tanaka-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "雲林救援",
+                "title": "雲林 Skoda Kodiaq 晶片鑰匙遺失：MQB 平台解碼",
+                "summary": "斯柯達 MQB 平台高難度解碼，極致核心職人運用原廠級設備在雲林現場完工。",
+                "link": "/article-skoda-kodiaq-yunlin-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "技術服務",
+                "title": "台中 Lexus 晶片鑰匙遺失配製：職人全天候支援",
+                "summary": "台中地區 Lexus 車主首選，針對 ES、RX、NX 全系提供原廠級現場匹配服務。",
+                "link": "/article-lexus-taichung-service"
             }
         ];
 
-        const container = document.getElementById('blog-list');
-        container.innerHTML = blogData.map(item => `
-            <div class="glass-panel p-10 rounded-sm hover:border-gold-primary/40 transition duration-500 group flex flex-col h-full shadow-2xl">
+        document.getElementById('blog-list').innerHTML = blogData.map(item => `
+            <div class="glass-panel p-10 rounded-sm hover:border-gold-primary/40 transition duration-500 group flex flex-col h-full">
                 <div class="flex justify-between items-start mb-8">
                     <span class="text-[10px] text-gold-primary border border-gold-primary/30 px-3 py-1 tracking-widest uppercase">${item.category}</span>
                     <span class="text-[10px] text-gray-600 font-cinzel">${item.date}</span>
