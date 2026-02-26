@@ -3,5 +3,9 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/index.html", "destination": "/" }
+  ],
+  "rewrites": [
+    { "source": "/blog", "destination": "/blog.html" },
+    { "source": "/cases", "destination": "/cases.html" }
   ]
 }
