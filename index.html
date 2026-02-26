@@ -11,38 +11,17 @@
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; }
         .hero-gradient { background: radial-gradient(circle at center, #1a1a1a 0%, #020202 100%); }
         .tech-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.12; pointer-events: none; }
-        
-        /* 實績牆優化：桌機無間隙，手機有間距 */
-        .showcase-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 2px; 
-        }
+        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2px; }
         @media (max-width: 768px) {
             .showcase-grid { gap: 15px; padding: 0 15px; }
             .showcase-item { border-radius: 8px; }
         }
-
         .showcase-item { position: relative; aspect-ratio: 16/10; overflow: hidden; cursor: pointer; }
         .showcase-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1); }
         .showcase-item:hover img { transform: scale(1.1); }
         .showcase-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%); }
-        
-        /* 按鈕優化：手機滿版 */
-        .gold-btn { 
-            border: 1px solid var(--gold); 
-            color: var(--gold); 
-            padding: 1.2rem 2.5rem; 
-            letter-spacing: 0.2em; 
-            text-transform: uppercase; 
-            font-size: 0.8rem; 
-            transition: all 0.3s; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .gold-btn { border: 1px solid var(--gold); color: var(--gold); padding: 1.2rem 2.5rem; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
         .gold-btn:hover { background: var(--gold); color: black; }
-        
         .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
@@ -52,19 +31,13 @@
         <video class="tech-video-bg" autoplay loop muted playsinline>
             <source src="vid/bmw_tech.mp4" type="video/mp4">
         </video>
-        
         <div class="relative z-10 w-full max-w-lg">
             <h1 class="font-cinzel text-5xl md:text-7xl font-bold tracking-[0.3em] mb-6 text-white">PROCORE</h1>
             <p class="text-gold tracking-[0.5em] uppercase text-[10px] mb-12">Extreme Automotive Intelligence</p>
-            
             <div class="flex flex-col md:flex-row gap-4 justify-center px-4">
                 <a href="/cases" class="gold-btn font-bold w-full md:w-auto">實戰案例 Cases</a>
                 <a href="/blog" class="gold-btn font-bold w-full md:w-auto">技術專欄 Journal</a>
             </div>
-        </div>
-
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-30">
-            <span class="text-[8px] text-white tracking-[0.8em] uppercase animate-pulse">Scroll</span>
         </div>
     </section>
 
@@ -77,7 +50,6 @@
             </div>
             <a href="/cases" class="hidden md:block text-[10px] text-gray-500 hover:text-white transition tracking-widest uppercase border-b border-gray-800 pb-2">All Cases →</a>
         </div>
-
         <div class="showcase-grid">
             <div class="showcase-item group" onclick="location.href='/article-benz-fbs3-xindian-rescue'">
                 <img src="img/benz_xindian_fbs3.jpg" alt="新店賓士救援">
@@ -112,10 +84,40 @@
                 </div>
             </div>
         </div>
-        
-        <!-- 手機端查看更多按鈕 -->
         <div class="mt-12 text-center md:hidden px-8">
             <a href="/cases" class="gold-btn w-full">查看更多實戰案例</a>
+        </div>
+    </section>
+
+    <!-- 專家解惑區塊 Expert Advice -->
+    <section class="py-32 bg-[#050505] border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block">Expert Advice</span>
+                <h2 class="text-3xl md:text-4xl font-bold font-cinzel">急難處理與維修指南</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- 文章 1 -->
+                <div class="group cursor-pointer" onclick="location.href='/article-lost-key-comparison'">
+                    <div class="border-l-2 border-gold/30 group-hover:border-gold pl-8 transition duration-500">
+                        <p class="text-gold text-[10px] tracking-widest uppercase mb-4 font-bold">Emergency</p>
+                        <h3 class="text-white text-2xl font-bold mb-6 group-hover:text-gold transition">鑰匙全丟怎麼辦？<br>官方通路與現場救援深度比較</h3>
+                        <p class="text-gray-500 text-sm leading-loose">當面臨鑰匙全丟、車輛無法發動的緊急狀態時，了解時間與預算的權衡，幫您做出最明智的選擇。</p>
+                        <p class="mt-8 text-[10px] text-white tracking-[0.2em] uppercase border-b border-white/10 inline-block pb-1">Read Guide →</p>
+                    </div>
+                </div>
+
+                <!-- 文章 2 -->
+                <div class="group cursor-pointer" onclick="location.href='/article-decoding-equipment'">
+                    <div class="border-l-2 border-gold/30 group-hover:border-gold pl-8 transition duration-500">
+                        <p class="text-gold text-[10px] tracking-widest uppercase mb-4 font-bold">Why Us</p>
+                        <h3 class="text-white text-2xl font-bold mb-6 group-hover:text-gold transition">為什麼需要專業解碼？<br>隱藏在鑰匙背後的安全機制</h3>
+                        <p class="text-gray-500 text-sm leading-loose">為什麼備份鑰匙至關重要？解析德系、日系防盜系統的運作原理，預防高昂的維修代價。</p>
+                        <p class="mt-8 text-[10px] text-white tracking-[0.2em] uppercase border-b border-white/10 inline-block pb-1">Learn More →</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
