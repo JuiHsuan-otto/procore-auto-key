@@ -7,157 +7,199 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-deep: #020202; --gold: #D4AF37; --gold-soft: rgba(212, 175, 55, 0.3); }
+        :root { --bg-deep: #020202; --gold: #D4AF37; --gold-glow: rgba(212, 175, 55, 0.4); }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; }
-        .text-gold-gradient { background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        nav { background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .hero-section { background: radial-gradient(circle at center, rgba(26, 26, 26, 0.5) 0%, rgba(2, 2, 2, 1) 100%), url('img/bmw_fem_board.jpg'); background-size: cover; background-position: center; }
-        .tech-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.15; mix-blend-mode: overlay; }
         
-        /* 實績牆樣式 */
-        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-        .showcase-item { position: relative; aspect-ratio: 1/1; overflow: hidden; cursor: pointer; border: 1px solid var(--gold-soft); border-radius: 4px; transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); background: #000; }
-        .showcase-item img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.1) contrast(1.05); transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
-        .showcase-item:hover { border-color: var(--gold); transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 25px rgba(212,175,55,0.25); }
-        .showcase-item:hover img { transform: scale(1.1); }
-        .showcase-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); opacity: 0.8; }
+        /* 金屬質感文字 */
+        .text-gold-gradient {
+            background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 8px rgba(212,175,55,0.2));
+        }
 
-        .gold-btn { background: var(--gold); color: black; padding: 1.2rem 2rem; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.85rem; font-weight: 800; transition: all 0.3s; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
-        .gold-btn:hover { box-shadow: 0 0 40px rgba(212,175,55,0.5); transform: scale(1.05); }
-        .tag-badge { border: 1px solid rgba(212,175,55,0.4); padding: 4px 12px; border-radius: 100px; font-size: 10px; color: var(--gold); letter-spacing: 2px; }
+        /* 導航欄 */
+        nav { background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* 旗艦級按鈕樣式 */
+        .gold-btn-v2 {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 1.2rem 2.5rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+        }
+        .gold-btn-v2:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 50px rgba(212,175,55,0.5);
+            transform: translateY(-3px);
+        }
+        
+        /* 實績牆 */
+        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        .showcase-item { 
+            position: relative; aspect-ratio: 1/1; overflow: hidden; cursor: pointer; 
+            border: 1px solid rgba(212,175,55,0.2); border-radius: 4px; 
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .showcase-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s ease; }
+        .showcase-item:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 30px rgba(212,175,55,0.2); }
+        .showcase-item:hover img { transform: scale(1.1); }
+        .showcase-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 70%); }
+
+        .tag-badge { border: 1px solid rgba(212,175,55,0.3); padding: 4px 14px; border-radius: 100px; font-size: 9px; color: var(--gold); letter-spacing: 2px; background: rgba(212,175,55,0.05); }
     </style>
 </head>
 <body class="antialiased">
 
-    <nav class="fixed top-0 w-full z-50 py-4">
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 py-5">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</a>
-            <div class="hidden md:flex space-x-8 text-[11px] font-bold tracking-widest uppercase">
-                <a href="/cases" class="hover:text-gold transition">實戰案例</a>
-                <a href="/blog" class="hover:text-gold transition">技術專欄</a>
-                <a href="tel:0909277670" class="bg-gold/10 text-gold px-4 py-2 rounded border border-gold/20">24H 救援專線</a>
+            <div class="hidden md:flex space-x-10 text-[10px] font-bold tracking-[0.3em] uppercase">
+                <a href="/cases" class="hover:text-gold transition">Cases / 實戰案例</a>
+                <a href="/blog" class="hover:text-gold transition">Journal / 技術專欄</a>
+                <a href="tel:0909277670" class="text-gold border border-gold/30 px-4 py-2 rounded-sm hover:bg-gold hover:text-black transition">24H Hotline</a>
             </div>
+            <!-- Mobile Hotline -->
+            <a href="tel:0909277670" class="md:hidden text-gold text-[10px] font-bold border border-gold/40 px-4 py-2 rounded-sm">CALL NOW</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative h-screen flex flex-col items-center justify-center text-center px-6 hero-section">
-        <video class="tech-video-bg" autoplay loop muted playsinline>
-            <source src="vid/bmw_tech.mp4" type="video/mp4">
-        </video>
-        <div class="relative z-10 w-full max-w-4xl">
-            <div class="flex justify-center gap-4 mb-8">
+    <section class="relative h-screen flex flex-col items-center justify-center text-center px-6">
+        <div class="absolute inset-0 z-0">
+            <video class="w-full h-full object-cover opacity-20 mix-blend-screen" autoplay loop muted playsinline>
+                <source src="vid/bmw_tech.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black"></div>
+        </div>
+        
+        <div class="relative z-10 w-full max-w-4xl mt-20">
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
                 <span class="tag-badge">免拖吊現場發動</span>
-                <span class="tag-badge">各系車款解碼</span>
-                <span class="tag-badge">全台 24H 支援</span>
+                <span class="tag-badge">德日全系車款解碼</span>
+                <span class="tag-badge">全台 24H 職人支援</span>
             </div>
-            <h1 class="font-cinzel text-5xl md:text-8xl font-bold tracking-[0.1em] mb-4 text-white">PROCORE</h1>
-            <h2 class="text-xl md:text-3xl font-bold text-gold-gradient mb-12 tracking-[0.2em]">汽車晶片鑰匙全丟救援職人</h2>
-            <div class="flex flex-col md:flex-row gap-6 justify-center px-4 mt-8">
-                <a href="tel:0909277670" class="gold-btn w-full md:w-80">立即撥打救援電話</a>
-                <a href="https://line.me/ti/p/chingweida" class="border border-white/20 hover:bg-white/5 text-white font-bold py-4 px-12 rounded tracking-widest transition">LINE 線上諮詢</a>
+            <h1 class="font-cinzel text-6xl md:text-9xl font-bold tracking-[0.1em] mb-6 text-white">PROCORE</h1>
+            <h2 class="text-lg md:text-2xl font-medium text-gold-gradient mb-16 tracking-[0.4em] uppercase">Automotive Security Specialist</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8 justify-center px-4">
+                <a href="/cases" class="gold-btn-v2 w-full md:w-72">查看實戰案例 Cases</a>
+                <a href="/blog" class="gold-btn-v2 w-full md:w-72">技術知識專欄 Journal</a>
             </div>
         </div>
     </section>
 
     <!-- 實績展示 -->
     <section class="py-32 bg-black">
-        <div class="max-w-7xl mx-auto px-6 mb-20 flex justify-between items-end">
-            <div>
-                <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-2 block font-bold">Field Operations</span>
-                <h2 class="text-3xl font-bold font-cinzel tracking-wider">實戰任務展示</h2>
-            </div>
-            <a href="/cases" class="text-[10px] text-gray-500 hover:text-white transition tracking-widest uppercase border-b border-gray-800 pb-2">Explore All Cases →</a>
+        <div class="max-w-7xl mx-auto px-6 mb-20 text-center">
+            <p class="text-gold text-[10px] tracking-[0.6em] uppercase mb-4 font-bold">Field Mission Log</p>
+            <h2 class="text-3xl md:text-5xl font-bold font-cinzel tracking-widest text-white">實戰任務展示</h2>
         </div>
-        <div class="showcase-grid max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-7xl mx-auto">
+            <!-- 實績 1 -->
             <div class="showcase-item group" onclick="location.href='/article-benz-fbs3-xindian-rescue'">
-                <img src="img/benz_xindian_fbs3.jpg" alt="新店賓士救援">
+                <img src="img/benz_xindian_fbs3.jpg" alt="賓士救援">
                 <div class="showcase-overlay"></div>
-                <div class="absolute bottom-6 left-6 text-left">
-                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-1">新店救援</p>
-                    <h3 class="text-white font-bold text-lg">Mercedes-Benz</h3>
+                <div class="absolute bottom-8 left-8">
+                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-2">新店案例</p>
+                    <h3 class="text-white font-bold text-lg font-cinzel">Mercedes-Benz</h3>
                 </div>
             </div>
+            <!-- 實績 2 -->
             <div class="showcase-item group" onclick="location.href='/article-bmw-fem-advanced-tech'">
-                <img src="img/bmw_front_keys.jpg" alt="BMW 技術解碼">
+                <img src="img/bmw_front_keys.jpg" alt="BMW 技術">
                 <div class="showcase-overlay"></div>
-                <div class="absolute bottom-6 left-6 text-left">
-                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-1">技術實錄</p>
-                    <h3 class="text-white font-bold text-lg">BMW G-Series</h3>
+                <div class="absolute bottom-8 left-8">
+                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-2">技術實錄</p>
+                    <h3 class="text-white font-bold text-lg font-cinzel">BMW G-Series</h3>
                 </div>
             </div>
+            <!-- 實績 3 -->
             <div class="showcase-item group" onclick="location.href='/article-nissan-kicks-zhongke-rescue'">
-                <img src="img/nissan_kicks_zhongke_real.jpg" alt="中科 Kicks 救援">
+                <img src="img/nissan_kicks_zhongke_real.jpg" alt="中科 Kicks">
                 <div class="showcase-overlay"></div>
-                <div class="absolute bottom-6 left-6 text-left">
-                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-1">中科現場</p>
-                    <h3 class="text-white font-bold text-lg">Nissan Kicks</h3>
+                <div class="absolute bottom-8 left-8">
+                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-2">中科案例</p>
+                    <h3 class="text-white font-bold text-lg font-cinzel">Nissan Kicks</h3>
                 </div>
             </div>
+            <!-- 實績 4 -->
             <div class="showcase-item group" onclick="location.href='/article-mazda-wufeng-rescue'">
-                <img src="img/mazda_cx5_wufeng_real.jpg" alt="霧峰 Mazda 救援">
+                <img src="img/mazda_cx5_wufeng_real.jpg" alt="霧峰 Mazda">
                 <div class="showcase-overlay"></div>
-                <div class="absolute bottom-6 left-6 text-left">
-                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-1">霧峰旗艦</p>
-                    <h3 class="text-white font-bold text-lg">Mazda CX-5</h3>
+                <div class="absolute bottom-8 left-8">
+                    <p class="text-[9px] text-gold tracking-widest uppercase font-bold mb-2">霧峰案例</p>
+                    <h3 class="text-white font-bold text-lg font-cinzel">Mazda CX-5</h3>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 常見問題 Q&A (擴充至 6 組) -->
+    <!-- 專家 Q&A -->
     <section class="py-32 bg-zinc-900/40 border-y border-white/5">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-3xl font-bold font-cinzel text-center mb-16 uppercase tracking-widest">Expert Q&A</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-                <div class="border-l border-gold/30 pl-6">
-                    <h3 class="text-gold text-sm font-bold mb-3">Q1. 鑰匙全丟一定要拖回原廠嗎？</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">不需要。我們具備專業級高階器材，可到府現場讀取數據並完成匹配，免除拖吊費與待料期。</p>
+        <div class="max-w-4xl mx-auto px-8">
+            <h2 class="text-3xl font-bold font-cinzel text-center mb-20 uppercase tracking-widest">Expert Insights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+                <div class="border-l border-gold/30 pl-8 group cursor-pointer" onclick="location.href='/article-lost-key-comparison'">
+                    <h3 class="text-gold text-base font-bold mb-4">Q1. 鑰匙全丟一定要拖回原廠嗎？</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed group-hover:text-gray-200 transition">不需要。極致核心具備專業級高階器材，可到府現場讀取數據並完成匹配，免除拖吊費與待料期。</p>
                 </div>
-                <div class="border-l border-gold/30 pl-6">
-                    <h3 class="text-gold text-sm font-bold mb-3">Q2. 配製的新鑰匙跟原廠一樣嗎？</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">是的。採用高品質晶片與同步工法，確保感應、發動功能與原車完全一致，不傷原車防盜模組。</p>
+                <div class="border-l border-gold/30 pl-8 group cursor-pointer" onclick="location.href='/article-decoding-equipment'">
+                    <h3 class="text-gold text-base font-bold mb-4">Q2. 配製的新鑰匙跟原廠一樣嗎？</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed group-hover:text-gray-200 transition">是的。採用高品質晶片與同步工法，確保感應、發動功能與原車完全一致，不傷原車防盜模組。</p>
                 </div>
-                <div class="border-l border-gold/30 pl-6">
-                    <h3 class="text-gold text-sm font-bold mb-3">Q3. 救援範圍包含哪些地區？</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">我們服務範圍涵蓋台北、桃園、新竹、台中、彰化、南投及高雄，全台主要城市均有職人駐點。</p>
+                <div class="border-l border-gold/30 pl-8 group cursor-pointer">
+                    <h3 class="text-gold text-base font-bold mb-4">Q3. 救援範圍包含哪些地區？</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed group-hover:text-gray-200 transition">服務範圍涵蓋台北、桃園、新竹、台中、彰化、南投及高雄，全台主要城市均有專業職人駐點。</p>
                 </div>
-                <div class="border-l border-gold/30 pl-6">
-                    <h3 class="text-gold text-sm font-bold mb-3">Q4. 現場配製需要提供什麼資料？</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">為確保車輛安全，現場需核對行照與身分證件，確認車主身份後方可執行解碼配製。</p>
+                <div class="border-l border-gold/30 pl-8 group cursor-pointer">
+                    <h3 class="text-gold text-base font-bold mb-4">Q4. 現場配製需要提供什麼資料？</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed group-hover:text-gray-200 transition">為確保車輛安全，現場需核對行照與身分證件，確認車主身份後方可執行解碼配製。</p>
                 </div>
-                <div class="border-l border-gold/30 pl-6">
-                    <h3 class="text-gold text-sm font-bold mb-3">Q5. 雙B等高階進口車也能處理嗎？</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">可以。我們專攻 BMW FEM/BDC、賓士 FBS3/FBS4 等高階防盜系統，具備底層數據運算能力。</p>
+                <div class="border-l border-gold/30 pl-8 group cursor-pointer" onclick="location.href='/article-bmw-fem-advanced-tech'">
+                    <h3 class="text-gold text-base font-bold mb-4">Q5. 雙B等高階進口車也能處理嗎？</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed group-hover:text-gray-200 transition">可以。我們專攻 BMW FEM/BDC、賓士 FBS3 等高階防盜系統，具備現場底層數據運算能力。</p>
                 </div>
-                <div class="border-l border-gold/30 pl-6">
-                    <h3 class="text-gold text-sm font-bold mb-3">Q6. Keyless 感應不到時是壞了嗎？</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">不一定。可能是電池耗盡或天線異常。我們提供專業級診斷服務，能精準找出故障點並現場修復。</p>
+                <div class="border-l border-gold/30 pl-8 group cursor-pointer" onclick="location.href='/article-keyless-troubleshooting'">
+                    <h3 class="text-gold text-base font-bold mb-4">Q6. Keyless 感應不到時是壞了嗎？</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed group-hover:text-gray-200 transition">不一定。可能是電池耗盡或天線異常。我們提供專業級診斷服務，能精準找出故障點並現場修復。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 聯繫方式 (正式恢復) -->
-    <section class="py-32 bg-black">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold font-cinzel mb-16 uppercase tracking-widest text-gold-gradient">Contact Us</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <a href="https://line.me/ti/p/chingweida" class="p-10 border border-white/5 rounded hover:border-gold/50 transition bg-zinc-900/30 group">
-                    <p class="text-gold text-[10px] tracking-widest mb-4 uppercase font-bold">Line Support</p>
-                    <p class="text-2xl font-bold text-white group-hover:text-gold transition">chingweida</p>
+    <!-- 聯繫方式 (旗艦級聯絡區) -->
+    <section class="py-40 bg-black relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl font-bold font-cinzel mb-20 uppercase tracking-[0.3em] text-gold-gradient">Connect With ProCore</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <a href="https://line.me/ti/p/chingweida" class="gold-btn-v2 py-12 flex-col gap-4 group">
+                    <span class="text-xs tracking-[0.5em] text-gold/60">Official Line ID</span>
+                    <span class="text-2xl font-bold tracking-widest text-white group-hover:text-black">chingweida</span>
                 </a>
-                <a href="tel:0909277670" class="p-10 border border-white/5 rounded hover:border-gold/50 transition bg-zinc-900/30 group">
-                    <p class="text-gold text-[10px] tracking-widest mb-4 uppercase font-bold">24H Hotline</p>
-                    <p class="text-2xl font-bold text-white group-hover:text-gold transition">0909-277-670</p>
+                <a href="tel:0909277670" class="gold-btn-v2 py-12 flex-col gap-4 group">
+                    <span class="text-xs tracking-[0.5em] text-gold/60">24H Hotline</span>
+                    <span class="text-2xl font-bold tracking-widest text-white group-hover:text-black">0909-277-670</span>
                 </a>
             </div>
-            <p class="mt-16 text-gray-600 text-[10px] tracking-[0.5em] uppercase">24 Hours Professional Emergency Service</p>
         </div>
     </section>
 
-    <footer class="py-12 border-t border-white/5 text-center text-[10px] text-gray-600 tracking-widest uppercase">
-        © 2026 PROCORE AUTO KEY.
+    <footer class="py-12 border-t border-white/5 text-center text-[10px] text-gray-700 tracking-[0.8em] uppercase">
+        © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
     </footer>
 </body>
 </html>
