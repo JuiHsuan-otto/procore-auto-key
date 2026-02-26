@@ -3,304 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>極致核心 | 專業汽車鑰匙技術專欄：晶片解碼、Keyless故障排除、防盜系統深度解析</title>
-    <meta name="description" content="汽車鑰匙專業知識庫：智能感應 Keyless 故障排除、賓士 BMW 防盜解碼、電池更換指南。專業技師撰寫的第一手維修經驗分享。">
+    <title>技術專欄 | 極致核心 ProCore | 專業汽車解碼與知識庫</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-deep: #020202; --gold: #D4AF37; --gold-soft: rgba(212, 175, 55, 0.2); }
+        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.7); --gold: #D4AF37; }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
-        
-        /* 金屬漸層文字 */
-        .text-gold-gradient { 
-            background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 8px rgba(212,175,55,0.2));
-        }
-        
-        /* 導航列 */
-        nav { 
-            background: rgba(5, 5, 5, 0.9); 
-            backdrop-filter: blur(25px); 
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        /* 高級按鈕 */
-        .premium-btn {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--gold-soft);
-            color: var(--gold);
-            padding: 0.75rem 2rem;
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-        }
-        .premium-btn:hover {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 30px rgba(212,175,55,0.3);
-            transform: translateY(-2px);
-        }
-        .premium-btn.active {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 30px rgba(212,175,55,0.3);
-        }
-
-        /* 文章卡片 */
-        .article-card {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--gold-soft);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .article-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(212,175,55,0.2);
-        }
-        .article-card img {
-            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-            filter: saturate(1.1) contrast(1.05);
-        }
-        .article-card:hover img { transform: scale(1.1); }
-
-        /* 技術圖示卡片 */
-        .tech-icon-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(212,175,55,0.1);
-            transition: all 0.4s;
-        }
-        .tech-icon-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-        }
+        .blog-card { background: var(--glass); backdrop-filter: blur(12px); border-left: 2px solid rgba(255,255,255,0.05); padding: 2.5rem; transition: all 0.3s; }
+        .blog-card:hover { border-left: 2px solid var(--gold); background: rgba(30, 30, 30, 0.6); }
     </style>
 </head>
 <body class="antialiased">
-    <!-- 導航列 -->
-    <nav class="fixed top-0 w-full z-50 py-4">
+    <nav class="py-8 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</a>
-            <div class="hidden md:flex space-x-8 text-[11px] font-bold tracking-widest uppercase">
-                <a href="/cases" class="hover:text-gold transition">實戰案例</a>
-                <a href="/blog" class="text-gold">技術專欄</a>
-                <a href="tel:0909277670" class="bg-gold/10 text-gold px-4 py-2 rounded-sm border border-gold/20 hover:bg-gold hover:text-black transition">24H 救援專線</a>
+            <a href="/" class="font-cinzel text-2xl text-white font-bold tracking-widest">PROCORE</a>
+            <div class="space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
+                <a href="/blog" class="text-gold border-b border-gold pb-1">技術專欄</a>
+                <a href="/cases" class="text-gray-400 hover:text-white transition">實戰案例</a>
+                <a href="/" class="text-gray-400 hover:text-white transition">返回首頁</a>
             </div>
-            <a href="tel:0909277670" class="md:hidden text-gold text-[10px] font-bold border border-gold/40 px-3 py-1 rounded-sm">CALL NOW</a>
         </div>
     </nav>
 
-    <!-- Hero Section 2.0 -->
-    <section class="relative min-h-screen bg-black overflow-hidden">
-        <!-- 背景圖片 -->
-        <div class="absolute inset-0 bg-[url('img/bmw_fem_board.jpg')] bg-cover bg-center opacity-20"></div>
-        
-        <!-- 漸層遮罩 -->
-        <div class="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black"></div>
-        
-        <!-- 內容 -->
-        <div class="relative z-10 max-w-7xl mx-auto px-6 pt-48 pb-24">
-            <!-- 頂部技術圖示 -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-                <div class="tech-icon-card p-8 rounded-sm text-center">
-                    <img src="img/icons/key-chip.svg" alt="晶片解碼" class="w-12 h-12 mx-auto mb-4 opacity-70">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">晶片解碼技術</p>
-                </div>
-                <div class="tech-icon-card p-8 rounded-sm text-center">
-                    <img src="img/icons/key-security.svg" alt="防盜系統" class="w-12 h-12 mx-auto mb-4 opacity-70">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">防盜系統分析</p>
-                </div>
-                <div class="tech-icon-card p-8 rounded-sm text-center">
-                    <img src="img/icons/key-repair.svg" alt="故障維修" class="w-12 h-12 mx-auto mb-4 opacity-70">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">故障維修指南</p>
-                </div>
-                <div class="tech-icon-card p-8 rounded-sm text-center">
-                    <img src="img/icons/key-info.svg" alt="知識專欄" class="w-12 h-12 mx-auto mb-4 opacity-70">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">技術知識庫</p>
-                </div>
-            </div>
-            
-            <!-- 主標題 -->
-            <div class="max-w-4xl">
-                <h1 class="text-5xl md:text-7xl font-bold font-cinzel mb-8">技術專欄</h1>
-                <p class="text-xl text-gray-400 mb-12 leading-relaxed">深入解析汽車鑰匙技術核心，從晶片匹配原理到進階故障排除，建立完整的專業知識體系。</p>
-                
-                <!-- 專業領域展示 -->
-                <div class="flex flex-wrap gap-4 mb-16">
-                    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-sm">
-                        <span class="w-2 h-2 rounded-full bg-gold"></span>
-                        <span class="text-sm">晶片解碼技術</span>
-                    </div>
-                    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-sm">
-                        <span class="w-2 h-2 rounded-full bg-gold"></span>
-                        <span class="text-sm">防盜系統分析</span>
-                    </div>
-                    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-sm">
-                        <span class="w-2 h-2 rounded-full bg-gold"></span>
-                        <span class="text-sm">故障診斷指南</span>
-                    </div>
-                </div>
-            </div>
+    <header class="py-20 text-center">
+        <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block">Knowledge Base</span>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 font-cinzel">Technical Journal</h2>
+        <p class="text-gray-500 font-light max-w-2xl mx-auto text-sm md:text-base">深入探討汽車電子防盜核心，解密鑰匙全丟後的底層重構工藝。</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 pb-32 space-y-8">
+        <div id="blog-list" class="space-y-6">
+            <!-- 由 JS 生成 -->
         </div>
+    </main>
 
-        <!-- 向下滾動提示 -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-            <span class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">探索文章</span>
-            <div class="w-px h-16 bg-gradient-to-b from-gold/50 to-transparent"></div>
-        </div>
-    </section>
+    <script>
+        const blogData = [
+            {
+                "category": "設備解析",
+                "title": "為什麼專業解碼需要高階診斷系統？",
+                "summary": "剖析資深職人專用設備的重要性。從 128 位元加密到雙向授權驗證，解析為何複製鑰匙不只是拷貝資料。",
+                "link": "/article-decoding-equipment"
+            },
+            {
+                "category": "維修指南",
+                "title": "Keyless 智慧鑰匙常見故障診斷流程",
+                "summary": "感應不到鑰匙、按鍵失靈？專業技師帶您從電路板微動開關到天線阻值，完整診斷 Keyless 系統。",
+                "link": "/article-keyless-troubleshooting"
+            },
+            {
+                "category": "成本分析",
+                "title": "2026 鑰匙全丟救援：官方通路與專業現場配製成本比較",
+                "summary": "針對進口車主最關心的費用問題，分析時間、拖吊及料件成本，幫您做出最明智的選擇。",
+                "link": "/article-lost-key-comparison"
+            },
+            {
+                "category": "市場趨勢",
+                "title": "美系車零關稅時代：Ford 等車款的防盜技術挑戰",
+                "summary": "美系車款即將迎來高峰，深入解析 PATS 等防盜系統的解碼應對策略。",
+                "link": "/article-us-car-market-tech"
+            }
+        ];
 
-    <!-- 分類選擇器 -->
-    <section class="py-20 bg-black border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-wrap justify-center gap-6">
-                <button class="premium-btn active">全部文章</button>
-                <button class="premium-btn">技術解析</button>
-                <button class="premium-btn">故障診斷</button>
-                <button class="premium-btn">基礎知識</button>
-                <button class="premium-btn">市場動態</button>
+        document.getElementById('blog-list').innerHTML = blogData.map(item => `
+            <div class="blog-card rounded-sm">
+                <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">${item.category}</span>
+                <h3 class="text-white font-bold text-xl mb-4">${item.title}</h3>
+                <p class="text-gray-500 text-sm leading-loose mb-6">${item.summary}</p>
+                <a href="${item.link}" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">Read Article →</a>
             </div>
-        </div>
-    </section>
-
-    <!-- 文章列表 -->
-    <section class="py-20 bg-black">
-        <div class="max-w-7xl mx-auto px-6">
-            <!-- 技術解析 -->
-            <div class="mb-20">
-                <div class="flex items-end justify-between mb-12">
-                    <div>
-                        <span class="text-[10px] text-gold tracking-[0.5em] uppercase block mb-4">Technology</span>
-                        <h2 class="text-3xl font-bold font-cinzel tracking-wider">技術解析</h2>
-                    </div>
-                    <a href="#more-tech" class="text-[10px] text-gray-500 hover:text-white transition tracking-widest uppercase border-b border-gray-800 pb-2">更多技術文章 →</a>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- BMW FEM 解析 -->
-                    <article class="article-card rounded-sm overflow-hidden">
-                        <a href="/article-bmw-fem-tech-explained" class="block">
-                            <div class="relative aspect-[4/3] overflow-hidden">
-                                <img src="img/bmw_fem_board.jpg" alt="BMW FEM 模組技術解析" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-                                <div class="absolute bottom-0 left-0 p-6">
-                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">技術解析</span>
-                                    <h3 class="text-white text-lg font-bold mb-2">BMW FEM 系統深度解析</h3>
-                                    <p class="text-gray-400 text-xs">前艙模組結構與數據重構原理剖析。</p>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                    <!-- 賓士防盜系統 -->
-                    <article class="article-card rounded-sm overflow-hidden">
-                        <a href="/article-benz-security-system" class="block">
-                            <div class="relative aspect-[4/3] overflow-hidden">
-                                <img src="img/benz_security_board.jpg" alt="賓士防盜系統進化史" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-                                <div class="absolute bottom-0 left-0 p-6">
-                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">技術解析</span>
-                                    <h3 class="text-white text-lg font-bold mb-2">賓士防盜系統進化史</h3>
-                                    <p class="text-gray-400 text-xs">從 EIS 到 FBS3，解密賓士鑰匙技術演進。</p>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                </div>
-            </div>
-
-            <!-- 故障診斷 -->
-            <div class="mb-20">
-                <div class="flex items-end justify-between mb-12">
-                    <div>
-                        <span class="text-[10px] text-gold tracking-[0.5em] uppercase block mb-4">Troubleshooting</span>
-                        <h2 class="text-3xl font-bold font-cinzel tracking-wider">故障診斷</h2>
-                    </div>
-                    <a href="#more-trouble" class="text-[10px] text-gray-500 hover:text-white transition tracking-widest uppercase border-b border-gray-800 pb-2">更多故障排除 →</a>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Keyless 故障排除 -->
-                    <article class="article-card rounded-sm overflow-hidden">
-                        <a href="/article-keyless-troubleshooting" class="block">
-                            <div class="relative aspect-[4/3] overflow-hidden">
-                                <img src="img/keyless_repair_guide.jpg" alt="Keyless 感應鑰匙故障排除" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-                                <div class="absolute bottom-0 left-0 p-6">
-                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">故障診斷</span>
-                                    <h3 class="text-white text-lg font-bold mb-2">Keyless 故障完整排查</h3>
-                                    <p class="text-gray-400 text-xs">從電池到天線，系統性診斷流程。</p>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                    <!-- 晶片對應失敗處理 -->
-                    <article class="article-card rounded-sm overflow-hidden">
-                        <a href="/article-chip-matching-failure" class="block">
-                            <div class="relative aspect-[4/3] overflow-hidden">
-                                <img src="img/chip_matching_guide.jpg" alt="晶片對應失敗原因與解決" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-                                <div class="absolute bottom-0 left-0 p-6">
-                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">故障診斷</span>
-                                    <h3 class="text-white text-lg font-bold mb-2">晶片匹配失敗全解析</h3>
-                                    <p class="text-gray-400 text-xs">常見匹配失敗原因與專業處理方法。</p>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                </div>
-            </div>
-
-            <!-- 基礎知識 -->
-            <div class="mb-20">
-                <div class="flex items-end justify-between mb-12">
-                    <div>
-                        <span class="text-[10px] text-gold tracking-[0.5em] uppercase block mb-4">Fundamentals</span>
-                        <h2 class="text-3xl font-bold font-cinzel tracking-wider">基礎知識</h2>
-                    </div>
-                    <a href="#more-basic" class="text-[10px] text-gray-500 hover:text-white transition tracking-widest uppercase border-b border-gray-800 pb-2">更多基礎知識 →</a>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- 鑰匙類型介紹 -->
-                    <article class="article-card rounded-sm overflow-hidden">
-                        <a href="/article-key-types-explained" class="block">
-                            <div class="relative aspect-[4/3] overflow-hidden">
-                                <img src="img/key_types_guide.jpg" alt="汽車鑰匙種類完整介紹" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-                                <div class="absolute bottom-0 left-0 p-6">
-                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">基礎知識</span>
-                                    <h3 class="text-white text-lg font-bold mb-2">汽車鑰匙完全指南</h3>
-                                    <p class="text-gray-400 text-xs">從機械到智能，認識各類鑰匙特性。</p>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 聯繫資訊 -->
-    <section class="py-24 bg-zinc-900/40 border-t border-white/5">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-2xl font-bold font-cinzel mb-12 uppercase tracking-[0.4em] text-gold-gradient">Contact</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <a href="https://line.me/ti/p/chingweida" class="p-8 border border-gold/20 rounded-sm hover:border-gold/40 transition group">
-                    <span class="text-[8px] tracking-[0.5em] text-gold/60 uppercase block mb-4">Official Line ID</span>
-                    <span class="text-lg font-bold tracking-widest text-white group-hover:text-gold">chingweida</span>
-                </a>
-                <a href="tel:0909277670" class="p-8 border border-gold/20 rounded-sm hover:border-gold/40 transition group">
-                    <span class="text-[8px] tracking-[0.5em] text-gold/60 uppercase block mb-4">24H Hotline</span>
-                    <span class="text-lg font-bold tracking-widest text-white group-hover:text-gold">0909-277-670</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-12 border-t border-white/5 text-center text-[9px] text-gray-700 tracking-[0.8em] uppercase">
-        © 2026 PROCORE AUTO KEY.
-    </footer>
+        `).join('');
+    </script>
 </body>
 </html>
