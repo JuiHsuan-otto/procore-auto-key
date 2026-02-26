@@ -1,0 +1,4 @@
+2026-02-26 08:38:38,074 - system_guardian - INFO - 已修正 Windows 編碼設置
+2026-02-26 08:38:38,083 - seo_tracker - INFO - 排名數據已保存到: C:\Users\ottoy\.openclaw\workspace\seo_data\rankings_2026-02-26.json
+2026-02-26 08:38:38,949 - seo_tracker - ERROR - Telegram 報告發送失敗: {"ok":false,"error_code":404,"description":"Not Found"}
+2026-02-26 08:38:38,949 - root - INFO - API 系統狀態: {'total_keys': 8, 'available_keys': 8, 'procore_keys': 7, 'hibou_keys': 1}
