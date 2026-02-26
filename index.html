@@ -3,21 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>極致核心 ProCore | 全台汽車晶片鑰匙全丟救援職人</title>
+    <title>極致核心 ProCore | 全台汽車晶片鑰匙救援職人</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg-deep: #020202; --gold: #D4AF37; }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; }
         .hero-gradient { background: radial-gradient(circle at center, #1a1a1a 0%, #020202 100%); }
-        .tech-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.15; pointer-events: none; }
-        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2px; background: rgba(255,255,255,0.05); }
+        .tech-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.12; pointer-events: none; }
+        
+        /* 實績牆優化：桌機無間隙，手機有間距 */
+        .showcase-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 2px; 
+        }
+        @media (max-width: 768px) {
+            .showcase-grid { gap: 15px; padding: 0 15px; }
+            .showcase-item { border-radius: 8px; }
+        }
+
         .showcase-item { position: relative; aspect-ratio: 16/10; overflow: hidden; cursor: pointer; }
         .showcase-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1); }
         .showcase-item:hover img { transform: scale(1.1); }
-        .showcase-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); opacity: 0.8; }
-        .gold-btn { border: 1px solid var(--gold); color: var(--gold); padding: 1rem 2.5rem; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.75rem; transition: all 0.3s; }
+        .showcase-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%); }
+        
+        /* 按鈕優化：手機滿版 */
+        .gold-btn { 
+            border: 1px solid var(--gold); 
+            color: var(--gold); 
+            padding: 1.2rem 2.5rem; 
+            letter-spacing: 0.2em; 
+            text-transform: uppercase; 
+            font-size: 0.8rem; 
+            transition: all 0.3s; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .gold-btn:hover { background: var(--gold); color: black; }
+        
+        .glass-panel { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body class="antialiased">
@@ -27,90 +53,90 @@
             <source src="vid/bmw_tech.mp4" type="video/mp4">
         </video>
         
-        <div class="relative z-10">
-            <h1 class="font-cinzel text-5xl md:text-7xl font-bold tracking-[0.3em] mb-4 text-white">PROCORE</h1>
-            <p class="text-gold tracking-[0.6em] uppercase text-xs mb-12">Extreme Automotive Intelligence</p>
+        <div class="relative z-10 w-full max-w-lg">
+            <h1 class="font-cinzel text-5xl md:text-7xl font-bold tracking-[0.3em] mb-6 text-white">PROCORE</h1>
+            <p class="text-gold tracking-[0.5em] uppercase text-[10px] mb-12">Extreme Automotive Intelligence</p>
             
-            <div class="flex flex-col md:flex-row gap-6 justify-center">
-                <a href="/cases" class="gold-btn font-bold">查看實戰案例 Cases</a>
-                <a href="/blog" class="gold-btn font-bold">技術知識專欄 Journal</a>
+            <div class="flex flex-col md:flex-row gap-4 justify-center px-4">
+                <a href="/cases" class="gold-btn font-bold w-full md:w-auto">實戰案例 Cases</a>
+                <a href="/blog" class="gold-btn font-bold w-full md:w-auto">技術專欄 Journal</a>
             </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-            <span class="text-[10px] text-gray-600 tracking-widest uppercase">Scroll to explore</span>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-30">
+            <span class="text-[8px] text-white tracking-[0.8em] uppercase animate-pulse">Scroll</span>
         </div>
     </section>
 
-    <!-- 全新震撼實績牆 Showcase Wall -->
+    <!-- 實績牆 Showcase Wall -->
     <section class="py-24 bg-black">
         <div class="max-w-7xl mx-auto px-6 mb-16 flex justify-between items-end">
             <div>
-                <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-2 block">Latest Field Ops</span>
-                <h2 class="text-3xl font-bold font-cinzel">Field Operations</h2>
+                <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-2 block font-bold">Latest Field Ops</span>
+                <h2 class="text-3xl font-bold font-cinzel tracking-wider">Field Operations</h2>
             </div>
-            <a href="/cases" class="text-[10px] text-gray-500 hover:text-white transition tracking-widest uppercase border-b border-gray-800 pb-2">Explore All Cases →</a>
+            <a href="/cases" class="hidden md:block text-[10px] text-gray-500 hover:text-white transition tracking-widest uppercase border-b border-gray-800 pb-2">All Cases →</a>
         </div>
 
         <div class="showcase-grid">
-            <!-- 實績牆項目 1 -->
             <div class="showcase-item group" onclick="location.href='/article-benz-fbs3-xindian-rescue'">
                 <img src="img/benz_xindian_fbs3.jpg" alt="新店賓士救援">
                 <div class="showcase-overlay"></div>
-                <div class="absolute bottom-6 left-6">
-                    <p class="text-[10px] text-gold tracking-widest mb-1 uppercase">台北新店</p>
-                    <h3 class="text-white font-bold text-lg">賓士 FBS3 全丟救援</h3>
+                <div class="absolute bottom-6 left-6 text-left">
+                    <p class="text-[10px] text-gold tracking-widest mb-1 uppercase font-bold">新店救援</p>
+                    <h3 class="text-white font-bold text-lg leading-tight">賓士 FBS3 全丟數據重構</h3>
                 </div>
             </div>
-            <!-- 實績牆項目 2 -->
             <div class="showcase-item group" onclick="location.href='/article-bmw-fem-advanced-tech'">
                 <img src="img/bmw_fem_board.jpg" alt="BMW 技術解碼">
                 <div class="showcase-overlay"></div>
-                <div class="absolute bottom-6 left-6">
-                    <p class="text-[10px] text-gold tracking-widest mb-1 uppercase">技術展示</p>
-                    <h3 class="text-white font-bold text-lg">BMW FEM 模組重構</h3>
+                <div class="absolute bottom-6 left-6 text-left">
+                    <p class="text-[10px] text-gold tracking-widest mb-1 uppercase font-bold">底層解碼</p>
+                    <h3 class="text-white font-bold text-lg leading-tight">BMW FEM 模組精密工藝</h3>
                 </div>
             </div>
-            <!-- 實績牆項目 3 -->
             <div class="showcase-item group" onclick="location.href='/article-nissan-kicks-zhongke-rescue'">
                 <img src="img/nissan_kicks_zhongke_real.jpg" alt="中科 Kicks 救援">
                 <div class="showcase-overlay"></div>
-                <div class="absolute bottom-6 left-6">
-                    <p class="text-[10px] text-gold tracking-widest mb-1 uppercase">台中中科</p>
-                    <h3 class="text-white font-bold text-lg">Nissan Kicks 現場匹配</h3>
+                <div class="absolute bottom-6 left-6 text-left">
+                    <p class="text-[10px] text-gold tracking-widest mb-1 uppercase font-bold">中科救援</p>
+                    <h3 class="text-white font-bold text-lg leading-tight">Nissan Kicks 現場匹配</h3>
                 </div>
             </div>
-            <!-- 實績牆項目 4 -->
             <div class="showcase-item group" onclick="location.href='/article-mazda-wufeng-rescue'">
                 <img src="img/mazda_cx5_wufeng_real.jpg" alt="霧峰 Mazda 救援">
                 <div class="showcase-overlay"></div>
-                <div class="absolute bottom-6 left-6">
-                    <p class="text-[10px] text-gold tracking-widest mb-1 uppercase">台中霧峰</p>
-                    <h3 class="text-white font-bold text-lg">Mazda CX-5 旗艦救援</h3>
+                <div class="absolute bottom-6 left-6 text-left">
+                    <p class="text-[10px] text-gold tracking-widest mb-1 uppercase font-bold">霧峰救援</p>
+                    <h3 class="text-white font-bold text-lg leading-tight">Mazda CX-5 旗艦匹配</h3>
                 </div>
             </div>
         </div>
+        
+        <!-- 手機端查看更多按鈕 -->
+        <div class="mt-12 text-center md:hidden px-8">
+            <a href="/cases" class="gold-btn w-full">查看更多實戰案例</a>
+        </div>
     </section>
 
-    <!-- 服務與聯繫方式 (保留原本的核心資訊) -->
-    <section class="py-32 bg-zinc-900/30">
-        <div class="max-w-4xl mx-auto text-center px-6">
-            <h2 class="text-3xl font-bold mb-12 font-cinzel">Direct Contact</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div class="glass-panel p-10 border border-white/5">
-                    <p class="text-gold text-[10px] tracking-widest uppercase mb-4">Line Support</p>
-                    <p class="text-2xl font-bold text-white">chingweida</p>
+    <!-- 聯繫方式 -->
+    <section class="py-24 bg-zinc-900/40">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 rounded-lg text-center">
+                    <p class="text-gold text-[10px] tracking-widest mb-4 font-bold uppercase">Line Support</p>
+                    <p class="text-xl font-bold text-white tracking-widest">chingweida</p>
                 </div>
-                <div class="glass-panel p-10 border border-white/5">
-                    <p class="text-gold text-[10px] tracking-widest uppercase mb-4">24H Hotline</p>
-                    <p class="text-2xl font-bold text-white">0909-277-670</p>
+                <div class="glass-panel p-8 rounded-lg text-center border-gold/20">
+                    <p class="text-gold text-[10px] tracking-widest mb-4 font-bold uppercase">24H Hotline</p>
+                    <p class="text-xl font-bold text-white tracking-widest">0909-277-670</p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer class="py-12 border-t border-white/5 text-center text-[10px] text-gray-600 tracking-widest uppercase">
-        © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
+        © 2026 PROCORE AUTO KEY.
     </footer>
 </body>
 </html>
