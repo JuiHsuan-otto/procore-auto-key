@@ -3,57 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>極致核心 汽車晶片鑰匙 - 專業開鎖、配製、故障維修 (ProCore Auto Key)</title>
-    <meta name="description" content="極致核心專業提供各類汽車晶片鑰匙配製、開鎖、遙控器維修及外殼更換服務。24小時救援，專業技術保障。">
-    <meta name="keywords" content="汽車晶片鑰匙, 汽車開鎖, 鑰匙配製, 遙控器維修, 極致核心, ProCore Auto Key">
+    <title>極致核心 ProCore | 台中彰化南投汽車晶片鑰匙遺失 24H 現場救援配製</title>
+    <meta name="description" content="極致核心 (ProCore) 專精台中汽車鑰匙遺失、彰化汽車晶片鑰匙備份及南投全丟救援。提供 24 小時無損開鎖、BMW/Benz 進口車晶片解碼與智慧感應鑰匙升級。免拖吊、現場數據重構，讓您的愛車重新跳動。LINE: chingweida / 0909277670">
+    <meta name="keywords" content="台中汽車鑰匙遺失, 汽車晶片鑰匙全丟, 24小時汽車開鎖, 台中汽車鎖匠, 賓士晶片鑰匙, BMW鑰匙遺失, 遙控器升級, 極致核心">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #002b5b; --accent: #00a8cc; --text: #333; }
-        body { font-family: "Microsoft JhengHei", sans-serif; margin: 0; color: var(--text); line-height: 1.6; }
-        header { background: var(--primary); color: white; padding: 2rem 1rem; text-align: center; }
-        .hero { background: #f4f4f4; padding: 4rem 1rem; text-align: center; }
-        .contact-box { background: white; border: 2px solid var(--primary); display: inline-block; padding: 1.5rem; margin-top: 1rem; border-radius: 8px; }
-        .btn { display: inline-block; background: #25d366; color: white; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 0.5rem; }
-        .btn-phone { background: var(--accent); }
-        .features { display: flex; flex-wrap: wrap; justify-content: center; padding: 2rem; }
-        .feature-item { width: 300px; margin: 1rem; padding: 1.5rem; border: 1px solid #ddd; border-radius: 8px; }
-        footer { background: #222; color: #ccc; text-align: center; padding: 1rem; }
+        :root {
+            --bg-deep: #050505;
+            --glass: rgba(20, 20, 20, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --gold-primary: #D4AF37;
+            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+        }
+        body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 80%); }
+        .font-serif-tc { font-family: 'Noto Serif TC', serif; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 6s linear infinite; }
+        @keyframes shine { to { background-position: 200% center; } }
+        .glass-panel { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--border); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); }
+        .btn-premium { position: relative; overflow: hidden; transition: all 0.3s ease; background: linear-gradient(90deg, #111, #222); border: 1px solid #333; }
+        .btn-premium::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent); transition: 0.5s; }
+        .btn-premium:hover::before { left: 100%; }
+        .btn-premium:hover { border-color: var(--gold-primary); color: var(--gold-primary); }
+        .btn-emergency { background: var(--gold-gradient); color: #000; font-weight: bold; box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); animation: pulse-gold 2s infinite; }
+        @keyframes pulse-gold { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); } }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .nav-scrolled { background: rgba(5, 5, 5, 0.95); border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-top: 1rem !important; padding-bottom: 1rem !important; }
+        .work-card { overflow: hidden; position: relative; }
+        .work-img { transition: transform 0.7s ease; width: 100%; height: 100%; object-fit: contain; background: #000; }
+        .work-card:hover .work-img { transform: scale(1.08); }
+        .divider-gold { height: 1px; background: linear-gradient(90deg, transparent, #b38728, transparent); width: 100%; margin: 2rem 0; opacity: 0.5; }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-<header>
-    <h1>極致核心 汽車晶片鑰匙</h1>
-    <p>Professional Automotive Chip Key Services</p>
-</header>
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 py-6 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="group">
+                <h1 class="font-cinzel text-2xl md:text-3xl text-white font-bold tracking-widest group-hover:text-gold-lux transition">PROCORE</h1>
+                <span class="text-[10px] text-gray-400 tracking-[0.4em] uppercase block">Artisan Auto Key</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about" class="text-xs font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">Philosophy</a>
+                <a href="#works" class="text-xs font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">Works</a>
+                <a href="blog.html" class="text-xs font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">Blog</a>
+                <a href="tel:0909277670" class="btn-premium px-6 py-2 text-xs font-bold tracking-widest text-white uppercase">24H Emergency</a>
+            </div>
+        </div>
+    </nav>
 
-<section class="hero">
-    <h2>專業技術．誠信服務．快速響應</h2>
-    <div class="contact-box">
-        <p><strong>服務專線：0909-277-670</strong></p>
-        <p><strong>LINE ID: <a href="https://line.me/ti/p/~chingweida">chingweida</a></strong></p>
-        <a href="tel:0909277670" class="btn btn-phone">撥打電話</a>
-        <a href="https://line.me/ti/p/~chingweida" class="btn">加 LINE 諮詢</a>
-    </div>
-</section>
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1920&q=80" alt="背景" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+        </div>
+        <div class="relative z-10 text-center px-4 max-w-5xl">
+            <div class="fade-up">
+                <span class="inline-block py-1 px-3 border border-yellow-600/30 rounded-full bg-yellow-900/10 text-yellow-500 text-[10px] tracking-[0.3em] uppercase mb-6">Automotive Security Solutions</span>
+            </div>
+            <h1 class="fade-up font-serif-tc text-4xl md:text-7xl font-bold text-white leading-tight mb-8">
+                台中．彰化．南投<br>
+                <span class="text-gold-lux italic text-2xl md:text-5xl">汽車晶片鑰匙全丟現場救援</span>
+            </h1>
+            <p class="fade-up text-gray-400 text-sm md:text-lg mb-12">這不只是一把鑰匙，而是啟動您生活節奏的開關。現場數據重構，讓您的愛車重新跳動。</p>
+            <div class="fade-up flex flex-col md:flex-row justify-center gap-6">
+                <a href="tel:0909277670" class="btn-emergency px-10 py-4 rounded-full text-sm tracking-widest uppercase"><span>⚡</span> 立即啟動救援</a>
+                <a href="https://line.me/ti/p/chingweida" target="_blank" class="btn-premium px-10 py-4 rounded-full text-sm tracking-widest text-white uppercase">LINE 預約諮詢</a>
+            </div>
+        </div>
+    </header>
 
-<section class="features">
-    <div class="feature-item">
-        <h3>晶片鑰匙配製</h3>
-        <p>各類歐、美、日系車款晶片鑰匙配製，現場快速交件。</p>
-    </div>
-    <div class="feature-item">
-        <h3>專業開鎖救援</h3>
-        <p>精密開鎖技術，不傷車身，解決您的燃眉之急。</p>
-    </div>
-    <div class="feature-item">
-        <h3>遙控器維修</h3>
-        <p>按鍵失靈、外殼破損、電池更換，一站式服務。</p>
-    </div>
-</section>
+    <!-- Stats -->
+    <section class="py-24 bg-black relative z-20">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 border-y border-white/5 py-12">
+            <div class="text-center fade-up"><div class="text-3xl text-gold-primary mb-3 font-cinzel">15+</div><div class="text-sm text-gray-300">資深解碼職人</div></div>
+            <div class="text-center fade-up"><div class="text-3xl text-gold-primary mb-3 font-cinzel">High</div><div class="text-sm text-gray-300">高精度匹配再生</div></div>
+            <div class="text-center fade-up"><div class="text-3xl text-gold-primary mb-3 font-cinzel">0</div><div class="text-sm text-gray-300">現場完工免拖吊</div></div>
+            <div class="text-center fade-up"><div class="text-3xl text-gold-primary mb-3 font-cinzel">24H</div><div class="text-sm text-gray-300">核心服務中彰投</div></div>
+        </div>
+    </section>
 
-<footer>
-    &copy; 2026 極致核心 (ProCore Auto Key). All rights reserved.
-</footer>
+    <!-- Works (Hardcoded for stability) -->
+    <section id="works" class="py-32 bg-[#080808]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 fade-up">
+                <span class="text-gold-primary text-xs font-bold tracking-[0.3em] uppercase mb-4 block">Selected Works</span>
+                <h3 class="font-serif-tc text-4xl text-white font-bold">解碼實績．工藝展示</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Case 1 -->
+                <div class="glass-panel p-5 rounded-sm fade-up group">
+                    <div class="relative aspect-video mb-4 overflow-hidden">
+                        <img src="img/1655.jpg" alt="BMW" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                        <div class="absolute bottom-3 right-3 px-3 py-1 bg-black/90 backdrop-blur-md border border-white/5 text-[7px] text-gray-500 uppercase">Privacy Shield</div>
+                        <div class="absolute top-2 left-2 bg-black/80 px-2 py-1 text-[10px] text-gold-primary">SUCCESS</div>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">[台中] BMW 鑰匙全丟現場再生</h4>
+                    <p class="text-gray-500 text-xs mb-4">專業 OBD 數據解碼，免拖吊現場直接發動。極致核心工藝，確保晶片匹配穩定可靠。</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-white/5">
+                        <span class="text-[10px] text-gray-600 font-cinzel">2026.02.23</span>
+                        <a href="https://line.me/ti/p/chingweida" class="text-[10px] text-gold-primary uppercase">Consultation →</a>
+                    </div>
+                </div>
+                <!-- Case 2 -->
+                <div class="glass-panel p-5 rounded-sm fade-up group">
+                    <div class="relative aspect-video mb-4 overflow-hidden">
+                        <img src="img/1711.JPG" alt="Benz" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                        <div class="absolute bottom-3 right-3 px-3 py-1 bg-black/90 backdrop-blur-md border border-white/5 text-[7px] text-gray-500 uppercase">Privacy Shield</div>
+                        <div class="absolute top-2 left-2 bg-black/80 px-2 py-1 text-[10px] text-gold-primary">SUCCESS</div>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">[彰化] Benz 晶片鑰匙備份</h4>
+                    <p class="text-gray-500 text-xs mb-4">原廠級設備匹配，智能感應鑰匙精準再生。極致核心 (ProCore) 為您的愛車保留第二份安全。</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-white/5">
+                        <span class="text-[10px] text-gray-600 font-cinzel">2026.02.22</span>
+                        <a href="https://line.me/ti/p/chingweida" class="text-[10px] text-gold-primary uppercase">Consultation →</a>
+                    </div>
+                </div>
+                <!-- Case 3 -->
+                <div class="glass-panel p-5 rounded-sm fade-up group">
+                    <div class="relative aspect-video mb-4 overflow-hidden">
+                        <img src="img/1726.JPG" alt="Toyota" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                        <div class="absolute bottom-3 right-3 px-3 py-1 bg-black/90 backdrop-blur-md border border-white/5 text-[7px] text-gray-500 uppercase">Privacy Shield</div>
+                        <div class="absolute top-2 left-2 bg-black/80 px-2 py-1 text-[10px] text-gold-primary">SUCCESS</div>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">[南投] Toyota 智能鑰匙全丟救援</h4>
+                    <p class="text-gray-500 text-xs mb-4">中彰投全區緊急支援，不分車款晶片數據重構。極致核心，隨時守護您的駕駛權限。</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-white/5">
+                        <span class="text-[10px] text-gray-600 font-cinzel">2026.02.21</span>
+                        <a href="https://line.me/ti/p/chingweida" class="text-[10px] text-gold-primary uppercase">Consultation →</a>
+                    </div>
+                </div>
+                <!-- Case 4 -->
+                <div class="glass-panel p-5 rounded-sm fade-up group">
+                    <div class="relative aspect-video mb-4 overflow-hidden">
+                        <img src="img/20240224_Taichung_Lexus.jpg" alt="Lexus" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                        <div class="absolute bottom-3 right-3 px-3 py-1 bg-black/90 backdrop-blur-md border border-white/5 text-[7px] text-gray-500 uppercase">Privacy Shield</div>
+                        <div class="absolute top-2 left-2 bg-black/80 px-2 py-1 text-[10px] text-gold-primary">SUCCESS</div>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">[台中] Lexus 智能鑰匙全丟</h4>
+                    <p class="text-gray-500 text-xs mb-4">現場數據重寫，無損開啟車門。極致核心確保每一把鑰匙都如同原廠般流暢。</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-white/5">
+                        <span class="text-[10px] text-gray-600 font-cinzel">2026.02.24</span>
+                        <a href="https://line.me/ti/p/chingweida" class="text-[10px] text-gold-primary uppercase">Consultation →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- FAQ (Hardcoded for stability) -->
+    <section id="faq" class="py-32 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-up"><h3 class="font-serif-tc text-3xl text-white font-bold mb-4">常見問題</h3><div class="divider-gold max-w-[100px] mx-auto"></div></div>
+            <div class="space-y-6 fade-up">
+                <div class="glass-panel p-8 rounded-lg group hover:border-gold-primary/50 transition duration-300">
+                    <h4 class="text-white font-bold text-lg mb-2 flex items-center gap-3"><span class="text-gold-primary">Q1.</span> 服務範圍包含哪些縣市？</h4>
+                    <p class="text-gray-400 pl-7">我們以 **中彰投 (台中、彰化、南投)** 為服務核心，支援竹苗雲嘉跨區。</p>
+                </div>
+                <div class="glass-panel p-8 rounded-lg group hover:border-gold-primary/50 transition duration-300">
+                    <h4 class="text-white font-bold text-lg mb-2 flex items-center gap-3"><span class="text-gold-primary">Q2.</span> 全丟救援需要多久時間？</h4>
+                    <p class="text-gray-400 pl-7">一般約 30-60 分鐘完成。高階歐系車款視數據複雜度而定。</p>
+                </div>
+                <div class="glass-panel p-8 rounded-lg group hover:border-gold-primary/50 transition duration-300">
+                    <h4 class="text-white font-bold text-lg mb-2 flex items-center gap-3"><span class="text-gold-primary">Q3.</span> 現場配製需要提供資料嗎？</h4>
+                    <p class="text-gray-400 pl-7">請備妥 **行照** 與 **身分證件** 以供核對，確保合法性。</p>
+                </div>
+                <div class="glass-panel p-8 rounded-lg group hover:border-gold-primary/50 transition duration-300">
+                    <h4 class="text-white font-bold text-lg mb-2 flex items-center gap-3"><span class="text-gold-primary">Q4.</span> 備份鑰匙跟原廠有差別嗎？</h4>
+                    <p class="text-gray-400 pl-7">極致核心採用高品質晶片，功能完整對標原廠，更提供客製化外殼。</p>
+                </div>
+                <div class="glass-panel p-8 rounded-lg group hover:border-gold-primary/50 transition duration-300">
+                    <h4 class="text-white font-bold text-lg mb-2 flex items-center gap-3"><span class="text-gold-primary">Q5.</span> 如果車門鎖死能處理嗎？</h4>
+                    <p class="text-gray-400 pl-7">是的。優先採取專業無損開鎖，必要時採取氣囊輔助，保證不損壞結構。</p>
+                </div>
+                <div class="glass-panel p-8 rounded-lg group hover:border-gold-primary/50 transition duration-300">
+                    <h4 class="text-white font-bold text-lg mb-2 flex items-center gap-3"><span class="text-gold-primary">Q6.</span> 配製後的鑰匙有保固嗎？</h4>
+                    <p class="text-gray-400 pl-7">有的。我們對產品提供 **實質保固與售後支援**，非人為異常負責到底。</p>
+                </div>
+            </div>
+            <div class="mt-20 text-center fade-up">
+                <a href="tel:0909277670" class="btn-premium inline-block px-12 py-5 rounded text-lg font-bold tracking-widest text-white uppercase">聯絡職人 (0909-277-670)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 text-center border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-left">
+            <div><h4 class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</h4><p class="text-gray-600 text-xs">Automotive Key Specialist</p></div>
+            <div class="text-gray-600 text-xs">© 2026 PROCORE AUTO KEY. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.style.background = "rgba(5,5,5,0.95)"; else nav.style.background = "transparent";
+        });
+    </script>
 </body>
 </html>
