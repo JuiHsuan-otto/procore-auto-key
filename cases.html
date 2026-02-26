@@ -3,100 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技術救援實績 | 極致核心 ProCore | 全台 24H 汽車鑰匙救援紀錄</title>
+    <title>極致核心 | 全台汽車晶片鑰匙救援實績：台中、彰化、南投第一品牌</title>
+    <meta name="description" content="24小時汽車鑰匙遺失免擔心！專攻賓士、BMW等進口車晶片匹配，現場完工免拖吊。在地服務據點遍及台中、彰化、南投，多年實戰經驗的職人團隊。">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.7); --gold: #D4AF37; }
+        :root { --bg-deep: #020202; --gold: #D4AF37; --gold-soft: rgba(212, 175, 55, 0.2); }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
-        .glass-card { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); transition: all 0.5s ease; }
-        .glass-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .case-img { width: 100%; height: 240px; object-fit: cover; border-radius: 4px; }
+        .text-gold-gradient { 
+            background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* 導航列 */
+        nav { background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* 案例卡片 */
+        .case-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--gold-soft);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .case-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(212,175,55,0.2);
+        }
+        .case-card img {
+            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+            filter: saturate(1.1) contrast(1.05);
+        }
+        .case-card:hover img { transform: scale(1.1); }
+
+        /* 區域標籤 */
+        .area-tag {
+            border: 1px solid var(--gold-soft);
+            padding: 0.5rem 1.5rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .area-tag:hover, .area-tag.active {
+            background: var(--gold);
+            color: black;
+            border-color: var(--gold);
+        }
     </style>
 </head>
 <body class="antialiased">
-    <nav class="py-8 border-b border-white/5">
+    <!-- 導航列 -->
+    <nav class="fixed top-0 w-full z-50 py-4">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="/" class="font-cinzel text-2xl text-white font-bold tracking-widest">PROCORE</a>
-            <div class="space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
-                <a href="/blog" class="text-gray-400 hover:text-white transition">技術專欄</a>
-                <a href="/cases" class="text-gold border-b border-gold pb-1">實戰案例</a>
-                <a href="/" class="text-gray-400 hover:text-white transition">返回首頁</a>
+            <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</a>
+            <div class="hidden md:flex space-x-8 text-[11px] font-bold tracking-widest uppercase">
+                <a href="/cases" class="text-gold">實戰案例</a>
+                <a href="/blog" class="hover:text-gold transition">技術專欄</a>
+                <a href="tel:0909277670" class="bg-gold/10 text-gold px-4 py-2 rounded border border-gold/20">24H 救援專線</a>
             </div>
+            <a href="tel:0909277670" class="md:hidden text-gold text-[10px] font-bold border border-gold/40 px-3 py-1 rounded-sm">CALL NOW</a>
         </div>
     </nav>
 
-    <header class="py-20 text-center">
-        <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block">Field Operations</span>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 font-cinzel">Case Showcase</h2>
-        <p class="text-gray-500 font-light max-w-2xl mx-auto">直擊全台救援現場。每一台車的成功發動，都是極致核心對技術的承諾。</p>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-6 pb-32">
-        <div id="case-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- 由 JS 生成 -->
+    <!-- 頁面標題 -->
+    <section class="pt-32 pb-20 bg-gradient-to-b from-zinc-900 to-black">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold font-cinzel mb-6 tracking-wider">實戰案例紀錄</h1>
+            <p class="text-gray-400 text-sm md:text-base">各地區汽車鑰匙救援實績，專業解碼、免拖吊現場完工。</p>
         </div>
-    </main>
+    </section>
 
-    <script>
-        const caseData = [
-            {
-                "region": "台北新店",
-                "car": "Mercedes-Benz FBS3",
-                "title": "新店賓士智慧鑰匙全丟：數據重構實錄",
-                "img": "img/benz_xindian_fbs3.jpg",
-                "link": "/article-benz-fbs3-xindian-rescue"
-            },
-            {
-                "region": "台中中科",
-                "car": "Nissan Kicks",
-                "title": "中科 Kicks 智能鑰匙全丟：極速現場匹配",
-                "img": "img/nissan_kicks_zhongke_real.jpg",
-                "link": "/article-nissan-kicks-zhongke-rescue"
-            },
-            {
-                "region": "新竹竹北",
-                "car": "BMW G-Series",
-                "title": "BMW FEM/BDC 核心解碼技術展示",
-                "img": "img/bmw_fem_board.jpg",
-                "link": "/article-bmw-fem-advanced-tech"
-            },
-            {
-                "region": "台中霧峰",
-                "car": "Mazda CX-5",
-                "title": "霧峰 Mazda CX-5 智慧鑰匙旗艦級救援",
-                "img": "img/mazda_cx5_wufeng_real.jpg",
-                "link": "/article-mazda-wufeng-rescue"
-            },
-            {
-                "region": "彰化線西",
-                "car": "VW Pointer",
-                "title": "線西小獵犬鑰匙全丟：引擎電腦解碼",
-                "img": "img/vw_pointer_rear.jpg",
-                "link": "/article-vw-pointer-xianxi-rescue"
-            },
-            {
-                "region": "高雄楠梓",
-                "car": "VW T5",
-                "title": "高雄福斯 T5 晶片鑰匙全丟救援",
-                "img": "img/vw_t5_kaohsiung.jpg",
-                "link": "/article-vw-t5-kaohsiung-rescue"
-            }
-        ];
-
-        document.getElementById('case-list').innerHTML = caseData.map(item => `
-            <div class="glass-card p-6 rounded-lg group">
-                <div class="overflow-hidden mb-6 rounded">
-                    <img src="${item.img}" class="case-img group-hover:scale-110 transition duration-700">
-                </div>
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-[10px] text-gold border border-gold/30 px-2 py-1 tracking-widest">${item.region}</span>
-                    <span class="text-[10px] text-gray-500 font-cinzel">${item.car}</span>
-                </div>
-                <h3 class="text-white font-bold text-lg mb-6 leading-snug">${item.title}</h3>
-                <a href="${item.link}" class="text-[10px] text-white border-b border-white/20 pb-1 hover:border-gold transition tracking-widest uppercase">View Case Details →</a>
+    <!-- 區域選擇 -->
+    <section class="py-12 bg-black">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="area-tag active">全部案例</button>
+                <button class="area-tag">台中市</button>
+                <button class="area-tag">彰化縣</button>
+                <button class="area-tag">南投縣</button>
+                <button class="area-tag">其他地區</button>
             </div>
-        `).join('');
-    </script>
+        </div>
+    </section>
+
+    <!-- 案例展示 -->
+    <section class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- 台中案例 -->
+            <div class="mb-20">
+                <h2 class="text-2xl font-bold mb-8 tracking-wider">
+                    <span class="text-gold font-cinzel">台中市</span> 救援實績
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Kicks 中科案例 -->
+                    <article class="case-card rounded-sm">
+                        <a href="/article-nissan-kicks-zhongke-rescue" class="block">
+                            <div class="relative aspect-[4/3] overflow-hidden">
+                                <img src="img/nissan_kicks_zhongke_real.jpg" alt="中科日產 Kicks 晶片鑰匙全丟救援" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-6">
+                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">中科園區</span>
+                                    <h3 class="text-white text-lg font-bold">Nissan Kicks 全丟救援</h3>
+                                    <p class="text-gray-400 text-xs mt-2">數據重構現場完工，免拖吊立即發動。</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    <!-- BMW 中科案例 -->
+                    <article class="case-card rounded-sm">
+                        <a href="/article-bmw-fem-taichung" class="block">
+                            <div class="relative aspect-[4/3] overflow-hidden">
+                                <img src="img/bmw_front_keys.jpg" alt="台中 BMW G系列 FEM 晶片鑰匙匹配" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-6">
+                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">台中市區</span>
+                                    <h3 class="text-white text-lg font-bold">BMW G20 FEM 匹配</h3>
+                                    <p class="text-gray-400 text-xs mt-2">原廠級設備解碼，專業底層運算。</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            </div>
+
+            <!-- 彰化案例 -->
+            <div class="mb-20">
+                <h2 class="text-2xl font-bold mb-8 tracking-wider">
+                    <span class="text-gold font-cinzel">彰化縣</span> 救援實績
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 賓士和美案例 -->
+                    <article class="case-card rounded-sm">
+                        <a href="/article-benz-fbs3-homei" class="block">
+                            <div class="relative aspect-[4/3] overflow-hidden">
+                                <img src="img/benz_homei_keys.jpg" alt="彰化和美賓士 FBS3 系統救援" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-6">
+                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">和美鎮</span>
+                                    <h3 class="text-white text-lg font-bold">賓士 W205 救援</h3>
+                                    <p class="text-gray-400 text-xs mt-2">FBS3 系統全丟，現場重啟完成。</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            </div>
+
+            <!-- 南投案例 -->
+            <div class="mb-20">
+                <h2 class="text-2xl font-bold mb-8 tracking-wider">
+                    <span class="text-gold font-cinzel">南投縣</span> 救援實績
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Mazda 霧峰案例 -->
+                    <article class="case-card rounded-sm">
+                        <a href="/article-mazda-wufeng-rescue" class="block">
+                            <div class="relative aspect-[4/3] overflow-hidden">
+                                <img src="img/mazda_cx5_wufeng_real.jpg" alt="南投霧峰 Mazda CX-5 智能鑰匙配製" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-6">
+                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">霧峰區</span>
+                                    <h3 class="text-white text-lg font-bold">Mazda CX-5 救援</h3>
+                                    <p class="text-gray-400 text-xs mt-2">感應鑰匙失靈，診斷後完美復原。</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    <!-- Toyota 草屯案例 -->
+                    <article class="case-card rounded-sm">
+                        <a href="/article-toyota-rav4-nantou-rescue" class="block">
+                            <div class="relative aspect-[4/3] overflow-hidden">
+                                <img src="img/toyota_rav4_caotun.jpg" alt="南投草屯 Toyota RAV4 晶片複製" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-6">
+                                    <span class="text-[10px] text-gold tracking-widest uppercase font-bold mb-2 block">草屯鎮</span>
+                                    <h3 class="text-white text-lg font-bold">Toyota RAV4 備份</h3>
+                                    <p class="text-gray-400 text-xs mt-2">智能鑰匙同步複製，防盜系統完整。</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯繫資訊 -->
+    <section class="py-24 bg-zinc-900/40 border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold font-cinzel mb-12 uppercase tracking-[0.4em] text-gold-gradient">Contact</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <a href="https://line.me/ti/p/chingweida" class="p-8 border border-gold/20 rounded-sm hover:border-gold/40 transition group">
+                    <span class="text-[8px] tracking-[0.5em] text-gold/60 uppercase block mb-4">Official Line ID</span>
+                    <span class="text-lg font-bold tracking-widest text-white group-hover:text-gold">chingweida</span>
+                </a>
+                <a href="tel:0909277670" class="p-8 border border-gold/20 rounded-sm hover:border-gold/40 transition group">
+                    <span class="text-[8px] tracking-[0.5em] text-gold/60 uppercase block mb-4">24H Hotline</span>
+                    <span class="text-lg font-bold tracking-widest text-white group-hover:text-gold">0909-277-670</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-white/5 text-center text-[9px] text-gray-700 tracking-[0.8em] uppercase">
+        © 2026 PROCORE AUTO KEY.
+    </footer>
 </body>
 </html>
