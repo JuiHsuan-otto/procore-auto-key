@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>職人技術專欄 | 極致核心 ProCore | 汽車晶片與解碼專家觀點</title>
+    <meta name="description" content="極致核心專業技術部落格。深入探討汽車晶片鑰匙遺失處理、Keyless 系統維修、高階進口車解碼工藝。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --glass: rgba(20, 20, 20, 0.6);
+            --gold-primary: #D4AF37;
+            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+        }
+        body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
+        .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; }
+        .glass-panel { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+    </style>
+</head>
+<body class="antialiased">
+    <nav class="py-8 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="/" class="group">
+                <h1 class="font-cinzel text-2xl text-white font-bold tracking-widest group-hover:text-gold-lux transition">PROCORE</h1>
+                <span class="text-[10px] text-gray-400 tracking-[0.4em] uppercase block">Technical Journal</span>
+            </a>
+            <a href="/" class="text-xs font-bold tracking-widest text-gray-400 hover:text-white transition uppercase">← Back to Services</a>
+        </div>
+    </nav>
+
+    <header class="py-20 text-center">
+        <div class="max-w-3xl mx-auto px-6">
+            <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-4 block text-center">Knowledge Base</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">職人觀點．技術專欄</h2>
+            <p class="text-gray-500 font-light leading-loose text-sm md:text-base">
+                我們記錄每一次解碼挑戰，將技術轉化為您重獲駕駛權限的保障。
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pb-32">
+        <div id="blog-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <!-- 由 JS 動態生成 -->
+        </div>
+    </main>
+
+    <footer class="py-12 border-t border-white/5 text-center">
+        <p class="text-gray-600 text-[10px] tracking-widest uppercase">© 2026 PROCORE AUTO KEY.</p>
+    </footer>
+
+    <script>
+        const blogData = [
+            {
+                "date": "2026.02.26",
+                "category": "霧峰救援",
+                "title": "台中霧峰 Mazda CX-5 旗艦展示：完美詮釋極致工藝",
+                "summary": "現場實拍：完美呈現全新 CX-5 的智慧鑰匙系統突破，職人等級的精準匹配，體現極致工藝精神。",
+                "link": "/article-mazda-wufeng-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "中科救援",
+                "title": "台中中科 Nissan Kicks 全丟救援：極速配製實錄",
+                "summary": "中科園區現場解碼，展現極致核心對 Nissan 智慧防盜系統的完整掌握，30分鐘內完成配製。",
+                "link": "/article-nissan-kicks-zhongke-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "新店救援",
+                "title": "台北新店賓士 FBS3 智慧鑰匙全丟：EIS 模組數據重構實錄",
+                "summary": "直擊新店現場：針對 Mercedes-Benz 經典 FBS3 系統進行底層數據採集，1小時內恢復雙鑰匙發動權限。",
+                "link": "/article-benz-fbs3-xindian-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "底層工藝",
+                "title": "BMW FEM/BDC 底層解碼工藝：從電路板到數據重構的全紀錄",
+                "summary": "深入防盜模組核心，直擊 EEPROM 數據讀寫與晶片級解碼，展現極致核心在歐系車電子系統的深層功底。",
+                "link": "/article-bmw-fem-advanced-tech"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "線西救援",
+                "title": "彰化線西 VW Pointer 小獵犬鑰匙全丟：引擎電腦底層解碼發動",
+                "summary": "面對經典車款的挑戰，展示如何拆解引擎電腦並讀取晶片數據，在線西現場重構 Pointer 防盜授權。",
+                "link": "/article-vw-pointer-xianxi-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "高雄救援",
+                "title": "高雄福斯 VW T5 晶片鑰匙全丟救援實錄",
+                "summary": "為商旅車主爭分奪秒，高雄現場完成福斯 T5 數據重構與鑰匙匹配，免拖吊、極速復工。",
+                "link": "/article-vw-t5-kaohsiung-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "台中新增",
+                "title": "2020 VW Golf 智能鑰匙新增實錄：台中大肚現場匹配",
+                "summary": "為 2020 年式福斯 Golf 進行 MQB 系統智能鑰匙新增，現場 30 分鐘完工。",
+                "link": "/article-vw-golf-dadu-service"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "彰化救援",
+                "title": "彰化田中 Honda Fit 智能鑰匙全丟救援實錄",
+                "summary": "記錄在彰化田中現場完成的 Honda Fit 數據重構，實現免拖吊、當場發動的極速救援。",
+                "link": "/article-honda-fit-tanaka-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "雲林救援",
+                "title": "雲林 Skoda Kodiaq 晶片鑰匙遺失：MQB 平台解碼",
+                "summary": "斯柯達 MQB 平台高難度解碼，極致核心職人運用原廠級設備在雲林現場完工。",
+                "link": "/article-skoda-kodiaq-yunlin-rescue"
+            },
+            {
+                "date": "2026.02.26",
+                "category": "技術服務",
+                "title": "台中 Lexus 晶片鑰匙遺失配製：職人全天候支援",
+                "summary": "台中地區 Lexus 車主首選，針對 ES、RX、NX 全系提供原廠級現場匹配服務。",
+                "link": "/article-lexus-taichung-service"
+            }
+        ];
+
+        document.getElementById('blog-list').innerHTML = blogData.map(item => `
+            <div class="glass-panel p-10 rounded-sm hover:border-gold-primary/40 transition duration-500 group flex flex-col h-full">
+                <div class="flex justify-between items-start mb-8">
+                    <span class="text-[10px] text-gold-primary border border-gold-primary/30 px-3 py-1 tracking-widest uppercase">${item.category}</span>
+                    <span class="text-[10px] text-gray-600 font-cinzel">${item.date}</span>
+                </div>
+                <h3 class="text-white font-bold text-xl mb-6 leading-snug group-hover:text-gold-lux transition duration-300">${item.title}</h3>
+                <p class="text-gray-500 text-sm leading-loose mb-10 flex-grow">${item.summary}</p>
+                <a href="${item.link}" class="text-[10px] text-white border-b border-white/20 pb-2 self-start hover:border-gold-primary hover:text-gold-primary transition duration-300 tracking-[0.2em] uppercase">Read Article →</a>
+            </div>
+        `).join('');
+    </script>
+</body>
+</html>

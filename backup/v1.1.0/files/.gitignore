@@ -1,0 +1,26 @@
+# OpenClaw Project Security - Ignore List
+# 核心敏感資訊
+.env
+api_keys_config.json
+*.pem
+*.key
+secrets/
+
+# 開發臨時腳本 (可能包含測試金鑰)
+quick_add.py
+test_*.py
+check_*.py
+*test_key*
+*temp*
+
+# 系統日誌與追蹤
+logs/
+*.log
+memory/reports/
+node_modules/
+.DS_Store
+
+# 瀏覽器會話數據
+.openclaw/browser_data/
+localStorage/
+cookies.json

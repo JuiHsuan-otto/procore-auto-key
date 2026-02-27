@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技術救援實績 | 極致核心 ProCore | 全台 24H 汽車鑰匙救援紀錄</title>
+    <title>解碼實績 | 極致核心 ProCore | 全台 24H 汽車鑰匙救援紀錄</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.7); --gold: #D4AF37; }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
         .glass-card { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); transition: all 0.5s ease; }
-        .glass-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .case-img { width: 100%; height: 240px; object-fit: cover; border-radius: 4px; }
+        .glass-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
+        .case-img { width: 100%; height: 240px; object-fit: cover; border-radius: 2px; }
     </style>
 </head>
 <body class="antialiased">
@@ -19,17 +19,17 @@
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="/" class="font-cinzel text-2xl text-white font-bold tracking-widest">PROCORE</a>
             <div class="space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
-                <a href="/blog" class="text-gray-400 hover:text-white transition">技術專欄</a>
-                <a href="/cases" class="text-gold border-b border-gold pb-1">實戰案例</a>
+                <a href="/cases" class="text-gold border-b border-gold pb-1">解碼實績 (Works)</a>
+                <a href="/blog" class="text-gray-400 hover:text-white transition">技術專欄 (Blog)</a>
                 <a href="/" class="text-gray-400 hover:text-white transition">返回首頁</a>
             </div>
         </div>
     </nav>
 
     <header class="py-20 text-center">
-        <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block">Field Operations</span>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 font-cinzel">Case Showcase</h2>
-        <p class="text-gray-500 font-light max-w-2xl mx-auto">直擊全台救援現場。每一台車的成功發動，都是極致核心對技術的承諾。</p>
+        <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block">Field Mission Logs</span>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 font-cinzel">實績展示</h2>
+        <p class="text-gray-500 font-light max-w-2xl mx-auto text-sm md:text-base">直擊全台救援現場。每一場成功的解碼，都是我們對「極致」的具體實踐。</p>
     </header>
 
     <main class="max-w-7xl mx-auto px-6 pb-32">
@@ -41,11 +41,11 @@
     <script>
         const caseData = [
             {
-                "region": "台北新店",
-                "car": "Mercedes-Benz FBS3",
-                "title": "新店賓士智慧鑰匙全丟：數據重構實錄",
-                "img": "img/benz_xindian_fbs3.jpg",
-                "link": "/article-benz-fbs3-xindian-rescue"
+                "region": "台中霧峰",
+                "car": "Mazda CX-5",
+                "title": "霧峰 Mazda CX-5 智慧鑰匙旗艦級救援",
+                "img": "img/mazda_cx5_wufeng_real.jpg",
+                "link": "/article-mazda-wufeng-rescue"
             },
             {
                 "region": "台中中科",
@@ -55,18 +55,11 @@
                 "link": "/article-nissan-kicks-zhongke-rescue"
             },
             {
-                "region": "新竹竹北",
-                "car": "BMW G-Series",
-                "title": "BMW FEM/BDC 核心解碼技術展示",
-                "img": "img/bmw_fem_board.jpg",
-                "link": "/article-bmw-fem-advanced-tech"
-            },
-            {
-                "region": "台中霧峰",
-                "car": "Mazda CX-5",
-                "title": "霧峰 Mazda CX-5 智慧鑰匙旗艦級救援",
-                "img": "img/mazda_cx5_wufeng_real.jpg",
-                "link": "/article-mazda-wufeng-rescue"
+                "region": "台北新店",
+                "car": "Mercedes-Benz",
+                "title": "新店賓士 FBS3 智慧鑰匙全丟：數據重構實錄",
+                "img": "img/benz_xindian_fbs3.jpg",
+                "link": "/article-benz-fbs3-xindian-rescue"
             },
             {
                 "region": "彰化線西",
@@ -81,11 +74,32 @@
                 "title": "高雄福斯 T5 晶片鑰匙全丟救援",
                 "img": "img/vw_t5_kaohsiung.jpg",
                 "link": "/article-vw-t5-kaohsiung-rescue"
+            },
+            {
+                "region": "台中大肚",
+                "car": "VW Golf",
+                "title": "2020 Golf 智能鑰匙新增：現場匹配實錄",
+                "img": "img/vw_golf_dadu.jpg",
+                "link": "/article-vw-golf-dadu-service"
+            },
+            {
+                "region": "彰化田中",
+                "car": "Honda Fit",
+                "title": "田中 Honda Fit 智慧鑰匙全丟救援",
+                "img": "img/honda_fit_tanaka.jpg",
+                "link": "/article-honda-fit-tanaka-rescue"
+            },
+            {
+                "region": "雲林地區",
+                "car": "Skoda Kodiaq",
+                "title": "雲林 Skoda 晶片鑰匙遺失：MQB 平台解碼",
+                "img": "img/skoda_kodiaq_yunlin.jpg",
+                "link": "/article-skoda-kodiaq-yunlin-rescue"
             }
         ];
 
         document.getElementById('case-list').innerHTML = caseData.map(item => `
-            <div class="glass-card p-6 rounded-lg group">
+            <div class="glass-card p-6 rounded group">
                 <div class="overflow-hidden mb-6 rounded">
                     <img src="${item.img}" class="case-img group-hover:scale-110 transition duration-700">
                 </div>
