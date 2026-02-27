@@ -8,39 +8,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-deep: #050505;
-            --glass: rgba(20, 20, 20, 0.6);
-            --border: rgba(255, 255, 255, 0.08);
-            --gold-primary: #D4AF37;
-            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-        }
+        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.6); --border: rgba(255, 255, 255, 0.08); --gold-primary: #D4AF37; --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 80%); }
         .font-cinzel { font-family: 'Cinzel', serif; }
         .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 6s linear infinite; }
         @keyframes shine { to { background-position: 200% center; } }
-        
-        /* 導航精簡版 */
-        nav { background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .nav-scrolled { border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
-
-        /* 實績卡片：職人細膩比例 */
         .work-card { position: relative; aspect-ratio: 1/1; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
         .work-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
         .work-card:hover { border-color: var(--gold-primary); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
         .work-card:hover img { transform: scale(1.08); }
         .work-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); }
-
-        /* 按鈕精細版 */
         .btn-premium { border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 0.6rem 1.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; background: rgba(255,255,255,0.02); }
         .btn-premium:hover { background: var(--gold-primary); color: black; box-shadow: 0 0 20px rgba(212,175,55,0.3); }
-        .btn-emergency { background: var(--gold-gradient); color: #000; font-weight: 800; padding: 1rem 2.5rem; border-radius: 2px; transition: all 0.3s; }
+        .btn-emergency { background: var(--gold-gradient); color: #000; font-weight: 800; padding: 1rem 2rem; border-radius: 2px; transition: all 0.3s; }
         .btn-emergency:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(212,175,55,0.4); }
     </style>
 </head>
 <body class="antialiased">
-
-    <nav id="navbar" class="fixed w-full z-50 py-4 transition-all duration-300">
+    <nav id="navbar" class="sticky top-0 w-full z-50 py-4 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="/" class="group">
                 <h1 class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</h1>
@@ -51,72 +38,74 @@
                 <a href="/blog" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">技術專欄 / Blog</a>
                 <a href="tel:0909277670" class="btn-premium">24H Emergency</a>
             </div>
+            <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
+                <a href="/cases" class="text-white">WORKS</a>
+                <a href="/blog" class="text-white">BLOG</a>
+                <a href="tel:0909277670" class="text-gold">CALL</a>
+            </div>
         </div>
     </nav>
 
-    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+    <header class="relative h-[80vh] flex items-center justify-center overflow-hidden">
         <video class="absolute inset-0 w-full h-full object-cover opacity-20" autoplay loop muted playsinline>
             <source src="vid/bmw_tech.mp4" type="video/mp4">
         </video>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         <div class="relative z-10 text-center px-4 max-w-5xl">
             <span class="inline-block py-1 px-3 border border-gold-primary/30 text-gold-primary text-[9px] tracking-[0.4em] uppercase mb-8">Automotive Security Specialist</span>
-            <h1 class="font-serif-tc text-5xl md:text-8xl font-bold text-white leading-tight mb-8">
+            <h1 class="font-serif-tc text-4xl md:text-8xl font-bold text-white leading-tight mb-8">
                 全台．跨區．遠征<br>
-                <span class="text-gold-lux italic text-2xl md:text-5xl">汽車晶片鑰匙現場救援</span>
+                <span class="text-gold-lux italic text-xl md:text-5xl">汽車晶片鑰匙現場救援</span>
             </h1>
-            <div class="flex flex-col md:flex-row justify-center gap-6 mt-12">
-                <a href="tel:0909277670" class="btn-emergency text-sm tracking-widest">立即啟動救援</a>
-                <a href="https://line.me/ti/p/chingweida" target="_blank" class="border border-white/20 px-10 py-4 text-xs tracking-widest text-white uppercase hover:bg-white/5 transition">LINE 預約諮詢</a>
+            <div class="flex flex-col md:flex-row justify-center gap-6 mt-8">
+                <a href="tel:0909277670" class="btn-emergency text-xs tracking-widest">立即啟動救援</a>
+                <a href="https://line.me/ti/p/chingweida" target="_blank" class="border border-white/20 px-10 py-4 text-[10px] tracking-widest text-white uppercase hover:bg-white/5 transition">LINE 預約諮詢</a>
             </div>
         </div>
     </header>
 
-    <section id="recent-works" class="py-32 bg-black">
+    <section id="recent-works" class="py-24 bg-black">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-end mb-16">
+            <div class="flex justify-between items-end mb-12">
                 <div>
-                    <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-4 block">Recent Missions</span>
-                    <h2 class="text-3xl font-bold font-serif-tc text-white">最新解碼實績</h2>
+                    <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Recent Missions</span>
+                    <h2 class="text-2xl font-bold font-serif-tc text-white">最新解碼實績</h2>
                 </div>
                 <a href="/cases" class="text-[10px] text-gray-500 hover:text-white border-b border-gray-800 pb-2 tracking-widest transition">VIEW ALL →</a>
             </div>
-            
             <div id="home-case-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- 由 JavaScript 從 cases.html 的數據自動載入 -->
+                <!-- 由 JS 聯動 -->
             </div>
         </div>
     </section>
 
-    <!-- FAQ 與 聯絡區塊 (保持精簡版比例) -->
-    <section class="py-24 bg-zinc-900/30">
+    <section class="py-20 bg-zinc-900/30">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-2xl font-bold font-cinzel mb-12 uppercase tracking-[0.4em] text-gold-lux">Contact</h2>
+            <h2 class="text-xl font-bold font-cinzel mb-10 uppercase tracking-[0.4em] text-gold-lux">Contact</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <a href="https://line.me/ti/p/chingweida" class="p-8 border border-white/5 hover:border-gold-primary/30 transition group">
-                    <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-4">Official Line ID</span>
-                    <span class="text-lg font-bold text-white group-hover:text-gold-primary transition">chingweida</span>
+                <a href="https://line.me/ti/p/chingweida" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
+                    <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">Official Line ID</span>
+                    <span class="text-base font-bold text-white group-hover:text-gold-primary transition">chingweida</span>
                 </a>
-                <a href="tel:0909277670" class="p-8 border border-white/5 hover:border-gold-primary/30 transition group">
-                    <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-4">24H Hotline</span>
-                    <span class="text-lg font-bold text-white group-hover:text-gold-primary transition">0909-277-670</span>
+                <a href="tel:0909277670" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
+                    <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">24H Hotline</span>
+                    <span class="text-base font-bold text-white group-hover:text-gold-primary transition">0909-277-670</span>
                 </a>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center border-t border-white/5 text-[9px] text-gray-700 tracking-[0.5em] uppercase">
+    <footer class="py-10 text-center border-t border-white/5 text-[8px] text-gray-700 tracking-[0.5em] uppercase">
         © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
     </footer>
 
     <script>
-        // 模擬從 cases.html 共享的數據結構，未來可進一步抽離成 data.json
         const latestCases = [
             { "car": "MAZDA CX-5", "label": "霧峰旗艦救援", "img": "img/mazda_cx5_wufeng_real.jpg", "link": "/article-mazda-wufeng-rescue" },
             { "car": "NISSAN KICKS", "label": "中科極速匹配", "img": "img/nissan_kicks_zhongke_real.jpg", "link": "/article-nissan-kicks-zhongke-rescue" },
             { "car": "BENZ FBS3", "label": "新店全丟救援", "img": "img/benz_xindian_fbs3.jpg", "link": "/article-benz-fbs3-xindian-rescue" },
             { "car": "BMW FEM/BDC", "label": "底層工藝紀錄", "img": "img/bmw_fem_board.jpg", "link": "/article-bmw-fem-advanced-tech" }
         ];
-
         document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
             <div class="work-card group" onclick="location.href='${c.link}'">
                 <img src="${c.img}" alt="${c.car}">
@@ -127,11 +116,6 @@
                 </div>
             </div>
         `).join('');
-
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) nav.classList.add('nav-scrolled'); else nav.classList.remove('nav-scrolled');
-        });
     </script>
 </body>
 </html>

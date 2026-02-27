@@ -11,16 +11,21 @@
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
         .blog-card { background: var(--glass); backdrop-filter: blur(12px); border-left: 2px solid rgba(255,255,255,0.05); padding: 3rem; transition: all 0.3s; }
         .blog-card:hover { border-left: 2px solid var(--gold); background: rgba(30, 30, 30, 0.6); transform: translateX(5px); }
+        nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body class="antialiased">
-    <nav class="py-8 border-b border-white/5">
+    <nav class="sticky top-0 w-full z-50 py-4">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="/" class="font-cinzel text-2xl text-white font-bold tracking-widest">PROCORE</a>
-            <div class="space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
+            <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</a>
+            <div class="hidden md:flex space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
                 <a href="/cases" class="text-gray-400 hover:text-white transition">解碼實績 (Works)</a>
                 <a href="/blog" class="text-gold border-b border-gold pb-1">技術專欄 (Blog)</a>
-                <a href="/" class="text-gray-400 hover:text-white transition">返回首頁</a>
+            </div>
+            <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
+                <a href="/cases" class="text-white">WORKS</a>
+                <a href="/blog" class="text-gold">BLOG</a>
+                <a href="tel:0909277670" class="text-gold">CALL</a>
             </div>
         </div>
     </nav>
@@ -28,7 +33,7 @@
     <header class="py-24 text-center">
         <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block">Knowledge & Insight</span>
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 font-cinzel">深度技術專欄</h2>
-        <p class="text-gray-500 font-light max-w-2xl mx-auto text-sm md:text-base">解析防盜系統核心邏輯，洞察汽車電子市場趨勢，分享職人的底層技術觀察。</p>
+        <p class="text-gray-500 font-light max-w-2xl mx-auto px-6 text-sm md:text-base leading-loose">解析防盜系統核心邏輯，洞察汽車電子市場趨勢，分享職人的底層技術觀察。</p>
     </header>
 
     <main class="max-w-5xl mx-auto px-6 pb-32 space-y-12">
@@ -39,42 +44,12 @@
 
     <script>
         const blogData = [
-            {
-                "category": "底層工藝",
-                "title": "BMW FEM/BDC 底層解碼工藝：數據重構的全紀錄",
-                "summary": "深入剖析 BMW 前艙模組安全架構，展示如何透過 EEPROM 讀取與 128 位元運算，在不傷原車零件的情況下重構防盜授權。",
-                "link": "/article-bmw-fem-advanced-tech"
-            },
-            {
-                "category": "技術解析",
-                "title": "為什麼專業解碼需要高階診斷系統？",
-                "summary": "解析資深職人專用設備的重要性。從加密演算法到雙向驗證流程，帶您看見複製鑰匙背後的技術壁壘。",
-                "link": "/article-decoding-equipment"
-            },
-            {
-                "category": "市場趨勢",
-                "title": "2026 鑰匙全丟救援：原廠通路與現場配製成本比較",
-                "summary": "針對高階進口車主最關心的痛點：分析時間、拖吊費用與零件等待成本，提供最科學的決策指南。",
-                "link": "/article-lost-key-comparison"
-            },
-            {
-                "category": "維修指南",
-                "title": "Keyless 智慧鑰匙常見故障診斷與修復流程",
-                "summary": "感應不到鑰匙、按鍵失靈？專業技師從電路板微動開關到天線感應強度，提供完整的診斷策略。",
-                "link": "/article-keyless-troubleshooting"
-            },
-            {
-                "category": "技術服務",
-                "title": "Lexus 全系晶片鑰匙遺失配製：高階安全系統應對",
-                "summary": "台中地區 Lexus 車主首選技術，針對 ES、RX、NX 等新款防盜系統提供原廠級現場匹配服務。",
-                "link": "/article-lexus-taichung-service"
-            },
-            {
-                "category": "趨勢洞察",
-                "title": "美系車零關稅時代：Ford 與美系防盜技術挑戰",
-                "summary": "美系車款即將迎來高峰，深入解析 PATS 等防盜系統的解碼應對策略與未來發展方向。",
-                "link": "/article-us-car-market-tech"
-            }
+            { "category": "底層工藝", "title": "BMW FEM/BDC 底層解碼工藝：數據重構的全紀錄", "summary": "深入剖析 BMW 前艙模組安全架構，展示如何透過 EEPROM 讀取與 128 位元運算，在不傷原車零件的情況下重構防盜授權。", "link": "/article-bmw-fem-advanced-tech" },
+            { "category": "技術解析", "title": "為什麼專業解碼需要高階診斷系統？", "summary": "解析資深職人專用設備的重要性。從加密演算法到雙向驗證流程，帶您看見複製鑰匙背後的技術壁壘。", "link": "/article-decoding-equipment" },
+            { "category": "市場趨勢", "title": "2026 鑰匙全丟救援：原廠通路與現場配製成本比較", "summary": "針對高階進口車主最關心的痛點：分析時間、拖吊費用與零件等待成本，提供最科學的決策指南。", "link": "/article-lost-key-comparison" },
+            { "category": "維修指南", "title": "Keyless 智慧鑰匙常見故障診斷與修復流程", "summary": "感應不到鑰匙、按鍵失靈？專業技師從電路板微動開關到天線感應強度，提供完整的診斷策略。", "link": "/article-keyless-troubleshooting" },
+            { "category": "技術服務", "title": "Lexus 全系晶片鑰匙遺失配製：高階安全系統應對", "summary": "針對 ES、RX、NX 等新款防盜系統提供原廠級現場匹配服務。", "link": "/article-lexus-taichung-service" },
+            { "category": "趨勢洞察", "title": "美系車零關稅時代：Ford 與美系防盜技術挑戰", "summary": "美系車款即將迎來高峰，深入解析 PATS 等防盜系統的解碼應對策略與未來發展方向。", "link": "/article-us-car-market-tech" }
         ];
 
         document.getElementById('blog-list').innerHTML = blogData.map(item => `
