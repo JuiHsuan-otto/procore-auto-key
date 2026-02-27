@@ -216,10 +216,10 @@
         });
 
         const latestCases = [
+            { "car": "BENZ ML350", "label": "和美鑰匙新增", "img": "img/benz_ml350_hemei_real.jpg", "link": "/article-benz-ml350-hemei-service" },
             { "car": "TOYOTA ALTIS", "label": "清水全丟救援", "img": "img/toyota_altis_qingshui_real.jpg", "link": "/article-toyota-altis-qingshui-rescue" },
             { "car": "MAZDA CX-5", "label": "霧峰旗艦救援", "img": "img/mazda_cx5_wufeng_real.jpg", "link": "/article-mazda-wufeng-rescue" },
-            { "car": "NISSAN KICKS", "label": "中科極速匹配", "img": "img/nissan_kicks_zhongke_real.jpg", "link": "/article-nissan-kicks-zhongke-rescue" },
-            { "car": "BENZ FBS3", "label": "新店全丟救援", "img": "img/benz_xindian_fbs3.jpg", "link": "/article-benz-fbs3-xindian-rescue" }
+            { "car": "NISSAN KICKS", "label": "中科極速匹配", "img": "img/nissan_kicks_zhongke_real.jpg", "link": "/article-nissan-kicks-zhongke-rescue" }
         ];
         document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
             <div class="work-card group" onclick="location.href='${c.link}'">
