@@ -13,10 +13,15 @@
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 80%); }
         
         /* 浮動按鈕呼吸效果 */
-        @keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
-        .float-btn { position: fixed; bottom: 30px; right: 20px; z-index: 100; display: flex; flex-direction: column; gap: 15px; }
-        .btn-call-float { width: 60px; height: 60px; background: var(--gold-gradient); border-radius: 50%; display: flex; items-center; justify-content: center; animation: pulse-gold 2s infinite; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .btn-line-float { width: 60px; height: 60px; background: #06C755; border-radius: 50%; display: flex; items-center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); }
+        }
+        .float-btn { position: fixed; bottom: 30px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
+        .btn-call-float { width: 65px; height: 65px; background: var(--gold-gradient); border-radius: 50%; display: flex; items-center; justify-content: center; animation: pulse-gold 2s infinite ease-in-out; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); }
+        .btn-line-float { width: 65px; height: 65px; background: #06C755; border-radius: 50%; display: flex; items-center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
+        .btn-line-float:hover { transform: scale(1.1); }
         
         /* 數字滾動樣式 */
         .stat-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; text-align: center; border-radius: 4px; }
