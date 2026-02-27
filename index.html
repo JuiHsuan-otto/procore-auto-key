@@ -10,7 +10,16 @@
     <style>
         :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.6); --border: rgba(255, 255, 255, 0.08); --gold-primary: #D4AF37; --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
         body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 80%); }
-        .font-cinzel { font-family: 'Cinzel', serif; }
+        
+        /* 浮動按鈕呼吸效果 */
+        @keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
+        .float-btn { position: fixed; bottom: 30px; right: 20px; z-index: 100; display: flex; flex-direction: column; gap: 15px; }
+        .btn-call-float { width: 60px; height: 60px; background: var(--gold-gradient); border-radius: 50%; display: flex; items-center; justify-content: center; animation: pulse-gold 2s infinite; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .btn-line-float { width: 60px; height: 60px; background: #06C755; border-radius: 50%; display: flex; items-center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        
+        /* 數字滾動樣式 */
+        .stat-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; text-align: center; border-radius: 4px; }
+        .stat-number { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 0.5rem; }
         .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 6s linear infinite; }
         @keyframes shine { to { background-position: 200% center; } }
         nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -27,6 +36,16 @@
     </style>
 </head>
 <body class="antialiased">
+    <!-- 24H 浮動救援按鈕 -->
+    <div class="float-btn md:hidden">
+        <a href="https://line.me/ti/p/chingweida" target="_blank" class="btn-line-float">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" class="w-8 h-8">
+        </a>
+        <a href="tel:0909277670" class="btn-call-float">
+            <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+        </a>
+    </div>
+
     <nav id="navbar" class="sticky top-0 w-full z-50 py-4 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="/" class="group">
@@ -63,6 +82,28 @@
             </div>
         </div>
     </header>
+
+    <!-- 技術權威數據看板 -->
+    <section class="py-12 bg-zinc-900/50">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="stat-card">
+                <div class="stat-number counter" data-target="5200">0</div>
+                <div class="text-[10px] text-gray-500 tracking-widest uppercase">累積解碼車輛</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number counter" data-target="1500">0</div>
+                <div class="text-[10px] text-gray-500 tracking-widest uppercase">全台遠征救援</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number counter" data-target="100">0</div>
+                <div class="text-[10px] text-gray-500 tracking-widest uppercase">覆蓋汽車品牌</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number counter" data-target="24">0</div>
+                <div class="text-[10px] text-gray-500 tracking-widest uppercase">24H 全年無休</div>
+            </div>
+        </div>
+    </section>
 
     <section id="recent-works" class="py-24 bg-black">
         <div class="max-w-7xl mx-auto px-6">
@@ -135,6 +176,41 @@
     </footer>
 
     <script>
+        // 數字滾動動畫
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+
+        const startCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target + '+';
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // 偵測滾動啟動動畫
+        let animated = false;
+        window.addEventListener('scroll', () => {
+            const section = document.querySelector('.stat-card');
+            if (section) {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight && !animated) {
+                    startCounters();
+                    animated = true;
+                }
+            }
+        });
+
         const latestCases = [
             { "car": "MAZDA CX-5", "label": "霧峰旗艦救援", "img": "img/mazda_cx5_wufeng_real.jpg", "link": "/article-mazda-wufeng-rescue" },
             { "car": "NISSAN KICKS", "label": "中科極速匹配", "img": "img/nissan_kicks_zhongke_real.jpg", "link": "/article-nissan-kicks-zhongke-rescue" },
@@ -151,6 +227,35 @@
                 </div>
             </div>
         `).join('');
+    </script>
+    <!-- FAQ Schema 結構化數據 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "汽車鑰匙全丟了，真的不需要拖車嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "是的。極致核心擁有專業行動解碼工作站，能直接前往您的停車地點，現場進行數據採集與晶片匹配，省去昂貴的拖吊費用與原廠漫長的等待期。"
+        }
+      }, {
+        "@type": "Question",
+        "name": "服務範圍涵蓋哪些地區？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "極致核心深耕中彰投地區，並提供新竹、苗栗、雲林、嘉義的跨區遠征服務。不論您在市區還是郊區，專業技術團隊皆可預約抵達。"
+        }
+      }, {
+        "@type": "Question",
+        "name": "進口車款（如 BMW/Benz）也能現場做嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "可以。我們專攻高階歐系防盜系統，包含 BMW FEM/BDC、Mercedes-Benz FBS3/FBS4 等複雜架構，均有成熟的現場解碼方案。"
+        }
+      }]
+    }
     </script>
 </body>
 </html>
