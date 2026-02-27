@@ -7,16 +7,17 @@ import logging
 import os
 
 class APIKey:
-    def __init__(self, key: str, model: str, project: str, daily_limit: int = 500):
+    def __init__(self, key: str, model: str, project: str, daily_limit: int = 500, priority: int = 10):
         self.key = key
         self.model = model
         self.project = project
         self.daily_limit = daily_limit
+        self.priority = priority # 優先級：越小越先用
         self.last_used = None
         self.in_cooldown = False
         self.cooldown_until = None
-        self.requests_count = 0  # 這裡是單次 session 的計數
-        self.total_usage_today = 0 # 這是今日累計
+        self.requests_count = 0
+        self.total_usage_today = 0
 
 class LoadBalancer:
     def __init__(self):
@@ -28,18 +29,18 @@ class LoadBalancer:
         self._sync_daily_usage()
         
     def _load_api_keys(self) -> List[APIKey]:
-        """從配置文件載入 API Keys，並注入限額"""
+        """從配置文件載入 API Keys，並注入限額與優先級"""
         try:
-            with open('api_keys_config.json', 'r') as f:
+            with open('api_keys_config.json', 'r', encoding='utf-8') as f:
                 config = json.load(f)
-                # 假設 config 中有 limits 定義，若無則預設 500
                 limits = config.get('global_limits', {})
                 return [
                     APIKey(
                         key=k['key'],
                         model=k['model'],
                         project=k['project'],
-                        daily_limit=limits.get(k['model'], 500)
+                        daily_limit=limits.get(k['model'], 500),
+                        priority=k.get('priority', 10)
                     ) for k in config['keys']
                 ]
         except:
@@ -95,8 +96,12 @@ class LoadBalancer:
             if flash_keys:
                 available_keys = flash_keys
 
-        # 輪詢
-        key = random.choice(available_keys)
+        # 優先級調度：選擇優先級數值最小且未超額的群組
+        min_priority = min(k.priority for k in available_keys)
+        priority_group = [k for k in available_keys if k.priority == min_priority]
+
+        # 在同優先級群組中隨機輪詢以分散壓力
+        key = random.choice(priority_group)
         key.total_usage_today += 1
         self.update_usage_log(key)
         return key
