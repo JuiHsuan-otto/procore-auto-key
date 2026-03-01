@@ -38,29 +38,33 @@
 
     <main class="max-w-5xl mx-auto px-6 pb-32 space-y-12">
         <div id="blog-list" class="space-y-8">
-            <!-- 由 JS 動態加載 -->
+            <!-- 初始列表 (靜態 SEO) -->
+            <div class="blog-card rounded-sm">
+                <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">技術救援 | 2026.03.02</span>
+                <h3 class="text-white font-bold text-xl mb-4 leading-tight">BMW F系列全丟救援：FEM/BDC 系統現場免拖吊解碼技術全解析</h3>
+                <p class="text-gray-500 text-sm leading-loose mb-6">針對 BMW F20, F30, F36 等主流車款，解析如何透過專業設備在現場完成 FEM/BDC 模組數據重構，無需拖吊回原廠，當天即可交車。</p>
+                <a href="/article-bmw-fseries-fem-bdc-rescue" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">Read Full Analysis →</a>
+            </div>
         </div>
     </main>
 
     <script>
-        async function loadBlog() {
-            try {
-                const response = await fetch('/blog.json?t=' + new Date().getTime());
-                const blogData = await response.json();
-                
-                document.getElementById('blog-list').innerHTML = blogData.map(item => `
-                    <div class="blog-card rounded-sm">
-                        <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">${item.category} | ${item.date}</span>
-                        <h3 class="text-white font-bold text-xl mb-4 leading-tight">${item.title}</h3>
-                        <p class="text-gray-500 text-sm leading-loose mb-6">${item.summary}</p>
-                        <a href="${item.link}" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">Read Full Analysis →</a>
-                    </div>
-                `).join('');
-            } catch (error) {
-                console.error('加載文章失敗:', error);
-            }
-        }
-        loadBlog();
+        const blogData = [
+            { "id": 4, "date": "2026.03.02", "category": "技術救援", "title": "BMW F系列全丟救援：FEM/BDC 系統現場免拖吊解碼技術全解析", "summary": "針對 BMW F20, F30, F36 等主流車款，解析如何透過專業設備在現場完成 FEM/BDC 模組數據重構，無需拖吊回原廠，當天即可交車。", "link": "/article-bmw-fseries-fem-bdc-rescue" },
+            { "id": 1, "date": "2026.02.23", "category": "價值分析", "title": "汽車晶片鑰匙遺失怎麼辦？找原廠還是找專業鎖匠最划算？", "summary": "專業分析汽車鑰匙全丟後的處理方案，對比原廠與極致核心的差異，為您提供最經濟高效的選擇。", "link": "/article-why-you-need-spare-car-key" },
+            { "id": 2, "date": "2026.02.22", "category": "技術維修", "title": "2026 智慧型免鑰匙啟動系統 (Keyless) 常見故障與維修指南", "summary": "深入剖析LF低頻訊號干擾、BCM模組數據偏移等深層故障原因。", "link": "/article-keyless-troubleshooting" },
+            { "id": 3, "date": "2026.02.21", "category": "設備解析", "title": "為什麼專業汽車鑰匙拷貝需要用到昂貴的解碼設備？", "summary": "解析 BMW G-Series 與賓士 FBS4 等高階加密系統。", "link": "/article-decoding-equipment" }
+        ];
+
+        // 如果想保留 JS 渲染邏輯
+        document.getElementById('blog-list').innerHTML = blogData.map(item => `
+            <div class="blog-card rounded-sm">
+                <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">${item.category} | ${item.date}</span>
+                <h3 class="text-white font-bold text-xl mb-4 leading-tight">${item.title}</h3>
+                <p class="text-gray-500 text-sm leading-loose mb-6">${item.summary}</p>
+                <a href="${item.link}" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">Read Full Analysis →</a>
+            </div>
+        `).join('');
     </script>
 </body>
 </html>
