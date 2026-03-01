@@ -1,17 +1,42 @@
 [
   {
+    "id": 4,
+    "date": "2026.03.02",
+    "category": "技術救援",
+    "title": "BMW F系列全丟救援：FEM/BDC 系統現場免拖吊解碼技術全解析",
+    "summary": "針對 BMW F20, F30, F36 等主流車款，解析如何透過專業設備在現場完成 FEM/BDC 模組數據重構，無需拖吊回原廠，當天即可交車。",
+    "keywords": [
+      "BMW F30 鑰匙遺失",
+      "FEM 模組解碼",
+      "台中 BMW 配鑰匙",
+      "極致核心",
+      "汽車鑰匙全丟"
+    ],
+    "link": "/procore-repo\\article-bmw-fseries-fem-bdc-rescue"
+  },
+  {
     "id": 1,
     "date": "2026.02.23",
     "category": "價值分析",
     "title": "汽車晶片鑰匙遺失怎麼辦？找原廠還是找專業鎖匠最划算？",
     "summary": "專業分析汽車鑰匙全丟後的處理方案，從成本、時間到穩定性，深度對比原廠與極致核心的差異，為您提供最經濟高效的選擇。",
-    "keywords": ["台中汽車鑰匙遺失", "晶片鑰匙配製", "專業鎖匠推薦"],
+    "keywords": [
+      "台中汽車鑰匙遺失",
+      "晶片鑰匙配製",
+      "專業鎖匠推薦"
+    ],
     "schema": {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       "headline": "汽車晶片鑰匙遺失怎麼辦？找原廠還是找專業鎖匠最划算？",
-      "author": {"@type": "Person", "name": "Meico"},
-      "publisher": {"@type": "Organization", "name": "極致核心"},
+      "author": {
+        "@type": "Person",
+        "name": "Meico"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "極致核心"
+      },
       "description": "專業分析汽車鑰匙全丟後的處理方案，對比原廠與專業鎖匠的成本、時間與穩定性。"
     }
   },
@@ -21,15 +46,28 @@
     "category": "技術維修",
     "title": "2026 智慧型免鑰匙啟動系統 (Keyless) 常見故障與維修指南",
     "summary": "深入剖析LF低頻訊號干擾、BCM模組數據偏移等深層故障原因。極致核心教您如何精準定位故障，避免誤換昂貴模組。",
-    "keywords": ["Keyless故障維修", "智慧感應鑰匙感應不到", "免鑰匙啟動原理"],
+    "keywords": [
+      "Keyless故障維修",
+      "智慧感應鑰匙感應不到",
+      "免鑰匙啟動原理"
+    ],
     "schema": {
       "@context": "https://schema.org",
       "@type": "HowTo",
       "name": "2026 Keyless 系統故障排除指南",
       "step": [
-        {"@type": "HowToStep", "text": "檢查遙控器電池電壓"},
-        {"@type": "HowToStep", "text": "使用專用設備掃描 OBD 故障碼"},
-        {"@type": "HowToStep", "text": "重新進行晶片與車體同步匹配"}
+        {
+          "@type": "HowToStep",
+          "text": "檢查遙控器電池電壓"
+        },
+        {
+          "@type": "HowToStep",
+          "text": "使用專用設備掃描 OBD 故障碼"
+        },
+        {
+          "@type": "HowToStep",
+          "text": "重新進行晶片與車體同步匹配"
+        }
       ]
     }
   },
@@ -39,7 +77,11 @@
     "category": "設備解析",
     "title": "為什麼專業汽車鑰匙拷貝需要用到昂貴的解碼設備？",
     "summary": "解析 BMW G-Series 與賓士 FBS4 等高階加密系統。極致核心重金引進全球頂規設備，確保數據讀寫不傷電腦、不留暗病。",
-    "keywords": ["汽車鑰匙拷貝推薦", "專業晶片解碼", "進口車鑰匙配製"],
+    "keywords": [
+      "汽車鑰匙拷貝推薦",
+      "專業晶片解碼",
+      "進口車鑰匙配製"
+    ],
     "schema": {
       "@context": "https://schema.org",
       "@type": "Article",
