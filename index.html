@@ -64,6 +64,13 @@
             <div class="hidden md:flex items-center gap-10">
                 <a href="/cases" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">解碼實績 / Works</a>
                 <a href="/blog" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">技術專欄 / Blog</a>
+                
+            <div class="hidden lg:flex items-center ml-10 relative group">
+                <input type="text" id="global-search" placeholder="搜尋車款或地點..." 
+                    class="bg-zinc-900/50 border border-white/10 rounded-full px-4 py-1 text-[10px] text-white focus:outline-none focus:border-gold-primary/50 transition-all w-40 focus:w-64">
+                <svg class="w-3 h-3 text-gray-500 absolute right-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <div id="search-results" class="absolute top-full right-0 mt-2 w-80 bg-zinc-900 border border-white/10 rounded shadow-2xl hidden z-[100] max-h-96 overflow-y-auto"></div>
+            </div>
                 <a href="tel:0909277670" class="btn-premium">24H Emergency</a>
             </div>
             <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
@@ -266,5 +273,55 @@
       }]
     }
     </script>
+
+    <script>
+        // 全局搜尋邏輯
+        const searchInput = document.getElementById('global-search');
+        const resultsDiv = document.getElementById('search-results');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', async (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                if (query.length < 1) {
+                    resultsDiv.classList.add('hidden');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/blog.json?t=' + new Date().getTime());
+                    const data = await response.json();
+                    
+                    const filtered = data.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.summary.toLowerCase().includes(query) ||
+                        (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query)))
+                    ).slice(0, 5);
+
+                    if (filtered.length > 0) {
+                        resultsDiv.innerHTML = filtered.map(item => `
+                            <a href="${item.link}" class="block p-4 border-b border-white/5 hover:bg-white/5 transition">
+                                <span class="text-[9px] text-gold-primary uppercase tracking-widest">${item.category}</span>
+                                <h5 class="text-white text-xs font-bold mt-1">${item.title}</h5>
+                            </a>
+                        `).join('');
+                        resultsDiv.classList.remove('hidden');
+                    } else {
+                        resultsDiv.innerHTML = '<div class="p-4 text-gray-500 text-[10px]">找不到相關結果</div>';
+                        resultsDiv.classList.remove('hidden');
+                    }
+                } catch (err) {
+                    console.error('Search failed:', err);
+                }
+            });
+
+            // 點擊外部關閉搜尋結果
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+                    resultsDiv.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+    
 </body>
 </html>

@@ -80,5 +80,55 @@
             </div>
         `).join('');
     </script>
+
+    <script>
+        // 全局搜尋邏輯
+        const searchInput = document.getElementById('global-search');
+        const resultsDiv = document.getElementById('search-results');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', async (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                if (query.length < 1) {
+                    resultsDiv.classList.add('hidden');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/blog.json?t=' + new Date().getTime());
+                    const data = await response.json();
+                    
+                    const filtered = data.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.summary.toLowerCase().includes(query) ||
+                        (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query)))
+                    ).slice(0, 5);
+
+                    if (filtered.length > 0) {
+                        resultsDiv.innerHTML = filtered.map(item => `
+                            <a href="${item.link}" class="block p-4 border-b border-white/5 hover:bg-white/5 transition">
+                                <span class="text-[9px] text-gold-primary uppercase tracking-widest">${item.category}</span>
+                                <h5 class="text-white text-xs font-bold mt-1">${item.title}</h5>
+                            </a>
+                        `).join('');
+                        resultsDiv.classList.remove('hidden');
+                    } else {
+                        resultsDiv.innerHTML = '<div class="p-4 text-gray-500 text-[10px]">找不到相關結果</div>';
+                        resultsDiv.classList.remove('hidden');
+                    }
+                } catch (err) {
+                    console.error('Search failed:', err);
+                }
+            });
+
+            // 點擊外部關閉搜尋結果
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+                    resultsDiv.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+    
 </body>
 </html>
