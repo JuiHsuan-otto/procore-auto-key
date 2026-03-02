@@ -1,5 +1,20 @@
 [
   {
+    "id": 16,
+    "date": "2026.03.02",
+    "category": "底層技術",
+    "title": "VAG 專業防盜架構解析：為什麼儀表板整合晶片讓鑰匙備份至關重要？",
+    "summary": "深入解析福斯、Audi、Skoda 等 VAG 車系 4 代防盜系統。防盜晶片數據整合進儀表板，極致核心帶您看見提前備份鑰匙的省時省錢之道。",
+    "keywords": [
+      "VAG防盜",
+      "福斯鑰匙備份",
+      "儀表板晶片",
+      "極致核心",
+      "VAG鑰匙遺失"
+    ],
+    "link": "/article-vag-dashboard-immobilizer-tech"
+  },
+  {
     "id": 15,
     "date": "2026.03.02",
     "category": "現場救援",
