@@ -1,5 +1,20 @@
 [
   {
+    "id": 17,
+    "date": "2026.03.02",
+    "category": "底層技術",
+    "title": "保時捷核心解碼：BCM 防盜模組數據讀取與重構實錄",
+    "summary": "直擊保時捷 Porsche 高階防盜系統。深入解析 BCM 模組數據讀取流程，展示極致核心如何透過精密拆解與專業設備，現場恢復您的駕駛權限。",
+    "keywords": [
+      "保時捷配鑰匙",
+      "Porsche鑰匙全丟",
+      "BCM數據讀取",
+      "極致核心",
+      "高階解碼"
+    ],
+    "link": "/article-porsche-bcm-decoding-tech"
+  },
+  {
     "id": 16,
     "date": "2026.03.02",
     "category": "底層技術",
