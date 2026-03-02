@@ -73,6 +73,12 @@
             </div>
                 <a href="tel:0909277670" class="btn-premium">24H Emergency</a>
             </div>
+            
+            <div class="md:hidden flex items-center gap-4">
+                <button id="mobile-search-toggle" class="text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+            </div>
             <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
                 <a href="/cases" class="text-white">WORKS</a>
                 <a href="/blog" class="text-white">BLOG</a>
@@ -319,6 +325,55 @@
                 if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
                     resultsDiv.classList.add('hidden');
                 }
+            });
+        }
+    </script>
+    
+
+    <!-- 手機版搜尋遮罩 -->
+    <div id="mobile-search-overlay" class="fixed inset-0 bg-black/95 z-[200] hidden flex-col p-6">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-gold-primary font-bold tracking-widest">SEARCH</h3>
+            <button id="mobile-search-close" class="text-white text-2xl">&times;</button>
+        </div>
+        <input type="text" id="mobile-search-input" placeholder="搜尋車款或地點..." 
+            class="bg-zinc-900 border border-white/10 rounded-lg px-6 py-4 text-white focus:outline-none focus:border-gold-primary transition-all w-full text-lg">
+        <div id="mobile-search-results" class="mt-8 space-y-4 overflow-y-auto flex-grow"></div>
+    </div>
+    <script>
+        const mobileToggle = document.getElementById('mobile-search-toggle');
+        const mobileOverlay = document.getElementById('mobile-search-overlay');
+        const mobileClose = document.getElementById('mobile-search-close');
+        const mobileInput = document.getElementById('mobile-search-input');
+        const mobileResults = document.getElementById('mobile-search-results');
+
+        if (mobileToggle) {
+            mobileToggle.onclick = () => {
+                mobileOverlay.classList.remove('hidden');
+                mobileInput.focus();
+            };
+            mobileClose.onclick = () => mobileOverlay.classList.add('hidden');
+            
+            mobileInput.addEventListener('input', async (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                if (query.length < 1) {
+                    mobileResults.innerHTML = '';
+                    return;
+                }
+                try {
+                    const response = await fetch('/blog.json?t=' + new Date().getTime());
+                    const data = await response.json();
+                    const filtered = data.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.summary.toLowerCase().includes(query)
+                    );
+                    mobileResults.innerHTML = filtered.map(item => `
+                        <a href="${item.link}" class="block p-5 bg-white/5 border border-white/5 rounded-lg">
+                            <span class="text-[10px] text-gold-primary uppercase tracking-widest">${item.category}</span>
+                            <h5 class="text-white font-bold mt-2">${item.title}</h5>
+                        </a>
+                    `).join('');
+                } catch (err) {}
             });
         }
     </script>
