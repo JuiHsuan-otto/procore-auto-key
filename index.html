@@ -109,11 +109,11 @@
     <section class="py-12 bg-zinc-900/50">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div class="stat-card">
-                <div class="stat-number counter" data-target="5212">0</div>
+                <div class="stat-number counter" data-target="5213">0</div>
                 <div class="text-[10px] text-gray-500 tracking-widest uppercase">累積解碼車輛</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number counter" data-target="1508">0</div>
+                <div class="stat-number counter" data-target="1509">0</div>
                 <div class="text-[10px] text-gray-500 tracking-widest uppercase">全台遠征救援</div>
             </div>
             <div class="stat-card">
@@ -234,11 +234,11 @@
         });
 
         const latestCases = [
+            { "car": "INFINITI FX35", "label": "社頭全丟救援", "img": "img/infiniti/infiniti_fx35_shetou_lost_key.jpg", "link": "/article-infiniti-fx35-shetou-rescue" },
             { "car": "MERCEDES GLC300", "label": "員林智慧鑰匙新增", "img": "img/mercedes/benz_glc300_yuanlin_front.jpg", "link": "/article-benz-glc300-yuanlin-service" },
             { "car": "HYUNDAI VENUE", "label": "智能全丟救援", "img": "img/hyundai_venue_rear.jpg", "link": "/case-hyundai-venue-smartkey-lost" },
             { "car": "MAZDA CX-30", "label": "社頭全丟救援", "img": "img/mazda_cx30_shetou_rear.jpg", "link": "/case-shetou-mazda-cx30-rescue" },
-            { "car": "RANGE ROVER", "label": "龍井鑰匙新增", "img": "img/range_rover_longjing_real.jpg", "link": "/article-range-rover-huatan-service" },
-            { "car": "TOYOTA SIENTA", "label": "和美鑰匙新增", "img": "img/toyota_sienta_hemei_real.jpg", "link": "/article-toyota-sienta-hemei-service" }
+            { "car": "RANGE ROVER", "label": "龍井鑰匙新增", "img": "img/range_rover_longjing_real.jpg", "link": "/article-range-rover-huatan-service" }
         ];
         document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
             <div class="work-card group" onclick="location.href='${c.link}'">
