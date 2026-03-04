@@ -6,61 +6,77 @@
     <title>Skoda Kamiq 智慧鑰匙慘遭輾壓？極致核心現場數據重構救援實錄 | 極致核心 ProCore</title>
     <meta name="description" content="Skoda Kamiq 智慧鑰匙放車頂掉落被輾壞？極致核心專業現場救援，針對輾毀主板進行數據採集，免回原廠更換全車鎖組，快速匹配全新感應鑰匙。">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background: #050505; color: #e5e5e5; line-height: 1.8; }
+        .gold-accent { color: #D4AF37; }
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2.5rem; border-radius: 16px; margin: 2rem 0; }
+        .btn-call { background-color: #D4AF37; color: black; font-weight: bold; padding: 1rem 2rem; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 320px; text-decoration: none; }
+        nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    </style>
 </head>
-<body class="bg-black text-gray-200">
-    <nav class="p-6 border-b border-white/10">
-        <a href="/" class="text-gold-primary">← 返回首頁</a>
-    </nav>
-    <main class="max-w-4xl mx-auto py-20 px-6">
-        <h1 class="text-3xl font-bold mb-8">Skoda Kamiq 智慧鑰匙慘遭輾壓？極致核心現場數據重構救援實錄</h1>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-            <img src="img/skoda/skoda_kamiq_crushed_key_1.jpg" class="w-full rounded-lg border border-white/10 shadow-xl">
-            <img src="img/skoda/skoda_kamiq_crushed_key_2.jpg" class="w-full rounded-lg border border-white/10 shadow-xl">
+<body class="antialiased">
+    <nav class="sticky top-0 w-full z-50 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest uppercase">PROCORE</a>
+            <a href="tel:0909277670" class="text-gold-accent text-[10px] font-bold tracking-widest border border-gold-accent/30 px-4 py-2 rounded">24H CALL</a>
         </div>
+    </nav>
 
-        <article class="prose prose-invert lg:prose-xl">
-            <p>這是一個令車主心碎的瞬間：鑰匙隨手放在車頂，啟動行駛後掉落，接著被後方車輛輾過。今日接獲 Skoda Kamiq 車主緊急求助，感應鑰匙已完全碎裂、電路板嚴重變形，車輛無法感應也無法發動。</p>
-            
-            <h2 class="text-2xl font-semibold text-white mt-10 mb-4">輾壓毀損的技術挑戰</h2>
-            <p>當智慧鑰匙被輾壓後，最嚴重的不是外殼破碎，而是電路板上的<strong>防盜晶片 (Transponder)</strong> 與<strong>認證資料 (Security Data)</strong> 是否受損。若直接回原廠，通常需要耗費數週等待德國總部下訂全車鎖組與電腦，費用更是驚人。</p>
-            
-            <div class="mb-8">
-                <img src="img/skoda/skoda_kamiq_crushed_key_3.jpg" alt="Skoda 鑰匙電路板精密檢測" class="w-full rounded-lg border border-white/10 shadow-xl">
+    <article class="max-w-4xl mx-auto py-20 px-6">
+        <header class="mb-12">
+            <a href="/cases" class="text-gray-500 text-sm hover:text-white transition">← 返回實績展示</a>
+            <div class="mt-8">
+                <span class="text-gold-accent border border-yellow-600/30 px-3 py-1 text-[10px] uppercase tracking-widest">極限救援：彰化社頭</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mt-6 mb-8 leading-tight font-cinzel">
+                Skoda Kamiq <br><span class="gold-accent">智慧鑰匙輾壓損毀</span> 現場數據救援
+            </h1>
+        </header>
+
+        <section class="article-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <img src="img/skoda/skoda_kamiq_crushed_key_1.jpg" class="w-full rounded-lg border border-white/10 shadow-xl">
+                <img src="img/skoda/skoda_kamiq_crushed_key_2.jpg" class="w-full rounded-lg border border-white/10 shadow-xl">
             </div>
 
-            <h2 class="text-2xl font-semibold text-white mt-10 mb-4">極致核心的救援方案</h2>
-            <p>技術團隊抵達現場後，立即進行以下精密作業：</p>
-            <ul class="list-disc pl-6 space-y-2">
-                <li><strong>晶片數據救援</strong>：嘗試從毀損的主板中讀取殘留的防盜授權碼。</li>
-                <li><strong>OBD 安全存取</strong>：連接 Skoda 專用診斷通訊協定，跳過損壞的鑰匙直接與車輛電腦通訊。</li>
-                <li><strong>全新密鑰重構</strong>：在確認車輛合法權限後，現場匹配兩把全新的原廠級智慧鑰匙。</li>
-            </ul>
+            <div class="glass-panel prose prose-invert max-w-none">
+                <p>這是一個令車主心碎的瞬間：鑰匙隨手放在車頂，啟動行駛後掉落，接著被後方車輛輾過。今日接獲 Skoda Kamiq 車主緊急求助，感應鑰匙已完全碎裂、電路板嚴重變形，車輛無法感應也無法發動。</p>
+            </div>
 
-            <h2 class="text-2xl font-semibold text-white mt-10 mb-4">任務摘要：</h2>
-            <ul>
-                <li>車型：Skoda Kamiq</li>
-                <li>狀況：鑰匙掉落被輾毀 (Totally Crushed)</li>
-                <li>技術：EEPROM 數據採集、MQB 平台匹配</li>
-                <li>結果：現場完工、兩把全新鑰匙順利交付</li>
-            </ul>
+            <div class="glass-panel text-center">
+                <img src="img/skoda/skoda_kamiq_crushed_key_3.jpg" alt="Skoda 鑰匙電路板精密檢測" class="w-full rounded-lg border border-white/10 shadow-xl mx-auto">
+                <p class="text-xs text-gray-500 italic mt-4">技術分析：即便外殼破碎，我們仍能從主板中提取防盜密碼</p>
+            </div>
 
-            <!-- 統一聯繫區塊 -->
+            <div class="p-8 bg-white/5 rounded-xl border border-white/5 my-12">
+                <h3 class="text-gold-accent font-bold mb-3 text-lg uppercase font-cinzel tracking-widest">Mission Summary</h3>
+                <ul class="text-sm text-gray-400 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <li>● 車型：Skoda Kamiq</li>
+                    <li>● 地點：彰化社頭</li>
+                    <li>● 狀況：鑰匙掉落被輾毀 (Totally Crushed)</li>
+                    <li>● 技術：EEPROM 數據採集、MQB 平台匹配</li>
+                </ul>
+            </div>
+
             <div class="bg-gray-900 p-8 rounded-lg border-l-4 border-gold-primary my-12 shadow-2xl">
-                <p class="font-bold mb-4 text-white text-xl tracking-wider">中彰投 24H 專業救援諮詢</p>
+                <p class="font-bold mb-4 text-white text-xl tracking-wider uppercase font-cinzel">Emergency Support</p>
                 <div class="flex flex-col md:flex-row gap-6">
-                    <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="flex-1 p-4 border border-white/10 hover:border-gold-primary/50 transition bg-black/50 group">
+                    <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="flex-1 p-4 border border-white/10 hover:border-gold-primary/50 transition bg-black/50 group text-center">
                         <span class="text-[9px] text-gray-500 uppercase tracking-widest block mb-1">Official LINE</span>
                         <span class="text-gold-primary font-bold">@420gknem</span>
                     </a>
-                    <a href="tel:0909277670" class="flex-1 p-4 border border-white/10 hover:border-gold-primary/50 transition bg-black/50 group">
+                    <a href="tel:0909277670" class="flex-1 p-4 border border-white/10 hover:border-gold-primary/50 transition bg-black/50 group text-center">
                         <span class="text-[9px] text-gray-500 uppercase tracking-widest block mb-1">24H Hotline</span>
                         <span class="text-white font-bold">0909-277-670</span>
                     </a>
                 </div>
-                <p class="mt-6 text-sm text-gray-400">鑰匙建議隨身放入口袋或包包，避免放置於車頂、車蓋等不穩固處。若發生意外毀損，請勿強行修復主板，以免造成短路燒毀車輛防盜電腦，應第一時間連繫極致核心專業處理。</p>
             </div>
-        </article>
-    </main>
+        </section>
+    </article>
+
+    <footer class="py-12 text-center border-t border-white/5 text-[8px] text-gray-700 tracking-[0.5em] uppercase">
+        © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
+    </footer>
 </body>
 </html>
