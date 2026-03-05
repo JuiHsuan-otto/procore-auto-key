@@ -234,11 +234,12 @@
         });
 
         const latestCases = [
+            { "car": "VW ARTEON", "label": "MQB智能新增", "img": "img/vw/vw_arteon_mqb_smartkey_1.jpg", "link": "/article-vw-arteon-mqb-smartkey" },
+            { "car": "HYUNDAI TUCSON", "label": "和美全丟救援", "img": "img/hyundai/hyundai_tucson_hemei_akl_1.jpg", "link": "/article-hyundai-tucson-hemei-akl" },
+            { "car": "KIA PICANTO", "label": "伸港全丟救援", "img": "img/kia/kia_picanto_shengang_akl_1.jpg", "link": "/article-kia-picanto-shengang-akl" },
+            { "car": "SKODA KAMIQ", "label": "社頭輾毀救援", "img": "img/skoda/skoda_kamiq_crushed_key_1.jpg", "link": "/article-skoda-kamiq-crushed-key" },
             { "car": "INFINITI FX35", "label": "社頭全丟救援", "img": "img/infiniti/infiniti_fx35_shetou_lost_key.jpg", "link": "/article-infiniti-fx35-shetou-rescue" },
-            { "car": "MERCEDES GLC300", "label": "員林智慧鑰匙新增", "img": "img/mercedes/benz_glc300_yuanlin_front.jpg", "link": "/article-benz-glc300-yuanlin-service" },
-            { "car": "HYUNDAI VENUE", "label": "智能全丟救援", "img": "img/hyundai_venue_rear.jpg", "link": "/case-hyundai-venue-smartkey-lost" },
-            { "car": "MAZDA CX-30", "label": "社頭全丟救援", "img": "img/mazda_cx30_shetou_rear.jpg", "link": "/case-shetou-mazda-cx30-rescue" },
-            { "car": "RANGE ROVER", "label": "龍井鑰匙新增", "img": "img/range_rover_longjing_real.jpg", "link": "/article-range-rover-huatan-service" }
+            { "car": "MERCEDES GLC300", "label": "員林智慧鑰匙新增", "img": "img/mercedes/benz_glc300_yuanlin_front.jpg", "link": "/article-benz-glc300-yuanlin-service" }
         ];
         document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
             <div class="work-card group" onclick="location.href='${c.link}'">
