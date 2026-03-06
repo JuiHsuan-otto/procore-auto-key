@@ -3,76 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[彰化特輯] BMW X5 E70 遙控器充電電池耗盡救援：極致核心現場維修實錄</title>
+    <title>[彰化特輯] BMW X5 E70 遙控器充電電池耗盡救援：極致核心現場維修實錄 | 極致核心 ProCore</title>
     <meta name="description" content="BMW X5 (E70) 遙控鑰匙無法感應、充電電池完全耗盡？極致核心彰化市現場救援，專業拆解維修更換充電電池，免去原廠高額換新費用。">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="article.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #050505; color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; line-height: 1.8; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .gold-accent { color: #D4AF37; }
+        .gold-primary { color: #D4AF37; }
+        .border-gold-primary { border-color: #D4AF37; }
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2.5rem; border-radius: 16px; margin: 2rem 0; }
+        
+        /* 浮動按鈕呼吸效果 */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); }
+        }
+        .float-btn { position: fixed; bottom: 30px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
+        .btn-call-float { width: 65px; height: 65px; background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); border-radius: 50%; display: flex; items-center; justify-content: center; animation: pulse-gold 2s infinite ease-in-out; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); }
+        .btn-line-float { width: 65px; height: 65px; background: #06C755; border-radius: 50%; display: flex; items-center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
+        
+        nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">PROCORE</div>
-            <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="cases.html">解碼實績</a></li>
-                <li><a href="blog.html">技術專欄</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="antialiased">
+    <!-- 24H 浮動救援按鈕 -->
+    <div class="float-btn md:hidden">
+        <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="btn-line-float">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" class="w-8 h-8">
+        </a>
+        <a href="tel:0909277670" class="btn-call-float">
+            <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+        </a>
+    </div>
 
-    <article class="case-article">
-        <header class="article-header">
-            <span class="category">解碼實績 / 彰化市</span>
-            <h1>BMW X5 E70 遙控器充電電池耗盡救援：現場精準維修實錄</h1>
-            <div class="meta">
-                <span><i class="far fa-calendar-alt"></i> 2026-03-06</span>
-                <span><i class="fas fa-car"></i> BMW X5 (E70)</span>
+    <nav class="sticky top-0 w-full z-50 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest uppercase">PROCORE</a>
+            <a href="tel:0909277670" class="gold-accent text-[10px] font-bold tracking-widest border border-gold-accent/30 px-4 py-2 rounded">24H CALL</a>
+        </div>
+    </nav>
+
+    <article class="max-w-4xl mx-auto py-20 px-6">
+        <header class="mb-12">
+            <a href="/cases" class="text-gray-500 text-sm hover:text-white transition">← 返回實績展示</a>
+            <div class="mt-8">
+                <span class="gold-accent border border-yellow-600/30 px-3 py-1 text-[10px] uppercase tracking-widest">彰化市現場救援：BMW 鑰匙維修</span>
             </div>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mt-6 mb-8 leading-tight font-cinzel">
+                BMW X5 E70 <br><span class="gold-accent">遙控器充電電池耗盡救援</span> 現場維修實錄
+            </h1>
         </header>
 
-        <section class="content">
-            <p>近日接到來自<strong>彰化市</strong>的求助電話。車主表示其愛車 <strong>BMW X5 (E70)</strong> 的遙控鑰匙在使用多年後，遙控功能完全失效，甚至無法透過遙控器解鎖車門，只能使用機械鑰匙手動開啟，非常不便。</p>
-            
-            <div class="image-box">
-                <img src="img/bmw-x5-battery-fix-changhua/front.jpg" alt="BMW X5 彰化市現場救援">
-                <p class="caption">BMW X5 彰化市現場救援：遙控失效診斷</p>
+        <section class="article-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <img src="img/bmw-x5-battery-fix-changhua/front.jpg" class="w-full rounded-lg border border-white/10 shadow-xl" alt="BMW X5 彰化市現場救援">
+                <img src="img/bmw-x5-battery-fix-changhua/rear.jpg" class="w-full rounded-lg border border-white/10 shadow-xl" alt="BMW X5 維修完成交車">
             </div>
 
-            <h2>技術分析：為什麼 BMW 鑰匙會遙控失效？</h2>
-            <p>BMW E 系列（如 E70, E90, E60 等）的智慧鑰匙採用的是<strong>內部焊接式充電電池 (VL2020)</strong>。正常情況下，鑰匙插入插槽啟動後會自動充電。然而，若鑰匙長時間未使用或電池壽命到達極限（通常約 8-10 年），電池將完全耗盡且無法再儲存電量，導致遙控功能永久失效。</p>
+            <div class="glass-panel prose prose-invert max-w-none">
+                <p>近日接到來自<strong>彰化市</strong>的求助電話。車主表示其愛車 <strong>BMW X5 (E70)</strong> 的遙控鑰匙在使用多年後，遙控功能完全失效，甚至無法透過遙控器解鎖車門，只能使用機械鑰匙手動開啟，非常不便。</p>
+                
+                <h3 class="text-white">技術分析：為什麼 BMW 鑰匙會遙控失效？</h3>
+                <p>BMW E 系列（如 E70, E90, E60 等）的智慧鑰匙採用的是<strong>內部焊接式充電電池 (VL2020)</strong>。正常情況下，鑰匙插入插槽啟動後會自動充電。然而，若鑰匙長時間未使用或電池壽命到達極限（通常約 8-10 年），電池將完全耗盡且無法再儲存電量，導致遙控功能永久失效。</p>
+                
+                <div class="my-8">
+                    <img src="img/bmw-x5-battery-fix-changhua/battery.jpg" class="w-full rounded-lg border border-white/10 shadow-xl" alt="BMW 鑰匙拆解電池維修">
+                </div>
 
-            <div class="image-box">
-                <img src="img/bmw-x5-battery-fix-changhua/battery.jpg" alt="BMW 鑰匙拆解電池維修">
-                <p class="caption">極致核心現場拆解：更換衰退的充電電池核心</p>
+                <h3 class="text-white">極致核心的解決方案：現場精準維修</h3>
+                <p>針對此類問題，傳統原廠的做法通常是「更換整把新鑰匙」，費用高昂且需等待數日。<strong>極致核心 ProCore</strong> 提供現場維修服務：</p>
+                <ul>
+                    <li><strong>專業拆解</strong>：BMW 鑰匙為超音波密封，需具備經驗與專業工具才能在不破壞外殼的情況下開啟。</li>
+                    <li><strong>電池更換</strong>：精準解焊並更換全新高品質充電電池，確保儲電效率恢復如初。</li>
+                    <li><strong>功能測試</strong>：現場即刻測試遙控感應距離與引擎啟動數據，確保 100% 恢復功能。</li>
+                </ul>
+                <p>經過約 40 分鐘的現場精準維修，這把 BMW X5 的鑰匙成功「起死回生」，遙控距離與感應靈敏度皆回到新車水準。車主不需支付原廠的高額換新費用，更不需等待漫長的備貨期。</p>
             </div>
 
-            <h2>極致核心的解決方案：現場精準維修</h2>
-            <p>針對此類問題，傳統原廠的做法通常是「更換整把新鑰匙」，費用高昂且需等待數日。<strong>極致核心 ProCore</strong> 提供現場維修服務：</p>
-            <ul>
-                <li><strong>專業拆解</strong>：BMW 鑰匙為超音波密封，需具備經驗與專業工具才能在不破壞外殼的情況下開啟。</li>
-                <li><strong>電池更換</strong>：精準解焊並更換全新高品質充電電池，確保儲電效率恢復如初。</li>
-                <li><strong>功能測試</strong>：現場即刻測試遙控感應距離與引擎啟動數據，確保 100% 恢復功能。</li>
-            </ul>
-
-            <div class="image-box">
-                <img src="img/bmw-x5-battery-fix-changhua/rear.jpg" alt="BMW X5 維修完成交車">
-                <p class="caption">維修完成：遙控功能完美恢復，當場交車</p>
+            <div class="p-8 bg-white/5 rounded-xl border border-white/5 my-12">
+                <h3 class="text-gold-accent font-bold mb-3 text-lg uppercase font-cinzel tracking-widest">Mission Summary</h3>
+                <ul class="text-sm text-gray-400 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <li>● 地點：彰化市</li>
+                    <li>● 車型：BMW X5 (E70)</li>
+                    <li>● 狀況：遙控失效 / 充電電池耗盡</li>
+                    <li>● 技術：專業拆解更換 VL2020 充電電池核心</li>
+                </ul>
             </div>
 
-            <h2>結果：免換新鑰匙，省時省錢！</h2>
-            <p>經過約 40 分鐘的現場精準維修，這把 BMW X5 的鑰匙成功「起死回生」，遙控距離與感應靈敏度皆回到新車水準。車主不需支付原廠的高額換新費用，更不需等待漫長的備貨期。</p>
-
-            <div class="action-box">
-                <h3>BMW 鑰匙沒反應？遙控器壞了？</h3>
-                <p>極致核心專攻 BMW/賓士全系列防盜系統與鑰匙維修。不論是電池耗盡、數據遺失或鑰匙全丟，我們在中彰投地區提供 24H 現場救援服務。</p>
-                <a href="https://line.me/R/ti/p/@420gknem" class="line-btn">諮詢專業技師 (LINE ID: @420gknem)</a>
+            <!-- 統一聯繫區塊 -->
+            <div class="bg-gray-900 p-8 rounded-lg border-l-4 border-gold-primary my-12 shadow-2xl">
+                <p class="font-bold mb-4 text-white text-xl tracking-wider uppercase font-cinzel text-center">Emergency Support</p>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="flex-1 p-4 border border-white/10 hover:border-gold-primary/50 transition bg-black/50 group text-center">
+                        <span class="text-[9px] text-gray-500 uppercase tracking-widest block mb-1">Official LINE</span>
+                        <span class="text-gold-primary font-bold">@420gknem</span>
+                    </a>
+                    <a href="tel:0909277670" class="flex-1 p-4 border border-white/10 hover:border-gold-primary/50 transition bg-black/50 group text-center">
+                        <span class="text-[9px] text-gray-500 uppercase tracking-widest block mb-1">24H Hotline</span>
+                        <span class="text-white font-bold">0909-277-670</span>
+                    </a>
+                </div>
             </div>
         </section>
     </article>
 
-    <footer>
-        <p>&copy; 2026 極致核心 ProCore Auto Key - 專業汽車鑰匙解碼中心</p>
+    <footer class="py-12 text-center border-t border-white/5 text-[8px] text-gray-700 tracking-[0.5em] uppercase">
+        © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
     </footer>
 </body>
 </html>
