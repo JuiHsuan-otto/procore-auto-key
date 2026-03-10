@@ -1,5 +1,20 @@
 [
   {
+    "id": 30,
+    "date": "2026.03.11",
+    "category": "技術專題",
+    "title": "現代汽車感應不到鑰匙？Keyless Go 故障排除與緊急發動教學",
+    "summary": "現代汽車智慧感應系統 Keyless Go 失靈？極致核心職人教您如何進行自我診斷、更換正確規格電池 (CR2032/CR2450) 並示範緊急貼背啟動法。",
+    "keywords": [
+      "現代汽車鑰匙",
+      "Keyless Go故障",
+      "感應不到鑰匙",
+      "緊急發動",
+      "電池規格更換"
+    ],
+    "link": "/article-hyundai-keyless-troubleshooting"
+  },
+  {
     "id": 29,
     "date": "2026.03.11",
     "category": "技術專欄",
