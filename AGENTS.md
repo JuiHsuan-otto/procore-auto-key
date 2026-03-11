@@ -1,3 +1,27 @@
+## CarKey (ProCore) 專屬發佈流程 (SOP)
+
+為了確保網頁內容同步，每次產出新文章（HTML）後，**必須**執行以下自動化同步指令，不得手動修改 blog.html 或 sitemap.xml：
+
+1. **執行同步腳本**：
+   使用 `publish_tool.py` 自動更新 `blog.json`, `blog.html` (JS 資料陣列) 與 `sitemap.xml`。
+   ```bash
+   python ..\publish_tool.py "文章標題" "/article-filename.html" "分類(如：技術專欄)" "文章摘要"
+   ```
+
+2. **驗證與推送**：
+   確認檔案皆已更新後，執行 Git 提交：
+   ```bash
+   git add .
+   git commit -m "feat: publish new article [文章標題]"
+   git push
+   ```
+
+3. **盲區提醒**：
+   - 僅產出 HTML 檔案是不夠的，沒執行 `publish_tool.py` 網頁列表就不會更新。
+   - 務必檢查 `sitemap.xml` 是否已包含新 URL，這影響 Google 搜尋排名。
+
+---
+
 # AGENTS.md - Your Workspace
 
 This folder is home. Treat it that way.
