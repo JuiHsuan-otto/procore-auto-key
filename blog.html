@@ -50,277 +50,268 @@
 
     <script>
         const blogData = [
-
-            {
-                        "date": "2026.03.13",
-                        "category": "技術專題",
-                        "title": "Dịch vụ làm khóa xe ô tô tận nơi tại Đài Trung, Chương Hóa | ProCore Auto Key",
-                        "summary": "Chuyên làm chìa khóa xe ô tô tận nơi tại Đài Trung, Chương Hóa. Xử lý mất hết chìa khóa BMW, Benz, Toyota nhanh chóng 24H.",
-                        "link": "/dich-vu-lam-khoa-xe-o-to-tai-dai-loan"
-            },
-            {
-                        "id": 30,
-                        "date": "2026.03.11",
-                        "category": "技術專題",
-                        "title": "現代汽車感應不到鑰匙？Keyless Go 故障排除與緊急發動教學",
-                        "summary": "現代汽車智慧感應系統 Keyless Go 失靈？極致核心職人教您如何進行自我診斷、更換正確規格電池 (CR2032/CR2450) 並示範緊急貼背啟動法。",
-                        "keywords": [
-                                    "現代汽車鑰匙",
-                                    "Keyless Go故障",
-                                    "感應不到鑰匙",
-                                    "緊急發動",
-                                    "電池規格更換"
-                        ],
-                        "link": "/article-hyundai-keyless-troubleshooting"
-            },
-            {
-                        "id": 29,
-                        "date": "2026.03.11",
-                        "category": "技術專欄",
-                        "title": "汽車鑰匙感應不到怎麼辦？5招教你快速自我檢測排除故障",
-                        "summary": "鑰匙沒反應、感應不到無法發動？極致核心專業技師整理5大常見原因與排除方法。從電池檢查、電磁干擾到應急啟動技巧，教您在聯繫救援前先自我檢測。",
-                        "keywords": [
-                                    "汽車鑰匙感應不到",
-                                    "Keyless故障排除",
-                                    "鑰匙沒反應",
-                                    "智慧鑰匙維修",
-                                    "自我檢測"
-                        ],
-                        "link": "/article-car-key-not-detected-troubleshooting"
-            },
-            {
-                        "id": 20,
-                        "date": "2026.03.04",
-                        "category": "技術專欄",
-                        "title": "台中汽車鑰匙遺失怎麼辦？極致核心教您如何快速重啟您的愛車",
-                        "summary": "台中汽車鑰匙遺失、不見怎麼辦？極致核心專業解碼工作站，教您如何透過 OBD 讀取數據、齒痕解碼等專業技術快速恢復功能。24H 全中部地區專業救援服務。",
-                        "keywords": [
-                                    "台中汽車鑰匙遺失",
-                                    "台中現場救援",
-                                    "現場讀取齒痕",
-                                    "極致核心救援",
-                                    "汽車鑰匙匹配"
-                        ],
-                        "link": "/article-taichung-on-site-decoding"
-            },
-            {
-                        "id": 19,
-                        "date": "2026.03.04",
-                        "category": "技術專欄",
-                        "title": "汽車鑰匙沒反應？Keyless 故障排除與電池更換指南",
-                        "summary": "遇到感應鑰匙沒反應、遙控失效時該怎麼辦？本文教您如何判斷電池問題或遙控器損壞，並提供常見品牌鑰匙更換電池的圖解步驟。",
-                        "keywords": [
-                                    "汽車鑰匙沒反應",
-                                    "Keyless故障",
-                                    "鑰匙電池更換",
-                                    "遙控功能失效",
-                                    "維修指南"
-                        ],
-                        "link": "/article-keyless-troubleshooting-guide"
-            },
-            {
-                        "id": 18,
-                        "date": "2026.03.03",
-                        "category": "技術專欄",
-                        "title": "中古車購買後的第一件事：防盜安全、您應該檢查的「數據匹配」清單",
-                        "summary": "購買二手車不僅是檢查外觀與引擎，防盜系統的安全性常被忽略。極致核心教您如何檢查現有鑰匙 ID，並註銷遺失 ID，確保愛車不會落入前車主或其他人之手。",
-                        "keywords": [
-                                    "中古車買賣安全",
-                                    "二手車防盜檢查",
-                                    "中古車鑰匙",
-                                    "註銷遺失鑰匙",
-                                    "汽車防盜系統"
-                        ],
-                        "link": "/article-used-car-buying-guide"
-            },
-            {
-                        "id": 17,
-                        "date": "2026.03.02",
-                        "category": "技術專欄",
-                        "title": "保時捷晶片鑰匙全丟救援：BCM 數據重讀與高級匹配技術實錄",
-                        "summary": "針對保時捷 Porsche 高階防盜系統，深入解析 BCM 數據重讀與匹配過程，展示極致核心如何在不影響車主保固前提下，提供原廠等級的高階解碼方案。",
-                        "keywords": [
-                                    "保時捷晶片鑰匙",
-                                    "Porsche鑰匙新增",
-                                    "BCM數據讀取",
-                                    "極致核心救援",
-                                    "高階解碼"
-                        ],
-                        "link": "/article-porsche-bcm-decoding-tech"
-            },
-            {
-                        "id": 16,
-                        "date": "2026.03.02",
-                        "category": "技術專欄",
-                        "title": "VAG 專業防盜技術解讀：為什麼您需要現場解碼而非漫長等待？",
-                        "summary": "深入解析福斯、Audi、Skoda 等 VAG 車系第 4 代防盜系統。防盜數據散落於各個電腦模組，極致核心整合讀取技術，能在現場直接完成匹配，縮短維修週期。",
-                        "keywords": [
-                                    "VAG防盜",
-                                    "福斯鑰匙解碼",
-                                    "現場數據匹配",
-                                    "極致核心救援",
-                                    "VAG鑰匙遺失"
-                        ],
-                        "link": "/article-vag-dashboard-immobilizer-tech"
-            },
-            {
-                        "id": 12,
-                        "date": "2026.02.26",
-                        "category": "技術專欄",
-                        "title": "Lexus 全系智能鑰匙遺失救援：揭秘高級防盜系統的解法",
-                        "summary": "針對 ES、UX、RX 等新一代防盜系統提供快速解碼與現場匹配技術分析。",
-                        "keywords": [
-                                    "Lexus救援",
-                                    "台中Lexus救援",
-                                    "智慧感應鑰匙"
-                        ],
-                        "link": "/article-lexus-taichung-service"
-            },
-            {
-                        "id": 11,
-                        "date": "2026.02.25",
-                        "category": "技術專欄",
-                        "title": "BMW G-Series 智慧感應鑰匙遺失：BDC 系統解碼實錄",
-                        "summary": "解析 BMW 最新 G-Series 車系之 BDC 智慧感應鑰匙系統，分享如何安全且快速的進行數據匹配流程。",
-                        "keywords": [
-                                    "BMW G系列",
-                                    "BDC解碼",
-                                    "鑰匙全丟"
-                        ],
-                        "link": "/article-bmw-gseries-keyless-rescue"
-            },
-            {
-                        "id": 10,
-                        "date": "2026.02.24",
-                        "category": "技術專欄",
-                        "title": "林口 Toyota RAV4 智慧鑰匙救援：一鍵啟動匹配實例",
-                        "summary": "記錄一場 Toyota RAV4 智慧感應鑰匙遺失的緊急救援過程，展示我們快速且穩定的專業能力。",
-                        "keywords": [
-                                    "RAV4鑰匙",
-                                    "林口救援",
-                                    "全丟匹配"
-                        ],
-                        "link": "/article-toyota-rav4-linkou-rescue"
-            },
-            {
-                        "id": 9,
-                        "date": "2026.02.23",
-                        "category": "技術專欄",
-                        "title": "保時捷 Porsche 鑰匙遺失救援：全丟解碼實錄",
-                        "summary": "展示如何針對 Porsche 高性能跑車的鑰匙全丟解決解決方案，包含現場讀取數據與晶片匹配過程。",
-                        "keywords": [
-                                    "Porsche鑰匙",
-                                    "保時捷全丟",
-                                    "高階解碼"
-                        ],
-                        "link": "/article-porsche-lost-key-rescue"
-            },
-            {
-                        "id": 8,
-                        "date": "2026.02.22",
-                        "category": "技術專欄",
-                        "title": "Keyless 智慧感應鑰匙常見故障排除與維護建議",
-                        "summary": "感應不到鑰匙、遙控器沒電？專業技師教您如何診斷與解決常見的智慧鑰匙問題。",
-                        "keywords": [
-                                    "Keyless故障",
-                                    "鑰匙維修",
-                                    "感應不到"
-                        ],
-                        "link": "/article-keyless-troubleshooting"
-            },
-            {
-                        "id": 7,
-                        "date": "2026.02.21",
-                        "category": "技術專欄",
-                        "title": "為什麼您需要專業解碼而非傳統鎖匠？",
-                        "summary": "解析電子防盜個人化編程的重要性，從齒痕到數據加密流程，帶您瞭解一把鑰匙的技術含量。",
-                        "keywords": [
-                                    "專業解碼",
-                                    "防盜系統",
-                                    "技術含量"
-                        ],
-                        "link": "/article-decoding-equipment"
-            },
-            {
-                        "id": 6,
-                        "date": "2026.02.20",
-                        "category": "技術專欄",
-                        "title": "Volvo XC90 Keyless 鑰匙救援：現場數據重構紀錄",
-                        "summary": "記錄一場 Volvo XC90 智慧感應鑰匙系統的緊急救援流程，展示我們如何安全執行高級車款的鑰匙匹配。",
-                        "keywords": [
-                                    "Volvo鑰匙",
-                                    "XC90救援",
-                                    "技術專欄"
-                        ],
-                        "link": "/article-volvo-keyless-lost-rescue"
-            },
-            {
-                        "id": 5,
-                        "date": "2026.02.19",
-                        "category": "技術專欄",
-                        "title": "深入 MQB 平台：VAG 體系（VW/Skoda/Audi）鑰匙全丟技術解析",
-                        "summary": "深入剖析福斯集團 MQB 平台的防盜架構。為什麼全丟比新增更難？數據讀取的核心技術是什麼？",
-                        "keywords": [
-                                    "MQB平台",
-                                    "VAG解碼",
-                                    "VW鑰匙"
-                        ],
-                        "link": "/article-vag-mqb-platform-tech"
-            },
-            {
-                        "id": 4,
-                        "date": "2026.02.18",
-                        "category": "技術專欄",
-                        "title": "BMW FEM/BDC 高級解碼實務：數據讀取與備份技術",
-                        "summary": "深入探討 BMW 智慧感應鑰匙的核心架構，解析如何透過 EEPROM 讀取與 128 位元加密技術。",
-                        "keywords": [
-                                    "FEM解碼",
-                                    "BDC讀取",
-                                    "BMW技術"
-                        ],
-                        "link": "/article-bmw-fem-advanced-tech"
-            },
-            {
-                        "id": 3,
-                        "date": "2026.02.17",
-                        "category": "技術專欄",
-                        "title": "美國汽車市場趨勢：智慧鑰匙與車輛安全系統的演進與未來",
-                        "summary": "解析全球及美洲汽車防盜系統發展，以及高技術含量的鑰匙匹配對二手車市場的影響。",
-                        "keywords": [
-                                    "全球趨勢",
-                                    "防盜演進",
-                                    "技術專欄"
-                        ],
-                        "link": "/article-us-car-market-growth-security-tech"
-            },
-            {
-                        "id": 2,
-                        "date": "2026.02.16",
-                        "category": "技術專欄",
-                        "title": "2026 全球車市分析：智慧感應鑰匙是否會被手機全面取代？",
-                        "summary": "Ford、Tesla 等品牌的數位化趨勢，對於傳統防盜硬體與維修市場的長遠影響。",
-                        "keywords": [
-                                    "數位鑰匙趨勢",
-                                    "汽車市場",
-                                    "技術演進"
-                        ],
-                        "link": "/article-us-car-market-tech"
-            },
-            {
-                        "id": 1,
-                        "date": "2026.02.15",
-                        "category": "技術專欄",
-                        "title": "預防勝於治療：為什麼您需要第二把備份鑰匙？配製流程與成本解析",
-                        "summary": "備份鑰匙不是浪費，而是保險。分析新增與全丟匹配的價差與技術門檻。",
-                        "keywords": [
-                                    "備份鑰匙",
-                                    "預防風險",
-                                    "省錢密技"
-                        ],
-                        "link": "/article-why-you-need-spare-car-key"
-            }
-
-        ];
+  {
+    "id": 30,
+    "date": "2026.03.11",
+    "category": "技術專題",
+    "title": "現代汽車感應不到鑰匙？Keyless Go 故障排除與緊急發動教學",
+    "summary": "現代汽車智慧感應系統 Keyless Go 失靈？極致核心職人教您如何進行自我診斷、更換正確規格電池 (CR2032/CR2450) 並示範緊急貼背啟動法。",
+    "keywords": [
+      "現代汽車鑰匙",
+      "Keyless Go故障",
+      "感應不到鑰匙",
+      "緊急發動",
+      "電池規格更換"
+    ],
+    "link": "/article-hyundai-keyless-troubleshooting"
+  },
+  {
+    "id": 29,
+    "date": "2026.03.11",
+    "category": "技術專欄",
+    "title": "汽車鑰匙感應不到怎麼辦？5招教你快速自我檢測排除故障",
+    "summary": "鑰匙沒反應、感應不到無法發動？極致核心專業技師整理5大常見原因與排除方法。從電池檢查、電磁干擾到應急啟動技巧，教您在聯繫救援前先自我檢測。",
+    "keywords": [
+      "汽車鑰匙感應不到",
+      "Keyless故障排除",
+      "鑰匙沒反應",
+      "智慧鑰匙維修",
+      "自我檢測"
+    ],
+    "link": "/article-car-key-not-detected-troubleshooting"
+  },
+  {
+    "id": 20,
+    "date": "2026.03.04",
+    "category": "技術專欄",
+    "title": "台中汽車鑰匙遺失怎麼辦？極致核心教您如何快速重啟您的愛車",
+    "summary": "台中汽車鑰匙遺失、不見怎麼辦？極致核心專業解碼工作站，教您如何透過 OBD 讀取數據、齒痕解碼等專業技術快速恢復功能。24H 全中部地區專業救援服務。",
+    "keywords": [
+      "台中汽車鑰匙遺失",
+      "台中現場救援",
+      "現場讀取齒痕",
+      "極致核心救援",
+      "汽車鑰匙匹配"
+    ],
+    "link": "/article-taichung-on-site-decoding"
+  },
+  {
+    "id": 19,
+    "date": "2026.03.04",
+    "category": "技術專欄",
+    "title": "汽車鑰匙沒反應？Keyless 故障排除與電池更換指南",
+    "summary": "遇到感應鑰匙沒反應、遙控失效時該怎麼辦？本文教您如何判斷電池問題或遙控器損壞，並提供常見品牌鑰匙更換電池的圖解步驟。",
+    "keywords": [
+      "汽車鑰匙沒反應",
+      "Keyless故障",
+      "鑰匙電池更換",
+      "遙控功能失效",
+      "維修指南"
+    ],
+    "link": "/article-keyless-troubleshooting-guide"
+  },
+  {
+    "id": 18,
+    "date": "2026.03.03",
+    "category": "技術專欄",
+    "title": "中古車購買後的第一件事：防盜安全、您應該檢查的「數據匹配」清單",
+    "summary": "購買二手車不僅是檢查外觀與引擎，防盜系統的安全性常被忽略。極致核心教您如何檢查現有鑰匙 ID，並註銷遺失 ID，確保愛車不會落入前車主或其他人之手。",
+    "keywords": [
+      "中古車買賣安全",
+      "二手車防盜檢查",
+      "中古車鑰匙",
+      "註銷遺失鑰匙",
+      "汽車防盜系統"
+    ],
+    "link": "/article-used-car-buying-guide"
+  },
+  {
+    "id": 17,
+    "date": "2026.03.02",
+    "category": "技術專欄",
+    "title": "保時捷晶片鑰匙全丟救援：BCM 數據重讀與高級匹配技術實錄",
+    "summary": "針對保時捷 Porsche 高階防盜系統，深入解析 BCM 數據重讀與匹配過程，展示極致核心如何在不影響車主保固前提下，提供原廠等級的高階解碼方案。",
+    "keywords": [
+      "保時捷晶片鑰匙",
+      "Porsche鑰匙新增",
+      "BCM數據讀取",
+      "極致核心救援",
+      "高階解碼"
+    ],
+    "link": "/article-porsche-bcm-decoding-tech"
+  },
+  {
+    "id": 16,
+    "date": "2026.03.02",
+    "category": "技術專欄",
+    "title": "VAG 專業防盜技術解讀：為什麼您需要現場解碼而非漫長等待？",
+    "summary": "深入解析福斯、Audi、Skoda 等 VAG 車系第 4 代防盜系統。防盜數據散落於各個電腦模組，極致核心整合讀取技術，能在現場直接完成匹配，縮短維修週期。",
+    "keywords": [
+      "VAG防盜",
+      "福斯鑰匙解碼",
+      "現場數據匹配",
+      "極致核心救援",
+      "VAG鑰匙遺失"
+    ],
+    "link": "/article-vag-dashboard-immobilizer-tech"
+  },
+  {
+    "id": 12,
+    "date": "2026.02.26",
+    "category": "技術專欄",
+    "title": "Lexus 全系智能鑰匙遺失救援：揭秘高級防盜系統的解法",
+    "summary": "針對 ES、UX、RX 等新一代防盜系統提供快速解碼與現場匹配技術分析。",
+    "keywords": [
+      "Lexus救援",
+      "台中Lexus救援",
+      "智慧感應鑰匙"
+    ],
+    "link": "/article-lexus-taichung-service"
+  },
+  {
+    "id": 11,
+    "date": "2026.02.25",
+    "category": "技術專欄",
+    "title": "BMW G-Series 智慧感應鑰匙遺失：BDC 系統解碼實錄",
+    "summary": "解析 BMW 最新 G-Series 車系之 BDC 智慧感應鑰匙系統，分享如何安全且快速的進行數據匹配流程。",
+    "keywords": [
+      "BMW G系列",
+      "BDC解碼",
+      "鑰匙全丟"
+    ],
+    "link": "/article-bmw-gseries-keyless-rescue"
+  },
+  {
+    "id": 10,
+    "date": "2026.02.24",
+    "category": "技術專欄",
+    "title": "林口 Toyota RAV4 智慧鑰匙救援：一鍵啟動匹配實例",
+    "summary": "記錄一場 Toyota RAV4 智慧感應鑰匙遺失的緊急救援過程，展示我們快速且穩定的專業能力。",
+    "keywords": [
+      "RAV4鑰匙",
+      "林口救援",
+      "全丟匹配"
+    ],
+    "link": "/article-toyota-rav4-linkou-rescue"
+  },
+  {
+    "id": 9,
+    "date": "2026.02.23",
+    "category": "技術專欄",
+    "title": "保時捷 Porsche 鑰匙遺失救援：全丟解碼實錄",
+    "summary": "展示如何針對 Porsche 高性能跑車的鑰匙全丟解決解決方案，包含現場讀取數據與晶片匹配過程。",
+    "keywords": [
+      "Porsche鑰匙",
+      "保時捷全丟",
+      "高階解碼"
+    ],
+    "link": "/article-porsche-lost-key-rescue"
+  },
+  {
+    "id": 8,
+    "date": "2026.02.22",
+    "category": "技術專欄",
+    "title": "Keyless 智慧感應鑰匙常見故障排除與維護建議",
+    "summary": "感應不到鑰匙、遙控器沒電？專業技師教您如何診斷與解決常見的智慧鑰匙問題。",
+    "keywords": [
+      "Keyless故障",
+      "鑰匙維修",
+      "感應不到"
+    ],
+    "link": "/article-keyless-troubleshooting"
+  },
+  {
+    "id": 7,
+    "date": "2026.02.21",
+    "category": "技術專欄",
+    "title": "為什麼您需要專業解碼而非傳統鎖匠？",
+    "summary": "解析電子防盜個人化編程的重要性，從齒痕到數據加密流程，帶您瞭解一把鑰匙的技術含量。",
+    "keywords": [
+      "專業解碼",
+      "防盜系統",
+      "技術含量"
+    ],
+    "link": "/article-decoding-equipment"
+  },
+  {
+    "id": 6,
+    "date": "2026.02.20",
+    "category": "技術專欄",
+    "title": "Volvo XC90 Keyless 鑰匙救援：現場數據重構紀錄",
+    "summary": "記錄一場 Volvo XC90 智慧感應鑰匙系統的緊急救援流程，展示我們如何安全執行高級車款的鑰匙匹配。",
+    "keywords": [
+      "Volvo鑰匙",
+      "XC90救援",
+      "技術專欄"
+    ],
+    "link": "/article-volvo-keyless-lost-rescue"
+  },
+  {
+    "id": 5,
+    "date": "2026.02.19",
+    "category": "技術專欄",
+    "title": "深入 MQB 平台：VAG 體系（VW/Skoda/Audi）鑰匙全丟技術解析",
+    "summary": "深入剖析福斯集團 MQB 平台的防盜架構。為什麼全丟比新增更難？數據讀取的核心技術是什麼？",
+    "keywords": [
+      "MQB平台",
+      "VAG解碼",
+      "VW鑰匙"
+    ],
+    "link": "/article-vag-mqb-platform-tech"
+  },
+  {
+    "id": 4,
+    "date": "2026.02.18",
+    "category": "技術專欄",
+    "title": "BMW FEM/BDC 高級解碼實務：數據讀取與備份技術",
+    "summary": "深入探討 BMW 智慧感應鑰匙的核心架構，解析如何透過 EEPROM 讀取與 128 位元加密技術。",
+    "keywords": [
+      "FEM解碼",
+      "BDC讀取",
+      "BMW技術"
+    ],
+    "link": "/article-bmw-fem-advanced-tech"
+  },
+  {
+    "id": 3,
+    "date": "2026.02.17",
+    "category": "技術專欄",
+    "title": "美國汽車市場趨勢：智慧鑰匙與車輛安全系統的演進與未來",
+    "summary": "解析全球及美洲汽車防盜系統發展，以及高技術含量的鑰匙匹配對二手車市場的影響。",
+    "keywords": [
+      "全球趨勢",
+      "防盜演進",
+      "技術專欄"
+    ],
+    "link": "/article-us-car-market-growth-security-tech"
+  },
+  {
+    "id": 2,
+    "date": "2026.02.16",
+    "category": "技術專欄",
+    "title": "2026 全球車市分析：智慧感應鑰匙是否會 be 手機全面取代？",
+    "summary": "Ford、Tesla 等品牌的數位化趨勢，對於傳統防盜硬體與維修市場的長遠影響。",
+    "keywords": [
+      "數位鑰匙趨勢",
+      "汽車市場",
+      "技術演進"
+    ],
+    "link": "/article-us-car-market-tech"
+  },
+  {
+    "id": 1,
+    "date": "2026.02.15",
+    "category": "技術專欄",
+    "title": "預防勝於治療：為什麼您需要第二把備份鑰匙？配製流程與成本解析",
+    "summary": "備份鑰匙不是浪費，而是保險。分析新增與全丟匹配的價差與技術門檻。",
+    "keywords": [
+      "備份鑰匙",
+      "預防風險",
+      "省錢密技"
+    ],
+    "link": "/article-why-you-need-spare-car-key"
+  }
+];
 
         document.getElementById('blog-list').innerHTML = blogData.map(item => `
             <div class="blog-card rounded-sm">
