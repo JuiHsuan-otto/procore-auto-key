@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026.03.13",
-    "category": "解碼實績",
-    "title": "BMW 740 (F01) 鑰匙全丟苗栗苑裡現場救援：專業數據解碼配製實錄",
-    "summary": "苗栗苑裡 BMW 740 鑰匙全丟，極致核心專業工程師現場透過高階設備讀取 CAS4 數據，免拆卸、免拖吊，一小時內快速配製全新感應智慧鑰匙。",
-    "link": "/article-bmw-740-yuanli-akl.html"
-  },
-  {
-    "date": "2026.03.11",
-    "category": "解碼實績",
-    "title": "Mini Clubman 鑰匙全丟彰化北斗現場救援：專業數據解碼配製實錄",
-    "summary": "彰化北斗 Mini Clubman 鑰匙全丟，極致核心專業工程師現場數據解碼，一小時內快速配製全新晶片鑰匙，免拖吊、效率高，找回愛車動力。",
-    "link": "/article-mini-clubman-beidou-akl.html"
-  },
-  {
     "id": 30,
     "date": "2026.03.11",
     "category": "技術專題",
@@ -42,126 +28,6 @@
       "自我檢測"
     ],
     "link": "/article-car-key-not-detected-troubleshooting"
-  },
-  {
-    "id": 28,
-    "date": "2026.03.10",
-    "category": "解碼實績",
-    "title": "高雄楠梓 Benz W204 鑰匙全丟救援：FBS3 系統現場數據重構實錄",
-    "summary": "高雄楠梓現場 Benz W204 (C-Class) 鑰匙全丟救援。極致核心利用高階設備讀取點火開關數據，現場計算密鑰並寫入新鑰匙，免拖吊、現場即刻恢復發動。",
-    "keywords": [
-      "Benz W204 鑰匙",
-      "高雄現場救援",
-      "楠梓汽車鑰匙",
-      "FBS3 系統解碼",
-      "鑰匙全丟"
-    ],
-    "link": "/article-benz-w204-nanzi-akl"
-  },
-  {
-    "id": 27,
-    "date": "2026.03.09",
-    "category": "解碼實績",
-    "title": "彰化花壇 Lexus NX200 智能鑰匙全丟救援：高階防盜現場數據重構",
-    "summary": "彰化花壇現場 Lexus NX200 智能感應鑰匙全丟救援。極致核心利用專業診斷設備現場進行數據解碼與密鑰授權，同步註銷遺失鑰匙權限，1 小時內完美復原。",
-    "keywords": [
-      "Lexus NX200 鑰匙",
-      "彰化現場救援",
-      "花壇汽車鑰匙",
-      "智能鑰匙全丟",
-      "數據重構"
-    ],
-    "link": "/article-lexus-nx200-huatan-akl"
-  },
-  {
-    "id": 26,
-    "date": "2026.03.08",
-    "category": "解碼實績",
-    "title": "彰化和美 Mazda CX-3 智能鑰匙新增：魂動美學現場極速解碼",
-    "summary": "彰化和美現場 Mazda CX-3 智能感應鑰匙新增。極致核心利用 OBD 專業設備現場匹配，無須拆卸飾板，30 分鐘內即刻恢復雙鑰匙狀態，確保車主用車無虞。",
-    "keywords": [
-      "Mazda CX-3 鑰匙",
-      "彰化現場救援",
-      "和美汽車鑰匙",
-      "智能鑰匙新增",
-      "魂動美學"
-    ],
-    "link": "/article-mazda-cx3-hemei-smartkey"
-  },
-  {
-    "id": 25,
-    "date": "2026.03.06",
-    "category": "解碼實績",
-    "title": "[彰化特輯] BMW X5 E70 遙控器充電電池耗盡救援：極致核心現場維修實錄",
-    "summary": "BMW X5 (E70) 遙控鑰匙無法感應、充電電池完全耗盡？極致核心彰化市現場救援，專業拆解維修更換充電電池，免去原廠高額換新費用。",
-    "keywords": [
-      "BMW X5 鑰匙維修",
-      "彰化汽車鑰匙",
-      "BMW 充電電池更換",
-      "E70 遙控器失效",
-      "極致核心救援"
-    ],
-    "link": "/article-bmw-x5-battery-fix"
-  },
-  {
-    "id": 24,
-    "date": "2026.03.05",
-    "category": "解碼實績",
-    "title": "VW Arteon 獵跑美學：MQB 系統智慧感應鑰匙新增實錄",
-    "summary": "彰化現場 VW Arteon 智慧感應鑰匙新增實績。針對 MQB 平台複雜的防盜系統，極致核心專業工程師現場快速完成解碼與匹配，展現原廠級設備匹配技術實力。",
-    "keywords": [
-      "VW Arteon 鑰匙",
-      "MQB鑰匙匹配",
-      "彰化現場救援",
-      "汽車鑰匙解碼",
-      "極致核心救援"
-    ],
-    "link": "/article-vw-arteon-mqb-smartkey"
-  },
-  {
-    "id": 23,
-    "date": "2026.03.04",
-    "category": "解碼實績",
-    "title": "Kia Picanto 智能鑰匙全丟救援：伸港現場匹配實錄",
-    "summary": "彰化伸港現場 Kia Picanto 智慧感應鑰匙全丟。極致核心專業團隊到場，從機械鑰匙齒痕解碼到晶片防盜系統數據匹配，完美恢復車主用車自由。",
-    "keywords": [
-      "Kia Picanto 鑰匙",
-      "彰化現場救援",
-      "伸港汽車鑰匙",
-      "智能鑰匙全丟",
-      "汽車鑰匙解碼"
-    ],
-    "link": "/article-kia-picanto-shengang-akl"
-  },
-  {
-    "id": 22,
-    "date": "2026.03.04",
-    "category": "解碼實績",
-    "title": "2021 Hyundai Tucson 油電版：和美現場智慧鑰匙全丟救援實錄",
-    "summary": "彰化和美現場 2021 Hyundai Tucson Hybrid 鑰匙全丟救援。利用專門設備讀取防盜系統數據，現場匹配原廠級智慧鑰匙，免去拖吊與長達兩週的等鑰期。",
-    "keywords": [
-      "Hyundai Tucson 鑰匙",
-      "Tucson Hybrid 救援",
-      "彰化現場救援",
-      "和美汽車鑰匙",
-      "汽車鑰匙解碼"
-    ],
-    "link": "/article-hyundai-tucson-hemei-akl"
-  },
-  {
-    "id": 21,
-    "date": "2026.03.04",
-    "category": "解碼實績",
-    "title": "Skoda Kamiq 智慧鑰匙慘遭輾壓？極致核心現場數據重構救援實錄",
-    "summary": "Skoda Kamiq 智慧鑰匙殼破裂失效？極致核心彰化社頭現場救援，在不拆車、不破壞原車電路前提下，成功重構防盜晶片數據，恢復車輛啟動與感應功能。",
-    "keywords": [
-      "Skoda Kamiq鑰匙",
-      "鑰匙被車輾過",
-      "Skoda救援",
-      "汽車鑰匙解碼",
-      "MQB鑰匙匹配"
-    ],
-    "link": "/article-skoda-kamiq-crushed-key"
   },
   {
     "id": 20,
@@ -239,48 +105,6 @@
     "link": "/article-vag-dashboard-immobilizer-tech"
   },
   {
-    "id": 15,
-    "date": "2026.03.02",
-    "category": "解碼實績",
-    "title": "現代 VENUE：智能鑰匙全丟現場極速匹配實錄",
-    "summary": "現代 VENUE 智慧感應鑰匙全丟怎麼辦？極致核心透過專門設備匹配，一站式完成兩把智能鑰匙生成，恢復車主用車便利。",
-    "keywords": [
-      "現代VENUE救援",
-      "VENUE智能鑰匙遺失",
-      "現代汽車救援",
-      "極致核心救援"
-    ],
-    "link": "/case-hyundai-venue-smartkey-lost"
-  },
-  {
-    "id": 14,
-    "date": "2026.03.02",
-    "category": "解碼實績",
-    "title": "社頭 Mazda CX-30 鑰匙全丟救援：烤漆爐內的緊急解碼任務",
-    "summary": "彰化社頭 Mazda CX-30 鑰匙全丟案件。車輛停於烤漆爐內進退不得，極致核心 24H 趕赴現場提供數據解碼與匹配，順利完成交車任務。",
-    "keywords": [
-      "社頭現場救援",
-      "Mazda CX-30 鑰匙全丟",
-      "彰化汽車救援",
-      "極致核心救援"
-    ],
-    "link": "/case-shetou-mazda-cx30-rescue"
-  },
-  {
-    "id": 13,
-    "date": "2026.03.02",
-    "category": "技術專欄",
-    "title": "汽車鑰匙遺失免驚！極致核心：中彰投地區、全台現場救援服務流程",
-    "summary": "汽車鑰匙遺失、不見怎麼辦？極致核心 ProCore 提供專門解碼救援。我們覆蓋台中、彰化、南投地區，並提供新竹、苗栗、雲林、嘉義跨區救援服務。",
-    "keywords": [
-      "汽車鑰匙遺失",
-      "全台現場救援",
-      "台中汽車鑰匙",
-      "極致核心救援"
-    ],
-    "link": "/car-key-lost-rescue-central-taiwan"
-  },
-  {
     "id": 12,
     "date": "2026.02.26",
     "category": "技術專欄",
@@ -324,7 +148,7 @@
     "date": "2026.02.23",
     "category": "技術專欄",
     "title": "保時捷 Porsche 鑰匙遺失救援：全丟解碼實錄",
-    "summary": "展示如何針對 Porsche 高性能跑車的鑰匙全丟解決方案，包含現場讀取數據與晶片匹配過程。",
+    "summary": "展示如何針對 Porsche 高性能跑車的鑰匙全丟解決解決方案，包含現場讀取數據與晶片匹配過程。",
     "keywords": [
       "Porsche鑰匙",
       "保時捷全丟",
