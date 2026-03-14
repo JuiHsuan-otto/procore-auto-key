@@ -5,6 +5,9 @@
 ## 核心目標
 **消滅所有隱形文章**。確保任何 `article-*.html` 產出後，必須在官網列表可見、且被搜尋引擎索引。
 
+## 🛡️ 備份優先原則 (Pre-action Backup)
+在執行任何 Indexing 或重構作業前，**必須**先將 `blog.json`, `blog.html`, `sitemap.xml` 複製一份至 `C:\Users\ottoy\.openclaw\workspace-carkey\backups\` 目錄，作為災難復原的基準點。
+
 ## 強制執行 Feedback Loop
 當生成、修改或刪除任何文章檔案後，**必須**依序執行以下步驟：
 
