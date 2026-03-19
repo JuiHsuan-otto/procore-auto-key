@@ -1,481 +1,874 @@
-﻿<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>極致核心 ProCore | 全台汽車晶片鑰匙全丟救援 24H 跨區現場匹配</title>
-    <link rel="icon" href="img/procore_logo_main.jpg" type="image/jpeg">
-    <meta name="description" content="全台汽車鑰匙遺失、晶片鑰匙備份及全丟救援。專攻 BMW/Benz 進口車晶片解碼、智慧感應鑰匙升級。免拖吊、全台跨區現場數據重構。">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;600&display=swap" rel="stylesheet">
-    <style>
-        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.6); --border: rgba(255, 255, 255, 0.08); --gold-primary: #D4AF37; --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
-        body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 80%); }
-        
-        /* 浮動按鈕呼吸效果 */
-        @keyframes pulse-gold {
-            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); }
-            50% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); transform: scale(1.05); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); }
-        }
-        .float-btn { position: fixed; bottom: 30px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
-        .btn-call-float { width: 65px; height: 65px; background: var(--gold-gradient); border-radius: 50%; display: flex; items-center; justify-content: center; animation: pulse-gold 2s infinite ease-in-out; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); }
-        .btn-line-float { width: 65px; height: 65px; background: #06C755; border-radius: 50%; display: flex; items-center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
-        .btn-line-float:hover { transform: scale(1.1); }
-        
-        /* 數字滾動樣式 */
-        .stat-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; text-align: center; border-radius: 4px; }
-        .stat-number { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 0.5rem; }
-        .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 6s linear infinite; }
-        @keyframes shine { to { background-position: 200% center; } }
-        nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .nav-scrolled { border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
-        .work-card { position: relative; aspect-ratio: 1/1; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
-        .work-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
-        .work-card:hover { border-color: var(--gold-primary); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
-        .work-card:hover img { transform: scale(1.08); }
-        .work-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); }
-        .btn-premium { border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 0.6rem 1.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; background: rgba(255,255,255,0.02); }
-        .btn-premium:hover { background: var(--gold-primary); color: black; box-shadow: 0 0 20px rgba(212,175,55,0.3); }
-        .btn-emergency { background: var(--gold-gradient); color: #000; font-weight: 800; padding: 1rem 2rem; border-radius: 2px; transition: all 0.3s; }
-        .btn-emergency:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(212,175,55,0.4); }
-    </style>
-</head>
-<body class="antialiased">
-    <!-- 24H 浮動救援按鈕 -->
-    <div class="float-btn md:hidden">
-        <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="btn-line-float">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" class="w-8 h-8">
-        </a>
-        <a href="tel:0909277670" class="btn-call-float">
-            <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
-        </a>
-    </div>
-
-    <nav id="navbar" class="sticky top-0 w-full z-50 py-4 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="/" class="group flex items-center gap-3">
-                <img src="img/procore_logo_main.jpg" class="w-10 h-10 rounded-full border border-gold-primary/30 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
-                <div>
-                    <h1 class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</h1>
-                    <span class="text-[8px] text-gray-500 tracking-[0.4em] uppercase block">Artisan Auto Key</span>
-                </div>
-            </a>
-            <div class="hidden md:flex items-center gap-10">
-                <a href="/cases" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">解碼實績 / Works</a>
-                <a href="/blog" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">技術專欄 / Blog</a>
-                
-            <div class="hidden lg:flex items-center ml-10 relative group">
-                <input type="text" id="global-search" placeholder="搜尋車款或地點..." 
-                    class="bg-zinc-900/50 border border-white/10 rounded-full px-4 py-1 text-[10px] text-white focus:outline-none focus:border-gold-primary/50 transition-all w-40 focus:w-64">
-                <svg class="w-3 h-3 text-gray-500 absolute right-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <div id="search-results" class="absolute top-full right-0 mt-2 w-80 bg-zinc-900 border border-white/10 rounded shadow-2xl hidden z-[100] max-h-96 overflow-y-auto"></div>
-            </div>
-                <a href="tel:0909277670" class="btn-premium">24H Emergency</a>
-            </div>
-            
-            <div class="md:hidden flex items-center gap-4">
-                <button id="mobile-search-toggle" class="text-white">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </button>
-            </div>
-            <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
-                <a href="/cases" class="text-white">WORKS</a>
-                <a href="/blog" class="text-white">BLOG</a>
-                <a href="tel:0909277670" class="text-gold">CALL</a>
-            </div>
-        </div>
-    </nav>
-
-    <header class="relative h-[80vh] flex items-center justify-center overflow-hidden">
-        <video class="absolute inset-0 w-full h-full object-cover opacity-20" autoplay loop muted playsinline>
-            <source src="vid/bmw_tech.mp4" type="video/mp4">
-        </video>
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-        <div class="relative z-10 text-center px-4 max-w-5xl">
-            <span class="inline-block py-1 px-3 border border-gold-primary/30 text-gold-primary text-[9px] tracking-[0.4em] uppercase mb-8">Automotive Security Specialist</span>
+﻿<!DOCTYPE html>
+
+<html lang="zh-TW">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>極致核心 ProCore | 全台汽車晶片鑰匙全丟救援 24H 跨區現場匹配</title>
+
+    <link rel="icon" href="img/procore_logo_main.jpg" type="image/jpeg">
+
+    <meta name="description" content="全台汽車鑰匙遺失、晶片鑰匙備份及全丟救援。專攻 BMW/Benz 進口車晶片解碼、智慧感應鑰匙升級。免拖吊、全台跨區現場數據重構。">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.6); --border: rgba(255, 255, 255, 0.08); --gold-primary: #D4AF37; --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
+
+        body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 80%); }
+
+        
+
+        /* 浮動按鈕呼吸效果 */
+
+        @keyframes pulse-gold {
+
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); }
+
+            50% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); transform: scale(1.05); }
+
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); }
+
+        }
+
+        .float-btn { position: fixed; bottom: 30px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
+
+        .btn-call-float { width: 65px; height: 65px; background: var(--gold-gradient); border-radius: 50%; display: flex; items-center; justify-content: center; animation: pulse-gold 2s infinite ease-in-out; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); }
+
+        .btn-line-float { width: 65px; height: 65px; background: #06C755; border-radius: 50%; display: flex; items-center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
+
+        .btn-line-float:hover { transform: scale(1.1); }
+
+        
+
+        /* 數字滾動樣式 */
+
+        .stat-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; text-align: center; border-radius: 4px; }
+
+        .stat-number { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 0.5rem; }
+
+        .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 6s linear infinite; }
+
+        @keyframes shine { to { background-position: 200% center; } }
+
+        nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        .nav-scrolled { border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
+
+        .work-card { position: relative; aspect-ratio: 1/1; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
+
+        .work-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
+
+        .work-card:hover { border-color: var(--gold-primary); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
+
+        .work-card:hover img { transform: scale(1.08); }
+
+        .work-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); }
+
+        .btn-premium { border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 0.6rem 1.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; background: rgba(255,255,255,0.02); }
+
+        .btn-premium:hover { background: var(--gold-primary); color: black; box-shadow: 0 0 20px rgba(212,175,55,0.3); }
+
+        .btn-emergency { background: var(--gold-gradient); color: #000; font-weight: 800; padding: 1rem 2rem; border-radius: 2px; transition: all 0.3s; }
+
+        .btn-emergency:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(212,175,55,0.4); }
+
+    </style>
+
+</head>
+
+<body class="antialiased">
+
+    <!-- 24H 浮動救援按鈕 -->
+
+    <div class="float-btn md:hidden">
+
+        <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="btn-line-float">
+
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" class="w-8 h-8">
+
+        </a>
+
+        <a href="tel:0909277670" class="btn-call-float">
+
+            <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+
+        </a>
+
+    </div>
+
+
+
+    <nav id="navbar" class="sticky top-0 w-full z-50 py-4 transition-all duration-300">
+
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+
+            <a href="/" class="group flex items-center gap-3">
+
+                <img src="img/procore_logo_main.jpg" class="w-10 h-10 rounded-full border border-gold-primary/30 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+
+                <div>
+
+                    <h1 class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</h1>
+
+                    <span class="text-[8px] text-gray-500 tracking-[0.4em] uppercase block">Artisan Auto Key</span>
+
+                </div>
+
+            </a>
+
+            <div class="hidden md:flex items-center gap-10">
+
+                <a href="/cases" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">解碼實績 / Works</a>
+
+                <a href="/blog" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">技術專欄 / Blog</a>
+
+                
+
+            <div class="hidden lg:flex items-center ml-10 relative group">
+
+                <input type="text" id="global-search" placeholder="搜尋車款或地點..." 
+
+                    class="bg-zinc-900/50 border border-white/10 rounded-full px-4 py-1 text-[10px] text-white focus:outline-none focus:border-gold-primary/50 transition-all w-40 focus:w-64">
+
+                <svg class="w-3 h-3 text-gray-500 absolute right-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+
+                <div id="search-results" class="absolute top-full right-0 mt-2 w-80 bg-zinc-900 border border-white/10 rounded shadow-2xl hidden z-[100] max-h-96 overflow-y-auto"></div>
+
+            </div>
+
+                <a href="tel:0909277670" class="btn-premium">24H Emergency</a>
+
+            </div>
+
+            
+
+            <div class="md:hidden flex items-center gap-4">
+
+                <button id="mobile-search-toggle" class="text-white">
+
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+
+                </button>
+
+            </div>
+
+            <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
+
+                <a href="/cases" class="text-white">WORKS</a>
+
+                <a href="/blog" class="text-white">BLOG</a>
+
+                <a href="tel:0909277670" class="text-gold">CALL</a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <header class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+
+        <video class="absolute inset-0 w-full h-full object-cover opacity-20" autoplay loop muted playsinline>
+
+            <source src="vid/bmw_tech.mp4" type="video/mp4">
+
+        </video>
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+
+        <div class="relative z-10 text-center px-4 max-w-5xl">
+
+            <span class="inline-block py-1 px-3 border border-gold-primary/30 text-gold-primary text-[9px] tracking-[0.4em] uppercase mb-8">Automotive Security Specialist</span>
+
             <h1 class="font-serif-tc text-4xl md:text-8xl font-bold text-white leading-tight mb-8">
                 沒鑰匙，找極致。<br>
                 <span class="text-gold-lux italic text-xl md:text-5xl">全台 24H 現場匹配，免拖吊一小時啟動</span>
-            </h1>
-            <div class="flex flex-col md:flex-row justify-center gap-6 mt-8">
-                <a href="tel:0909277670" class="btn-emergency text-xs tracking-widest">立即啟動救援</a>
-                <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="border border-white/20 px-10 py-4 text-[10px] tracking-widest text-white uppercase hover:bg-white/5 transition">LINE 預約諮詢</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- 技術權威數據看板 -->
-    <section class="py-12 bg-zinc-900/50">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="stat-card">
-                <div class="stat-number counter" data-target="5221">0</div>
-                <div class="text-[10px] text-gray-500 tracking-widest uppercase">累積解碼車輛</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number counter" data-target="1514">0</div>
-                <div class="text-[10px] text-gray-500 tracking-widest uppercase">全台遠征救援</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number counter" data-target="100">0</div>
-                <div class="text-[10px] text-gray-500 tracking-widest uppercase">覆蓋汽車品牌</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number counter" data-target="24">0</div>
-                <div class="text-[10px] text-gray-500 tracking-widest uppercase">24H 全年無休</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="recent-works" class="py-24 bg-black">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Recent Missions</span>
-                    <h2 class="text-2xl font-bold font-serif-tc text-white">最新解碼實績</h2>
-                </div>
-                <a href="/cases" class="text-[10px] text-gray-500 hover:text-white border-b border-gray-800 pb-2 tracking-widest transition">VIEW ALL →</a>
-            </div>
-            <div id="home-case-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- 由 JS 聯動 -->
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-black/50 border-y border-white/5">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Common Questions</span>
-                <h2 class="text-3xl font-bold font-serif-tc text-white italic">常見問題解答</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
-                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 鑰匙全丟了，真的不需要拖車嗎？</h3>
-                    <p class="text-gray-300 text-sm leading-loose">是的。我們擁有專業行動解碼工作站，能直接前往您的停車地點，現場進行數據採集與晶片匹配，省去昂貴的拖吊費用與原廠漫長的等待期。</p>
-                </div>
-                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
-                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 現場配製的鑰匙，功能與原廠一樣嗎？</h3>
-                    <p class="text-gray-300 text-sm leading-loose">完全一致。我們使用的智慧鑰匙均支援原廠所有功能（包含 Keyless 免鑰匙進入、一鍵啟動及防盜數據同步），且享有技術保固。</p>
-                </div>
-                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
-                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 服務範圍涵蓋哪些地區？</h3>
-                    <p class="text-gray-300 text-sm leading-loose">極致核心深耕中彰投地區，並提供新竹、苗栗、雲林、嘉義的跨區遠征服務。不論您在市區還是郊區，專業技術團隊皆可預約抵達。</p>
-                </div>
-                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
-                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 配製新鑰匙時，遺失的舊鑰匙安全嗎？</h3>
-                    <p class="text-gray-300 text-sm leading-loose">我們會在匹配新鑰匙的同時，從車輛系統中註銷已遺失的鑰匙 ID。這意味著即便有人撿到舊鑰匙，也無法啟動您的愛車。</p>
-                </div>
-                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
-                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 進口車款（如 BMW/Benz）也能現場做嗎？</h3>
-                    <p class="text-gray-300 text-sm leading-loose">可以。我們專攻高階歐系防盜系統，包含 BMW FEM/BDC、Mercedes-Benz FBS3/FBS4 等複雜架構，均有成熟的現場解碼方案。</p>
-                </div>
-                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
-                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 整個配製過程需要多久時間？</h3>
-                    <p class="text-gray-300 text-sm leading-loose">視車款複雜度而定，一般國產車約 30-40 分鐘，高階歐系車款約 1-2 小時即可完工交車，讓您當天就能重新啟動行程。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 bg-zinc-900/30">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-xl font-bold font-cinzel mb-10 uppercase tracking-[0.4em] text-gold-lux">Contact</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
-                    <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">Official Line ID</span>
-                    <span class="text-base font-bold text-white group-hover:text-gold-primary transition">@420gknem</span>
-                </a>
-                <a href="tel:0909277670" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
-                    <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">24H Hotline</span>
-                    <span class="text-base font-bold text-white group-hover:text-gold-primary transition">0909-277-670</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-black border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h3 class="text-gold-primary text-[8px] tracking-[0.4em] uppercase mb-6 opacity-60">Popular Service Areas</h3>
-            <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[10px] text-gray-600 tracking-widest">
-                <a href="/local/taichung/xitun/bmw" class="hover:text-gold-primary transition">台中西屯</a>
-                <a href="/local/taichung/nantun/benz" class="hover:text-gold-primary transition">台中南屯</a>
-                <a href="/local/taichung/beitun/volvo" class="hover:text-gold-primary transition">台中北屯</a>
-                <a href="/local/taichung/dali/audi" class="hover:text-gold-primary transition">台中大里</a>
-                <a href="/local/taichung/fengyuan/vw" class="hover:text-gold-primary transition">台中豐原</a>
-                <a href="/local/changhua/city/bmw" class="hover:text-gold-primary transition">彰化市區</a>
-                <a href="/local/changhua/yuanlin/benz" class="hover:text-gold-primary transition">彰化員林</a>
-                <a href="/local/changhua/lukang/volvo" class="hover:text-gold-primary transition">彰化鹿港</a>
-                <a href="/local/nantou/caotun/audi" class="hover:text-gold-primary transition">南投草屯</a>
-                <a href="/local/nantou/puli/vw" class="hover:text-gold-primary transition">南投埔里</a>
-                <a href="/dich-vu-lam-khoa-xe-o-to-tai-dai-loan" class="hover:text-gold-primary transition">Dịch vụ làm khóa xe ô tô (Vietnamese)</a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-10 text-center border-t border-white/5 text-[8px] text-gray-700 tracking-[0.5em] uppercase">
-        © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
-    </footer>
-
-    <script>
-        // 數字滾動動畫
-        const counters = document.querySelectorAll('.counter');
-        const speed = 200;
-
-        const startCounters = () => {
-            counters.forEach(counter => {
-                const updateCount = () => {
-                    const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText;
-                    const inc = target / speed;
-
-                    if (count < target) {
-                        counter.innerText = Math.ceil(count + inc);
-                        setTimeout(updateCount, 1);
-                    } else {
-                        counter.innerText = target + '+';
-                    }
-                };
-                updateCount();
-            });
-        };
-
-        // 偵測滾動啟動動畫
-        let animated = false;
-        window.addEventListener('scroll', () => {
-            const section = document.querySelector('.stat-card');
-            if (section) {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight && !animated) {
-                    startCounters();
-                    animated = true;
-                }
-            }
-        });
-
-        const latestCases = [
-            {
-                        "car": "PORSCHE CAYENNE",
-                        "label": "解碼實績",
-                        "img": "img/porsche-cayenne-hemei/case-1.jpg",
-                        "link": "/article-porsche-cayenne-hemei.html"
-            },
-            {
-                        "car": "MERCEDES",
-                        "label": "解碼實績",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-benz-glk-miaoli-akl.html"
-            },
-            {
-                        "car": "HONDA",
-                        "label": "解碼實績",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-honda-hrv-2020-all-lost-changhua.html"
-            },
-            {
-                        "car": "3",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-car-wont-start-troubleshooting.html"
-            },
-            {
-                        "car": "GO",
-                        "label": "技術專題",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-hyundai-keyless-troubleshooting"
-            },
-            {
-                        "car": "CAR",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-car-key-not-detected-troubleshooting"
-            },
-            {
-                        "car": "CAR",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-taichung-on-site-decoding"
-            },
-            {
-                        "car": "故障排除與電池更換指南",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-keyless-troubleshooting-guide"
-            },
-            {
-                        "car": "CAR",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-used-car-buying-guide"
-            },
-            {
-                        "car": "數據重讀與高級匹配技術實錄",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-porsche-bcm-decoding-tech"
-            },
-            {
-                        "car": "專業防盜技術解讀：為什麼您需要現場解碼而非漫長等待？",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-vag-dashboard-immobilizer-tech"
-            },
-            {
-                        "car": "全系智能鑰匙遺失救援：揭秘高級防盜系統的解法",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-lexus-taichung-service"
-            },
-            {
-                        "car": "BMW",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-bmw-gseries-keyless-rescue"
-            },
-            {
-                        "car": "MQB",
-                        "label": "技術專欄",
-                        "img": "img/procore_logo_main.jpg",
-                        "link": "/article-vag-mqb-platform-tech"
-            }
-];
-        document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
-            <div class="work-card group" onclick="location.href='${c.link}'">
-                <img src="${c.img}" alt="${c.car}">
-                <div class="work-overlay"></div>
-                <div class="absolute bottom-6 left-6">
-                    <p class="text-[9px] text-gold-primary font-bold tracking-widest mb-1">${c.car}</p>
-                    <h4 class="text-white text-xs font-bold">${c.label}</h4>
-                </div>
-            </div>
-        `).join('');
-    </script>
-    <!-- FAQ Schema 結構化數據 -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "汽車鑰匙全丟了，真的不需要拖車嗎？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "是的。極致核心擁有專業行動解碼工作站，能直接前往您的停車地點，現場進行數據採集與晶片匹配，省去昂貴的拖吊費用與原廠漫長的等待期。"
-        }
-      }, {
-        "@type": "Question",
-        "name": "服務範圍涵蓋哪些地區？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "極致核心深耕中彰投地區，並提供新竹、苗栗、雲林、嘉義的跨區遠征服務。不論您在市區還是郊區，專業技術團隊皆可預約抵達。"
-        }
-      }, {
-        "@type": "Question",
-        "name": "進口車款（如 BMW/Benz）也能現場做嗎？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "可以。我們專攻高階歐系防盜系統，包含 BMW FEM/BDC、Mercedes-Benz FBS3/FBS4 等複雜架構，均有成熟的現場解碼方案。"
-        }
-      }]
-    }
-    </script>
-
-    <script>
-        // 全局搜尋邏輯
-        const searchInput = document.getElementById('global-search');
-        const resultsDiv = document.getElementById('search-results');
-
-        if (searchInput) {
-            searchInput.addEventListener('input', async (e) => {
-                const query = e.target.value.toLowerCase().trim();
-                if (query.length < 1) {
-                    resultsDiv.classList.add('hidden');
-                    return;
-                }
-
-                try {
-                    const response = await fetch('/blog.json?t=' + new Date().getTime());
-                    const data = await response.json();
-                    
-                    const filtered = data.filter(item => 
-                        item.title.toLowerCase().includes(query) || 
-                        item.summary.toLowerCase().includes(query) ||
-                        (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query)))
-                    ).slice(0, 5);
-
-                    if (filtered.length > 0) {
-                        resultsDiv.innerHTML = filtered.map(item => `
-                            <a href="${item.link}" class="block p-4 border-b border-white/5 hover:bg-white/5 transition">
-                                <span class="text-[9px] text-gold-primary uppercase tracking-widest">${item.category}</span>
-                                <h5 class="text-white text-xs font-bold mt-1">${item.title}</h5>
-                            </a>
-                        `).join('');
-                        resultsDiv.classList.remove('hidden');
-                    } else {
-                        resultsDiv.innerHTML = '<div class="p-4 text-gray-500 text-[10px]">找不到相關結果</div>';
-                        resultsDiv.classList.remove('hidden');
-                    }
-                } catch (err) {
-                    console.error('Search failed:', err);
-                }
-            });
-
-            // 點擊外部關閉搜尋結果
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
-                    resultsDiv.classList.add('hidden');
-                }
-            });
-        }
-    </script>
-    
-
-    <!-- 手機版搜尋遮罩 -->
-    <div id="mobile-search-overlay" class="fixed inset-0 bg-black/95 z-[200] hidden flex-col p-6">
-        <div class="flex justify-between items-center mb-8">
-            <h3 class="text-gold-primary font-bold tracking-widest">SEARCH</h3>
-            <button id="mobile-search-close" class="text-white text-2xl">&times;</button>
-        </div>
-        <input type="text" id="mobile-search-input" placeholder="搜尋車款或地點..." 
-            class="bg-zinc-900 border border-white/10 rounded-lg px-6 py-4 text-white focus:outline-none focus:border-gold-primary transition-all w-full text-lg">
-        <div id="mobile-search-results" class="mt-8 space-y-4 overflow-y-auto flex-grow"></div>
-    </div>
-    <script>
-        const mobileToggle = document.getElementById('mobile-search-toggle');
-        const mobileOverlay = document.getElementById('mobile-search-overlay');
-        const mobileClose = document.getElementById('mobile-search-close');
-        const mobileInput = document.getElementById('mobile-search-input');
-        const mobileResults = document.getElementById('mobile-search-results');
-
-        if (mobileToggle) {
-            mobileToggle.onclick = () => {
-                mobileOverlay.classList.remove('hidden');
-                mobileInput.focus();
-            };
-            mobileClose.onclick = () => mobileOverlay.classList.add('hidden');
-            
-            mobileInput.addEventListener('input', async (e) => {
-                const query = e.target.value.toLowerCase().trim();
-                if (query.length < 1) {
-                    mobileResults.innerHTML = '';
-                    return;
-                }
-                try {
-                    const response = await fetch('/blog.json?t=' + new Date().getTime());
-                    const data = await response.json();
-                    const filtered = data.filter(item => 
-                        item.title.toLowerCase().includes(query) || 
-                        item.summary.toLowerCase().includes(query)
-                    );
-                    mobileResults.innerHTML = filtered.map(item => `
-                        <a href="${item.link}" class="block p-5 bg-white/5 border border-white/5 rounded-lg">
-                            <span class="text-[10px] text-gold-primary uppercase tracking-widest">${item.category}</span>
-                            <h5 class="text-white font-bold mt-2">${item.title}</h5>
-                        </a>
-                    `).join('');
-                } catch (err) {}
-            });
-        }
-    </script>
-    
-</body>
-</html>
+            </h1>
+
+            <div class="flex flex-col md:flex-row justify-center gap-6 mt-8">
+
+                <a href="tel:0909277670" class="btn-emergency text-xs tracking-widest">立即啟動救援</a>
+
+                <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="border border-white/20 px-10 py-4 text-[10px] tracking-widest text-white uppercase hover:bg-white/5 transition">LINE 預約諮詢</a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- 技術權威數據看板 -->
+
+    <section class="py-12 bg-zinc-900/50">
+
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+
+            <div class="stat-card">
+
+                <div class="stat-number counter" data-target="5221">0</div>
+
+                <div class="text-[10px] text-gray-500 tracking-widest uppercase">累積解碼車輛</div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-number counter" data-target="1514">0</div>
+
+                <div class="text-[10px] text-gray-500 tracking-widest uppercase">全台遠征救援</div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-number counter" data-target="100">0</div>
+
+                <div class="text-[10px] text-gray-500 tracking-widest uppercase">覆蓋汽車品牌</div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-number counter" data-target="24">0</div>
+
+                <div class="text-[10px] text-gray-500 tracking-widest uppercase">24H 全年無休</div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section id="recent-works" class="py-24 bg-black">
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="flex justify-between items-end mb-12">
+
+                <div>
+
+                    <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Recent Missions</span>
+
+                    <h2 class="text-2xl font-bold font-serif-tc text-white">最新解碼實績</h2>
+
+                </div>
+
+                <a href="/cases" class="text-[10px] text-gray-500 hover:text-white border-b border-gray-800 pb-2 tracking-widest transition">VIEW ALL →</a>
+
+            </div>
+
+            <div id="home-case-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- 由 JS 聯動 -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="py-24 bg-black/50 border-y border-white/5">
+
+        <div class="max-w-4xl mx-auto px-6">
+
+            <div class="text-center mb-16">
+
+                <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Common Questions</span>
+
+                <h2 class="text-3xl font-bold font-serif-tc text-white italic">常見問題解答</h2>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+
+                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 鑰匙全丟了，真的不需要拖車嗎？</h3>
+
+                    <p class="text-gray-300 text-sm leading-loose">是的。我們擁有專業行動解碼工作站，能直接前往您的停車地點，現場進行數據採集與晶片匹配，省去昂貴的拖吊費用與原廠漫長的等待期。</p>
+
+                </div>
+
+                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+
+                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 現場配製的鑰匙，功能與原廠一樣嗎？</h3>
+
+                    <p class="text-gray-300 text-sm leading-loose">完全一致。我們使用的智慧鑰匙均支援原廠所有功能（包含 Keyless 免鑰匙進入、一鍵啟動及防盜數據同步），且享有技術保固。</p>
+
+                </div>
+
+                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+
+                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 服務範圍涵蓋哪些地區？</h3>
+
+                    <p class="text-gray-300 text-sm leading-loose">極致核心深耕中彰投地區，並提供新竹、苗栗、雲林、嘉義的跨區遠征服務。不論您在市區還是郊區，專業技術團隊皆可預約抵達。</p>
+
+                </div>
+
+                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+
+                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 配製新鑰匙時，遺失的舊鑰匙安全嗎？</h3>
+
+                    <p class="text-gray-300 text-sm leading-loose">我們會在匹配新鑰匙的同時，從車輛系統中註銷已遺失的鑰匙 ID。這意味著即便有人撿到舊鑰匙，也無法啟動您的愛車。</p>
+
+                </div>
+
+                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+
+                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 進口車款（如 BMW/Benz）也能現場做嗎？</h3>
+
+                    <p class="text-gray-300 text-sm leading-loose">可以。我們專攻高階歐系防盜系統，包含 BMW FEM/BDC、Mercedes-Benz FBS3/FBS4 等複雜架構，均有成熟的現場解碼方案。</p>
+
+                </div>
+
+                <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+
+                    <h3 class="text-gold-primary text-base font-bold mb-4">Q: 整個配製過程需要多久時間？</h3>
+
+                    <p class="text-gray-300 text-sm leading-loose">視車款複雜度而定，一般國產車約 30-40 分鐘，高階歐系車款約 1-2 小時即可完工交車，讓您當天就能重新啟動行程。</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="py-20 bg-zinc-900/30">
+
+        <div class="max-w-4xl mx-auto px-6 text-center">
+
+            <h2 class="text-xl font-bold font-cinzel mb-10 uppercase tracking-[0.4em] text-gold-lux">Contact</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
+
+                    <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">Official Line ID</span>
+
+                    <span class="text-base font-bold text-white group-hover:text-gold-primary transition">@420gknem</span>
+
+                </a>
+
+                <a href="tel:0909277670" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
+
+                    <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">24H Hotline</span>
+
+                    <span class="text-base font-bold text-white group-hover:text-gold-primary transition">0909-277-670</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="py-12 bg-black border-t border-white/5">
+
+        <div class="max-w-7xl mx-auto px-6 text-center">
+
+            <h3 class="text-gold-primary text-[8px] tracking-[0.4em] uppercase mb-6 opacity-60">Popular Service Areas</h3>
+
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[10px] text-gray-600 tracking-widest">
+
+                <a href="/local/taichung/xitun/bmw" class="hover:text-gold-primary transition">台中西屯</a>
+
+                <a href="/local/taichung/nantun/benz" class="hover:text-gold-primary transition">台中南屯</a>
+
+                <a href="/local/taichung/beitun/volvo" class="hover:text-gold-primary transition">台中北屯</a>
+
+                <a href="/local/taichung/dali/audi" class="hover:text-gold-primary transition">台中大里</a>
+
+                <a href="/local/taichung/fengyuan/vw" class="hover:text-gold-primary transition">台中豐原</a>
+
+                <a href="/local/changhua/city/bmw" class="hover:text-gold-primary transition">彰化市區</a>
+
+                <a href="/local/changhua/yuanlin/benz" class="hover:text-gold-primary transition">彰化員林</a>
+
+                <a href="/local/changhua/lukang/volvo" class="hover:text-gold-primary transition">彰化鹿港</a>
+
+                <a href="/local/nantou/caotun/audi" class="hover:text-gold-primary transition">南投草屯</a>
+
+                <a href="/local/nantou/puli/vw" class="hover:text-gold-primary transition">南投埔里</a>
+
+                <a href="/dich-vu-lam-khoa-xe-o-to-tai-dai-loan" class="hover:text-gold-primary transition">Dịch vụ làm khóa xe ô tô (Vietnamese)</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <footer class="py-10 text-center border-t border-white/5 text-[8px] text-gray-700 tracking-[0.5em] uppercase">
+
+        © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
+
+    </footer>
+
+
+
+    <script>
+
+        // 數字滾動動畫
+
+        const counters = document.querySelectorAll('.counter');
+
+        const speed = 200;
+
+
+
+        const startCounters = () => {
+
+            counters.forEach(counter => {
+
+                const updateCount = () => {
+
+                    const target = +counter.getAttribute('data-target');
+
+                    const count = +counter.innerText;
+
+                    const inc = target / speed;
+
+
+
+                    if (count < target) {
+
+                        counter.innerText = Math.ceil(count + inc);
+
+                        setTimeout(updateCount, 1);
+
+                    } else {
+
+                        counter.innerText = target + '+';
+
+                    }
+
+                };
+
+                updateCount();
+
+            });
+
+        };
+
+
+
+        // 偵測滾動啟動動畫
+
+        let animated = false;
+
+        window.addEventListener('scroll', () => {
+
+            const section = document.querySelector('.stat-card');
+
+            if (section) {
+
+                const rect = section.getBoundingClientRect();
+
+                if (rect.top < window.innerHeight && !animated) {
+
+                    startCounters();
+
+                    animated = true;
+
+                }
+
+            }
+
+        });
+
+
+
+        const latestCases = [
+            {
+                        "car": "Porsche Cayenne",
+                        "label": "彰化和美智慧新增",
+                        "img": "img/porsche-cayenne-hemei/case-1.jpg",
+                        "link": "/article-porsche-cayenne-hemei.html"
+            },
+            {
+                        "car": "HONDA HR-V",
+                        "label": "彰化市全丟救援",
+                        "img": "img/cases/honda-hrv-20260316.jpg",
+                        "link": "/article-honda-hrv-2020-all-lost-changhua.html"
+            },
+            {
+                        "car": "FORD FOCUS",
+                        "label": "南投埔里現場解碼",
+                        "img": "img/ford-focus-puli/front-with-key.jpg",
+                        "link": "/article-ford-focus-puli-akl"
+            },
+            {
+                        "car": "BMW 118",
+                        "label": "台中北屯現場匹配",
+                        "img": "img/bmw-118-beitun/front-with-keys.jpg",
+                        "link": "/article-bmw-118-beitun-akl"
+            },
+            {
+                        "car": "MERCEDES",
+                        "label": "解碼實績",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-benz-glk-miaoli-akl.html"
+            },
+            {
+                        "car": "CAR",
+                        "label": "技術專欄",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-car-wont-start-troubleshooting.html"
+            },
+            {
+                        "car": "CAR",
+                        "label": "技術專題",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-hyundai-keyless-troubleshooting"
+            },
+            {
+                        "car": "CAR",
+                        "label": "技術專欄",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-car-key-not-detected-troubleshooting"
+            },
+            {
+                        "car": "CAR",
+                        "label": "技術專欄",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-taichung-on-site-decoding"
+            },
+            {
+                        "car": "CAR",
+                        "label": "技術專欄",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-keyless-troubleshooting-guide"
+            },
+            {
+                        "car": "CAR",
+                        "label": "技術專欄",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-used-car-buying-guide"
+            },
+            {
+                        "car": "CAR",
+                        "label": "技術專欄",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-porsche-bcm-decoding-tech"
+            },
+            {
+                        "car": "CAR",
+                        "label": "技術專欄",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-vag-dashboard-immobilizer-tech"
+            },
+            {
+                        "car": "LEXUS",
+                        "label": "技術專欄",
+                        "img": "img/procore_logo_main.jpg",
+                        "link": "/article-lexus-taichung-service"
+            }
+];
+
+        document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
+
+            <div class="work-card group" onclick="location.href='${c.link}'">
+
+                <img src="${c.img}" alt="${c.car}">
+
+                <div class="work-overlay"></div>
+
+                <div class="absolute bottom-6 left-6">
+
+                    <p class="text-[9px] text-gold-primary font-bold tracking-widest mb-1">${c.car}</p>
+
+                    <h4 class="text-white text-xs font-bold">${c.label}</h4>
+
+                </div>
+
+            </div>
+
+        `).join('');
+
+    </script>
+
+    <!-- FAQ Schema 結構化數據 -->
+
+    <script type="application/ld+json">
+
+    {
+
+      "@context": "https://schema.org",
+
+      "@type": "FAQPage",
+
+      "mainEntity": [{
+
+        "@type": "Question",
+
+        "name": "汽車鑰匙全丟了，真的不需要拖車嗎？",
+
+        "acceptedAnswer": {
+
+          "@type": "Answer",
+
+          "text": "是的。極致核心擁有專業行動解碼工作站，能直接前往您的停車地點，現場進行數據採集與晶片匹配，省去昂貴的拖吊費用與原廠漫長的等待期。"
+
+        }
+
+      }, {
+
+        "@type": "Question",
+
+        "name": "服務範圍涵蓋哪些地區？",
+
+        "acceptedAnswer": {
+
+          "@type": "Answer",
+
+          "text": "極致核心深耕中彰投地區，並提供新竹、苗栗、雲林、嘉義的跨區遠征服務。不論您在市區還是郊區，專業技術團隊皆可預約抵達。"
+
+        }
+
+      }, {
+
+        "@type": "Question",
+
+        "name": "進口車款（如 BMW/Benz）也能現場做嗎？",
+
+        "acceptedAnswer": {
+
+          "@type": "Answer",
+
+          "text": "可以。我們專攻高階歐系防盜系統，包含 BMW FEM/BDC、Mercedes-Benz FBS3/FBS4 等複雜架構，均有成熟的現場解碼方案。"
+
+        }
+
+      }]
+
+    }
+
+    </script>
+
+
+
+    <script>
+
+        // 全局搜尋邏輯
+
+        const searchInput = document.getElementById('global-search');
+
+        const resultsDiv = document.getElementById('search-results');
+
+
+
+        if (searchInput) {
+
+            searchInput.addEventListener('input', async (e) => {
+
+                const query = e.target.value.toLowerCase().trim();
+
+                if (query.length < 1) {
+
+                    resultsDiv.classList.add('hidden');
+
+                    return;
+
+                }
+
+
+
+                try {
+
+                    const response = await fetch('/blog.json?t=' + new Date().getTime());
+
+                    const data = await response.json();
+
+                    
+
+                    const filtered = data.filter(item => 
+
+                        item.title.toLowerCase().includes(query) || 
+
+                        item.summary.toLowerCase().includes(query) ||
+
+                        (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query)))
+
+                    ).slice(0, 5);
+
+
+
+                    if (filtered.length > 0) {
+
+                        resultsDiv.innerHTML = filtered.map(item => `
+
+                            <a href="${item.link}" class="block p-4 border-b border-white/5 hover:bg-white/5 transition">
+
+                                <span class="text-[9px] text-gold-primary uppercase tracking-widest">${item.category}</span>
+
+                                <h5 class="text-white text-xs font-bold mt-1">${item.title}</h5>
+
+                            </a>
+
+                        `).join('');
+
+                        resultsDiv.classList.remove('hidden');
+
+                    } else {
+
+                        resultsDiv.innerHTML = '<div class="p-4 text-gray-500 text-[10px]">找不到相關結果</div>';
+
+                        resultsDiv.classList.remove('hidden');
+
+                    }
+
+                } catch (err) {
+
+                    console.error('Search failed:', err);
+
+                }
+
+            });
+
+
+
+            // 點擊外部關閉搜尋結果
+
+            document.addEventListener('click', (e) => {
+
+                if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+
+                    resultsDiv.classList.add('hidden');
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+    
+
+
+
+    <!-- 手機版搜尋遮罩 -->
+
+    <div id="mobile-search-overlay" class="fixed inset-0 bg-black/95 z-[200] hidden flex-col p-6">
+
+        <div class="flex justify-between items-center mb-8">
+
+            <h3 class="text-gold-primary font-bold tracking-widest">SEARCH</h3>
+
+            <button id="mobile-search-close" class="text-white text-2xl">&times;</button>
+
+        </div>
+
+        <input type="text" id="mobile-search-input" placeholder="搜尋車款或地點..." 
+
+            class="bg-zinc-900 border border-white/10 rounded-lg px-6 py-4 text-white focus:outline-none focus:border-gold-primary transition-all w-full text-lg">
+
+        <div id="mobile-search-results" class="mt-8 space-y-4 overflow-y-auto flex-grow"></div>
+
+    </div>
+
+    <script>
+
+        const mobileToggle = document.getElementById('mobile-search-toggle');
+
+        const mobileOverlay = document.getElementById('mobile-search-overlay');
+
+        const mobileClose = document.getElementById('mobile-search-close');
+
+        const mobileInput = document.getElementById('mobile-search-input');
+
+        const mobileResults = document.getElementById('mobile-search-results');
+
+
+
+        if (mobileToggle) {
+
+            mobileToggle.onclick = () => {
+
+                mobileOverlay.classList.remove('hidden');
+
+                mobileInput.focus();
+
+            };
+
+            mobileClose.onclick = () => mobileOverlay.classList.add('hidden');
+
+            
+
+            mobileInput.addEventListener('input', async (e) => {
+
+                const query = e.target.value.toLowerCase().trim();
+
+                if (query.length < 1) {
+
+                    mobileResults.innerHTML = '';
+
+                    return;
+
+                }
+
+                try {
+
+                    const response = await fetch('/blog.json?t=' + new Date().getTime());
+
+                    const data = await response.json();
+
+                    const filtered = data.filter(item => 
+
+                        item.title.toLowerCase().includes(query) || 
+
+                        item.summary.toLowerCase().includes(query)
+
+                    );
+
+                    mobileResults.innerHTML = filtered.map(item => `
+
+                        <a href="${item.link}" class="block p-5 bg-white/5 border border-white/5 rounded-lg">
+
+                            <span class="text-[10px] text-gold-primary uppercase tracking-widest">${item.category}</span>
+
+                            <h5 class="text-white font-bold mt-2">${item.title}</h5>
+
+                        </a>
+
+                    `).join('');
+
+                } catch (err) {}
+
+            });
+
+        }
+
+    </script>
+
+    
+
+</body>
+
+</html>
+
