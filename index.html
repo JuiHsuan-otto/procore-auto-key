@@ -134,6 +134,33 @@
 
     <section id="recent-works" class="py-24 bg-black">
         <div class="max-w-7xl mx-auto px-6">
+            <!-- 專業指南固定區 (New) -->
+            <div class="mb-20">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="h-[1px] flex-grow bg-gold-primary/20"></div>
+                    <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase whitespace-nowrap">Professional Guides</span>
+                    <div class="h-[1px] flex-grow bg-gold-primary/20"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <a href="/article-lost-key-rescue-guide" class="group relative overflow-hidden border border-gold-primary/30 bg-zinc-900/30 p-8 hover:bg-gold-primary/5 transition-all duration-500">
+                        <div class="flex justify-between items-start mb-6">
+                            <span class="text-[9px] text-gold-primary border border-gold-primary/50 px-2 py-1 tracking-widest uppercase">全丟救援百科</span>
+                            <svg class="w-5 h-5 text-gold-primary opacity-50 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-gold-primary transition-colors">汽車智慧鑰匙全丟怎麼辦？<br>免拖車流程與費用解析</h3>
+                        <p class="text-gray-500 text-xs leading-loose">深入解析 2026 最新現場解碼技術，助您避開原廠漫長等待與高昂拖吊費...</p>
+                    </a>
+                    <a href="/article-used-car-security-guide" class="group relative overflow-hidden border border-gold-primary/30 bg-zinc-900/30 p-8 hover:bg-gold-primary/5 transition-all duration-500">
+                        <div class="flex justify-between items-start mb-6">
+                            <span class="text-[9px] text-gold-primary border border-gold-primary/50 px-2 py-1 tracking-widest uppercase">二手車安全專題</span>
+                            <svg class="w-5 h-5 text-gold-primary opacity-50 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-gold-primary transition-colors">中古車購車指南：<br>鑰匙 ID 清除才是防盜第一步</h3>
+                        <p class="text-gray-300/60 text-xs leading-loose">您手中的鑰匙是唯一的嗎？教您如何註銷遺失的 ID，確保前車主無法開啟您的愛車...</p>
+                    </a>
+                </div>
+            </div>
+
             <div class="flex justify-between items-end mb-12">
                 <div>
                     <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Recent Missions</span>
@@ -258,10 +285,10 @@
         });
 
         const latestCases = [
-            { "car": "購車指南", "label": "二手車防盜 ID 清除專題", "img": "img/procore_logo_main.jpg", "link": "/article-used-car-security-guide.html" },
-            { "car": "救援百科", "label": "汽車智慧鑰匙全丟指南", "img": "img/procore_logo_main.jpg", "link": "/article-lost-key-rescue-guide.html" },
             { "car": "Honda HR-V", "label": "台中龍井全丟救援", "img": "img/honda/hrv-longjing-akl-1.jpg", "link": "/article-honda-hrv-2022-akl-longjing.html" },
-            { "car": "Toyota Auris", "label": "林口拍場全丟救援", "img": "img/toyota/auris-linkou-auction-akl-1.jpg", "link": "/article-toyota-auris-linkou-auction-akl.html" }
+            { "car": "Toyota Auris", "label": "林口拍場全丟救援", "img": "img/toyota/auris-linkou-auction-akl-1.jpg", "link": "/article-toyota-auris-linkou-auction-akl.html" },
+            { "car": "Range Rover", "label": "台中拍場得標救援", "img": "img/land_rover/evoque-taichung-auction-akl.jpg", "link": "/article-landrover-evoque-taichung-auction-akl.html" },
+            { "car": "Kia Picanto", "label": "台中南屯全丟救援", "img": "img/kia-picanto-nantun/case-1.jpg", "link": "/article-kia-picanto-nantun.html" }
         ];
         document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
             <div class="work-card group" onclick="location.href='${c.link}'">
