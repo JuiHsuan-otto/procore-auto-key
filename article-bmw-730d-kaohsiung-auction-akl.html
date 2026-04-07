@@ -7,16 +7,96 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.7); --gold: #D4AF37; }
-        body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
-        .glass-card { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); padding: 40px; }
-        nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        :root { 
+            --bg-deep: #050505; 
+            --glass: rgba(20, 20, 20, 0.7); 
+            --gold: #D4AF37;
+            --gold-light: #F4D03F;
+            --gold-dark: #AA8B20;
+        }
+        body { 
+            background-color: var(--bg-deep); 
+            color: #e5e5e5; 
+            font-family: 'Noto Sans TC', sans-serif;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.03), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.04), transparent 25%);
+        }
+        .glass-card { 
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.9), rgba(15, 15, 15, 0.8)); 
+            backdrop-filter: blur(16px); 
+            border: 1px solid rgba(212, 175, 55, 0.15); 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 48px; 
+            border-radius: 12px;
+        }
+        nav { 
+            background: rgba(5, 5, 5, 0.95); 
+            backdrop-filter: blur(20px); 
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1); 
+        }
+        
+        .hero-img-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        
+        .hero-img-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,5,5,0.8) 0%, transparent 40%);
+        }
+        
+        .tech-badge {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        
+        .feature-box {
+            background: linear-gradient(to bottom, rgba(25, 25, 25, 0.8), rgba(15, 15, 15, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-box:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+            background: linear-gradient(to bottom, rgba(30, 30, 30, 0.9), rgba(20, 20, 20, 0.95));
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #000;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-btn:hover {
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
     </style>
 </head>
 <body class="antialiased">
     <nav class="sticky top-0 w-full z-50 py-4">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</a>
+            <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                PROCORE
+            </a>
             <div class="flex space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
                 <a href="/cases" class="text-gold border-b border-gold pb-1">解碼實績</a>
                 <a href="/blog" class="text-gray-400 hover:text-white transition">技術專欄</a>
@@ -24,55 +104,87 @@
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-6 py-20">
-        <div class="glass-card rounded-lg">
-            <header class="mb-12 text-center">
-                <span class="text-gold text-xs tracking-[0.5em] uppercase mb-4 block">Field Mission Log #20260407</span>
-                <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">【高雄拍場】2014 BMW 730d (F01 LCI) 智能鑰匙全丟救援：現場數據重構實錄</h1>
-                <div class="flex justify-center items-center gap-6 text-gray-500 text-xs tracking-widest">
-                    <span>LOCATION: 高雄汽車拍賣場</span>
-                    <span>SYSTEM: CAS4+</span>
+    <main class="max-w-4xl mx-auto px-6 py-16">
+        <div class="glass-card">
+            <header class="mb-10 text-center">
+                <div class="inline-block border border-gold/30 text-gold text-[10px] tracking-[0.5em] uppercase px-4 py-1 rounded-full mb-6">
+                    Field Mission Log #20260407
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight tracking-wide">
+                    【高雄拍場】2014 BMW 730d (F01 LCI) <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-light">智能鑰匙全丟救援實錄</span>
+                </h1>
+                <div class="flex flex-wrap justify-center items-center gap-3 mt-6">
+                    <span class="tech-badge">📍 高雄汽車拍賣場</span>
+                    <span class="tech-badge">⚙️ CAS4+ SYSTEM</span>
+                    <span class="tech-badge">⚡ FIELD DECODING</span>
                 </div>
             </header>
 
-            <img src="img/cases/bmw-730d-20260407.jpg" class="w-full rounded-sm mb-12 shadow-2xl" alt="BMW 730d 救援現場">
+            <div class="hero-img-container">
+                <img src="img/cases/bmw-730d-20260407.jpg" class="w-full object-cover" style="max-height: 500px;" alt="BMW 730d 救援現場">
+            </div>
 
-            <div class="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-6">
-                <p>今日接到緊急委託，前往高雄大型汽車拍賣場救援一台 2014 年款的 <strong>BMW 730d (F01 LCI)</strong>。該車為拍賣場剛得標之車輛，現場處於「智能鑰匙全數遺失」狀態，無法啟動且拖吊困難。</p>
+            <div class="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-6 text-justify">
+                <p class="text-lg font-light text-gray-200">今日接到緊急委託，前往高雄大型汽車拍賣場救援一台 2014 年款的 <strong class="text-white">BMW 730d (F01 LCI)</strong>。該車為拍賣場剛得標之車輛，現場處於「智能鑰匙全數遺失」狀態，無法啟動且拖吊困難。</p>
                 
-                <h3 class="text-white text-xl font-bold mt-12 mb-4 border-l-4 border-gold pl-4">技術挑戰：CAS4+ 高階安全防盜</h3>
+                <h3 class="text-white text-2xl font-bold mt-14 mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-gold block"></span>
+                    技術挑戰：CAS4+ 高階安全防盜
+                </h3>
                 <p>2014 年後的 7 系列小改款普遍搭載 CAS4+ 系統。在拍賣場有限的時間與窄小的空間內，回原廠更換整套電腦模組並非首選。極致核心團隊憑藉專業設備與現地數據重構技術，直接於現場進行解碼。</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-12">
-                    <div class="bg-white/5 p-6 rounded text-center">
-                        <div class="text-gold font-bold mb-2">無需拖吊</div>
-                        <div class="text-xs text-gray-500 text-balance">直接於拍場車位現地作業，保護愛車外觀無損</div>
+                    <div class="feature-box p-6 rounded-lg text-center">
+                        <div class="text-3xl mb-3">🏗️</div>
+                        <div class="text-gold font-bold mb-2 tracking-widest text-sm">無需拖吊</div>
+                        <div class="text-xs text-gray-400 leading-relaxed">直接於拍場車位現地作業，保護愛車外觀無損</div>
                     </div>
-                    <div class="bg-white/5 p-6 rounded text-center">
-                        <div class="text-gold font-bold mb-2">數據重構</div>
-                        <div class="text-xs text-gray-500 text-balance">專業設備安全讀取加密數據，精準匹配全新鑰匙</div>
+                    <div class="feature-box p-6 rounded-lg text-center">
+                        <div class="text-3xl mb-3">📡</div>
+                        <div class="text-gold font-bold mb-2 tracking-widest text-sm">數據重構</div>
+                        <div class="text-xs text-gray-400 leading-relaxed">專業設備安全讀取加密數據，精準匹配全新鑰匙</div>
                     </div>
-                    <div class="bg-white/5 p-6 rounded text-center">
-                        <div class="text-gold font-bold mb-2">完美同步</div>
-                        <div class="text-xs text-gray-500 text-balance">Comfort Access 舒適進入與一鍵啟動功能完全復原</div>
+                    <div class="feature-box p-6 rounded-lg text-center">
+                        <div class="text-3xl mb-3">⚡</div>
+                        <div class="text-gold font-bold mb-2 tracking-widest text-sm">完美同步</div>
+                        <div class="text-xs text-gray-400 leading-relaxed">Comfort Access 舒適進入與一鍵啟動功能完全復原</div>
                     </div>
                 </div>
 
-                <h3 class="text-white text-xl font-bold mt-12 mb-4 border-l-4 border-gold pl-4">救援成果</h3>
+                <h3 class="text-white text-2xl font-bold mt-14 mb-6 flex items-center gap-3">
+                    <span class="w-1 h-6 bg-gold block"></span>
+                    救援成果
+                </h3>
                 <p>現場耗時約 60 分鐘，成功配製兩把全新智能鑰匙。車主順利將得標車開離拍場，省下了昂貴的原廠更換費與漫長的等待期。這就是極致核心對技術與效率的堅持。</p>
             </div>
 
-            <footer class="mt-20 pt-12 border-t border-white/10 text-center">
-                <p class="text-gray-400 text-sm mb-8">如果您也遇到鑰匙全丟的緊急情況，請聯繫極致核心專業團隊。</p>
-                <div class="flex flex-col items-center gap-4">
-                    <a href="tel:0909277670" class="bg-gold text-black px-10 py-4 font-bold tracking-widest hover:brightness-110 transition">24H 救援專線</a>
-                    <a href="https://line.me/R/ti/p/@420gknem" class="text-gold text-xs border-b border-gold/30 pb-1">加入官方 LINE (@420gknem) 預約</a>
+            <div class="mt-16 bg-gradient-to-r from-[rgba(212,175,55,0.05)] to-transparent border border-gold/20 p-6 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div>
+                    <h4 class="text-gold font-bold mb-1">專家防盜推薦 <span class="text-[10px] bg-gold/20 px-2 py-0.5 rounded ml-2">Sponsored</span></h4>
+                    <p class="text-xs text-gray-400 m-0">完成鑰匙匹配後，強烈建議搭配專業防盜遮蔽袋，阻斷 Keyless 側錄。</p>
+                </div>
+                <a href="https://amzn.to/420gknem" target="_blank" class="shrink-0 border border-gold/50 text-gold hover:bg-gold/10 px-4 py-2 rounded text-xs tracking-widest transition">
+                    VIEW ON AMAZON →
+                </a>
+            </div>
+
+            <footer class="mt-16 pt-12 border-t border-white/10 text-center">
+                <p class="text-gray-300 text-sm mb-8 font-light">如果您也遇到鑰匙全丟的緊急情況，請立即聯繫極致核心專業團隊。</p>
+                <div class="flex flex-col items-center gap-5">
+                    <a href="tel:0909277670" class="cta-btn px-12 py-4 rounded-sm font-bold tracking-[0.2em] text-sm flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        24H 救援專線
+                    </a>
+                    <a href="https://line.me/R/ti/p/@420gknem" class="text-gray-400 hover:text-gold text-xs border-b border-transparent hover:border-gold/50 pb-1 transition flex items-center gap-2">
+                        加入官方 LINE (@420gknem) 預約
+                    </a>
                 </div>
             </footer>
         </div>
     </main>
 
-    <footer class="py-12 text-center text-gray-600 text-[10px] tracking-widest uppercase">
+    <footer class="py-12 text-center text-gray-600 text-[10px] tracking-[0.2em] uppercase">
         © 2026 PROCORE EXTREME DECODING LAB. ALL RIGHTS RESERVED.
     </footer>
 </body>
