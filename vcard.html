@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>葉睿軒 - ProCore Auto Key 專業汽車晶片鑰匙</title>
+<meta name="description" content="ProCore Auto Key - 專業汽車晶片鑰匙・無損開鎖・快速匹配">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-dark: #121212;
+        --card-bg: #1e1e1e;
+        --gold: #D4AF37;
+        --gold-dim: #9A7B26;
+        --text-main: #FFFFFF;
+        --text-muted: #A0A0A0;
+        --border-color: #333333;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .vcard-container {
+        background: linear-gradient(145deg, #242424, #181818);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* 頂部品牌區塊 */
+    .vcard-header {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        padding: 40px 30px;
+        text-align: center;
+        border-bottom: 2px solid var(--gold);
+        position: relative;
+    }
+
+    .vcard-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .brand-name {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--gold);
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    .brand-slogan {
+        font-size: 13px;
+        color: var(--text-muted);
+        letter-spacing: 1.5px;
+        font-weight: 300;
+    }
+
+    /* 內容區塊 */
+    .vcard-body {
+        padding: 35px 30px;
+    }
+
+    .profile-name {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        letter-spacing: 2px;
+    }
+
+    .profile-name span {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 300;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+    }
+
+    /* 聯絡資訊 */
+    .contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 30px;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-decoration: none;
+        color: var(--text-main);
+        font-size: 15px;
+        transition: color 0.3s ease;
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .contact-item:hover {
+        color: var(--gold);
+        background: rgba(212, 175, 55, 0.05);
+        border-color: rgba(212, 175, 55, 0.3);
+    }
+
+    .icon {
+        font-size: 18px;
+        color: var(--gold);
+        width: 24px;
+        text-align: center;
+    }
+
+    /* 服務項目 */
+    .services-box {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        border: 1px solid var(--border-color);
+    }
+
+    .services-box ul {
+        list-style: none;
+    }
+
+    .services-box li {
+        font-size: 14px;
+        color: #d0d0d0;
+        margin-bottom: 12px;
+        position: relative;
+        padding-left: 20px;
+        line-height: 1.5;
+        letter-spacing: 0.5px;
+    }
+
+    .services-box li:last-child {
+        margin-bottom: 0;
+    }
+
+    .services-box li::before {
+        content: '▪';
+        position: absolute;
+        left: 0;
+        top: 0px;
+        color: var(--gold);
+        font-size: 14px;
+    }
+
+    /* QR Code 區塊 */
+    .qr-section {
+        text-align: center;
+        padding-top: 10px;
+        border-top: 1px dashed var(--border-color);
+    }
+
+    .qr-box {
+        background: white;
+        padding: 8px;
+        border-radius: 12px;
+        display: inline-block;
+        margin-bottom: 12px;
+        margin-top: 10px;
+    }
+
+    .qr-box img {
+        display: block;
+        width: 110px;
+        height: 110px;
+    }
+
+    .qr-text {
+        font-size: 13px;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+    }
+
+    /* 按鈕 */
+    .action-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: var(--gold);
+        color: #000;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 1px;
+        margin-top: 25px;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .action-btn:hover {
+        background: #e6c555;
+        transform: translateY(-2px);
+    }
+</style>
+</head>
+<body>
+
+<div class="vcard-container">
+    <div class="vcard-header">
+        <div class="brand-name">ProCore Auto Key</div>
+        <div class="brand-slogan">專業汽車晶片鑰匙・無損開鎖・快速匹配</div>
+    </div>
+
+    <div class="vcard-body">
+        <div class="profile-name">
+            葉 睿 軒 <span>Jui-Hsuan Yeh</span>
+        </div>
+
+        <div class="contact-list">
+            <a href="tel:0909277670" class="contact-item">
+                <span class="icon">📞</span>
+                <span>0909-277-670</span>
+            </a>
+            <a href="https://line.me/R/ti/p/%40420gknem" target="_blank" class="contact-item">
+                <span class="icon">💬</span>
+                <span>LINE ID: @420gknem</span>
+            </a>
+            <a href="https://www.carkey.com.tw/" target="_blank" class="contact-item">
+                <span class="icon">🌐</span>
+                <span>www.carkey.com.tw</span>
+            </a>
+        </div>
+
+        <div class="services-box">
+            <ul>
+                <li>智能晶片鑰匙拷貝 / 遺失再生</li>
+                <li>汽車遙控器設定 / 電池更換</li>
+                <li>專業無損開鎖服務</li>
+            </ul>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-box">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me/R/ti/p/%40420gknem" alt="LINE QR Code">
+            </div>
+            <div class="qr-text">掃碼快速諮詢 / 道路救援</div>
+        </div>
+
+        <a href="https://line.me/R/ti/p/%40420gknem" class="action-btn">立即加入 LINE 諮詢</a>
+    </div>
+</div>
+
+</body>
+</html>
