@@ -1,10 +1,138 @@
 [
   {
+    "date": "2026.04.05",
+    "category": "安全百科",
+    "title": "【購車必看】二手車買賣後的防盜首要任務：鑰匙數量確認與 ID 數據清除",
+    "summary": "購買二手車後，您確定手中那把鑰匙是唯一的嗎？極致核心專業解析二手車防盜安全漏洞，教您如何檢查鑰匙數量，並執行防盜 ID 數據清除（註銷遺失鑰匙），確保愛車資產安全。",
+    "link": "/article-used-car-security-guide.html",
+    "keywords": [
+      "二手車防盜",
+      "鑰匙註銷",
+      "購車指南",
+      "ID清除"
+    ]
+  },
+  {
+    "date": "2026.04.05",
+    "category": "救援指南",
+    "title": "【2026 專業指南】汽車智慧鑰匙全丟怎麼辦？免拖車、現場匹配流程與行情費用全解析",
+    "summary": "鑰匙全丟了真的不需要拖車嗎？極致核心專業技師解析 2026 汽車智慧鑰匙遺失後的黃金處置步驟、現場數據解碼流程與原廠費用對比。支援 BMW、賓士等高階防盜系統現場匹配。",
+    "link": "/article-lost-key-rescue-guide.html",
+    "keywords": [
+      "汽車鑰匙全丟怎麼辦",
+      "費用解析",
+      "現場匹配",
+      "24H救援"
+    ]
+  },
+  {
+    "date": "2026.04.03",
+    "category": "解碼實績",
+    "title": "【台中龍井】Honda HR-V 智慧鑰匙全丟救援：2022年式新車現場解碼實錄",
+    "summary": "台中龍井現場救援：2022 年式 Honda HR-V 智慧鑰匙遺失。極致核心技師火速趕往現場執行 OBDII 安全協議解碼，免拆電腦現場配製兩把全新智慧感應鑰匙，當場恢復啟動。",
+    "link": "/article-honda-hrv-2022-akl-longjing.html",
+    "keywords": ["台中龍井", "Honda HR-V 鑰匙全丟", "智慧鑰匙匹配", "現場救援"]
+  },
+  {
+    "date": "2026.03.31",
+    "category": "解碼實績",
+    "title": "【林口拍場】Toyota Auris 智慧鑰匙全丟救援：2023年式新車現場解碼實錄",
+    "summary": "林口大型拍賣場救援：2023 年式 Toyota Auris 得標車鑰匙遺失。極致核心技師火速趕往現場執行 OBDII 解碼，免拆電腦現場配製新鑰匙。",
+    "link": "/article-toyota-auris-linkou-auction-akl.html",
+    "keywords": ["林口行將拍賣", "SAA 行將企業", "和運拍賣", "HAA 和運租賃", "Toyota Auris 鑰匙全丟"]
+  },
+  {
+    "date": "2026.03.30",
+    "category": "解碼實績",
+    "title": "【台中拍場】Range Rover Evoque 智慧鑰匙全丟救援：得標車現場解碼匹配實錄",
+    "summary": "台中大型拍賣場救援：2015 年式 Range Rover Evoque 得標車鑰匙遺失。極致核心技師現地進駐拍場執行 KVM 模組解碼，免拖吊現場配製新鑰匙。",
+    "link": "/article-landrover-evoque-taichung-auction-akl.html",
+    "keywords": ["台中行將拍賣", "SAA 行將企業", "和運拍賣", "HAA 和運租賃", "Range Rover 鑰匙全丟"]
+  },
+  {
+    "date": "2026.03.28",
+    "category": "解碼實績",
+    "title": "【新北林口】BMW X3 智慧鑰匙全丟救援：拍場得標車現場解碼匹配實錄",
+    "summary": "林口大型拍賣場救援實錄：BMW X3 (F25) 得標車鑰匙遺失。極致核心技師直奔競拍場現場執行 FEM/BDC 系統數據重構，免拖吊現場配製新鑰匙。",
+    "link": "/article-bmw-x3-linkou-auction-akl.html",
+    "keywords": ["林口行將拍賣", "SAA 行將企業", "和運拍賣", "HAA 和運租賃", "得標車鑰匙全丟"]
+  },
+  {
+    "date": "2026.03.27",
+    "category": "解碼實績",
+    "title": "【台中清水】Mazda CX-5 智慧鑰匙全丟救援：魂動美學現場快速解碼實錄",
+    "summary": "台中清水 Mazda 救援實錄：Mazda CX-5 智慧感應鑰匙遺失。極致核心技師現場執行專業 OBD 數據重構技術，免拖吊、當場完工，一小時內恢復啟動。",
+    "link": "/article-mazda-cx5-qingshui-akl.html"
+  },
+  {
+    "date": "2026.03.26",
+    "category": "解碼實績",
+    "title": "【台中豐原】Toyota RAV4 智慧鑰匙全丟救援：五代 RAV4 現場快速匹配紀錄",
+    "summary": "台中豐原 Toyota 救援：2021 年式五代 RAV4 智慧鑰匙遺失。極致核心職人現場執行專業 OBD 解碼技術，免拆電腦、免拖吊，一小時內恢復啟動。",
+    "link": "/article-toyota-rav4-fengyuan-akl.html"
+  },
+  {
+    "date": "2026.03.23",
+    "category": "解碼實績",
+    "title": "【高雄仁武】BMW 2012 GT 535i 鑰匙全丟救援：現場解碼匹配免拖車",
+    "summary": "高雄 BMW 救援實錄：2012 年式 BMW GT 535i 智慧鑰匙全丟遺失。極致核心技師親赴仁武現場，透過專業開鎖技術與 OBD 數據採集，免拆電腦、免拖吊，現場 1 小時內完成鑰匙匹配發動。",
+    "link": "/article-bmw-gt535i-renwu-akl.html"
+  },
+  {
+    "date": "2026.03.21",
+    "category": "解碼實績",
+    "title": "【台中南屯】Kia Picanto 智慧鑰匙全丟救援：現場解碼與新鑰匙匹配實錄",
+    "summary": "極致核心技術團隊於台中南屯完成 Kia Picanto 智慧感應鑰匙全丟 (All Keys Lost) 現場救援。專業無損開鎖、防盜數據採集與新鑰匙匹配，免拖吊、當日恢復啟動。",
+    "link": "/article-kia-picanto-nantun.html"
+  },
+  {
+    "date": "2026.03.20",
+    "category": "技術專欄",
+    "title": "【技術救援】福斯 VW 點火開關卡死、鑰匙無法轉動：現場更換槍管紀錄",
+    "summary": "福斯 VW 車系通病：點火開關（槍管）磨損導致鑰匙無法轉動。極致核心提供現場維修，無需留車，快速更換原廠等級槍管總成。",
+    "link": "/article-vw-ignition-repair.html"
+  },
+  {
+    "date": "2026.03.20",
+    "category": "解碼實績",
+    "title": "【台中梧棲】2017 Mercedes-Benz C300 賓士智慧鑰匙新增案例",
+    "summary": "極致核心技術團隊於台中梧棲完成 2017 賓士 C300 智慧鑰匙新增服務。專業現場匹配、支援原廠感應進入與啟動，免拆電腦、當日完工。",
+    "link": "/article-benz-c300-wuqi.html"
+  },
+  {
+    "date": "2026.03.19",
+    "category": "解碼實績",
+    "title": "【彰化和美】2018 Porsche Cayenne 保時捷 Cayenne 智慧鑰匙新增案例",
+    "summary": "極致核心技術團隊於彰化和美完成 2018 Porsche Cayenne 智慧鑰匙新增服務。專業現場匹配、支援原廠 Keyless Go，免拆電腦、當日完工。",
+    "link": "/article-porsche-cayenne-hemei.html"
+  },
+  {
+    "date": "2026.03.18",
+    "category": "解碼實績",
+    "title": "【南投埔里】Ford Focus Mk4 鑰匙全丟救援：智能感應鑰匙現場匹配實錄",
+    "summary": "南投埔里 Ford Focus Mk4 救援實錄。現場執行專業 OBD 數據重構，註銷舊鑰匙並匹配全新智能感應鑰匙。",
+    "link": "/article-ford-focus-puli-akl"
+  },
+  {
+    "date": "2026.03.18",
+    "category": "解碼實績",
+    "title": "【台中北屯】BMW 118 (F20) 鑰匙全丟救援：FEM/BDC 系統現場數據重構實錄",
+    "summary": "台中北屯 BMW 救援實錄。針對 F 系列 FEM/BDC 系統執行現場數據重構，免拆電腦快速恢復啟動。",
+    "link": "/article-bmw-118-beitun-akl"
+  },
+  {
     "date": "2026.03.17",
     "category": "解碼實績",
     "title": "2011 賓士 GLK 鑰匙全丟 苗栗現場解碼實錄",
     "summary": "苗栗賓士救援實錄：2011年 Mercedes-Benz GLK 鑰匙全丟遺失，極致核心職人親赴苗栗市現場，針對 FBS3 防盜系統進行數據採集與重構。",
     "link": "/article-benz-glk-miaoli-akl.html"
+  },
+  {
+    "date": "2026.03.17",
+    "category": "解碼實績",
+    "title": "【苗栗苑裡】BMW 740 (F01) 鑰匙全丟救援：CAS4 系統現場數據解碼配製實錄",
+    "summary": "苗栗苑裡 BMW 救援實錄。針對 F01 CAS4 系統執行現場數據解碼，一小時內完成新鑰匙配製。",
+    "link": "/article-bmw-740-yuanli-akl"
   },
   {
     "date": "2026.03.16",
@@ -14,6 +142,13 @@
     "link": "/article-honda-hrv-2020-all-lost-changhua.html"
   },
   {
+    "date": "2026.03.16",
+    "category": "解碼實績",
+    "title": "【彰化北斗】Mini Clubman 鑰匙全丟救援：專業數據解碼配製實錄",
+    "summary": "彰化北斗 Mini 救援實錄。現場執行專業防盜數據採集，快速配製全新智慧鑰匙。",
+    "link": "/article-mini-clubman-beidou-akl"
+  },
+  {
     "date": "2026.03.15",
     "category": "技術專欄",
     "title": "車子無法發動怎麼辦？專業技師教你 3 分鐘快速排查與救援指南",
@@ -21,7 +156,27 @@
     "link": "/article-car-wont-start-troubleshooting.html"
   },
   {
-    "id": 30,
+    "date": "2026.03.14",
+    "category": "解碼實績",
+    "title": "【高雄楠梓】Benz W204 鑰匙全丟救援：FBS3 系統現場數據重構實錄",
+    "summary": "高雄楠梓賓士救援實錄。針對 W204 FBS3 系統執行現場解碼，免拆 EIS 快速恢復啟動。",
+    "link": "/article-benz-w204-nanzi-akl"
+  },
+  {
+    "date": "2026.03.13",
+    "category": "解碼實績",
+    "title": "【彰化花壇】Lexus NX200 智能鑰匙全丟救援：高階防盜現場數據重構",
+    "summary": "彰化花壇 Lexus 救援實錄。針對新一代高階防盜系統執行現場解碼，一小時內恢復所有功能。",
+    "link": "/article-lexus-nx200-huatan-akl"
+  },
+  {
+    "date": "2026.03.12",
+    "category": "解碼實績",
+    "title": "【彰化和美】Mazda CX-3 智能鑰匙新增：魂動美學現場極速解碼",
+    "summary": "彰化和美 Mazda 救援實錄：Mazda CX-3 智慧感應鑰匙新增。現場執行專業數據匹配，恢復 Keyless 感應功能。",
+    "link": "/article-mazda-cx3-hemei-smartkey"
+  },
+  {
     "date": "2026.03.11",
     "category": "技術專題",
     "title": "現代汽車感應不到鑰匙？Keyless Go 故障排除與緊急發動教學",
@@ -29,15 +184,41 @@
     "link": "/article-hyundai-keyless-troubleshooting"
   },
   {
-    "id": 29,
+    "date": "2026.03.11",
+    "category": "解碼實績",
+    "title": "【彰化社頭】Mazda CX-30 智慧鑰匙全丟救援：烤漆爐內的緊急解碼任務",
+    "summary": "彰化社頭 Mazda 救援實錄：Mazda CX-30 智慧感應鑰匙遺失。極致核心技師現場執行專業數據重構，註銷舊鑰匙並匹配新鑰匙。",
+    "link": "/case-shetou-mazda-cx30-rescue"
+  },
+  {
     "date": "2026.03.11",
     "category": "技術專欄",
     "title": "汽車鑰匙感應不到怎麼辦？5招教你快速自我檢測排除故障",
-    "summary": "鑰匙沒反應、感應不到無法發動？極致核心專業技師整理5大常見原因與排除方法。從電池檢查、電磁干擾到應急啟動技巧，教您在聯繫救援前先自我檢測。",
+    "summary": "鑰匙沒反應、感應不到無法發動？極致核心專業技師整理5大常見原因與排除方法。從電池檢查、電磁干擾到應迎啟動技巧，教您在聯繫救援前先自我檢測。",
     "link": "/article-car-key-not-detected-troubleshooting"
   },
   {
-    "id": 20,
+    "date": "2026.03.10",
+    "category": "解碼實績",
+    "title": "【台中霧峰】Mazda CX-5 智慧鑰匙旗艦級救援實錄",
+    "summary": "台中霧峰 Mazda 救援實錄：Mazda CX-5 智慧感應鑰匙全丟。極致核心提供專業現場匹配，免拖吊快速恢復。",
+    "link": "/article-mazda-wufeng-rescue"
+  },
+  {
+    "date": "2026.03.09",
+    "category": "解碼實績",
+    "title": "【彰化和美】Toyota Sienta 智能鑰匙新增：和美現場技術實錄",
+    "summary": "彰化和美 Toyota 救援實錄。現場執行智慧鑰匙新增，恢復滑門感應與一鍵啟動。",
+    "link": "/article-toyota-sienta-hemei-service"
+  },
+  {
+    "date": "2026.03.08",
+    "category": "解碼實績",
+    "title": "【台中清水】Toyota Altis 智能鑰匙全丟：清水現場快速匹配紀錄",
+    "summary": "台中清水 Toyota 救援實錄。2020 Altis 智慧鑰匙全丟現場快速救援，免換電腦當場完工。",
+    "link": "/article-toyota-altis-qingshui-rescue"
+  },
+  {
     "date": "2026.03.04",
     "category": "技術專欄",
     "title": "台中汽車鑰匙遺失怎麼辦？極致核心教您如何快速重啟您的愛車",
@@ -45,7 +226,6 @@
     "link": "/article-taichung-on-site-decoding"
   },
   {
-    "id": 19,
     "date": "2026.03.04",
     "category": "技術專欄",
     "title": "汽車鑰匙沒反應？Keyless 故障排除與電池更換指南",
@@ -53,7 +233,6 @@
     "link": "/article-keyless-troubleshooting-guide"
   },
   {
-    "id": 18,
     "date": "2026.03.03",
     "category": "技術專欄",
     "title": "中古車購買後的第一件事：防盜安全、您應該檢查的「數據匹配」清單",
@@ -61,7 +240,6 @@
     "link": "/article-used-car-buying-guide"
   },
   {
-    "id": 17,
     "date": "2026.03.02",
     "category": "技術專欄",
     "title": "保時捷晶片鑰匙全丟救援：BCM 數據重讀與高級匹配技術實錄",
@@ -69,7 +247,6 @@
     "link": "/article-porsche-bcm-decoding-tech"
   },
   {
-    "id": 16,
     "date": "2026.03.02",
     "category": "技術專欄",
     "title": "VAG 專業防盜技術解讀：為什麼您需要現場解碼而非漫長等待？",
@@ -77,7 +254,6 @@
     "link": "/article-vag-dashboard-immobilizer-tech"
   },
   {
-    "id": 12,
     "date": "2026.02.26",
     "category": "技術專欄",
     "title": "Lexus 全系智能鑰匙遺失救援：揭秘高級防盜系統的解法",
@@ -85,7 +261,6 @@
     "link": "/article-lexus-taichung-service"
   },
   {
-    "id": 11,
     "date": "2026.02.25",
     "category": "技術專欄",
     "title": "BMW G-Series 智慧感應鑰匙遺失：BDC 系統解碼實錄",
@@ -93,7 +268,6 @@
     "link": "/article-bmw-gseries-keyless-rescue"
   },
   {
-    "id": 5,
     "date": "2026.02.19",
     "category": "技術專欄",
     "title": "深入 MQB 平台：VAG 體系（VW/Skoda/Audi）鑰匙全丟技術解析",
@@ -101,7 +275,6 @@
     "link": "/article-vag-mqb-platform-tech"
   },
   {
-    "id": 4,
     "date": "2026.02.18",
     "category": "技術專欄",
     "title": "BMW FEM/BDC 高級解碼實務：數據讀取與備份技術",
@@ -109,7 +282,6 @@
     "link": "/article-bmw-fem-advanced-tech"
   },
   {
-    "id": 1,
     "date": "2026.02.15",
     "category": "技術專欄",
     "title": "預防勝於治療：為什麼您需要第二把備份鑰匙？配製流程與成本解析",

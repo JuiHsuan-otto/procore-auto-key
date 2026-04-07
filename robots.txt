@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://carkey.com.tw/sitemap.xml
