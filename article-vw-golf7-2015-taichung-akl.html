@@ -46,8 +46,8 @@
                     本次任務位於台中東區知名的車輛拍賣中心。一台 2015 年式的 VW Golf 7 代，因車主全丟 (All Keys Lost) 導致車輛鎖死無法發動。此案的困難點在於其搭載了 MQB 平台中的 <strong>JCI (Johnson Controls) 儀表</strong>，這在防盜數據的獲取上極具挑戰性。
                 </p>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-white/10">
-                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Platform</span><span class="text-white font-bold">MQB</span></div>
-                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">ECU</span><span class="text-white font-bold">MED17.5.21</span></div>
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Platform</span><span class="text-white font-bold">MQB High</span></div>
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">System</span><span class="text-white font-bold">Security v2</span></div>
                     <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Location</span><span class="text-white font-bold">台中東區</span></div>
                     <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Status</span><span class="text-green-500 font-bold">Success</span></div>
                 </div>
@@ -60,10 +60,10 @@
                         在 MQB 系統全丟的情況下，最核心的挑戰在於獲取 <strong>同步數據 (Sync Data)</strong>。由於 JCI 儀表無法直接透過 OBD 讀取安全數據，極致核心 ProCore 團隊採取了多重數據交叉驗證的策略。
                     </p>
                     <ul class="list-disc pl-6 space-y-4 mb-8">
-                        <li><strong>儀表數據備份：</strong> 先行備份 IMMO 與 EEPROM 原始數據，確保操作安全性。</li>
-                        <li><strong>ECU 數據讀取：</strong> 透過 Boot 模式成功讀取 MED17.5.21 引擎電腦的全 CS 數據 (16 Bytes)。</li>
-                        <li><strong>數據合成運算：</strong> 利用獲取的 ECU CS 碼與儀表 IMMO 數據，與雲端伺服器同步進行非對稱加密計算，產出專屬的同步數據。</li>
-                        <li><strong>鑰匙生成與學習：</strong> 成功製作兩把全新智能感應鑰匙，並現地完成 OBD 匹配學習。</li>
+                        <li><strong>數據備份：</strong> 先行備份系統原始數據，確保操作安全性。</li>
+                        <li><strong>核心數據讀取：</strong> 透過專業模式成功讀取防盜核心數據，並進行校驗。</li>
+                        <li><strong>同步運算：</strong> 利用獲取的關鍵代碼與系統數據進行加密計算，產出專屬同步資料。</li>
+                        <li><strong>鑰匙生成與學習：</strong> 成功製作兩把全新智能感應鑰匙，並現地完成匹配學習。</li>
                     </ul>
                     <p>
                         整個救援過程在拍賣現場完成，無需拖車、無需更換任何模組，僅用時約 1.5 小時即恢復車輛動能。
