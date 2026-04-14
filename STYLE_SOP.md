@@ -7,19 +7,18 @@
 
 ### CSS 必要定義 (Style Section)
 ```css
-:root {
-    --gold: #D4AF37;
-    --gold-dark: #AA8B20;
-}
 .cta-btn {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: #000;
+    background: linear-gradient(135deg, #D4AF37, #AA8B20) !important;
+    color: #000 !important;
     text-shadow: 0 1px 1px rgba(255,255,255,0.3);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .cta-btn:hover {
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
     transform: scale(1.02);
     filter: brightness(1.1);
 }
