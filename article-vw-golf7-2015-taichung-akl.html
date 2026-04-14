@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2015 VW Golf 7 MQB 智能鑰匙全丟救援：台中東區拍場 JCI 儀表數據重構全紀錄 | 極致核心 ProCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.85); --gold: #D4AF37; }
+        body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
+        .gold-glow { text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+        .neon-border { border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
+    </style>
+</head>
+<body class="antialiased">
+    <nav class="fixed top-0 w-full z-50 py-6 px-10 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <a href="/" class="font-cinzel text-2xl text-white font-bold tracking-[0.3em]">PROCORE</a>
+        <div class="hidden md:flex space-x-12 text-[10px] font-bold tracking-[0.2em] uppercase">
+            <a href="/cases" class="text-gold">Works</a>
+            <a href="/blog" class="text-gray-400 hover:text-white transition">Insights</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+        <header class="mb-16">
+            <div class="flex items-center gap-4 mb-6">
+                <span class="bg-gold/10 text-gold text-[10px] px-3 py-1 border border-gold/20 tracking-widest uppercase">Field Report</span>
+                <span class="text-gray-500 text-[10px] tracking-widest uppercase">2026.04.14</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight font-cinzel gold-glow">
+                2015 VW Golf 7 MQB <br>智能鑰匙全丟：數據重構實錄
+            </h1>
+            <p class="text-xl text-gray-400 font-light leading-relaxed">台中東區大型汽車拍賣場救援：攻克 JCI 儀表與同步數據計算瓶頸。</p>
+        </header>
+
+        <section class="mb-20">
+            <div class="overflow-hidden rounded-sm neon-border mb-12">
+                <img src="img/cases/vw-golf7-2015-taichung-akl.jpg" alt="VW Golf 7 MQB 救援現場" class="w-full">
+            </div>
+            
+            <div class="glass-card p-10 rounded-sm mb-12">
+                <h3 class="text-gold font-cinzel text-xl mb-6 tracking-widest uppercase">Mission Background</h3>
+                <p class="text-gray-300 leading-loose mb-6">
+                    本次任務位於台中東區知名的車輛拍賣中心。一台 2015 年式的 VW Golf 7 代，因車主全丟 (All Keys Lost) 導致車輛鎖死無法發動。此案的困難點在於其搭載了 MQB 平台中的 <strong>JCI (Johnson Controls) 儀表</strong>，這在防盜數據的獲取上極具挑戰性。
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-white/10">
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Platform</span><span class="text-white font-bold">MQB</span></div>
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">ECU</span><span class="text-white font-bold">MED17.5.21</span></div>
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Location</span><span class="text-white font-bold">台中東區</span></div>
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Status</span><span class="text-green-500 font-bold">Success</span></div>
+                </div>
+            </div>
+
+            <div class="space-y-12">
+                <h3 class="text-2xl font-bold text-white font-cinzel tracking-widest uppercase">Technical Execution</h3>
+                <div class="prose prose-invert max-w-none text-gray-400 leading-loose">
+                    <p class="mb-6">
+                        在 MQB 系統全丟的情況下，最核心的挑戰在於獲取 <strong>同步數據 (Sync Data)</strong>。由於 JCI 儀表無法直接透過 OBD 讀取安全數據，極致核心 ProCore 團隊採取了多重數據交叉驗證的策略。
+                    </p>
+                    <ul class="list-disc pl-6 space-y-4 mb-8">
+                        <li><strong>儀表數據備份：</strong> 先行備份 IMMO 與 EEPROM 原始數據，確保操作安全性。</li>
+                        <li><strong>ECU 數據讀取：</strong> 透過 Boot 模式成功讀取 MED17.5.21 引擎電腦的全 CS 數據 (16 Bytes)。</li>
+                        <li><strong>數據合成運算：</strong> 利用獲取的 ECU CS 碼與儀表 IMMO 數據，與雲端伺服器同步進行非對稱加密計算，產出專屬的同步數據。</li>
+                        <li><strong>鑰匙生成與學習：</strong> 成功製作兩把全新智能感應鑰匙，並現地完成 OBD 匹配學習。</li>
+                    </ul>
+                    <p>
+                        整個救援過程在拍賣現場完成，無需拖車、無需更換任何模組，僅用時約 1.5 小時即恢復車輛動能。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="pt-20 border-t border-white/10 text-center">
+            <h4 class="text-white font-cinzel text-lg mb-8 tracking-widest">PROCORE AUTOMOTIVE INTELLIGENCE</h4>
+            <a href="/cases" class="inline-block border border-gold text-gold px-10 py-4 text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-gold hover:text-black transition duration-500">Back to Case Studies</a>
+        </footer>
+    </main>
+</body>
+</html>
