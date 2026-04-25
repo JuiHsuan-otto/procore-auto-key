@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW 儀表紅色方向盤鎖死、無法啟動：專業數據重構修復實錄 | 極致核心 ProCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.85); --gold: #D4AF37; --gold-dark: #AA8B20; }
+        body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
+        .gold-glow { text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+        .cta-btn {
+            background: linear-gradient(135deg, #D4AF37, #AA8B20) !important;
+            color: #000 !important;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cta-btn:hover {
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <nav class="fixed top-0 w-full z-50 py-6 px-10 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <a href="/" class="font-cinzel text-2xl text-white font-bold tracking-[0.3em]">PROCORE</a>
+        <div class="hidden md:flex space-x-12 text-[10px] font-bold tracking-[0.2em] uppercase">
+            <a href="/cases" class="text-gold">Works</a>
+            <a href="/blog" class="text-gray-400 hover:text-white transition">Insights</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+        <header class="mb-16">
+            <div class="flex items-center gap-4 mb-6">
+                <span class="bg-gold/10 text-gold text-[10px] px-3 py-1 border border-gold/20 tracking-widest uppercase">Technical Mission</span>
+                <span class="text-gray-500 text-[10px] tracking-widest uppercase">2026.04.25</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight font-cinzel gold-glow">
+                BMW 紅色方向盤鎖死 <br>無法啟動：專業數據修復實錄
+            </h1>
+            <p class="text-xl text-gray-400 font-light leading-relaxed">解決 BMW E世代通病：防盜模組與 ELV 鎖死現地修復，無需更換總成。</p>
+        </header>
+
+        <section class="mb-20">
+            <div class="overflow-hidden rounded-sm border border-white/10 mb-12">
+                <img src="img/cases/bmw-elv-red-lock-fix.jpg" alt="BMW 儀表紅色鎖圖示" class="w-full">
+            </div>
+            
+            <div class="glass-card p-10 rounded-sm mb-12">
+                <h3 class="text-gold font-cinzel text-xl mb-6 tracking-widest uppercase">Case Overview</h3>
+                <p class="text-gray-300 leading-loose mb-6">
+                    車主反映車輛在正常停放後，儀表突然出現紅色方向盤鎖圖示，隨即車輛完全無法開啟電門、無法發動。這是 BMW 經典 E 系列常見的「防盜鎖死」問題。極致核心團隊獲報後，直接前往現場，透過「數據重構」技術，而非傳統的「更換整組硬體」，成功在現地恢復車輛動能。
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-white/10">
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Vehicle</span><span class="text-white font-bold">BMW E-Series</span></div>
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">System</span><span class="text-white font-bold">Security v2</span></div>
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Issue</span><span class="text-white font-bold">ELV Locked</span></div>
+                    <div><span class="text-[10px] text-gray-500 block mb-2 uppercase">Status</span><span class="text-green-500 font-bold">Fixed</span></div>
+                </div>
+            </div>
+
+            <div class="space-y-12">
+                <h3 class="text-2xl font-bold text-white font-cinzel tracking-widest uppercase">Artisan Approach</h3>
+                <div class="prose prose-invert max-w-none text-gray-400 leading-loose">
+                    <p class="mb-6">
+                        面對高階歐系防盜系統，極致核心採取了「數據導向」的修復路徑，有效避免了昂貴的硬體更換：
+                    </p>
+                    <ul class="list-disc pl-6 space-y-4 mb-8">
+                        <li><strong>專業診斷：</strong> 精確判別故障源自防盜模組計數器異常或數據偏移。</li>
+                        <li><strong>數據重構：</strong> 在不破壞原車結構的前提下，採集防盜核心代碼並進行加密重寫。</li>
+                        <li><strong>鎖定解除：</strong> 透過專業協議強制解鎖 ELV 方向盤電子鎖定狀態。</li>
+                        <li><strong>功能恢復：</strong> 重新匹配數據同步，恢復車輛點火與一鍵啟動功能。</li>
+                    </ul>
+                    <p>
+                        任務圓滿達成。相較於原廠要求更換轉向柱與模組的高昂報價與等待時間，極致核心在現場僅用數小時即完成修復。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-16 pt-12 border-t border-white/10 text-center">
+            <p class="text-gray-300 text-sm mb-8 font-light leading-relaxed">如果您也遇到「紅色方向盤鎖死」或車輛無法啟動，<br>請立即聯繫極致核心專業團隊。</p>
+            <div class="flex flex-col items-center gap-6">
+                <a href="tel:0909277670" class="cta-btn px-16 py-4 rounded-sm font-bold tracking-[0.2em] text-sm flex items-center justify-center gap-3 w-full md:w-auto">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    24H 救援專線
+                </a>
+                <a href="https://line.me/R/ti/p/@420gknem" class="text-gray-400 hover:text-gold text-xs border-b border-transparent hover:border-gold/50 pb-1 transition flex items-center gap-2">
+                    加入官方 LINE (@420gknem) 預約
+                </a>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
