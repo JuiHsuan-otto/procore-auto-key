@@ -1,12 +1,20 @@
 import sys
 import smtplib
+import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
+def _required_env(name):
+    value = os.environ.get(name)
+    if not value:
+        raise RuntimeError(f"Missing required environment variable: {name}")
+    return value
+
 def send_post(title, html_body):
-    sender_email = "ottoyeh@gmail.com"
-    app_password = "mzvk msyj irdm oeex".replace(" ", "")
-    blogger_email = "sig.noise.decoder.procore@blogger.com"
+    sender_email = _required_env("BLOGGER_SMTP_USER")
+    app_password = _required_env("BLOGGER_SMTP_APP_PASSWORD")
+    blogger_email = os.environ.get("BLOGGER_EMAIL_TARGET", "sig.noise.decoder.procore@blogger.com")
     
     msg = MIMEMultipart()
     msg['From'] = sender_email

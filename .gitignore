@@ -5,6 +5,13 @@ api_keys_config.json
 *.pem
 *.key
 secrets/
+.env.local
+scripts/blogger/token.json
+scripts/blogger/client_secret.json
+drafts/
+content_queue.local.json
+__pycache__/
+*.pyc
 
 # 開發臨時腳本 (可能包含測試金鑰)
 quick_add.py

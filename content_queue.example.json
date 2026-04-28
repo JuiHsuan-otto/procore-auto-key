@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "queue": [
+    {
+      "id": "2026-04-week-1-lost-key-guide",
+      "status": "idea",
+      "sourceType": "guide",
+      "officialUrl": "/article-lost-key-rescue-guide",
+      "primaryKeyword": "汽車鑰匙全丟怎麼辦",
+      "secondaryKeywords": ["免拖車", "現場匹配", "智慧鑰匙遺失"],
+      "targetChannels": ["website", "blogger", "googleBusinessProfile", "threads"],
+      "approval": {
+        "website": false,
+        "blogger": false,
+        "googleBusinessProfile": false,
+        "threads": false
+      },
+      "notes": "Generate draft pack first. Do not publish until approved_for_publish."
+    }
+  ]
+}
