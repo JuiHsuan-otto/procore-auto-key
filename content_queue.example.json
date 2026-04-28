@@ -16,6 +16,24 @@
         "threads": false
       },
       "notes": "Generate draft pack first. Do not publish until approved_for_publish."
+    },
+    {
+      "id": "2026-04-28-daily-vehicle-case",
+      "status": "idea",
+      "sourceType": "daily_vehicle_case",
+      "intakeTemplate": "case_intake.example.json",
+      "publicLocation": "台中北屯",
+      "issueType": "all_keys_lost",
+      "deIdentificationRequired": true,
+      "technicalDisclosure": "outcome_only",
+      "targetChannels": ["website", "blogger", "googleBusinessProfile", "threads"],
+      "approval": {
+        "website": true,
+        "blogger": false,
+        "googleBusinessProfile": false,
+        "threads": false
+      },
+      "notes": "If the user says direct publish in the same request, website is approved. External channels still require explicit platform approval."
     }
   ]
 }

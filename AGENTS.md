@@ -1,6 +1,6 @@
 ## CarKey (ProCore) 專屬發佈流程 (SOP)
 
-跨平台內容排程與 AI 助理自動化，必須先讀 `AI_CONTENT_AUTOMATION_SOP.md`。官網是唯一 canonical source；Blogger、Threads、Google Business Profile 只能作為草稿、分發與回鏈層。除非使用者明確批准該平台發布，AI 助理不得自動對外發文。
+跨平台內容排程與 AI 助理自動化，必須先讀 `AI_CONTENT_AUTOMATION_SOP.md`。官網是唯一 canonical source；Blogger、Threads、Google Business Profile 只能作為草稿、分發與回鏈層。使用者提供當天車輛照片、地點、是否全丟等素材並明確要求直接發文時，可依 SOP 產出並發布官網案例文；外部平台除非被明確點名，仍不得自動公開發文。所有案例必須去識別化，且不得公開同業可利用的技術流程。
 
 為了確保網頁內容同步，每次產出新文章（HTML）後，**必須**執行以下自動化同步指令，不得手動修改 blog.html 或 sitemap.xml：
 

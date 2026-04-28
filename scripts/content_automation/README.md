@@ -25,3 +25,9 @@ python scripts/content_automation/validate_content_pack.py drafts/YYYY-MM-DD-art
 ## Publish Boundary
 
 Publishing to Blogger, Threads, or Google Business Profile requires explicit approval and platform credentials. Draft generation and validation are safe to run on a schedule.
+
+## Daily Case Intake
+
+When Meico provides today's vehicle photos, location, and whether the key was all-lost, follow `AI_CONTENT_AUTOMATION_SOP.md` section 3.
+
+Use `case_intake.example.json` as the field reference when structured input is helpful. Public copy must be de-identified and must describe outcomes without exposing repeatable technical procedures.
