@@ -2,12 +2,12 @@
 
 跨平台內容排程與 AI 助理自動化，必須先讀 `AI_CONTENT_AUTOMATION_SOP.md`。官網是唯一 canonical source；Blogger、Threads、Google Business Profile 只能作為草稿、分發與回鏈層。使用者提供當天車輛照片、地點、是否全丟等素材並明確要求直接發文時，可依 SOP 產出並發布官網案例文；外部平台除非被明確點名，仍不得自動公開發文。所有案例必須去識別化，且不得公開同業可利用的技術流程。
 
-為了確保網頁內容同步，每次產出新文章（HTML）後，**必須**執行以下自動化同步指令，不得手動修改 blog.html 或 sitemap.xml：
+為了確保網頁內容同步，每次產出新文章（HTML）後，**必須**執行以下自動化同步指令，不得手動修改 blog.html 或 sitemap.xml。使用者提供的車輛照片預設已可公開使用，不要擅自裁切、遮罩或改圖；若檢查到隱藏 GPS metadata，只移除 metadata，不改畫面內容；若使用者特別提醒需要去識別化，再另行處理圖片。
 
 1. **執行同步腳本**：
-   使用 `publish_tool.py` 自動更新 `blog.json`, `blog.html` (JS 資料陣列) 與 `sitemap.xml`。
+   使用 `publish_tool.py` 自動更新 `blog.json`, `blog.html` (JS 資料陣列), `cases.html`, `cases.json` 與 `sitemap.xml`。
    ```bash
-   python ..\publish_tool.py "文章標題" "/article-filename.html" "分類(如：技術專欄)" "文章摘要"
+   python publish_tool.py "文章標題" "/article-filename.html" "分類(如：技術專欄)" "文章摘要"
    ```
 
 2. **驗證與推送**：

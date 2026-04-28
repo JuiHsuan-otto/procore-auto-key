@@ -1,5 +1,15 @@
 [
   {
+    "id": 5,
+    "date": "2026.04.28",
+    "location": "新竹竹北",
+    "brand": "Peugeot 508 SW",
+    "type": "智慧鑰匙新增",
+    "desc": "新竹竹北 2022 Peugeot 508 SW 智慧鑰匙新增案例。整理車主備份鑰匙前可準備的資料、現場確認項目與完成後測試重點。",
+    "img": "img/peugeot-508sw-zhubei-smartkey/case-1.jpg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 1,
     "date": "2026.02.23",
     "location": "台中",

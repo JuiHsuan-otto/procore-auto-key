@@ -17,7 +17,7 @@ LINE ID：@420gknem
 - Blogger、Threads、Google Business Profile 只做延伸摘要、導流與品牌提醒，不取代官網文章。
 - 未經使用者明確批准，不得自動公開發布到 Blogger、Threads、Google Business Profile。
 - 草稿產生、SEO 檢查、連結驗證、排程建議可以自動執行。
-- 新增官網 HTML 文章後，必須使用既有 `publish_tool.py` 同步 `blog.json`、`blog.html`、`sitemap.xml`，不得手動硬改清單與 sitemap。
+- 新增官網 HTML 文章後，必須使用 `publish_tool.py` 同步 `blog.json`、`blog.html`、`cases.html`、`cases.json` 與 `sitemap.xml`，不得手動硬改清單與 sitemap。
 - 所有公開連結使用乾淨網址，例如 `/article-lost-key-rescue-guide`，不要在公開文案放 `.html`。
 - 聯絡資料固定為 `LINE ID：@420gknem`、`電話：0909277670`。
 - 不要承諾「保證」、「最便宜」、「全台第一」這類無法驗證的句子。
@@ -52,7 +52,7 @@ LINE ID：@420gknem
 
 使用者通常提供：
 
-- 車輛照片。
+- 車輛照片。使用者提供的圖片預設已去識別化，可直接放入網站資產；除非使用者特別提醒，不要擅自裁切、遮罩或改圖。若檢查到隱藏 GPS metadata，只移除 metadata，不改畫面內容。
 - 大約地點，例如縣市、行政區、停車場、拍場、地下室、維修廠或路邊。
 - 是否鑰匙全丟。
 - 是備份鑰匙、全丟、感應異常、遙控失效、鎖頭/啟動問題或其他狀況。
@@ -119,7 +119,7 @@ AI 助理收到資料後的處理順序：
 新增 HTML 文章標準命令：
 
 ```bash
-python ..\publish_tool.py "文章標題" "/article-filename.html" "分類" "文章摘要"
+python publish_tool.py "文章標題" "/article-filename.html" "分類" "文章摘要"
 ```
 
 注意：這是既有發文 SOP 的規則；跨平台工具只負責產生草稿包，不取代官網同步流程。
