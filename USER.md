@@ -3,7 +3,7 @@
 - **Name:** Meico (Boss of Extreme Core Automotive Chip Keys / 極致核心 汽車晶片鑰匙)
 - **Role:** Business Owner
 - **Contact Info:**
-  - **LINE ID:** chingweida
+  - **LINE ID:** @420gknem
   - **Phone:** 0909277670
 - **Notes:**
   - Focused on "Extreme Core Automotive Chip Keys" web project.
