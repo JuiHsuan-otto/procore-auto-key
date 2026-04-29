@@ -32,6 +32,8 @@ Google Cloud Console -> Google Auth Platform / OAuth consent -> Audience -> Test
 
 Then run `auth.py` again. This is expected while the OAuth app is in testing mode.
 
+If `list_locations.py` returns a quota error with `quota_limit_value: 0`, the APIs are enabled but the Google Cloud project has not been approved for Google Business Profile API access yet. Submit the GBP API access request form from Google's Business Profile API documentation. Do not use the normal quota increase path for a zero quota project.
+
 ## 2. List Accounts And Locations
 
 ```bash

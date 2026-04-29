@@ -58,6 +58,12 @@ def headers() -> dict[str, str]:
 def request_json(method: str, url: str, **kwargs: Any) -> Any:
     response = requests.request(method, url, headers=headers(), timeout=30, **kwargs)
     if response.status_code >= 400:
+        if response.status_code == 429 and '"quota_limit_value": "0"' in response.text:
+            raise GbpError(
+                "Google Business Profile API quota is 0. The APIs are enabled, "
+                "but this Google Cloud project still needs GBP API access approval. "
+                "Submit the GBP API access request form; do not request a normal quota increase."
+            )
         raise GbpError(f"Google API error {response.status_code}: {response.text[:1200]}")
     if not response.text:
         return {}
