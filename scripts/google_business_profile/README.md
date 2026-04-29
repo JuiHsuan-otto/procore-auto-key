@@ -6,6 +6,14 @@ These scripts never commit credentials. OAuth client JSON, token JSON, and selec
 
 ## 1. Authorize
 
+Before authorization and location discovery, enable these APIs in the same Google Cloud project as the OAuth client:
+
+```text
+My Business Account Management API
+My Business Business Information API
+Google My Business API
+```
+
 ```bash
 python scripts/google_business_profile/auth.py
 ```
