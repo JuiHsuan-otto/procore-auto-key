@@ -1,5 +1,15 @@
 [
   {
+    "id": 7,
+    "date": "2026.05.01",
+    "location": "台北士林",
+    "brand": "VW T6",
+    "type": "smart_key",
+    "desc": "VW T6在台北士林遇到智慧鑰匙處理狀況，技師到場評估後完成智慧鑰匙服務到場處理，並確認完成匹配。",
+    "img": "img/cases/article-vw-t6-2022-taipei-smartkey.jpg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 6,
     "date": "2026.04.30",
     "location": "台北內湖",
