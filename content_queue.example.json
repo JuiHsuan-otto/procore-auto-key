@@ -1,24 +1,8 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "queue": [
     {
-      "id": "2026-04-week-1-lost-key-guide",
-      "status": "idea",
-      "sourceType": "guide",
-      "officialUrl": "/article-lost-key-rescue-guide",
-      "primaryKeyword": "汽車鑰匙全丟怎麼辦",
-      "secondaryKeywords": ["免拖車", "現場匹配", "智慧鑰匙遺失"],
-      "targetChannels": ["website", "blogger", "googleBusinessProfile", "threads"],
-      "approval": {
-        "website": false,
-        "blogger": false,
-        "googleBusinessProfile": false,
-        "threads": false
-      },
-      "notes": "Generate draft pack first. Do not publish until approved_for_publish."
-    },
-    {
-      "id": "2026-04-28-daily-vehicle-case",
+      "id": "2026-05-01-bmw-x3-taichung-akl",
       "status": "idea",
       "sourceType": "daily_vehicle_case",
       "intakeTemplate": "case_intake.example.json",
@@ -26,14 +10,19 @@
       "issueType": "all_keys_lost",
       "deIdentificationRequired": true,
       "technicalDisclosure": "outcome_only",
-      "targetChannels": ["website", "blogger", "googleBusinessProfile", "threads"],
+      "targetChannels": [
+        "website",
+        "blogger",
+        "googleBusinessProfile",
+        "threads"
+      ],
       "approval": {
         "website": true,
         "blogger": false,
         "googleBusinessProfile": false,
         "threads": false
       },
-      "notes": "If the user says direct publish in the same request, website is approved. External channels still require explicit platform approval."
+      "notes": "Generate a draft pack first. External channels require explicit platform approval."
     }
   ]
 }
