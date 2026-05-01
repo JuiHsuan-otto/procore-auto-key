@@ -1,5 +1,15 @@
 [
   {
+    "id": 10,
+    "date": "2026.05.01",
+    "location": "台灣",
+    "brand": "BMW 528",
+    "type": "all_keys_lost",
+    "desc": "2015 BMW 528車主在台灣安排鑰匙全丟處理，到場確認車輛狀態與鑰匙需求後，已完成檢測與交車確認。",
+    "img": "img/cases/article-bmw-528-2015-taiwan-akl.jpg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 9,
     "date": "2026.05.01",
     "location": "台北士林",
