@@ -19,6 +19,26 @@ BANNED = [
     "魂動美學",
     "數據重構",
     "全台．跨區．遠征",
+    "在現代社會中",
+    "隨著科技",
+    "不可或缺",
+    "至關重要",
+    "本文將",
+    "以下將",
+    "本文旨在",
+    "深入探討",
+    "專業團隊",
+    "量身打造",
+    "值得信賴",
+    "最佳選擇",
+    "頂尖",
+    "快速有效",
+    "高效便捷",
+    "一站式解決方案",
+    "全方位解決方案",
+    "為您提供最",
+    "無論是",
+    "不僅如此",
 ]
 LINE_ID = "@420gknem"
 PHONE = "0909277670"
@@ -93,6 +113,22 @@ def check_publish_args(pack: Path, official: str, errors: list[str]) -> None:
     for field in ["title", "category", "summary", "date", "lastmod"]:
         if not str(payload.get(field, "")).strip():
             fail(errors, f"publish-tool-args: missing {field}")
+    title = str(payload.get("title", ""))
+    summary = str(payload.get("summary", ""))
+    keywords = str(payload.get("keywords", ""))
+    region = str(payload.get("caseRegion", "")).strip()
+    car = str(payload.get("caseCar", "")).strip()
+    check_banned(json.dumps(payload, ensure_ascii=False), "publish-tool-args", errors)
+    if region and region not in title:
+        fail(errors, "publish-tool-args: title should include public location for local SEO")
+    if car and not any(part and part in title for part in car.split()):
+        fail(errors, "publish-tool-args: title should include vehicle label for search intent")
+    if len(summary) < 45:
+        fail(errors, f"publish-tool-args: summary too short for SEO: {len(summary)}")
+    if len(summary) > 180:
+        fail(errors, f"publish-tool-args: summary too long for meta/index use: {len(summary)}")
+    if region and region not in keywords:
+        fail(errors, "publish-tool-args: keywords should include public location")
 
 
 def main() -> None:

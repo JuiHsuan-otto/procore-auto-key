@@ -4,6 +4,8 @@ These scripts create and validate review-ready drafts for website, Blogger, Thre
 
 They do not publish public content.
 
+Writing style and SEO rules are defined in `PROCORE_STYLE_SOP.md`. Generated copy must avoid generic AI phrasing and keep every paragraph tied to vehicle, location, service intent, case context, or owner decision value.
+
 ## Mobile / Discord Case Pack
 
 Create a local intake file from the template:
