@@ -125,8 +125,14 @@ def case_prompt(identity: dict, intake: dict) -> str:
         },
     }
     return (
-        "你是 ProCore 官網的真人案例編輯，不是廣告文案機器。"
-        "請把技師回報、案件資訊與可能附上的現場照片，整理成可直接發布的繁體中文 SEO 案例內容。\n\n"
+        "你是 ProCore 官網的真人案例編輯與在地 SEO 成交流程規劃師，不是廣告文案機器。"
+        "請把技師回報、案件資訊與可能附上的現場照片，先判斷搜尋者意圖與成交阻力，再整理成可直接發布的繁體中文 SEO 案例內容。\n\n"
+        "業績導向 SEO 策略：\n"
+        "- 先判斷這筆素材最像哪一種搜尋需求：急救型（鑰匙全丟/車無法用）、追加備用型、感應或遙控異常型、特殊停放場域型、特定車款疑難型。\n"
+        "- 文章角度要服務潛在客戶的下一步決策：他會擔心能不能到場、要不要拖車、需要準備什麼、是否安全、是否會洩漏資料、如何快速判斷報價方向。\n"
+        "- 優先使用能帶來詢問的長尾字：地點 + 車款 + 問題、地點 + 汽車鑰匙、車款 + 鑰匙全丟、車款 + 智慧鑰匙新增、停放場域 + 鑰匙救援。\n"
+        "- 每篇只選 1 個主要成交角度，不要什麼都寫；標題、首段、H2、CTA 要圍繞同一個搜尋意圖。\n"
+        "- CTA 要自然引導讀者先傳車款、年份、所在地、鑰匙狀態與照片，讓詢問門檻降低。\n\n"
         "寫作核心：\n"
         "- 讀者是正在搜尋「地區 + 車款 + 汽車鑰匙問題」的台灣車主；內容要回答他下一步該準備什麼、怎麼判斷能否到場處理。\n"
         "- 每一段都必須有案件事實或決策價值：地點、車款年份、停放場域、鑰匙狀況、風險控管、完成結果、聯絡前準備。\n"
@@ -152,7 +158,8 @@ def case_prompt(identity: dict, intake: dict) -> str:
         "- 官網是 canonical source；Blogger 只做摘要與回鏈，不要複製整篇官網文。\n\n"
         "內容結構：\n"
         "- sections 至少 4 段，每段 120-180 字。\n"
-        "- 建議段落：案件背景、現場條件與評估、處理結果與交車確認、同車主可先準備什麼。\n"
+        "- 建議段落：搜尋者遇到的問題、到場前先確認的條件、處理結果與交車確認、同車主可先準備什麼。\n"
+        "- H2 應該像潛在客戶會搜尋或會問的句子，例如「雲林斗南 BMW 528 鑰匙全丟，需要先拖車嗎？」、「BMW 528 沒有備用鑰匙，聯絡前要準備什麼？」。\n"
         "- 如果照片能看出場域，只能描述可公開的環境類型，例如拍場、停車場、地下室、保修廠；不要猜完整地址或車主身份。\n\n"
         "請只回傳 JSON，格式如下：\n"
         "{\n"
@@ -162,9 +169,12 @@ def case_prompt(identity: dict, intake: dict) -> str:
         '  "summary": "80-120字案例摘要",\n'
         '  "primaryKeyword": "主關鍵字",\n'
         '  "secondaryKeywords": ["關鍵字1", "關鍵字2", "關鍵字3"],\n'
+        '  "searchIntent": "這篇鎖定的搜尋意圖，例如急救型鑰匙全丟",\n'
+        '  "conversionAngle": "這篇主打的成交角度，例如不用先拖車，先傳車款與現場照片評估",\n'
+        '  "cta": "自然行動呼籲",\n'
         '  "sections": [\n'
-        '    {"heading": "案件背景", "body": "120-180字"},\n'
-        '    {"heading": "現場條件與評估", "body": "120-180字"},\n'
+        '    {"heading": "搜尋者會問的 H2", "body": "120-180字"},\n'
+        '    {"heading": "到場前先確認的條件", "body": "120-180字"},\n'
         '    {"heading": "處理結果與交車確認", "body": "120-180字"},\n'
         '    {"heading": "同車主可先準備什麼", "body": "120-180字"}\n'
         "  ],\n"
@@ -235,6 +245,9 @@ def sanitize_ai_copy(payload: dict[str, Any]) -> dict[str, Any]:
         "summary": remove_banned_phrases(payload.get("summary"))[:180],
         "primaryKeyword": remove_banned_phrases(payload.get("primaryKeyword"))[:80],
         "secondaryKeywords": [remove_banned_phrases(item)[:60] for item in secondary if remove_banned_phrases(item)][:8],
+        "searchIntent": remove_banned_phrases(payload.get("searchIntent"))[:120],
+        "conversionAngle": remove_banned_phrases(payload.get("conversionAngle"))[:160],
+        "cta": remove_banned_phrases(payload.get("cta"))[:160],
         "sections": clean_sections,
         "bloggerTitle": remove_banned_phrases(payload.get("bloggerTitle"))[:90],
         "bloggerHtml": remove_banned_phrases(str(payload.get("bloggerHtml") or "").strip()),
