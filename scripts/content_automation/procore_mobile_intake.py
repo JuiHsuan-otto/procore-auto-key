@@ -133,7 +133,50 @@ LOCATION_HINTS = {
     "西屯": "台中西屯",
     "梧棲": "台中梧棲",
     "員林": "彰化員林",
+    "斗南鎮": "雲林斗南",
+    "斗南": "雲林斗南",
     "拍場": "新北林口",
+}
+
+LOCATION_PREFIXES = {
+    "台北": "台北",
+    "臺北": "台北",
+    "新北": "新北",
+    "桃園": "桃園",
+    "新竹": "新竹",
+    "苗栗": "苗栗",
+    "台中": "台中",
+    "臺中": "台中",
+    "彰化": "彰化",
+    "南投": "南投",
+    "雲林": "雲林",
+    "嘉義": "嘉義",
+    "台南": "台南",
+    "臺南": "台南",
+    "高雄": "高雄",
+    "屏東": "屏東",
+    "宜蘭": "宜蘭",
+    "花蓮": "花蓮",
+    "台東": "台東",
+    "臺東": "台東",
+    "基隆": "基隆",
+}
+
+NON_LOCATION_TAILS = {
+    "全丟",
+    "全失",
+    "遺失",
+    "不見",
+    "鑰匙",
+    "智慧",
+    "感應",
+    "遙控",
+    "服務",
+    "處理",
+    "到場",
+    "完成",
+    "車主",
+    "案例",
 }
 
 
@@ -221,6 +264,16 @@ def normalize_issue_type(value: str, full_text: str) -> str:
     return infer_issue_type(f"{value} {full_text}")
 
 
+def default_result(issue_type: str) -> str:
+    if issue_type == "all_keys_lost":
+        return "完成鑰匙全丟到場處理與交車前確認"
+    if issue_type in {"smart_key", "spare_key"}:
+        return "完成鑰匙匹配與交車前確認"
+    if issue_type in {"remote_failure", "keyless_not_detected"}:
+        return "完成異常檢查與交車前確認"
+    return "完成到場處理與交車前確認"
+
+
 def infer_model(text: str, brand: str, year: str) -> str:
     lower = text.lower()
     for hint, (_brand, model) in MODEL_HINTS.items():
@@ -245,6 +298,17 @@ def infer_location(text: str) -> str:
     for hint, location in LOCATION_HINTS.items():
         if hint in text:
             return location
+    for prefix, normalized in LOCATION_PREFIXES.items():
+        match = re.search(rf"{re.escape(prefix)}(?:縣|市)?\s*([\u4e00-\u9fff]{{1,4}}(?:區|鎮|鄉|市)?)?", text)
+        if not match:
+            continue
+        tail = clean(match.group(1))
+        if not tail:
+            return normalized
+        tail_core = re.sub(r"(區|鎮|鄉|市)$", "", tail)
+        if tail_core in NON_LOCATION_TAILS or any(word in tail_core for word in NON_LOCATION_TAILS):
+            return normalized
+        return f"{normalized}{tail_core}"
     match = re.search(r"([\u4e00-\u9fff]{2,6}(?:市|縣|區|鎮|鄉|拍場))", text)
     return match.group(1) if match else ""
 
@@ -268,7 +332,7 @@ def build_intake(message: str, photo_paths: list[str]) -> dict:
     issue_label = ISSUE_LABELS.get(issue_type, "汽車鑰匙服務")
     scene = clean(fields.get("scene")) or clean("；".join(free_lines)) or f"{public_vehicle_label}遇到{issue_label}狀況"
     service_type = clean(fields.get("service_type")) or f"{issue_label}到場處理"
-    result = clean(fields.get("result")) or "完成檢測與交車確認"
+    result = clean(fields.get("result")) or default_result(issue_type)
     case_date = clean(fields.get("date")) or date.today().isoformat()
 
     primary_keyword = clean(fields.get("primary_keyword")) or f"{public_location} {public_vehicle_label} {issue_label}"

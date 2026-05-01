@@ -329,17 +329,22 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
     if scene and "新增" in scene:
         scene_clause = "這次需求是新增智慧鑰匙，重點不是鑰匙全丟救援，而是確認原鑰匙狀態、車輛辨識與新增後的日常使用功能。"
         prep_detail = "新增案件會先確認目前是否還有可用鑰匙、是否只需要備用鑰匙，以及車主希望保留哪些日常使用功能。"
+        prep_next_step = "若是新增鑰匙，請說明目前是否還有可用鑰匙，以及希望新增備用鑰匙還是處理感應、遙控或啟動異常。"
     elif scene and ("全丟" in scene or "遺失" in scene):
         scene_clause = "車主回報手邊沒有可用鑰匙，重點會放在身分確認、車輛狀態與安全的到場處理條件。"
         prep_detail = "鑰匙全丟案件會先確認車主身分、車輛是否可接近、停放位置與車輛電力狀態。"
+        prep_next_step = "若是鑰匙全丟，請先說明車輛是否可開門、停放位置是否方便到場，以及手邊是否還有備用鑰匙或車籍相關資料。"
     elif scene:
         scene_clause = f"車主回報的狀況是{scene}，處理前會先把車款、年份、停放環境與功能需求確認清楚。"
         prep_detail = "這類案件會先確認故障或需求發生在哪一段，避免只用單一關鍵字判斷作業方向。"
+        prep_next_step = "請描述遙控、感應、開門或啟動是哪一段出問題，也可以先附現場照片協助判斷。"
     else:
         scene_clause = "車主先提供車款、年份、所在地與現場照片，方便先判斷是否適合到場處理。"
         prep_detail = "到場前會先確認車款年份、停放位置、鑰匙狀態與車主需求，降低現場資訊不足造成的誤判。"
+        prep_next_step = "請先提供車款年份、所在地、鑰匙狀況與現場照片，方便判斷下一步。"
 
     result_sentence = result.rstrip("。")
+    direction_label = service_label[:-2] if service_label.endswith("處理") else service_label
 
     intro = (
         f"這件案例來自{location}。車主的車輛是{vehicle_with_year}，需要{service_label}。"
@@ -366,12 +371,12 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
                 f"照片可以先判斷車輛停放位置、周邊作業空間與是否有需要遮蔽的資訊。對{vehicle}這類車款來說，年份、鑰匙型式與現場條件都會影響安排方式；先把資訊補齊，現場才不會走冤枉路。",
             ),
             (
-                f"{vehicle} {service_label}處理方向",
+                f"{vehicle} {direction_label}處理方向",
                 f"本次到場處理以{service_label}為目標，現場依車輛狀態完成必要確認後，{result_sentence}。交車前會確認車輛辨識、遙控、感應與啟動等日常使用狀態，避免只完成單一功能就交車。",
             ),
             (
                 f"{location}車主可先準備什麼",
-                f"如果你也在{location}或附近遇到{vehicle}鑰匙需求，可以先傳車款年份、所在地、鑰匙狀況與現場照片。若是新增鑰匙，請說明目前是否還有可用鑰匙；若是異常，請描述遙控、感應或啟動是哪一段出問題。",
+                f"如果你也在{location}或附近遇到{vehicle}鑰匙需求，可以先傳車款年份、所在地、鑰匙狀況與現場照片。{prep_next_step}",
             ),
         ]
     article_sections = []
@@ -401,7 +406,7 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
                 "telephone": "+886909277670",
                 "image": f"{SITE}/img/procore_logo_main.jpg",
                 "priceRange": "$$",
-                "areaServed": ["台北市", "新北市", "桃園市", "新竹縣市", "台中市", "彰化縣", "苗栗縣"],
+                "areaServed": ["台北市", "新北市", "桃園市", "新竹縣市", "苗栗縣", "台中市", "彰化縣", "南投縣", "雲林縣", "嘉義市", "嘉義縣"],
                 "address": {"@type": "PostalAddress", "addressCountry": "TW"},
                 "contactPoint": {
                     "@type": "ContactPoint",
