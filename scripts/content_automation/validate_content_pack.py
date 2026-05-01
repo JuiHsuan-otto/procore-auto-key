@@ -23,6 +23,12 @@ BANNED = [
 LINE_ID = "@420gknem"
 PHONE = "0909277670"
 SITE_HOSTS = {"www.carkey.com.tw", "carkey.com.tw"}
+TECH_DISCLOSURE_TERMS = [
+    "EEPROM",
+    "immobilizer dump",
+    "bypass",
+    "PIN code",
+]
 
 
 def fail(errors: list[str], msg: str) -> None:
@@ -43,6 +49,50 @@ def check_banned(text: str, label: str, errors: list[str]) -> None:
     for phrase in BANNED:
         if phrase in text:
             fail(errors, f"{label}: banned phrase found: {phrase}")
+
+
+def check_technical_disclosure(text: str, label: str, errors: list[str]) -> None:
+    lower = text.lower()
+    for term in TECH_DISCLOSURE_TERMS:
+        if term.lower() in lower:
+            fail(errors, f"{label}: technical disclosure term found: {term}")
+
+
+def check_website_article(pack: Path, official: str, errors: list[str]) -> None:
+    path = pack / "website-article.html"
+    if not path.exists():
+        return
+    html = path.read_text(encoding="utf-8")
+    check_no_bad_links(html, "website-article", errors)
+    check_banned(html, "website-article", errors)
+    check_technical_disclosure(html, "website-article", errors)
+    if official and official not in html:
+        fail(errors, "website-article: missing canonical official URL")
+    if "<h1" not in html.lower():
+        fail(errors, "website-article: missing h1")
+    if "application/ld+json" not in html:
+        fail(errors, "website-article: missing JSON-LD")
+    if LINE_ID not in html:
+        fail(errors, "website-article: missing correct LINE ID")
+    if PHONE not in html:
+        fail(errors, "website-article: missing correct phone")
+
+
+def check_publish_args(pack: Path, official: str, errors: list[str]) -> None:
+    path = pack / "publish-tool-args.json"
+    if not path.exists():
+        return
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    link = payload.get("path", "")
+    if not link.startswith("/"):
+        fail(errors, "publish-tool-args: path must be a clean root-relative URL")
+    if link.endswith(".html"):
+        fail(errors, "publish-tool-args: path must not end with .html")
+    if official and not official.endswith(link):
+        fail(errors, "publish-tool-args: path does not match manifest officialUrl")
+    for field in ["title", "category", "summary", "date", "lastmod"]:
+        if not str(payload.get(field, "")).strip():
+            fail(errors, f"publish-tool-args: missing {field}")
 
 
 def main() -> None:
@@ -108,6 +158,9 @@ def main() -> None:
         fail(errors, "website-checklist: missing correct LINE ID")
     if PHONE not in checklist:
         fail(errors, "website-checklist: missing correct phone")
+
+    check_website_article(pack, official, errors)
+    check_publish_args(pack, official, errors)
 
     if errors:
         print("VALID=0")

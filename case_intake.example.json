@@ -1,12 +1,12 @@
 {
-  "version": "1.0",
-  "purpose": "Daily vehicle case intake template for ProCore AI publishing workflow.",
+  "version": "1.1",
+  "purpose": "Daily vehicle case intake template for the ProCore mobile/Discord publishing workflow.",
   "publishIntent": {
     "website": true,
     "blogger": false,
     "threads": false,
     "googleBusinessProfile": false,
-    "notes": "If the user says direct publish, treat website as approved. External channels require explicit platform approval."
+    "notes": "Website may be drafted immediately. External channels require explicit approval."
   },
   "vehicle": {
     "brand": "BMW",
@@ -15,24 +15,36 @@
     "publicVehicleLabel": "BMW X3"
   },
   "caseContext": {
-    "date": "2026-04-28",
+    "date": "2026-05-01",
     "publicLocation": "台中北屯",
     "privateLocation": "Do not publish exact address unless explicitly allowed.",
-    "scene": "地下室停車場",
+    "scene": "車主鑰匙全丟，車輛停放於地下停車場",
     "issueType": "all_keys_lost",
     "allKeysLost": true,
-    "serviceType": "現場鑰匙處理",
-    "result": "完成可正常啟動與遙控使用的鑰匙"
+    "serviceType": "汽車鑰匙全丟到場處理",
+    "result": "完成鑰匙匹配，遙控、感應與啟動功能確認正常"
   },
   "media": {
     "photoPaths": [],
     "redactionRequired": true,
-    "redact": ["license_plate", "faces", "exact_address", "documents", "vin", "customer_name", "phone_number"]
+    "redact": [
+      "license_plate",
+      "faces",
+      "exact_address",
+      "documents",
+      "vin",
+      "customer_name",
+      "phone_number"
+    ]
   },
   "seo": {
     "primaryKeyword": "台中 BMW 鑰匙全丟",
-    "secondaryKeywords": ["BMW 智慧鑰匙遺失", "汽車鑰匙全丟免拖車", "北屯汽車鑰匙"],
-    "tone": "車主看得懂，少術語，不公開技術細節"
+    "secondaryKeywords": [
+      "BMW 智慧鑰匙",
+      "台中汽車鑰匙",
+      "汽車鑰匙全丟"
+    ],
+    "tone": "清楚、可信、結果導向，不公開可複製的技術細節"
   },
-  "privateNotes": "Internal notes may help the AI judge the case, but must not be published if they reveal technical methods."
+  "privateNotes": "Internal notes may help the AI understand the case, but must not be published if they reveal customer identity, exact location, or repeatable technical methods."
 }
