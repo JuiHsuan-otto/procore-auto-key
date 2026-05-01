@@ -166,6 +166,34 @@ def issue_label(issue_type: str) -> str:
     return ISSUE_LABELS.get(issue_type, clean_space(issue_type) or "汽車鑰匙服務")
 
 
+def service_label(issue_type: str, scene: str, service: str) -> str:
+    text = f"{scene} {service}"
+    if issue_type == "smart_key" and any(word in text for word in ["新增", "追加", "備用", "多打一支"]):
+        return "智慧鑰匙新增"
+    if issue_type == "smart_key":
+        return "智慧鑰匙處理"
+    if issue_type == "remote_failure":
+        return "遙控鑰匙異常處理"
+    if issue_type == "keyless_not_detected":
+        return "感應鑰匙異常處理"
+    if issue_type == "all_keys_lost":
+        return "鑰匙全丟處理"
+    return issue_label(issue_type)
+
+
+def human_result(result: str, service_name: str) -> str:
+    result = clean_space(result)
+    if not result:
+        return "已完成檢測與交車前確認"
+    if result in {"完成匹配", "匹配完成"}:
+        return f"已完成{service_name}匹配，並完成交車前基本功能確認"
+    if result.startswith("已完成"):
+        return result
+    if result.startswith("完成"):
+        return f"已{result}"
+    return result
+
+
 def issue_slug(issue_type: str) -> str:
     return ISSUE_SLUGS.get(issue_type, slugify(issue_type, "service"))
 
@@ -175,7 +203,7 @@ def vehicle_label(intake: dict) -> str:
     explicit = clean_space(vehicle.get("publicVehicleLabel"))
     if explicit:
         return explicit
-    parts = [vehicle.get("brand"), vehicle.get("model"), vehicle.get("year")]
+    parts = [vehicle.get("brand"), vehicle.get("model")]
     return " ".join(clean_space(part) for part in parts if clean_space(part)) or "車輛"
 
 
@@ -193,14 +221,21 @@ def build_article_identity(intake: dict) -> dict:
     slug_parts = ["article", brand, model, year, location, issue_slug(issue_type)]
     slug = "-".join(part for part in slug_parts if part)
     link = f"/{slug}"
-    title = f"{public_location}{label}{issue_label(issue_type)}到場處理紀錄 | 極致核心 ProCore"
-    h1 = f"{public_location}{label}{issue_label(issue_type)}處理紀錄"
     service = clean_space(context.get("serviceType")) or issue_label(issue_type)
-    result = clean_space(context.get("result")) or "完成檢測與交車確認"
     scene = clean_space(context.get("scene")) or "車主遇到鑰匙或啟動相關問題"
+    label_for_service = service_label(issue_type, scene, service)
+    result = human_result(clean_space(context.get("result")), label_for_service)
+    year_text = clean_space(vehicle.get("year"))
+    title_vehicle = " ".join(part for part in [year_text, label] if part)
+    title_core = " ".join(part for part in [public_location, title_vehicle, label_for_service] if part)
+    title = f"{title_core}｜極致核心 ProCore"
+    h1 = f"{title_core}案例"
     primary_keyword = clean_space(seo.get("primaryKeyword")) or f"{public_location} {label} {issue_label(issue_type)}"
     secondary = [clean_space(item) for item in seo.get("secondaryKeywords", []) if clean_space(item)]
-    summary = compact_summary(f"{label}在{public_location}遇到{issue_label(issue_type)}狀況，技師到場評估後完成{service}，並確認{result}。")
+    summary = compact_summary(
+        f"{title_vehicle}車主在{public_location}安排{label_for_service}，到場確認車輛狀態與鑰匙需求後，{result}。",
+        150,
+    )
     return {
         "slug": slug,
         "link": link,
@@ -211,6 +246,8 @@ def build_article_identity(intake: dict) -> dict:
         "scene": scene,
         "service": service,
         "result": result,
+        "year": year_text,
+        "serviceLabel": label_for_service,
         "vehicleLabel": label,
         "publicLocation": public_location,
         "issueLabel": issue_label(issue_type),
@@ -481,6 +518,12 @@ def build_manifest(identity: dict, intake: dict, media_entries: list[dict], case
             "vehicleLabel": identity["vehicleLabel"],
             "publicLocation": identity["publicLocation"],
             "issueType": identity["issueType"],
+            "issueLabel": identity["issueLabel"],
+            "serviceLabel": identity["serviceLabel"],
+            "scene": identity["scene"],
+            "service": identity["service"],
+            "result": identity["result"],
+            "year": identity["year"],
         },
         "channels": {
             "websiteDraft": {"file": "website-article.html", "status": "draft"},

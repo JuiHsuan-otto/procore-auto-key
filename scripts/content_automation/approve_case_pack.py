@@ -308,17 +308,44 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
         "spare_key": "備用鑰匙",
         "smart_key": "智慧鑰匙服務",
     }.get(issue_type, "汽車鑰匙服務")
+    service_label = clean_text(source.get("serviceLabel")) or issue_label
+    scene = clean_text(source.get("scene"))
+    service = clean_text(source.get("service")) or service_label
+    result = clean_text(source.get("result")) or clean_text(publish_args.get("summary"))
+    year = clean_text(source.get("year"))
+    vehicle_with_year = " ".join(part for part in [year, vehicle] if part)
     h1 = clean_text(ai_copy.get("h1")) if ai_copy.get("status") == "ok" else ""
     h1 = h1 or clean_text(source.get("title")) or title
     h1 = h1.replace(" | 極致核心 ProCore", "")
+    h1 = h1.replace("｜極致核心 ProCore", "")
     keywords = [item.strip() for item in clean_text(publish_args.get("keywords")).split(",") if item.strip()]
     keywords_meta = "、".join(dict.fromkeys(keywords))
     image_url = case_img if case_img.startswith("http") else f"{SITE}/{case_img}"
     date_value = clean_text(publish_args.get("lastmod")) or clean_text(publish_args.get("date")).replace(".", "-")
-    hero_tag = f"{location}｜{vehicle}｜{issue_label}".upper()
+    hero_tag = f"{location}｜{vehicle}｜{service_label}".upper()
     hero_summary = clean_text(ai_copy.get("summary")) if ai_copy.get("status") == "ok" else ""
     hero_summary = hero_summary or summary
 
+    if scene and "新增" in scene:
+        scene_clause = "這次需求是新增智慧鑰匙，重點不是鑰匙全丟救援，而是確認原鑰匙狀態、車輛辨識與新增後的日常使用功能。"
+        prep_detail = "新增案件會先確認目前是否還有可用鑰匙、是否只需要備用鑰匙，以及車主希望保留哪些日常使用功能。"
+    elif scene and ("全丟" in scene or "遺失" in scene):
+        scene_clause = "車主回報手邊沒有可用鑰匙，重點會放在身分確認、車輛狀態與安全的到場處理條件。"
+        prep_detail = "鑰匙全丟案件會先確認車主身分、車輛是否可接近、停放位置與車輛電力狀態。"
+    elif scene:
+        scene_clause = f"車主回報的狀況是{scene}，處理前會先把車款、年份、停放環境與功能需求確認清楚。"
+        prep_detail = "這類案件會先確認故障或需求發生在哪一段，避免只用單一關鍵字判斷作業方向。"
+    else:
+        scene_clause = "車主先提供車款、年份、所在地與現場照片，方便先判斷是否適合到場處理。"
+        prep_detail = "到場前會先確認車款年份、停放位置、鑰匙狀態與車主需求，降低現場資訊不足造成的誤判。"
+
+    result_sentence = result.rstrip("。")
+
+    intro = (
+        f"這件案例來自{location}。車主的車輛是{vehicle_with_year}，需要{service_label}。"
+        f"{scene_clause}"
+        f"收到照片與基本資料後，會先把車款年份、停放環境與鑰匙需求確認清楚，再安排到場處理。"
+    )
     section_blocks = []
     if ai_copy.get("status") == "ok" and isinstance(ai_copy.get("sections"), list):
         for section in ai_copy.get("sections", [])[:6]:
@@ -331,20 +358,22 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
     if not section_blocks:
         section_blocks = [
             (
-                "案件背景",
-                f"這次是 {location} 的 {vehicle} {issue_label} 案例。車主最需要的是安全、明確、不要把問題越弄越複雜，因此會先確認車款年份、停放環境與鑰匙狀態，再安排適合的處理方式。",
+                f"{location} {vehicle} {service_label}案件背景",
+                f"車主先提供車款、年份、所在地與現場照片，確認是{vehicle_with_year}的{service_label}需求。{prep_detail}公開案例只保留車款、地區、需求與完成結果，不放出足以被複製的作業路徑。",
             ),
             (
-                "到場評估重點",
-                "汽車鑰匙服務牽涉車輛安全，公開案例只保留車款、地區、狀況與結果，不揭露可被複製的作業路徑。實際處理會依車況、現場條件與車主需求判斷。",
+                "到場前為什麼要先看照片？",
+                f"照片可以先判斷車輛停放位置、周邊作業空間與是否有需要遮蔽的資訊。對{vehicle}這類車款來說，年份、鑰匙型式與現場條件都會影響安排方式；先把資訊補齊，現場才不會走冤枉路。",
             ),
             (
-                "處理結果",
-                f"{summary} 交車前會確認車輛辨識、遙控、感應與日常使用需要的功能，讓車主可以安心恢復用車。",
+                f"{vehicle} {service_label}處理方向",
+                f"本次到場處理以{service_label}為目標，現場依車輛狀態完成必要確認後，{result_sentence}。交車前會確認車輛辨識、遙控、感應與啟動等日常使用狀態，避免只完成單一功能就交車。",
+            ),
+            (
+                f"{location}車主可先準備什麼",
+                f"如果你也在{location}或附近遇到{vehicle}鑰匙需求，可以先傳車款年份、所在地、鑰匙狀況與現場照片。若是新增鑰匙，請說明目前是否還有可用鑰匙；若是異常，請描述遙控、感應或啟動是哪一段出問題。",
             ),
         ]
-
-    intro = section_blocks[0][1]
     article_sections = []
     for heading, body in section_blocks:
         article_sections.append(f"""
@@ -477,20 +506,20 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
       <h2>這次處理重點</h2>
       <div class="grid md:grid-cols-2 gap-4">
         <div class="panel p-5">
-          <h3>先確認現場條件</h3>
-          <p>先確認車款、年份、停放位置與鑰匙狀態，再安排合適的處理方式。</p>
+          <h3>先確認車款與鑰匙需求</h3>
+          <p>{escape(vehicle_with_year)} 的鑰匙型式、現有鑰匙狀態與車主需求會先確認清楚，再安排到場。</p>
         </div>
         <div class="panel p-5">
-          <h3>資訊去識別化</h3>
-          <p>案例只保留車款、地區與服務類型，不公開車主資訊或可被濫用的細節。</p>
+          <h3>依現場條件安排</h3>
+          <p>停放位置、車輛是否可開門、周邊作業空間都會影響處理方式，先傳照片能更快判斷。</p>
         </div>
         <div class="panel p-5">
           <h3>完成後確認功能</h3>
-          <p>交車前確認日常使用需要的遙控、感應與啟動狀態。</p>
+          <p>完成後會確認遙控、感應、啟動與日常使用狀態，避免只完成一半就交車。</p>
         </div>
         <div class="panel p-5">
-          <h3>適合先傳照片評估</h3>
-          <p>先提供車款、年份、所在地與現場照片，可以更快判斷下一步。</p>
+          <h3>公開內容保留安全邊界</h3>
+          <p>案例只保留地區、車款、需求與結果，不公開車主個資或可被複製的技術細節。</p>
         </div>
       </div>
 
