@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import os
+import json
 import re
 import subprocess
 import sys
@@ -227,7 +228,7 @@ def format_draft_reply(output: str, validation: str = "") -> str:
     body = output
     if validation:
         body = f"{body}\n\n{validation}"
-    return "ProCore 草稿包已建立。\n" f"```text\n{truncate_output(body)}\n```"
+    return "ProCore 草稿包已建立。\n" f"{read_ai_status(output)}\n" f"```text\n{truncate_output(body)}\n```"
 
 
 def format_publish_reply(pack_output: str, approve_output: str) -> str:
@@ -244,6 +245,35 @@ def find_line(output: str, key: str) -> str:
     return match.group(1).strip() if match else ""
 
 
+def read_ai_status(pack_output: str) -> str:
+    pack = find_line(pack_output, "CASE_PACK")
+    if not pack:
+        return "AI：未找到草稿包狀態。"
+    manifest_path = Path(pack)
+    if not manifest_path.is_absolute():
+        manifest_path = ROOT / manifest_path
+    manifest_path = manifest_path / "manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return "AI：無法讀取產文狀態。"
+    ai_copy = manifest.get("aiCopy", {}) if isinstance(manifest.get("aiCopy"), dict) else {}
+    provider = str(ai_copy.get("provider") or "none")
+    status = str(ai_copy.get("status") or "not_requested")
+    if provider == "gemini" and status == "ok":
+        model = str(ai_copy.get("model") or "gemini")
+        guardrails = ai_copy.get("guardrails", {}) if isinstance(ai_copy.get("guardrails"), dict) else {}
+        rejected = guardrails.get("rejectedFields") if isinstance(guardrails, dict) else None
+        suffix = f"，已保留硬資料並退回欄位：{', '.join(rejected)}" if rejected else "，硬資料已鎖定"
+        return f"AI：Gemini 已產生 SEO 文案（{model}）{suffix}。"
+    if provider == "gemini":
+        reason = str(ai_copy.get("reason") or status)
+        if "GEMINI_API_KEY" in reason:
+            return "AI：Gemini 已啟用但尚未執行，缺 GEMINI_API_KEY。"
+        return f"AI：Gemini 未完成（{status}）。"
+    return "AI：未啟用 API 產文，本次使用本地 ProCore 模板。"
+
+
 def format_completed_reply(source_text: str, pack_output: str, approve_output: str, deploy_output: str) -> str:
     url = find_line(deploy_output, "URL") or find_line(approve_output, "URL")
     article = find_line(approve_output, "ARTICLE")
@@ -258,6 +288,7 @@ def format_completed_reply(source_text: str, pack_output: str, approve_output: s
 
     details = [
         f"來源：{title_hint}",
+        read_ai_status(pack_output),
         "",
         "1. Blogger / SEO 分發",
         f"- {blogger_text}",

@@ -110,23 +110,65 @@ def ai_ok(ai_copy: dict | None) -> bool:
     return isinstance(ai_copy, dict) and ai_copy.get("status") == "ok"
 
 
+def has_locked_facts(value: str, identity: dict, require_year: bool = True) -> bool:
+    value = clean_space(value)
+    if not value:
+        return False
+    location = clean_space(identity.get("publicLocation"))
+    vehicle = clean_space(identity.get("vehicleLabel"))
+    year = clean_space(identity.get("year"))
+    if location and location not in value:
+        return False
+    if vehicle and vehicle.lower() not in value.lower():
+        return False
+    if require_year and year and year not in value:
+        return False
+    return True
+
+
 def apply_ai_copy(identity: dict, ai_copy: dict | None) -> None:
     if not ai_ok(ai_copy):
         return
-    for target, source in [
-        ("title", "title"),
-        ("h1", "h1"),
-        ("summary", "summary"),
-        ("primaryKeyword", "primaryKeyword"),
+    rejected: list[str] = []
+    for target, sources in [
+        ("title", ["title"]),
+        ("h1", ["h1"]),
+        ("summary", ["metaDescription", "summary"]),
+        ("primaryKeyword", ["primaryKeyword"]),
     ]:
-        value = clean_space(ai_copy.get(source))
-        if value:
+        value = ""
+        source_name = ""
+        for source in sources:
+            candidate = clean_space(ai_copy.get(source))
+            if candidate:
+                value = candidate
+                source_name = source
+                break
+        if not value:
+            continue
+        if has_locked_facts(value, identity, require_year=target != "primaryKeyword"):
             identity[target] = value
+        else:
+            rejected.append(source_name or target)
+    if rejected:
+        guardrails = ai_copy.setdefault("guardrails", {})
+        guardrails["rejectedFields"] = sorted(set(rejected))
+        guardrails["reason"] = "missing locked publicLocation, vehicleLabel, or year"
     secondary = ai_copy.get("secondaryKeywords")
     if isinstance(secondary, list):
         values = [clean_space(item) for item in secondary if clean_space(item)]
-        if values:
-            identity["secondaryKeywords"] = values
+        location = clean_space(identity.get("publicLocation"))
+        vehicle = clean_space(identity.get("vehicleLabel"))
+        issue = clean_space(identity.get("issueLabel"))
+        safe_values = [
+            item
+            for item in values
+            if (location and location in item)
+            or (vehicle and vehicle.lower() in item.lower())
+            or (issue and issue in item)
+        ]
+        if safe_values:
+            identity["secondaryKeywords"] = safe_values
 
 
 def ensure_contact_and_backlink(html: str, official_url: str) -> str:

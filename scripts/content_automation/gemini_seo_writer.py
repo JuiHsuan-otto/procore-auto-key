@@ -87,6 +87,8 @@ def case_prompt(identity: dict, intake: dict) -> str:
         "- H2 請用搜尋者會問的語氣，不要用空泛詞，例如「VW T6 感應鑰匙異常，先確認哪些狀況？」。\n"
         "- 不做關鍵字堆砌；同一關鍵字在正文自然出現 1-2 次即可。\n\n"
         "安全與品牌規則：\n"
+        "- 案件資料 JSON 裡的 publicLocation、publicVehicleLabel、year、issueLabel 是鎖定硬資料，不能改寫、泛化或自行推測。\n"
+        "- title、H1、metaDescription、summary、primaryKeyword 都必須使用鎖定硬資料，不得把地點改成「台灣」或其他縣市。\n"
         "- 不公開車主姓名、電話、完整地址、車牌、VIN、文件細節。\n"
         "- 不揭露可複製的技術流程、設備步驟、繞過方式、PIN、EEPROM、OBD、dump 等敏感詞。\n"
         "- 只描述情境判斷、現場限制、風險控管、到場確認、完成結果與車主提醒。\n"
