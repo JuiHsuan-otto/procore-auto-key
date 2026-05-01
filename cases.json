@@ -1,12 +1,22 @@
 [
   {
-    "id": 7,
+    "id": 9,
     "date": "2026.05.01",
     "location": "台北士林",
     "brand": "VW T6",
     "type": "smart_key",
-    "desc": "VW T6在台北士林遇到智慧鑰匙處理狀況，技師到場評估後完成智慧鑰匙服務到場處理，並確認完成匹配。",
+    "desc": "2022 VW T6車主在台北士林安排智慧鑰匙新增，到場確認車輛狀態與鑰匙需求後，完成智慧鑰匙新增匹配，並進行交車前基本功能確認。",
     "img": "img/cases/article-vw-t6-2022-taipei-smartkey.jpg",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 8,
+    "date": "2026.05.01",
+    "location": "台北士林",
+    "brand": "VW T6",
+    "type": "smart_key",
+    "desc": "2022 VW T6車主在台北士林安排智慧鑰匙新增，到場確認車輛狀態與鑰匙需求後，完成智慧鑰匙新增匹配，並進行交車前基本功能確認。",
+    "img": "img/procore_logo_main.jpg",
     "tag": "SUCCESS"
   },
   {
