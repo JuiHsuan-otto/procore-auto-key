@@ -20,18 +20,71 @@ from typing import Any
 
 API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 DEFAULT_MODEL = "gemini-2.5-flash"
+FALLBACK_MODELS = ["gemini-3-flash-preview", "gemini-3.1-flash-lite-preview", "gemini-2.5-flash-lite", "gemini-flash-lite-latest"]
 MAX_IMAGES = 3
 MAX_IMAGE_BYTES = 8 * 1024 * 1024
+BANNED_REPLACEMENTS = {
+    "職人": "技師",
+    "火速": "快速",
+    "攻克": "處理",
+    "深入解析": "整理",
+    "完美匹配": "完成匹配",
+    "守護您的駕駛權限": "協助恢復用車",
+    "魂動美學": "車輛外觀",
+    "數據重構": "資料確認",
+    "全台．跨區．遠征": "跨區到場",
+    "在現代社會中": "",
+    "隨著科技": "",
+    "不可或缺": "常見",
+    "至關重要": "很重要",
+    "本文將": "這篇案例會",
+    "以下將": "接下來會",
+    "本文旨在": "這篇案例整理",
+    "深入探討": "整理",
+    "專業團隊": "技師",
+    "專業設備": "合適工具",
+    "專業處理": "到場處理",
+    "專業度": "處理方式",
+    "量身打造": "依車況安排",
+    "值得信賴": "清楚",
+    "最佳選擇": "可評估的方式",
+    "頂尖": "",
+    "快速有效": "有效率",
+    "高效便捷": "有效率",
+    "一站式解決方案": "到場處理方式",
+    "全方位解決方案": "處理方式",
+    "為您提供最": "提供",
+    "無論是": "不論",
+    "不僅如此": "另外",
+}
 
 
 def clean(value: object) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()
 
 
+def remove_banned_phrases(value: str) -> str:
+    text = str(value or "")
+    for phrase, replacement in BANNED_REPLACEMENTS.items():
+        text = text.replace(phrase, replacement)
+    return clean(text)
+
+
 def should_use_gemini(provider: str = "") -> bool:
     provider = clean(provider or os.environ.get("PROCORE_AI_PROVIDER")).lower()
     enabled = clean(os.environ.get("PROCORE_USE_GEMINI")).lower() in {"1", "true", "yes", "on"}
     return provider == "gemini" or enabled
+
+
+def split_models(value: str) -> list[str]:
+    return [clean(item).removeprefix("models/") for item in re.split(r"[,，;\s]+", value) if clean(item)]
+
+
+def model_candidates() -> list[str]:
+    primary = clean(os.environ.get("GEMINI_MODEL")) or DEFAULT_MODEL
+    fallbacks = split_models(os.environ.get("GEMINI_FALLBACK_MODELS", ""))
+    candidates = [primary, *fallbacks, *FALLBACK_MODELS]
+    return list(dict.fromkeys(model for model in candidates if model))
 
 
 def image_part(path: Path) -> dict[str, Any] | None:
@@ -79,6 +132,10 @@ def case_prompt(identity: dict, intake: dict) -> str:
         "- 每一段都必須有案件事實或決策價值：地點、車款年份、停放場域、鑰匙狀況、風險控管、完成結果、聯絡前準備。\n"
         "- 不要像 AI 文章。禁止開場空話、趨勢語、華麗形容詞、抽象承諾。不要寫「在現代社會中、隨著科技、不可或缺、至關重要、本文將、以下將、深入探討、專業團隊、量身打造、值得信賴、最佳選擇、快速有效、完美、頂尖」。\n"
         "- 不要寫得像教學文或技術揭密；這是案例頁，不是作業流程公開文。\n\n"
+        "真實性規則：\n"
+        "- 不得自行加入案件資料或照片中沒有的細節，例如車主如何找到我們、停放於室外停車場/地下室/保修廠、車主表示滿意、舊鑰匙刪除、具體功能逐項通過等。\n"
+        "- 若資料沒有提供停放場域或驗收細節，請寫「會先確認停放環境」或「交車前會確認日常使用功能」，不要把它寫成已發生事實。\n"
+        "- 可以根據 issueLabel 說明該類案件通常要先確認哪些資訊，但必須明確避免說成這次案例已確認的事實。\n\n"
         "SEO 規則：\n"
         "- title 格式優先使用「地點 + 年份 + 車款 + 服務意圖｜極致核心 ProCore」，60 字內，讀起來像真人標題。\n"
         "- H1 要包含地點、車款、問題類型；首段前 60 字要自然出現主關鍵字，不要堆疊。\n"
@@ -155,15 +212,15 @@ def sanitize_ai_copy(payload: dict[str, Any]) -> dict[str, Any]:
     for item in sections[:6]:
         if not isinstance(item, dict):
             continue
-        heading = clean(item.get("heading"))
-        body = clean(item.get("body"))
+        heading = remove_banned_phrases(item.get("heading"))
+        body = remove_banned_phrases(item.get("body"))
         if heading and body:
             clean_sections.append({"heading": heading[:48], "body": body[:900]})
 
     threads = payload.get("threads")
     if not isinstance(threads, list):
         threads = []
-    clean_threads = [clean(item)[:500] for item in threads if clean(item)][:3]
+    clean_threads = [remove_banned_phrases(item)[:500] for item in threads if remove_banned_phrases(item)][:3]
 
     secondary = payload.get("secondaryKeywords")
     if not isinstance(secondary, list):
@@ -172,17 +229,17 @@ def sanitize_ai_copy(payload: dict[str, Any]) -> dict[str, Any]:
     return {
         "provider": "gemini",
         "model": clean(payload.get("model")),
-        "title": clean(payload.get("title"))[:90],
-        "h1": clean(payload.get("h1"))[:90],
-        "metaDescription": clean(payload.get("metaDescription"))[:180],
-        "summary": clean(payload.get("summary"))[:180],
-        "primaryKeyword": clean(payload.get("primaryKeyword"))[:80],
-        "secondaryKeywords": [clean(item)[:60] for item in secondary if clean(item)][:8],
+        "title": remove_banned_phrases(payload.get("title"))[:90],
+        "h1": remove_banned_phrases(payload.get("h1"))[:90],
+        "metaDescription": remove_banned_phrases(payload.get("metaDescription"))[:180],
+        "summary": remove_banned_phrases(payload.get("summary"))[:180],
+        "primaryKeyword": remove_banned_phrases(payload.get("primaryKeyword"))[:80],
+        "secondaryKeywords": [remove_banned_phrases(item)[:60] for item in secondary if remove_banned_phrases(item)][:8],
         "sections": clean_sections,
-        "bloggerTitle": clean(payload.get("bloggerTitle"))[:90],
-        "bloggerHtml": str(payload.get("bloggerHtml") or "").strip(),
+        "bloggerTitle": remove_banned_phrases(payload.get("bloggerTitle"))[:90],
+        "bloggerHtml": remove_banned_phrases(str(payload.get("bloggerHtml") or "").strip()),
         "threads": clean_threads,
-        "gbpSummary": clean(payload.get("gbpSummary"))[:650],
+        "gbpSummary": remove_banned_phrases(payload.get("gbpSummary"))[:650],
     }
 
 
@@ -194,7 +251,6 @@ def generate_ai_copy(identity: dict, intake: dict, media_entries: list[dict], pr
     if not api_key:
         return {"provider": "gemini", "status": "skipped", "reason": "missing GEMINI_API_KEY"}
 
-    model = clean(os.environ.get("GEMINI_MODEL")) or DEFAULT_MODEL
     parts: list[dict[str, Any]] = [{"text": case_prompt(identity, intake)}]
     for item in media_entries[:MAX_IMAGES]:
         copied = clean(item.get("copiedTo"))
@@ -217,37 +273,62 @@ def generate_ai_copy(identity: dict, intake: dict, media_entries: list[dict], pr
             "responseMimeType": "application/json",
         },
     }
-    request = urllib.request.Request(
-        API_URL.format(model=model),
-        data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
-        headers={
-            "Content-Type": "application/json",
-            "x-goog-api-key": api_key,
-        },
-        method="POST",
-    )
+    attempted: list[str] = []
+    last_failure: dict[str, Any] = {"provider": "gemini", "status": "failed", "reason": "no model attempted"}
+    for model in model_candidates():
+        attempted.append(model)
+        request = urllib.request.Request(
+            API_URL.format(model=model),
+            data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "x-goog-api-key": api_key,
+            },
+            method="POST",
+        )
 
-    try:
-        with urllib.request.urlopen(request, timeout=90) as response:
-            raw = response.read().decode("utf-8")
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")
-        return {"provider": "gemini", "model": model, "status": "failed", "reason": detail[:1000]}
-    except OSError as exc:
-        return {"provider": "gemini", "model": model, "status": "failed", "reason": str(exc)[:1000]}
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                raw = response.read().decode("utf-8")
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            last_failure = {
+                "provider": "gemini",
+                "model": model,
+                "status": "failed",
+                "reason": detail[:1000],
+                "attemptedModels": attempted,
+            }
+            if exc.code in {404, 429, 500, 502, 503, 504}:
+                continue
+            return last_failure
+        except OSError as exc:
+            last_failure = {
+                "provider": "gemini",
+                "model": model,
+                "status": "failed",
+                "reason": str(exc)[:1000],
+                "attemptedModels": attempted,
+            }
+            continue
 
-    try:
-        response_payload = json.loads(raw)
-        text = extract_text(response_payload)
-        ai_copy = sanitize_ai_copy(parse_json_text(text))
-        ai_copy["model"] = model
-        ai_copy["status"] = "ok"
-        return ai_copy
-    except Exception as exc:  # noqa: BLE001 - preserve the original text for operator review
-        return {
-            "provider": "gemini",
-            "model": model,
-            "status": "failed",
-            "reason": f"{type(exc).__name__}: {exc}",
-            "raw": raw[:2000],
-        }
+        try:
+            response_payload = json.loads(raw)
+            text = extract_text(response_payload)
+            ai_copy = sanitize_ai_copy(parse_json_text(text))
+            ai_copy["model"] = model
+            ai_copy["status"] = "ok"
+            ai_copy["attemptedModels"] = attempted
+            if attempted[0] != model:
+                ai_copy["fallbackFrom"] = attempted[0]
+            return ai_copy
+        except Exception as exc:  # noqa: BLE001 - preserve the original text for operator review
+            return {
+                "provider": "gemini",
+                "model": model,
+                "status": "failed",
+                "reason": f"{type(exc).__name__}: {exc}",
+                "attemptedModels": attempted,
+                "raw": raw[:2000],
+            }
+    return last_failure
