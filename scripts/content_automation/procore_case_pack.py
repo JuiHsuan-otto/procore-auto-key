@@ -189,6 +189,80 @@ def ensure_contact_and_backlink(html: str, official_url: str) -> str:
     return html
 
 
+def remove_hidden_seo_patterns(html: str) -> str:
+    """Keep Blogger output readable and avoid search-engine-only text."""
+    cleaned = re.sub(
+        r'\sstyle=(["\'])(?=[^"\']*(?:display\s*:\s*none|visibility\s*:\s*hidden|font-size\s*:\s*0|opacity\s*:\s*0|text-indent\s*:\s*-))[^"\']*\1',
+        "",
+        html,
+        flags=re.I,
+    )
+    cleaned = re.sub(r"<link[^>]+rel=(['\"])canonical\1[^>]*>", "", cleaned, flags=re.I)
+    return cleaned.strip()
+
+
+def normalize_blogger_links(html: str, identity: dict) -> str:
+    backlink = f"{identity['officialUrl']}?utm_source=blogger&utm_medium=referral&utm_campaign=ai_content_pack"
+
+    def replace_href(match: re.Match[str]) -> str:
+        quote = match.group(1)
+        url = match.group(2)
+        host_match = re.match(r"https?://([^/?#]+)", url, flags=re.I)
+        if host_match and host_match.group(1).lower() not in {"www.carkey.com.tw", "carkey.com.tw"}:
+            return f"href={quote}{backlink}{quote}"
+        return match.group(0)
+
+    html = re.sub(r"href=(['\"])(https?://[^'\"]+)\1", replace_href, html, flags=re.I)
+    html = re.sub(
+        r"https?://(?!www\.carkey\.com\.tw|carkey\.com\.tw)[^\s\"'<>]+",
+        identity["officialUrl"],
+        html,
+        flags=re.I,
+    )
+    return html
+
+
+def finalize_blogger_html(html: str, identity: dict) -> str:
+    html = normalize_blogger_links(html, identity)
+    html = remove_hidden_seo_patterns(ensure_contact_and_backlink(html, identity["officialUrl"]))
+    if not html:
+        return ""
+    note = (
+        "<p>這篇是 Blogger 摘要版，角度放在車主查詢時會遇到的判斷問題；"
+        "完整案例、正式網址與後續更新以官網頁面為準。</p>"
+    )
+    if "摘要版" not in html and "完整案例" not in html:
+        if "<article" in html.lower():
+            html = re.sub(r"(<article\b[^>]*>)", r"\1\n  " + note, html, count=1, flags=re.I)
+        else:
+            html = note + "\n" + html
+    if "<article" not in html.lower():
+        html = f"<article>\n{html}\n</article>"
+    return html
+
+
+def build_blogger_summary(identity: dict) -> str:
+    labels = [identity["primaryKeyword"], *identity["secondaryKeywords"], identity["category"]]
+    labels = [item for item in dict.fromkeys(labels) if item]
+    backlink = f"{identity['officialUrl']}?utm_source=blogger&utm_medium=referral&utm_campaign=ai_content_pack"
+    return f"""<article>
+  <h1>{escape(identity["publicLocation"])} {escape(identity["vehicleLabel"])}鑰匙問題，先看這幾個判斷重點</h1>
+  <p>這篇是 Blogger 摘要版，重點放在車主搜尋時最常卡住的問題：車款年份是否明確、鑰匙是全丟還是感應異常、車輛所在位置是否影響到場處理。</p>
+  <p>{escape(identity["year"])} {escape(identity["vehicleLabel"])} 這類案件，建議先把所在地、車輛狀態與手邊照片整理好，再讓技師判斷下一步。公開文章只保留服務情境與處理方向，不公開可被濫用的技術細節。</p>
+  <h2>聯絡前先準備什麼</h2>
+  <ul>
+    <li>車款、年份與目前所在地</li>
+    <li>鑰匙是全丟、備份追加，還是感應異常</li>
+    <li>車輛是否在地下室、拍場、路邊或維修廠</li>
+    <li>儀表是否有錯誤訊息，或車門是否能正常開啟</li>
+  </ul>
+  <p>官網完整案例與正式網址：<a href="{backlink}" rel="noopener">{identity["officialUrl"]}</a></p>
+  <p>極致核心 ProCore：電話 {PHONE}，LINE ID {LINE_ID}。</p>
+  <p>標籤：{escape("、".join(labels[:5]))}</p>
+</article>
+"""
+
+
 def slugify(value: str, fallback: str) -> str:
     text = value.lower()
     text = text.replace("&", " and ")
@@ -425,26 +499,8 @@ def build_blogger(identity: dict, ai_copy: dict | None = None) -> str:
     if ai_ok(ai_copy):
         html = ensure_contact_and_backlink(str(ai_copy.get("bloggerHtml") or ""), identity["officialUrl"])
         if html:
-            return html
-    labels = [identity["primaryKeyword"], *identity["secondaryKeywords"], identity["category"]]
-    labels = [item for item in dict.fromkeys(labels) if item]
-    backlink = f"{identity['officialUrl']}?utm_source=blogger&utm_medium=referral&utm_campaign=ai_content_pack"
-    return f"""<article>
-  <h1>{escape(identity["h1"])}</h1>
-  <p>{escape(identity["summary"])}</p>
-  <p>如果你遇到類似狀況，建議先整理車款、年份、所在地、是否還有備用鑰匙，以及車輛是否能正常開門或啟動。</p>
-  <p>完整官網說明與相關案例：<a href="{backlink}" rel="noopener">{identity["officialUrl"]}</a></p>
-  <h2>聯絡前建議準備</h2>
-  <ul>
-    <li>車款、年份與所在地</li>
-    <li>鑰匙是全丟、備份，還是感應異常</li>
-    <li>車輛是否在地下室、拍場、路邊或維修廠</li>
-    <li>儀表是否有錯誤訊息</li>
-  </ul>
-  <p>極致核心 ProCore：電話 {PHONE}，LINE ID {LINE_ID}。</p>
-  <p>標籤：{escape("、".join(labels[:5]))}</p>
-</article>
-"""
+            return finalize_blogger_html(html, identity)
+    return build_blogger_summary(identity)
 
 
 def build_threads(identity: dict, ai_copy: dict | None = None) -> str:

@@ -144,8 +144,6 @@ def deploy(args: argparse.Namespace) -> None:
     files = candidate_files(pack, publish_args)
 
     blogger_status = "BLOGGER=not_requested"
-    if args.blogger:
-        blogger_status = publish_blogger(pack, publish_args)
 
     existing_staged = git_staged_files()
     if existing_staged:
@@ -157,6 +155,8 @@ def deploy(args: argparse.Namespace) -> None:
 
     git_stage(files)
     if not git_has_staged_changes():
+        if args.blogger:
+            blogger_status = publish_blogger(pack, publish_args)
         print("DEPLOY=skipped")
         print("REASON=no staged website changes")
         print(blogger_status)
@@ -170,6 +170,9 @@ def deploy(args: argparse.Namespace) -> None:
         pushed = "1"
     else:
         pushed = "0"
+
+    if args.blogger:
+        blogger_status = publish_blogger(pack, publish_args)
 
     print("DEPLOY=1")
     print(f"COMMIT={commit}")

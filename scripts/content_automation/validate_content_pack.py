@@ -49,6 +49,13 @@ TECH_DISCLOSURE_TERMS = [
     "bypass",
     "PIN code",
 ]
+HIDDEN_SEO_PATTERNS = [
+    r"display\s*:\s*none",
+    r"visibility\s*:\s*hidden",
+    r"font-size\s*:\s*0",
+    r"opacity\s*:\s*0",
+    r"text-indent\s*:\s*-",
+]
 
 
 def fail(errors: list[str], msg: str) -> None:
@@ -65,6 +72,15 @@ def check_no_bad_links(text: str, label: str, errors: list[str]) -> None:
             fail(errors, f"{label}: href uses .html path: {href}")
 
 
+def check_allowed_external_hosts(text: str, label: str, allowed_hosts: set[str], errors: list[str]) -> None:
+    urls = set(re.findall(r"https?://[^\s\"'<>]+", text))
+    urls.update(re.findall(r"""(?:href|url)\s*=\s*["'](https?://[^"']+)["']""", text, flags=re.I))
+    for url in urls:
+        host = urlparse(url.rstrip(".,)")).netloc.lower()
+        if host and host not in allowed_hosts:
+            fail(errors, f"{label}: unexpected external host: {host}")
+
+
 def check_banned(text: str, label: str, errors: list[str]) -> None:
     for phrase in BANNED:
         if phrase in text:
@@ -76,6 +92,40 @@ def check_technical_disclosure(text: str, label: str, errors: list[str]) -> None
     for term in TECH_DISCLOSURE_TERMS:
         if term.lower() in lower:
             fail(errors, f"{label}: technical disclosure term found: {term}")
+
+
+def plain_text(html: str) -> str:
+    text = re.sub(r"<script\b[^>]*>.*?</script>", "", html, flags=re.I | re.S)
+    text = re.sub(r"<style\b[^>]*>.*?</style>", "", text, flags=re.I | re.S)
+    text = re.sub(r"<[^>]+>", "", text)
+    return re.sub(r"\s+", "", text)
+
+
+def shingle_overlap(left: str, right: str, size: int = 16) -> float:
+    if len(left) < size or len(right) < size:
+        return 0.0
+    left_set = {left[index : index + size] for index in range(0, len(left) - size + 1)}
+    right_set = {right[index : index + size] for index in range(0, len(right) - size + 1)}
+    if not left_set:
+        return 0.0
+    return len(left_set & right_set) / len(left_set)
+
+
+def check_distribution_quality(pack: Path, blogger: str, errors: list[str]) -> None:
+    for pattern in HIDDEN_SEO_PATTERNS:
+        if re.search(pattern, blogger, flags=re.I):
+            fail(errors, f"blogger: hidden SEO pattern found: {pattern}")
+    blogger_text = plain_text(blogger)
+    if len(blogger_text) > 2200:
+        fail(errors, f"blogger: too long for summary distribution: {len(blogger_text)} chars")
+    if "摘要版" not in blogger and "完整案例" not in blogger:
+        fail(errors, "blogger: should identify itself as summary content and link to the full case")
+    website_path = pack / "website-article.html"
+    if website_path.exists():
+        website_text = plain_text(website_path.read_text(encoding="utf-8"))
+        overlap = shingle_overlap(blogger_text, website_text)
+        if len(blogger_text) > 280 and overlap > 0.42:
+            fail(errors, f"blogger: too similar to website article for SEO distribution: {overlap:.2f}")
 
 
 def check_website_article(pack: Path, official: str, errors: list[str]) -> None:
@@ -153,6 +203,7 @@ def main() -> None:
 
     blogger = (pack / "blogger.html").read_text(encoding="utf-8")
     check_no_bad_links(blogger, "blogger", errors)
+    check_allowed_external_hosts(blogger, "blogger", SITE_HOSTS, errors)
     check_banned(blogger, "blogger", errors)
     if official not in blogger:
         fail(errors, "blogger: missing official backlink")
@@ -160,6 +211,7 @@ def main() -> None:
         fail(errors, "blogger: missing correct LINE ID")
     if PHONE not in blogger:
         fail(errors, "blogger: missing correct phone")
+    check_distribution_quality(pack, blogger, errors)
 
     threads = (pack / "threads.txt").read_text(encoding="utf-8")
     check_no_bad_links(threads, "threads", errors)

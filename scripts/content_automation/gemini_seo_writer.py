@@ -59,6 +59,18 @@ BANNED_REPLACEMENTS = {
 }
 
 
+SEO_DISTRIBUTION_RULES = """
+內容分發規則：
+- 官網文章是 canonical source，負責完整案例、在地搜尋意圖、服務脈絡與轉換 CTA。
+- Blogger 不是官網全文備份，必須改寫成 40-60% 長度的獨立導流短文，主角度可放在「車主會搜尋的問題、現場判斷重點、何時該先傳照片評估」。
+- Blogger 不要複製官網 sections 的句子，不要使用同一組 H2，不要堆疊關鍵字；要自然提到車款、年份、地區、服務類型，並保留官網回鏈。
+- 不做 cloaking、隱藏文字、給搜尋引擎看的隱藏關鍵字、假評論、假承諾或技術細節外洩。
+- SEO 目標是降低重複內容風險、提高真實搜尋者的可讀性與詢問率，而不是規避搜尋引擎規則。
+- 若照片不足以判斷現場細節，不得自行補地下室、拍場、車主滿意、刪除舊鑰匙等素材沒有提供的情節。
+- 對外連結只能使用 JSON 內的 officialUrl 或 carkey.com.tw 網域；不得自行發明 procore.com.tw、Google 地圖、社群網址或其他外部網站。
+"""
+
+
 def clean(value: object) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()
 
@@ -125,7 +137,9 @@ def case_prompt(identity: dict, intake: dict) -> str:
         },
     }
     return (
-        "你是 ProCore 官網的真人案例編輯與在地 SEO 成交流程規劃師，不是廣告文案機器。"
+        SEO_DISTRIBUTION_RULES
+        + "\n"
+        + "你是 ProCore 官網的真人案例編輯與在地 SEO 成交流程規劃師，不是廣告文案機器。"
         "請把技師回報、案件資訊與可能附上的現場照片，先判斷搜尋者意圖與成交阻力，再整理成可直接發布的繁體中文 SEO 案例內容。\n\n"
         "業績導向 SEO 策略：\n"
         "- 先判斷這筆素材最像哪一種搜尋需求：急救型（鑰匙全丟/車無法用）、追加備用型、感應或遙控異常型、特殊停放場域型、特定車款疑難型。\n"
