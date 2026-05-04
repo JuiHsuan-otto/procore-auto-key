@@ -109,6 +109,8 @@ BRAND_ALIASES = {
     "tesla": "Tesla",
     "hyundai": "Hyundai",
     "kia": "Kia",
+    "suzuki": "Suzuki",
+    "鈴木": "Suzuki",
 }
 
 MODEL_HINTS = {
@@ -118,6 +120,7 @@ MODEL_HINTS = {
     "野馬": ("Ford", "Mustang"),
     "beetle": ("VW", "Beetle"),
     "金龜車": ("VW", "Beetle"),
+    "swift": ("Suzuki", "Swift"),
 }
 
 LOCATION_HINTS = {
@@ -325,7 +328,7 @@ def build_intake(message: str, photo_paths: list[str]) -> dict:
         " ".join(part for part in [brand, model] if part)
     )
     if not public_vehicle_label:
-        public_vehicle_label = "車輛"
+        public_vehicle_label = "車款未確認"
 
     public_location = clean(fields.get("location")) or infer_location(full_text) or "台灣"
     issue_type = normalize_issue_type(fields.get("issue_type", ""), full_text)

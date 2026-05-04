@@ -320,7 +320,7 @@ def vehicle_label(intake: dict) -> str:
     if explicit:
         return explicit
     parts = [vehicle.get("brand"), vehicle.get("model")]
-    return " ".join(clean_space(part) for part in parts if clean_space(part)) or "車輛"
+    return " ".join(clean_space(part) for part in parts if clean_space(part)) or "車款未確認"
 
 
 def build_article_identity(intake: dict) -> dict:

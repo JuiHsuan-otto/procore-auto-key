@@ -39,10 +39,18 @@ BANNED = [
     "為您提供最",
     "無論是",
     "不僅如此",
+    "原廠標準",
+    "最短時間",
+    "免拖車快速解決",
+    "無論車輛停放何處",
+    "無需再為鑰匙問題煩惱",
+    "功能是否靈敏",
 ]
 LINE_ID = "@420gknem"
 PHONE = "0909277670"
 SITE_HOSTS = {"www.carkey.com.tw", "carkey.com.tw"}
+GENERIC_VEHICLE_LABELS = {"", "車輛", "汽車", "愛車", "車款", "車款未確認", "未確認車款"}
+GENERIC_LOCATIONS = {"", "台灣", "全台", "全省"}
 TECH_DISCLOSURE_TERMS = [
     "EEPROM",
     "immobilizer dump",
@@ -148,6 +156,32 @@ def check_website_article(pack: Path, official: str, errors: list[str]) -> None:
         fail(errors, "website-article: missing correct phone")
 
 
+def is_generic_vehicle_label(value: str) -> bool:
+    value = re.sub(r"\s+", " ", str(value or "")).strip()
+    if value in GENERIC_VEHICLE_LABELS:
+        return True
+    return value.replace(" ", "") in {item.replace(" ", "") for item in GENERIC_VEHICLE_LABELS}
+
+
+def check_manifest_facts(manifest: dict, errors: list[str]) -> None:
+    source = manifest.get("source", {}) if isinstance(manifest.get("source"), dict) else {}
+    vehicle = str(source.get("vehicleLabel", "")).strip()
+    location = str(source.get("publicLocation", "")).strip()
+    year = str(source.get("year", "")).strip()
+    title = str(source.get("title", ""))
+    summary = str(source.get("summary", ""))
+    if is_generic_vehicle_label(vehicle):
+        fail(errors, "manifest: vehicleLabel is generic; require brand/model before publishing")
+    if location in GENERIC_LOCATIONS:
+        fail(errors, "manifest: publicLocation is generic; require city/district before publishing")
+    if not re.fullmatch(r"(19\d{2}|20\d{2})", year):
+        fail(errors, "manifest: year is missing or invalid; require vehicle year before publishing")
+    if any(generic and generic in title for generic in {"車款未確認", "未確認車款"}):
+        fail(errors, "manifest: title contains generic vehicle placeholder")
+    if re.search(r"(?:19\d{2}|20\d{2})\s*車輛", title) or re.search(r"(?:19\d{2}|20\d{2})\s*車輛", summary):
+        fail(errors, "manifest: summary contains generic vehicle placeholder")
+
+
 def check_publish_args(pack: Path, official: str, errors: list[str]) -> None:
     path = pack / "publish-tool-args.json"
     if not path.exists():
@@ -169,6 +203,12 @@ def check_publish_args(pack: Path, official: str, errors: list[str]) -> None:
     region = str(payload.get("caseRegion", "")).strip()
     car = str(payload.get("caseCar", "")).strip()
     check_banned(json.dumps(payload, ensure_ascii=False), "publish-tool-args", errors)
+    if is_generic_vehicle_label(car):
+        fail(errors, "publish-tool-args: caseCar is generic; require brand/model before publishing")
+    if region in GENERIC_LOCATIONS:
+        fail(errors, "publish-tool-args: caseRegion is generic; require city/district before publishing")
+    if re.search(r"(?:19\d{2}|20\d{2})\s*車輛", title) or re.search(r"(?:19\d{2}|20\d{2})\s*車輛", summary):
+        fail(errors, "publish-tool-args: title/summary contains generic vehicle placeholder")
     if region and region not in title:
         fail(errors, "publish-tool-args: title should include public location for local SEO")
     if car and not any(part and part in title for part in car.split()):
@@ -196,6 +236,7 @@ def main() -> None:
         raise SystemExit(1)
 
     manifest = json.loads((pack / "manifest.json").read_text(encoding="utf-8"))
+    check_manifest_facts(manifest, errors)
     official = manifest.get("source", {}).get("officialUrl", "")
     if not official.startswith("https://www.carkey.com.tw/"):
         fail(errors, "manifest: officialUrl must point to www.carkey.com.tw")
