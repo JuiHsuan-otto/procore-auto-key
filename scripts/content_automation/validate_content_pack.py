@@ -45,6 +45,40 @@ BANNED = [
     "無論車輛停放何處",
     "無需再為鑰匙問題煩惱",
     "功能是否靈敏",
+    "車主的車輛是",
+    "嚴重影響日常行程",
+    "了解這種焦慮",
+    "緊急到場服務",
+    "專業到場服務",
+    "專業到場處理服務",
+    "專業的到場處理服務",
+    "專門提供",
+    "避免不必要的拖吊費用與等待時間",
+    "免去拖車煩惱",
+    "拖車煩惱",
+    "即時協助",
+    "迅速提供",
+    "迅速評估",
+    "嚴謹的交車前確認",
+    "透明公開",
+    "充分的信心",
+    "安心地重新駕駛愛車",
+    "確保您的行車安全與便利",
+    "重獲新生",
+    "預防勝於治療",
+    "燃眉之急",
+    "致力於提供",
+    "高效、可靠",
+    "大幅節省您的時間與拖車費用",
+    "直接前往您的車輛停放地點",
+    "成功為車主解決",
+    "精準判斷",
+    "精準報價",
+    "快速評估與報價流程",
+    "省去不必要的等待",
+    "無後顧之憂",
+    "不用再擔心",
+    "車主感到滿意",
 ]
 LINE_ID = "@420gknem"
 PHONE = "0909277670"
@@ -95,6 +129,16 @@ def check_banned(text: str, label: str, errors: list[str]) -> None:
             fail(errors, f"{label}: banned phrase found: {phrase}")
 
 
+def check_case_copy_quality(text: str, label: str, errors: list[str]) -> None:
+    readable = plain_text(text) if "<" in text else re.sub(r"\s+", "", text)
+    if readable.count("極致核心ProCore") > 4:
+        fail(errors, f"{label}: brand name repeated too often")
+    if re.search(r"(?:19\d{2}|20\d{2})車輛", readable):
+        fail(errors, f"{label}: contains generic year + vehicle wording")
+    if "遙控、感應、啟動" in text and "若" not in text:
+        fail(errors, f"{label}: lists remote/smart/start checks as universal facts")
+
+
 def check_technical_disclosure(text: str, label: str, errors: list[str]) -> None:
     lower = text.lower()
     for term in TECH_DISCLOSURE_TERMS:
@@ -143,6 +187,7 @@ def check_website_article(pack: Path, official: str, errors: list[str]) -> None:
     html = path.read_text(encoding="utf-8")
     check_no_bad_links(html, "website-article", errors)
     check_banned(html, "website-article", errors)
+    check_case_copy_quality(html, "website-article", errors)
     check_technical_disclosure(html, "website-article", errors)
     if official and official not in html:
         fail(errors, "website-article: missing canonical official URL")
@@ -203,6 +248,7 @@ def check_publish_args(pack: Path, official: str, errors: list[str]) -> None:
     region = str(payload.get("caseRegion", "")).strip()
     car = str(payload.get("caseCar", "")).strip()
     check_banned(json.dumps(payload, ensure_ascii=False), "publish-tool-args", errors)
+    check_case_copy_quality(json.dumps(payload, ensure_ascii=False), "publish-tool-args", errors)
     if is_generic_vehicle_label(car):
         fail(errors, "publish-tool-args: caseCar is generic; require brand/model before publishing")
     if region in GENERIC_LOCATIONS:
@@ -241,11 +287,13 @@ def main() -> None:
     if not official.startswith("https://www.carkey.com.tw/"):
         fail(errors, "manifest: officialUrl must point to www.carkey.com.tw")
     check_no_bad_links(json.dumps(manifest, ensure_ascii=False), "manifest", errors)
+    check_banned(json.dumps(manifest, ensure_ascii=False), "manifest", errors)
 
     blogger = (pack / "blogger.html").read_text(encoding="utf-8")
     check_no_bad_links(blogger, "blogger", errors)
     check_allowed_external_hosts(blogger, "blogger", SITE_HOSTS, errors)
     check_banned(blogger, "blogger", errors)
+    check_case_copy_quality(blogger, "blogger", errors)
     if official not in blogger:
         fail(errors, "blogger: missing official backlink")
     if LINE_ID not in blogger:
@@ -257,6 +305,7 @@ def main() -> None:
     threads = (pack / "threads.txt").read_text(encoding="utf-8")
     check_no_bad_links(threads, "threads", errors)
     check_banned(threads, "threads", errors)
+    check_case_copy_quality(threads, "threads", errors)
     if "0909-277-670" in threads:
         fail(errors, "threads: phone format must be 0909277670")
     for block in re.split(r"\n\s*\n", threads.strip()):
@@ -272,6 +321,7 @@ def main() -> None:
         fail(errors, "gbp: topicType must be STANDARD by default")
     summary = gbp.get("summary", "")
     check_banned(summary, "gbp.summary", errors)
+    check_case_copy_quality(summary, "gbp.summary", errors)
     if len(summary) > 700:
         fail(errors, f"gbp: summary too long: {len(summary)}")
     cta = gbp.get("callToAction", {})
@@ -283,6 +333,7 @@ def main() -> None:
 
     checklist = (pack / "website-checklist.md").read_text(encoding="utf-8")
     check_banned(checklist, "website-checklist", errors)
+    check_case_copy_quality(checklist, "website-checklist", errors)
     if LINE_ID not in checklist:
         fail(errors, "website-checklist: missing correct LINE ID")
     if PHONE not in checklist:

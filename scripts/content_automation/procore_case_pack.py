@@ -248,13 +248,13 @@ def build_blogger_summary(identity: dict) -> str:
     return f"""<article>
   <h1>{escape(identity["publicLocation"])} {escape(identity["vehicleLabel"])}鑰匙問題，先看這幾個判斷重點</h1>
   <p>這篇是 Blogger 摘要版，重點放在車主搜尋時最常卡住的問題：車款年份是否明確、鑰匙是全丟還是感應異常、車輛所在位置是否影響到場處理。</p>
-  <p>{escape(identity["year"])} {escape(identity["vehicleLabel"])} 這類案件，建議先把所在地、車輛狀態與手邊照片整理好，再讓技師判斷下一步。公開文章只保留服務情境與處理方向，不公開可被濫用的技術細節。</p>
+  <p>{escape(identity["year"])} {escape(identity["vehicleLabel"])} 這類案件，建議先把所在地、車輛狀態與手邊照片整理好，再判斷是否適合到場處理。公開文章只保留服務情境與處理方向，不公開可被濫用的技術細節。</p>
   <h2>聯絡前先準備什麼</h2>
   <ul>
     <li>車款、年份與目前所在地</li>
     <li>鑰匙是全丟、備份追加，還是感應異常</li>
     <li>車輛是否在地下室、拍場、路邊或維修廠</li>
-    <li>儀表是否有錯誤訊息，或車門是否能正常開啟</li>
+    <li>儀表是否有錯誤訊息，以及車輛目前是否可接近或開門</li>
   </ul>
   <p>官網完整案例與正式網址：<a href="{backlink}" rel="noopener">{identity["officialUrl"]}</a></p>
   <p>極致核心 ProCore：電話 {PHONE}，LINE ID {LINE_ID}。</p>
@@ -349,7 +349,7 @@ def build_article_identity(intake: dict) -> dict:
     primary_keyword = clean_space(seo.get("primaryKeyword")) or f"{public_location} {label} {issue_label(issue_type)}"
     secondary = [clean_space(item) for item in seo.get("secondaryKeywords", []) if clean_space(item)]
     summary = compact_summary(
-        f"{title_vehicle}車主在{public_location}安排{label_for_service}，到場確認車輛狀態與鑰匙需求後，{result}。",
+        f"{public_location} {title_vehicle}安排{label_for_service}，到場前先確認車輛狀態、停放條件與鑰匙需求；現場處理後，{result}。",
         150,
     )
     return {
@@ -470,7 +470,7 @@ def build_website_article(identity: dict, intake: dict, media_entries: list[dict
 
       <section>
         <h2>處理方式</h2>
-        <p>技師先確認車款年份、現場條件與車主需求，再安排合適的到場處理流程。公開文章只描述服務結果，不公開可被複製的技術步驟。</p>
+        <p>處理前會先確認車款年份、現場條件與車主需求，再安排合適的到場方式。公開文章只描述服務結果，不公開可被複製的技術步驟。</p>
       </section>
 
       <section>
@@ -484,7 +484,7 @@ def build_website_article(identity: dict, intake: dict, media_entries: list[dict
         <ul>
           <li>先準備車款、年份、所在地與鑰匙狀況。</li>
           <li>如果車在地下室、拍場或路邊，請先說明現場環境。</li>
-          <li>可透過 LINE 傳照片與位置，先評估是否能到場處理。</li>
+          <li>可透過 LINE 傳照片與位置，先評估是否適合到場處理。</li>
         </ul>
         <p>聯絡極致核心 ProCore：電話 {PHONE}，LINE ID {LINE_ID}。</p>
       </section>
@@ -512,9 +512,9 @@ def build_threads(identity: dict, ai_copy: dict | None = None) -> str:
                 posts[0] = compact_summary(f"{posts[0]} {url}", 500)
             return "\n\n".join(f"THREAD {idx}\n{post[:500]}" for idx, post in enumerate(posts[:3], 1)) + "\n"
     posts = [
-        f"{identity['vehicleLabel']}在{identity['publicLocation']}遇到{identity['issueLabel']}，重點是先確認車款年份、停放環境與是否還有備用鑰匙，再判斷能否到場處理。{url}",
+        f"{identity['vehicleLabel']}在{identity['publicLocation']}遇到{identity['issueLabel']}，重點是先確認車款年份、停放環境與是否還有備用鑰匙，再判斷是否適合到場處理。{url}",
         f"{identity['h1']}。公開案例只說明車主遇到的狀況與完成結果，不公開可複製的技術步驟。LINE：{LINE_ID}",
-        f"車停在地下室、拍場或路邊，都可以先傳車款、年份、位置與照片。技師會先評估，再報價與安排。電話：{PHONE}",
+        f"車停在地下室、拍場或路邊，都建議先傳車款、年份、位置與照片。確認條件後，再估價與安排。電話：{PHONE}",
     ]
     return "\n\n".join(f"THREAD {idx}\n{post[:500]}" for idx, post in enumerate(posts, 1)) + "\n"
 

@@ -137,8 +137,8 @@ def render_article(manifest: dict, publish_args: dict, case_img: str) -> str:
     official_url = f"{SITE}{link}"
     h1 = clean_text(source.get("title")) or title
     h1 = h1.replace(" | 極致核心 ProCore", "")
-    vehicle = clean_text(source.get("vehicleLabel")) or clean_text(publish_args.get("caseCar")) or "車輛"
-    location = clean_text(source.get("publicLocation")) or clean_text(publish_args.get("caseRegion")) or "台灣"
+    vehicle = clean_text(source.get("vehicleLabel")) or clean_text(publish_args.get("caseCar")) or "車款未確認"
+    location = clean_text(source.get("publicLocation")) or clean_text(publish_args.get("caseRegion")) or "地點未確認"
     issue_type = clean_text(source.get("issueType"))
     issue_label = {
         "all_keys_lost": "鑰匙全丟",
@@ -347,9 +347,9 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
     direction_label = service_label[:-2] if service_label.endswith("處理") else service_label
 
     intro = (
-        f"這件案例來自{location}。車主的車輛是{vehicle_with_year}，需要{service_label}。"
+        f"這次是{location}的 {vehicle_with_year} {service_label}案例。"
         f"{scene_clause}"
-        f"收到照片與基本資料後，會先把車款年份、停放環境與鑰匙需求確認清楚，再安排到場處理。"
+        f"收到照片與基本資料後，會先確認車款年份、停放位置、車輛狀態與身分資料，再評估現場條件是否適合到場處理。"
     )
     section_blocks = []
     if ai_copy.get("status") == "ok" and isinstance(ai_copy.get("sections"), list):
@@ -364,15 +364,15 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
         section_blocks = [
             (
                 f"{location} {vehicle} {service_label}案件背景",
-                f"車主先提供車款、年份、所在地與現場照片，確認是{vehicle_with_year}的{service_label}需求。{prep_detail}公開案例只保留車款、地區、需求與完成結果，不放出足以被複製的作業路徑。",
+                f"車主先提供車款、年份、所在地與現場照片，確認這次是{vehicle_with_year}的{service_label}需求。{prep_detail}公開案例只保留車款、地區、需求與完成結果，不公開可被濫用的作業細節。",
             ),
             (
                 "到場前為什麼要先看照片？",
-                f"照片可以先判斷車輛停放位置、周邊作業空間與是否有需要遮蔽的資訊。對{vehicle}這類車款來說，年份、鑰匙型式與現場條件都會影響安排方式；先把資訊補齊，現場才不會走冤枉路。",
+                f"照片可以先看車輛停放位置、周邊作業空間與是否有需要遮蔽的資訊。對{vehicle}這類車款來說，年份、鑰匙型式與現場條件都會影響安排方式；先把資訊補齊，才比較能判斷適合的處理方式。",
             ),
             (
                 f"{vehicle} {direction_label}處理方向",
-                f"本次到場處理以{service_label}為目標，現場依車輛狀態完成必要確認後，{result_sentence}。交車前會確認車輛辨識、遙控、感應與啟動等日常使用狀態，避免只完成單一功能就交車。",
+                f"本次到場處理以{service_label}為目標，現場依車輛狀態完成必要確認後，{result_sentence}。交車前會確認開關鎖、啟動與日常使用需要的功能；若實車有遙控或感應配備，也會依車況一起確認。",
             ),
             (
                 f"{location}車主可先準備什麼",
@@ -516,11 +516,11 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
         </div>
         <div class="panel p-5">
           <h3>依現場條件安排</h3>
-          <p>停放位置、車輛是否可開門、周邊作業空間都會影響處理方式，先傳照片能更快判斷。</p>
+          <p>停放位置、車輛是否可接近、周邊作業空間都會影響處理方式，先傳照片能更快判斷。</p>
         </div>
         <div class="panel p-5">
           <h3>完成後確認功能</h3>
-          <p>完成後會確認遙控、感應、啟動與日常使用狀態，避免只完成一半就交車。</p>
+          <p>完成後會確認開關鎖、啟動與日常使用狀態；若車輛具備遙控或感應功能，也會依車況確認。</p>
         </div>
         <div class="panel p-5">
           <h3>公開內容保留安全邊界</h3>
@@ -540,7 +540,7 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
 
       <div class="mt-10 p-6 rounded-2xl" style="background: var(--gold-soft); border: 1px solid rgba(212,175,55,.28);">
         <h2 class="mt-0">{escape(location)} {escape(vehicle)} {escape(issue_label)}，可先傳照片評估</h2>
-        <p>遇到汽車鑰匙問題，不用先急著拆車或拖車。把車款、年份、所在地、現場照片傳來，極致核心會先協助判斷下一步。</p>
+        <p>遇到汽車鑰匙問題，可以先把車款、年份、所在地與現場照片傳來。確認車況與停放條件後，再判斷是否適合到場處理。</p>
         <div class="flex flex-col sm:flex-row gap-3 mt-6">
           <a class="btn-gold" href="tel:{PHONE}">電話 {PHONE}</a>
           <a class="btn-dark" href="https://line.me/R/ti/p/{LINE_ID}">LINE {LINE_ID}</a>
