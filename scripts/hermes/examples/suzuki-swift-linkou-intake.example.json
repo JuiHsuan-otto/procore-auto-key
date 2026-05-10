@@ -1,0 +1,38 @@
+{
+  "version": "1.1",
+  "purpose": "Hermes aiCopy pipeline example.",
+  "publishIntent": {
+    "website": true,
+    "blogger": false,
+    "threads": false,
+    "googleBusinessProfile": false,
+    "notes": "Example only. External channels require explicit approval."
+  },
+  "vehicle": {
+    "brand": "Suzuki",
+    "model": "Swift",
+    "year": "2018",
+    "publicVehicleLabel": "Suzuki Swift"
+  },
+  "caseContext": {
+    "date": "2026-05-11",
+    "publicLocation": "新北林口",
+    "privateLocation": "Do not publish exact address unless explicitly allowed.",
+    "scene": "車主手邊沒有可用鑰匙，車輛停在公開停車場，先傳照片確認現場條件。",
+    "issueType": "all_keys_lost",
+    "allKeysLost": true,
+    "serviceType": "鑰匙全丟到場處理",
+    "result": "完成鑰匙全丟到場處理與交車前確認"
+  },
+  "media": {
+    "photoPaths": [],
+    "redactionRequired": true,
+    "redact": ["license_plate", "faces", "exact_address", "documents", "vin", "customer_name", "phone_number"]
+  },
+  "seo": {
+    "primaryKeyword": "新北林口 Suzuki Swift 鑰匙全丟",
+    "secondaryKeywords": ["新北林口汽車鑰匙", "Suzuki Swift鑰匙", "鑰匙全丟"],
+    "tone": "清楚、可信、結果導向，不公開可複製的技術細節"
+  },
+  "privateNotes": ""
+}

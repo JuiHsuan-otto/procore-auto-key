@@ -78,6 +78,19 @@ set PROCORE_AI_PROVIDER=gemini
 set GEMINI_MODEL=gemini-2.5-flash
 ```
 
+Hermes is the preferred writer for the current workflow. To use Hermes-authored
+copy without spending Gemini/API writing tokens, create an `aiCopy` JSON file and
+pass it into the pack generator:
+
+```bash
+python scripts/hermes/procore_case_controller.py brief --intake drafts/intakes/case-intake.json --out drafts/intakes/case-brief.json
+# Ask Hermes to write drafts/intakes/case-ai-copy.json from that brief.
+python scripts/hermes/procore_case_controller.py pack --intake drafts/intakes/case-intake.json --ai-copy drafts/intakes/case-ai-copy.json
+```
+
+In this mode ProCore scripts only render, validate, sync indexes, and deploy.
+Hermes owns the commercial angle, SEO copy, and anti-AI-tone review.
+
 Discord can also approve a pack into the local website files:
 
 ```text

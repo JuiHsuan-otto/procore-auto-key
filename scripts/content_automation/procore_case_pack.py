@@ -21,6 +21,11 @@ try:
 except ImportError:  # pragma: no cover - keeps the generator usable if copied alone
     generate_ai_copy = None
 
+try:
+    from approve_case_pack import render_article_latest as render_public_article_preview
+except ImportError:  # pragma: no cover - draft generation still has a simple fallback
+    render_public_article_preview = None
+
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = "https://www.carkey.com.tw"
@@ -99,6 +104,25 @@ def clean_space(value: object) -> str:
     return text
 
 
+def clean_lines(value: object) -> str:
+    text = str(value or "").replace("\r\n", "\n").replace("\r", "\n")
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
+
+
+def render_paragraphs(value: object, indent: str = "        ") -> str:
+    text = clean_lines(value)
+    blocks: list[str] = []
+    for paragraph in re.split(r"\n\s*\n", text):
+        lines = [clean_space(line) for line in paragraph.splitlines() if clean_space(line)]
+        if not lines:
+            continue
+        body = "<br>\n".join(f"{indent}  {escape(line)}" for line in lines)
+        blocks.append(f"{indent}<p>\n{body}\n{indent}</p>")
+    return "\n".join(blocks)
+
+
 def compact_summary(value: str, limit: int = 110) -> str:
     value = clean_space(value)
     if len(value) <= limit:
@@ -108,6 +132,22 @@ def compact_summary(value: str, limit: int = 110) -> str:
 
 def ai_ok(ai_copy: dict | None) -> bool:
     return isinstance(ai_copy, dict) and ai_copy.get("status") == "ok"
+
+
+def load_external_ai_copy(path_value: str) -> dict:
+    """Load a Hermes-authored aiCopy payload without calling another LLM API."""
+    if not clean_space(path_value):
+        return {}
+    path = Path(path_value)
+    if not path.is_absolute():
+        path = ROOT / path
+    payload = read_json(path)
+    if not isinstance(payload, dict):
+        raise SystemExit(f"External ai copy must be a JSON object: {path}")
+    payload.setdefault("provider", "hermes")
+    payload.setdefault("status", "ok")
+    payload.setdefault("source", path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path))
+    return payload
 
 
 def has_locked_facts(value: str, identity: dict, require_year: bool = True) -> bool:
@@ -374,6 +414,29 @@ def build_article_identity(intake: dict) -> dict:
     }
 
 
+def resolve_media_source(raw: object) -> Path:
+    raw_text = str(raw or "").strip()
+    source = Path(raw_text).expanduser()
+    if source.exists():
+        return source
+
+    if os.name == "nt" and raw_text:
+        mount_match = re.match(r"^/mnt/([a-zA-Z])/(.*)$", raw_text)
+        if mount_match:
+            drive = mount_match.group(1).upper()
+            rest = mount_match.group(2).replace("/", "\\")
+            mounted_source = Path(f"{drive}:\\{rest}")
+            if mounted_source.exists():
+                return mounted_source
+
+        if raw_text.startswith("/"):
+            wsl_source = Path("\\\\wsl.localhost\\Ubuntu-24.04" + raw_text.replace("/", "\\"))
+            if wsl_source.exists():
+                return wsl_source
+
+    return source
+
+
 def copy_media(intake: dict, out_dir: Path, enabled: bool) -> list[dict]:
     media = intake.get("media", {})
     copied: list[dict] = []
@@ -385,8 +448,10 @@ def copy_media(intake: dict, out_dir: Path, enabled: bool) -> list[dict]:
     target_dir = out_dir / "media" / "originals"
     target_dir.mkdir(parents=True, exist_ok=True)
     for index, raw in enumerate(photo_paths, 1):
-        source = Path(str(raw)).expanduser()
+        source = resolve_media_source(raw)
         entry = {"source": str(raw), "exists": source.exists()}
+        if str(source) != str(raw):
+            entry["resolvedSource"] = str(source)
         if source.exists() and source.is_file():
             safe_name = f"case-photo-{index}{source.suffix.lower() or '.jpg'}"
             target = target_dir / safe_name
@@ -396,7 +461,28 @@ def copy_media(intake: dict, out_dir: Path, enabled: bool) -> list[dict]:
     return copied
 
 
-def build_website_article(identity: dict, intake: dict, media_entries: list[dict], ai_copy: dict | None = None) -> str:
+def draft_case_img(media_entries: list[dict]) -> str:
+    for item in media_entries:
+        copied = clean_space(item.get("copiedTo"))
+        if copied:
+            return copied
+    return "../../img/procore_logo_main.jpg"
+
+
+def build_website_article(
+    identity: dict,
+    intake: dict,
+    media_entries: list[dict],
+    ai_copy: dict | None = None,
+    manifest: dict | None = None,
+    publish_args: dict | None = None,
+) -> str:
+    if render_public_article_preview is not None and manifest and publish_args:
+        try:
+            return render_public_article_preview(manifest, publish_args, draft_case_img(media_entries))
+        except Exception:
+            pass
+
     context = intake.get("caseContext", {})
     case_date = clean_space(context.get("date")) or date.today().isoformat()
     meta_desc = compact_summary(identity["summary"], 150)
@@ -416,12 +502,12 @@ def build_website_article(identity: dict, intake: dict, media_entries: list[dict
         blocks = []
         for section in ai_copy.get("sections", []):
             heading = clean_space(section.get("heading"))
-            body = clean_space(section.get("body"))
-            if heading and body:
+            body_html = render_paragraphs(section.get("body"))
+            if heading and body_html:
                 blocks.append(
                     "\n      <section>\n"
                     f"        <h2>{escape(heading)}</h2>\n"
-                    f"        <p>{escape(body)}</p>\n"
+                    f"{body_html}\n"
                     "      </section>\n"
                 )
         ai_sections = "".join(blocks)
@@ -661,18 +747,21 @@ def generate_pack(args: argparse.Namespace) -> Path:
     media_entries = copy_media(intake, out_dir, not args.no_copy_media)
     ai_entries = [dict(entry, _packRoot=str(out_dir)) for entry in media_entries]
     ai_provider = clean_space(args.ai_provider or os.environ.get("PROCORE_AI_PROVIDER"))
-    ai_copy = {}
-    if generate_ai_copy is not None:
+    ai_copy = load_external_ai_copy(args.ai_copy)
+    if not ai_copy and generate_ai_copy is not None:
         ai_copy = generate_ai_copy(identity, intake, ai_entries, provider=ai_provider)
     apply_ai_copy(identity, ai_copy)
 
-    write_json(out_dir / "manifest.json", build_manifest(identity, intake, media_entries, case_date, ai_copy))
-    write_text(out_dir / "website-article.html", build_website_article(identity, intake, media_entries, ai_copy))
+    manifest = build_manifest(identity, intake, media_entries, case_date, ai_copy)
+    publish_args = build_publish_args(identity, intake, media_entries)
+
+    write_json(out_dir / "manifest.json", manifest)
+    write_text(out_dir / "website-article.html", build_website_article(identity, intake, media_entries, ai_copy, manifest, publish_args))
     write_text(out_dir / "blogger.html", build_blogger(identity, ai_copy))
     write_text(out_dir / "threads.txt", build_threads(identity, ai_copy))
     write_json(out_dir / "google-business-profile.json", build_gbp(identity, ai_copy))
     write_text(out_dir / "website-checklist.md", build_checklist(identity, media_entries))
-    write_json(out_dir / "publish-tool-args.json", build_publish_args(identity, intake, media_entries))
+    write_json(out_dir / "publish-tool-args.json", publish_args)
 
     return out_dir
 
@@ -684,6 +773,7 @@ def main() -> None:
     parser.add_argument("--out", default="drafts", help="Output directory relative to repo root.")
     parser.add_argument("--no-copy-media", action="store_true", help="Do not copy source photos into the draft pack.")
     parser.add_argument("--ai-provider", default="", help="Optional AI provider, e.g. gemini.")
+    parser.add_argument("--ai-copy", default="", help="Hermes-authored aiCopy JSON file. Skips Gemini/API writing.")
     parser.add_argument("--use-gemini", action="store_true", help="Use Gemini API when GEMINI_API_KEY is configured.")
     args = parser.parse_args()
     if args.use_gemini and not args.ai_provider:

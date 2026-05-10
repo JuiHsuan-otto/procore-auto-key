@@ -44,6 +44,25 @@ def clean_text(value: object) -> str:
     return text
 
 
+def clean_lines(value: object) -> str:
+    text = str(value or "").replace("\r\n", "\n").replace("\r", "\n")
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
+
+
+def render_paragraphs(value: object, indent: str = "    ") -> str:
+    text = clean_lines(value)
+    blocks: list[str] = []
+    for paragraph in re.split(r"\n\s*\n", text):
+        lines = [clean_text(line) for line in paragraph.splitlines() if clean_text(line)]
+        if not lines:
+            continue
+        body = "<br>\n".join(f"{indent}  {escape(line)}" for line in lines)
+        blocks.append(f"{indent}<p>\n{body}\n{indent}</p>")
+    return "\n".join(blocks)
+
+
 def shorten(value: str, limit: int) -> str:
     value = clean_text(value)
     if len(value) <= limit:
@@ -357,7 +376,7 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
             if not isinstance(section, dict):
                 continue
             heading = clean_text(section.get("heading"))
-            body = clean_text(section.get("body"))
+            body = clean_lines(section.get("body"))
             if heading and body:
                 section_blocks.append((heading, body))
     if not section_blocks:
@@ -381,9 +400,10 @@ def render_article_latest(manifest: dict, publish_args: dict, case_img: str) -> 
         ]
     article_sections = []
     for heading, body in section_blocks:
+        body_html = render_paragraphs(body)
         article_sections.append(f"""
     <h2>{escape(heading)}</h2>
-    <p>{escape(body)}</p>""")
+{body_html}""")
     article_sections_html = "".join(article_sections)
 
     json_ld = {

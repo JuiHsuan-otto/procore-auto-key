@@ -40,6 +40,7 @@ BANNED = [
     "無論是",
     "不僅如此",
     "原廠標準",
+    "完善解決方案",
     "最短時間",
     "免拖車快速解決",
     "無論車輛停放何處",
@@ -79,6 +80,14 @@ BANNED = [
     "無後顧之憂",
     "不用再擔心",
     "車主感到滿意",
+    "AI 口吻殘留自評",
+    "車輛系統狀態",
+    "白跑一趟",
+    "汽車鑰匙到場處理前",
+    "汽車鑰匙到場處理時",
+    "點選以反應",
+    "加入反應",
+    "傳送訊息給",
 ]
 LINE_ID = "@420gknem"
 PHONE = "0909277670"
@@ -129,6 +138,18 @@ def check_banned(text: str, label: str, errors: list[str]) -> None:
             fail(errors, f"{label}: banned phrase found: {phrase}")
 
 
+def check_format_artifacts(text: str, label: str, errors: list[str]) -> None:
+    artifacts = [
+        (r"(?m)^\s*(?:標題|SEO description|完整文章|FAQ)\s*[,，]\s*$", "draft label keeps trailing comma"),
+        (r"(?m)^\s*[,，]\s*$", "standalone comma line"),
+        (r"(?m)^.{0,80}？\s*[,，]\s*$", "FAQ question keeps trailing comma"),
+        (r"\(\s*\d+\s*/\s*\d+\s*\)", "Discord split marker"),
+    ]
+    for pattern, description in artifacts:
+        if re.search(pattern, text):
+            fail(errors, f"{label}: format artifact found: {description}")
+
+
 def check_case_copy_quality(text: str, label: str, errors: list[str]) -> None:
     readable = plain_text(text) if "<" in text else re.sub(r"\s+", "", text)
     if readable.count("極致核心ProCore") > 4:
@@ -137,6 +158,8 @@ def check_case_copy_quality(text: str, label: str, errors: list[str]) -> None:
         fail(errors, f"{label}: contains generic year + vehicle wording")
     if "遙控、感應、啟動" in text and "若" not in text:
         fail(errors, f"{label}: lists remote/smart/start checks as universal facts")
+    if re.search(r"[\u4e00-\u9fff]{0,8}汽車鑰匙到場處理(?:前|時)", readable):
+        fail(errors, f"{label}: local SEO keyword is stuffed into an unnatural sentence")
 
 
 def check_technical_disclosure(text: str, label: str, errors: list[str]) -> None:
@@ -187,6 +210,7 @@ def check_website_article(pack: Path, official: str, errors: list[str]) -> None:
     html = path.read_text(encoding="utf-8")
     check_no_bad_links(html, "website-article", errors)
     check_banned(html, "website-article", errors)
+    check_format_artifacts(html, "website-article", errors)
     check_case_copy_quality(html, "website-article", errors)
     check_technical_disclosure(html, "website-article", errors)
     if official and official not in html:
@@ -248,6 +272,7 @@ def check_publish_args(pack: Path, official: str, errors: list[str]) -> None:
     region = str(payload.get("caseRegion", "")).strip()
     car = str(payload.get("caseCar", "")).strip()
     check_banned(json.dumps(payload, ensure_ascii=False), "publish-tool-args", errors)
+    check_format_artifacts(json.dumps(payload, ensure_ascii=False), "publish-tool-args", errors)
     check_case_copy_quality(json.dumps(payload, ensure_ascii=False), "publish-tool-args", errors)
     if is_generic_vehicle_label(car):
         fail(errors, "publish-tool-args: caseCar is generic; require brand/model before publishing")
@@ -288,11 +313,13 @@ def main() -> None:
         fail(errors, "manifest: officialUrl must point to www.carkey.com.tw")
     check_no_bad_links(json.dumps(manifest, ensure_ascii=False), "manifest", errors)
     check_banned(json.dumps(manifest, ensure_ascii=False), "manifest", errors)
+    check_format_artifacts(json.dumps(manifest, ensure_ascii=False), "manifest", errors)
 
     blogger = (pack / "blogger.html").read_text(encoding="utf-8")
     check_no_bad_links(blogger, "blogger", errors)
     check_allowed_external_hosts(blogger, "blogger", SITE_HOSTS, errors)
     check_banned(blogger, "blogger", errors)
+    check_format_artifacts(blogger, "blogger", errors)
     check_case_copy_quality(blogger, "blogger", errors)
     if official not in blogger:
         fail(errors, "blogger: missing official backlink")
@@ -305,6 +332,7 @@ def main() -> None:
     threads = (pack / "threads.txt").read_text(encoding="utf-8")
     check_no_bad_links(threads, "threads", errors)
     check_banned(threads, "threads", errors)
+    check_format_artifacts(threads, "threads", errors)
     check_case_copy_quality(threads, "threads", errors)
     if "0909-277-670" in threads:
         fail(errors, "threads: phone format must be 0909277670")
@@ -321,6 +349,7 @@ def main() -> None:
         fail(errors, "gbp: topicType must be STANDARD by default")
     summary = gbp.get("summary", "")
     check_banned(summary, "gbp.summary", errors)
+    check_format_artifacts(summary, "gbp.summary", errors)
     check_case_copy_quality(summary, "gbp.summary", errors)
     if len(summary) > 700:
         fail(errors, f"gbp: summary too long: {len(summary)}")
@@ -333,6 +362,7 @@ def main() -> None:
 
     checklist = (pack / "website-checklist.md").read_text(encoding="utf-8")
     check_banned(checklist, "website-checklist", errors)
+    check_format_artifacts(checklist, "website-checklist", errors)
     check_case_copy_quality(checklist, "website-checklist", errors)
     if LINE_ID not in checklist:
         fail(errors, "website-checklist: missing correct LINE ID")
