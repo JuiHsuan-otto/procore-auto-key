@@ -1,5 +1,15 @@
 [
   {
+    "id": 13,
+    "date": "2026.05.11",
+    "location": "雲林斗六",
+    "brand": "BMW 218D",
+    "type": "all_keys_lost",
+    "desc": "雲林斗六 2016 BMW 218D 智慧鑰匙全丟案例，車主手邊沒有可用鑰匙。到場先確認車況、年份與停放條件，再完成交車前確認。",
+    "img": "img/cases/article-bmw-218d-2016-yunlin-akl.jpeg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 12,
     "date": "2026.05.04",
     "location": "新北林口",
