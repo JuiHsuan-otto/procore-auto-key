@@ -1,5 +1,15 @@
 [
   {
+    "id": 14,
+    "date": "2026.05.11",
+    "location": "彰化和美",
+    "brand": "Toyota VIOS",
+    "type": "all_keys_lost",
+    "desc": "彰化和美 2019 Toyota VIOS 鑰匙全丟案例，車主手邊沒有可用鑰匙，ProCore 依車款年份、停放位置與現場條件到場處理。",
+    "img": "img/cases/article-toyota-vios-2019-changhua-akl.jpg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 13,
     "date": "2026.05.11",
     "location": "雲林斗六",
