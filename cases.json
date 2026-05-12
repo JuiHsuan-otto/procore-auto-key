@@ -1,5 +1,15 @@
 [
   {
+    "id": 16,
+    "date": "2026.05.12",
+    "location": "台中龍井",
+    "brand": "Toyota Altis",
+    "type": "all_keys_lost",
+    "desc": "台中龍井 2016 Toyota Altis 智能鑰匙全丟，到場依車況與停放條件處理。車主可先提供年份、車款、所在地與現場照片評估。",
+    "img": "img/cases/article-toyota-altis-2016-taichung-akl.jpeg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 15,
     "date": "2026.05.11",
     "location": "彰化芬園",
