@@ -15,7 +15,7 @@
     "location": "台中龍井",
     "brand": "Toyota Altis",
     "type": "all_keys_lost",
-    "desc": "台中龍井 2016 Toyota Altis 智能鑰匙全丟，到場依車況與停放條件處理。車主可先提供年份、車款、所在地與現場照片評估。",
+    "desc": "台中龍井 2016 Toyota Altis 智慧感應鑰匙全丟，到場依車況與停放條件處理。車主可先提供年份、車款、所在地與現場照片評估。",
     "img": "img/cases/article-toyota-altis-2016-taichung-akl.jpeg",
     "tag": "SUCCESS"
   },
@@ -45,7 +45,7 @@
     "location": "雲林斗六",
     "brand": "BMW 218D",
     "type": "all_keys_lost",
-    "desc": "雲林斗六 2016 BMW 218D 智慧鑰匙全丟案例，車主手邊沒有可用鑰匙。到場先確認車況、年份與停放條件，再完成交車前確認。",
+    "desc": "雲林斗六 2016 BMW 218D 智慧感應鑰匙全丟案例，車主手邊沒有可用鑰匙。到場先確認車況、年份與停放條件，再完成交車前確認。",
     "img": "img/cases/article-bmw-218d-2016-yunlin-akl.jpeg",
     "tag": "SUCCESS"
   },
@@ -55,7 +55,7 @@
     "location": "新北林口",
     "brand": "Suzuki Swift",
     "type": "all_keys_lost",
-    "desc": "新北林口 2018 Suzuki Swift 鑰匙全丟案例。車主手邊沒有可用鑰匙，先確認車款年份、停放位置、車輛狀態與身分資料，再安排到場處理；完成後確認開關鎖、啟動與日常使用功能。",
+    "desc": "新北林口 2018 Suzuki Swift 鑰匙全丟案例。車主手邊沒有可用鑰匙，先確認車款年份、停放位置與車輛狀態，再安排到場處理；完成後確認開關鎖、啟動與日常使用功能。",
     "img": "img/cases/article-car-key-2018-new-taipei-akl.jpg",
     "tag": "SUCCESS"
   },
@@ -115,7 +115,7 @@
     "location": "台中",
     "brand": "BMW",
     "type": "鑰匙全丟現場再生",
-    "desc": "台中 BMW 鑰匙全丟案例。到場前先確認車款、年份、停放位置與車主需求，再依實車狀態安排處理；公開內容不揭露設備名稱或可複製流程。",
+    "desc": "台中 BMW 鑰匙全丟案例。到場前先確認車款、年份、停放位置與車主需求，再依實車狀態安排處理；文章內容不揭露不適合公開的操作細節。",
     "img": "img/1655.jpg",
     "tag": "SUCCESS"
   },
@@ -134,7 +134,7 @@
     "date": "2026.02.21",
     "location": "南投",
     "brand": "Toyota",
-    "type": "智能鑰匙全丟救援",
+    "type": "智慧鑰匙全丟救援",
     "desc": "南投 Toyota 智慧鑰匙全丟案例。這類狀況不一定只能拖吊，需先看車況、年份與現場條件，再判斷是否適合到場處理。",
     "img": "img/1726.JPG",
     "tag": "SUCCESS"
@@ -144,7 +144,7 @@
     "date": "2026.02.24",
     "location": "台中",
     "brand": "Lexus",
-    "type": "智能鑰匙全丟",
+    "type": "智慧鑰匙全丟",
     "desc": "台中 Lexus 智慧鑰匙全丟案例。到場確認車輛狀態與鑰匙需求後完成處理；功能確認依實車配備與現場條件執行，不在公開文章揭露技術流程。",
     "img": "img/20240224_Taichung_Lexus.jpg",
     "tag": "SUCCESS"

@@ -63,6 +63,13 @@ Prioritize search intent:
 - comparison owner: `車款 + 備用鑰匙 + 費用/流程`
 - trust seeker: `拍場/地下室/路邊 + 到場處理`
 - brand-specific owner: `BMW / Benz / VW / Suzuki + 問題類型`
+- smart/keyless problem owner: `智慧感應鑰匙`, `感應鑰匙`, `keyless`, `感應不到鑰匙`, `未偵測到鑰匙`, `遙控器有電沒反應`
+
+Terminology rule:
+
+- Formal service term: `智慧感應鑰匙` when the case clearly involves a smart/keyless/proximity key or the article is a smart-key service page.
+- Supporting terms: naturally include `智慧鑰匙`, `感應鑰匙`, `keyless`, and symptom phrases such as `感應不到鑰匙`, `未偵測到鑰匙`, `遙控器沒反應` when they match search intent.
+- Do not force `智慧感應鑰匙` into mechanical-key or motorcycle cases unless the intake confirms that system.
 
 Title formula:
 
@@ -86,6 +93,9 @@ Before passing copy into `case-ai-copy.json`, remove Discord/chat formatting:
 - do not leave question lines ending with `,` or standalone comma lines
 - do not include editor notes such as `AI 口吻殘留自評`
 - avoid keyword-stuffed connective phrases like `新北汽車鑰匙到場處理前`; rewrite them as a natural owner scenario
+- do not publish two FAQ groups on one case page. If the template will render the final FAQ, skip the aiCopy section headed `常見問題` / `FAQ`.
+- rewrite internal review terms (`安全邊界`, `可複製流程`, `設備名稱`, `操作方式`, `身分資料`) into customer-facing privacy/service wording such as `文章只保留車款、地區與完成結果，不放完整地址、車牌或車主個人資料`.
+- use `智慧感應鑰匙` as the formal owner-facing term for confirmed smart/keyless/proximity-key cases; use `智慧鑰匙` only as a supporting phrase when natural.
 - when `aiCopy` is long, write the JSON file directly in the repo and report the path; do not paste multi-part JSON into Discord
 - never include Discord split markers such as `(1/3)`, reaction UI text, or profile text in any content file
 

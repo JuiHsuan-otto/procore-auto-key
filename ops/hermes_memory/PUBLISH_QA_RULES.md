@@ -22,6 +22,10 @@ Before a case can be approved or deployed, Hermes must check:
 - no editor-only blocks such as `AI 口吻殘留自評`
 - no awkward keyword-stuffed phrases such as `新北汽車鑰匙到場處理前`; write the same idea as a natural owner scenario instead
 - no Discord split markers such as `(1/3)`, reaction UI text, or copied profile text
+- no duplicate FAQ blocks: if the official template generates the final FAQ, remove or skip aiCopy sections headed `常見問題` / `FAQ`
+- avoid internal QA language in customer-facing articles, including `安全邊界`, `可複製流程`, `設備名稱`, `操作方式`, `身分資料`, and rewrite as natural privacy/service wording
+- use `智慧感應鑰匙` as the formal service term for confirmed smart/keyless/proximity-key cases; keep `智慧鑰匙`, `感應鑰匙`, `keyless`, `感應不到鑰匙`, `未偵測到鑰匙`, and `遙控器沒反應` as natural supporting search phrases when relevant
+- do not force smart/keyless terminology into mechanical-key or motorcycle cases unless the intake confirms it
 - long `aiCopy` JSON must be saved as a file and reported by path, not pasted as multi-part Discord messages
 
 ## SEO
