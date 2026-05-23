@@ -83,7 +83,7 @@
   <url><loc>https://www.carkey.com.tw/cases</loc><lastmod>2026-04-28</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.carkey.com.tw/case-shetou-mazda-cx30-rescue</loc><lastmod>2026-04-28</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.carkey.com.tw/dich-vu-lam-khoa-xe-o-to-tai-dai-loan</loc><lastmod>2026-04-28</lastmod><priority>0.7</priority></url>
-  <url><loc>https://www.carkey.com.tw/service-areas</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/service-areas</loc><lastmod>2026-05-23</lastmod><priority>0.85</priority></url>
   <url><loc>https://www.carkey.com.tw/vcard</loc><lastmod>2026-04-28</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.carkey.com.tw/article-peugeot-508sw-zhubei-smartkey</loc><lastmod>2026-04-28</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.carkey.com.tw/article-audi-r8-neihu-all-keys-lost</loc><lastmod>2026-04-30</lastmod><priority>0.7</priority></url>
@@ -95,9 +95,9 @@
   <url><loc>https://www.carkey.com.tw/article-vw-amarok-2019-changhua-akl</loc><lastmod>2026-05-11</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.carkey.com.tw/article-toyota-altis-2016-taichung-akl</loc><lastmod>2026-05-12</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.carkey.com.tw/toyota-altis-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://www.carkey.com.tw/taichung-car-key</loc><lastmod>2026-05-12</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/taichung-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.carkey.com.tw/changhua-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
-  <url><loc>https://www.carkey.com.tw/yunlin-car-key</loc><lastmod>2026-05-14</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/yunlin-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.carkey.com.tw/smart-key-lost-service</loc><lastmod>2026-05-12</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.carkey.com.tw/car-key-lost-service</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.carkey.com.tw/spare-car-key-service</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
@@ -111,4 +111,23 @@
   <url><loc>https://www.carkey.com.tw/non-chip-car-key-duplication-service</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.carkey.com.tw/chip-key-copy-by-mail-service</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.carkey.com.tw/car-key-shell-replacement-service</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/taipei-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/new-taipei-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/keelung-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/taoyuan-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/hsinchu-city-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/hsinchu-county-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/miaoli-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/nantou-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/chiayi-city-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/chiayi-county-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/tainan-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/kaohsiung-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/pingtung-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/yilan-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/hualien-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/taitung-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/penghu-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/kinmen-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.carkey.com.tw/lienchiang-car-key</loc><lastmod>2026-05-23</lastmod><priority>0.8</priority></url>
 </urlset>
