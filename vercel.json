@@ -3,8 +3,32 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/index.html", "destination": "/" },
+    { "source": "/car-key-lost-rescue-central-taiwan", "destination": "/article-car-key-lost-rescue-central-taiwan", "permanent": true },
+    { "source": "/car-key-lost-rescue-central-taiwan.html", "destination": "/article-car-key-lost-rescue-central-taiwan", "permanent": true },
     { "source": "/local/changhua/:path*", "destination": "/changhua-car-key", "permanent": true },
     { "source": "/local/taichung/:path*", "destination": "/taichung-car-key", "permanent": true },
     { "source": "/local/nantou/:path*", "destination": "/service-areas", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/drafts/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/backup/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/backups/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/logs/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/seo_data/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    }
   ]
 }
