@@ -48,6 +48,7 @@
  nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
  .nav-scrolled { border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
  .work-card { position: relative; aspect-ratio: 1/1; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
+ .work-card picture { display: block; width: 100%; height: 100%; }
  .work-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
  .work-card:hover { border-color: var(--gold-primary); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
  .work-card:hover img { transform: scale(1.08); }
@@ -72,7 +73,7 @@
  <nav id="navbar" class="sticky top-0 w-full z-50 py-4 transition-all duration-300">
  <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
  <a href="/" class="group flex items-center gap-3">
- <img alt="中彰投為主・全台可預約 汽車晶片鑰匙現場救援" src="img/procore_logo_main.jpg" class="w-10 h-10 rounded-full border border-gold-primary/30 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+ <picture><source srcset="img/procore_logo_main.webp" type="image/webp"><img alt="中彰投為主・全台可預約 汽車晶片鑰匙現場救援" src="img/procore_logo_main.jpg" class="w-10 h-10 rounded-full border border-gold-primary/30 shadow-[0_0_15px_rgba(212,175,55,0.2)]" decoding="async"></picture>
  <div>
  <div class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</div>
  <span class="text-[8px] text-gray-500 tracking-[0.4em] uppercase block">Artisan Auto Key</span>
@@ -521,13 +522,26 @@
     "link": "/article-toyota-vios-2019-changhua-akl"
   }
 ];
+ const escapeHtml = (value) => String(value || '').replace(/[&<>"']/g, (char) => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+ }[char]));
+ const webpOf = (src) => String(src || '').replace(/\.(jpe?g|png)$/i, '.webp');
+ const renderCaseImage = (src, alt) => `
+ <picture>
+ <source srcset="${escapeHtml(webpOf(src))}" type="image/webp">
+ <img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async">
+ </picture>`;
  document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
  <div class="work-card group" onclick="location.href='${c.link}'">
- <img src="${c.img}" alt="${c.car}" loading="lazy" decoding="async">
+ ${renderCaseImage(c.img, c.car)}
  <div class="work-overlay"></div>
  <div class="absolute bottom-6 left-6">
- <p class="text-[9px] text-gold-primary font-bold tracking-widest mb-1">${c.car}</p>
- <h4 class="text-white text-xs font-bold">${c.label}</h4>
+ <p class="text-[9px] text-gold-primary font-bold tracking-widest mb-1">${escapeHtml(c.car)}</p>
+ <h4 class="text-white text-xs font-bold">${escapeHtml(c.label)}</h4>
  </div>
  </div>
  `).join('');
