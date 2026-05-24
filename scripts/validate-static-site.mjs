@@ -139,6 +139,16 @@ function fileExistsForRoute(ref) {
   return false;
 }
 
+function htmlFileForRoute(ref) {
+  if (!ref) return "index.html";
+  if (ref.toLowerCase().endsWith(".html") && fs.existsSync(path.join(ROOT, ref))) return ref;
+  if (!path.extname(ref) && fs.existsSync(path.join(ROOT, `${ref}.html`))) return `${ref}.html`;
+  if (!path.extname(ref) && fs.existsSync(path.join(ROOT, ref, "index.html"))) {
+    return toPosix(path.join(ref, "index.html"));
+  }
+  return null;
+}
+
 function parseJsonLdBlocks(html, relPath, errors) {
   const re = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
   let match;
@@ -212,7 +222,21 @@ function extractSeoMetadata(relPath, html) {
   };
 }
 
-function validateSeoEntries(entries, sitemapUrls, errors) {
+function collectInternalHtmlTargets(html) {
+  const targets = [];
+  const anchorRe = /<a\b[^>]*>/gi;
+  let match;
+  while ((match = anchorRe.exec(html)) !== null) {
+    const href = getAttr(match[0], "href");
+    const ref = cleanUrlPathFromHtmlHref(href);
+    if (!ref && href !== "/") continue;
+    const target = htmlFileForRoute(ref || "");
+    if (target) targets.push(target);
+  }
+  return targets;
+}
+
+function validateSeoEntries(entries, sitemapUrls, incomingLinks, errors) {
   const indexableEntries = entries.filter((entry) => !entry.noindex);
   const titles = new Map();
   const descriptions = new Map();
@@ -224,6 +248,9 @@ function validateSeoEntries(entries, sitemapUrls, errors) {
     if (entry.h1Count !== 1) errors.push(`${entry.relPath}: expected exactly one h1, found ${entry.h1Count}`);
     if (!entry.ogImage) errors.push(`${entry.relPath}: missing og:image`);
     if (!entry.twitterImage) errors.push(`${entry.relPath}: missing twitter:image`);
+    if (entry.relPath !== "index.html" && (incomingLinks.get(entry.relPath) || 0) === 0) {
+      errors.push(`${entry.relPath}: indexable page has no internal inlinks`);
+    }
 
     if (entry.canonical) {
       try {
@@ -317,11 +344,17 @@ async function main() {
   const errors = [];
   const warnings = [];
   const seoEntries = [];
+  const incomingLinks = new Map();
 
   for (const relPath of htmlFiles) {
     const html = await fsp.readFile(path.join(ROOT, relPath), "utf8");
     validateHtml(relPath, html, errors, warnings);
     seoEntries.push(extractSeoMetadata(relPath, html));
+    for (const target of collectInternalHtmlTargets(html)) {
+      if (target !== relPath) {
+        incomingLinks.set(target, (incomingLinks.get(target) || 0) + 1);
+      }
+    }
   }
 
   for (const jsonFile of ["blog.json", "cases.json", "package.json", "vercel.json"]) {
@@ -344,7 +377,7 @@ async function main() {
     }
   }
 
-  validateSeoEntries(seoEntries, sitemapUrls, errors);
+  validateSeoEntries(seoEntries, sitemapUrls, incomingLinks, errors);
 
   console.log(`Validated HTML files: ${htmlFiles.length}`);
   console.log(`Warnings: ${warnings.length}`);
