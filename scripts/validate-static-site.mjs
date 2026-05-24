@@ -36,6 +36,40 @@ const SENSITIVE_PUBLIC_TERMS = [
   "EIS",
   "電子點火開關",
   "密碼採集",
+  "128 位元",
+  "256 位元",
+  "PATS",
+  "Delete Keys",
+  "密鑰",
+  "演算法",
+  "加密",
+  "診斷接口",
+  "數據協議",
+  "讀寫",
+  "註銷",
+  "不鎖死電腦",
+  "技術診斷",
+  "安全安全",
+  "車輛安全車輛系統",
+  "BCM",
+  "MCU",
+  "繞過",
+  "安全協議",
+  "車輛安全 ID",
+  "解密：",
+  "流程如下",
+  "授權碼",
+  "通訊協議",
+  "射頻邏輯",
+  "防盜資料",
+  "底層",
+  "原始編碼",
+  "對接點",
+  "拆解後",
+  "內部晶片",
+  "十六進位",
+  "重寫過程",
+  "安全演算",
 ];
 
 function toPosix(value) {
@@ -119,6 +153,112 @@ function parseJsonLdBlocks(html, relPath, errors) {
   }
 }
 
+function decodeHtmlEntities(value) {
+  return value
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getAttr(tag, attrName) {
+  const re = new RegExp(`\\b${attrName}\\s*=\\s*(["'])(.*?)\\1`, "i");
+  const match = tag.match(re);
+  return match ? decodeHtmlEntities(match[2]) : "";
+}
+
+function getTitle(html) {
+  const match = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
+  return match ? decodeHtmlEntities(match[1].replace(/<[^>]+>/g, "")) : "";
+}
+
+function getMetaContent(html, attrName, attrValue) {
+  const tagRe = /<meta\b[^>]*>/gi;
+  let match;
+  while ((match = tagRe.exec(html)) !== null) {
+    const tag = match[0];
+    if (getAttr(tag, attrName).toLowerCase() === attrValue.toLowerCase()) {
+      return getAttr(tag, "content");
+    }
+  }
+  return "";
+}
+
+function getCanonical(html) {
+  const tagRe = /<link\b[^>]*>/gi;
+  let match;
+  while ((match = tagRe.exec(html)) !== null) {
+    const tag = match[0];
+    const rel = getAttr(tag, "rel").toLowerCase().split(/\s+/);
+    if (rel.includes("canonical")) return getAttr(tag, "href");
+  }
+  return "";
+}
+
+function extractSeoMetadata(relPath, html) {
+  const robots = getMetaContent(html, "name", "robots").toLowerCase();
+  return {
+    relPath,
+    noindex: robots.includes("noindex"),
+    title: getTitle(html),
+    description: getMetaContent(html, "name", "description"),
+    canonical: getCanonical(html),
+    h1Count: (html.match(/<h1\b/gi) || []).length,
+    ogImage: getMetaContent(html, "property", "og:image"),
+    twitterImage: getMetaContent(html, "name", "twitter:image"),
+  };
+}
+
+function validateSeoEntries(entries, sitemapUrls, errors) {
+  const indexableEntries = entries.filter((entry) => !entry.noindex);
+  const titles = new Map();
+  const descriptions = new Map();
+
+  for (const entry of indexableEntries) {
+    if (!entry.title) errors.push(`${entry.relPath}: missing <title>`);
+    if (!entry.description) errors.push(`${entry.relPath}: missing meta description`);
+    if (!entry.canonical) errors.push(`${entry.relPath}: missing canonical URL`);
+    if (entry.h1Count !== 1) errors.push(`${entry.relPath}: expected exactly one h1, found ${entry.h1Count}`);
+    if (!entry.ogImage) errors.push(`${entry.relPath}: missing og:image`);
+    if (!entry.twitterImage) errors.push(`${entry.relPath}: missing twitter:image`);
+
+    if (entry.canonical) {
+      try {
+        const canonicalUrl = new URL(entry.canonical);
+        if (!SITE_HOSTS.has(canonicalUrl.hostname)) {
+          errors.push(`${entry.relPath}: canonical host is not a site host: ${entry.canonical}`);
+        }
+        if (sitemapUrls.size && !sitemapUrls.has(entry.canonical)) {
+          errors.push(`${entry.relPath}: canonical URL missing from sitemap.xml: ${entry.canonical}`);
+        }
+      } catch {
+        errors.push(`${entry.relPath}: invalid canonical URL: ${entry.canonical}`);
+      }
+    }
+
+    if (entry.title) {
+      titles.set(entry.title, [...(titles.get(entry.title) || []), entry.relPath]);
+    }
+    if (entry.description) {
+      descriptions.set(entry.description, [...(descriptions.get(entry.description) || []), entry.relPath]);
+    }
+  }
+
+  for (const [title, relPaths] of titles.entries()) {
+    if (relPaths.length > 1) {
+      errors.push(`duplicate title "${title}": ${relPaths.join(", ")}`);
+    }
+  }
+  for (const [description, relPaths] of descriptions.entries()) {
+    if (relPaths.length > 1) {
+      errors.push(`duplicate meta description "${description}": ${relPaths.join(", ")}`);
+    }
+  }
+}
+
 function validateHtml(relPath, html, errors, warnings) {
   if (/cdn\.tailwindcss\.com/i.test(html)) {
     errors.push(`${relPath}: Tailwind CDN is still referenced`);
@@ -176,10 +316,12 @@ async function main() {
   const htmlFiles = await walk(ROOT, (relPath) => relPath.toLowerCase().endsWith(".html"));
   const errors = [];
   const warnings = [];
+  const seoEntries = [];
 
   for (const relPath of htmlFiles) {
     const html = await fsp.readFile(path.join(ROOT, relPath), "utf8");
     validateHtml(relPath, html, errors, warnings);
+    seoEntries.push(extractSeoMetadata(relPath, html));
   }
 
   for (const jsonFile of ["blog.json", "cases.json", "package.json", "vercel.json"]) {
@@ -188,13 +330,21 @@ async function main() {
     }
   }
 
+  const sitemapUrls = new Set();
   for (const xmlFile of ["sitemap.xml", "sitemap_local.xml"]) {
     if (!fs.existsSync(path.join(ROOT, xmlFile))) continue;
     const xml = await fsp.readFile(path.join(ROOT, xmlFile), "utf8");
     if (!xml.includes("<urlset") || !xml.includes("</urlset>")) {
       errors.push(`${xmlFile}: missing urlset wrapper`);
     }
+    if (xmlFile === "sitemap.xml") {
+      for (const match of xml.matchAll(/<loc>([\s\S]*?)<\/loc>/g)) {
+        sitemapUrls.add(decodeHtmlEntities(match[1]));
+      }
+    }
   }
+
+  validateSeoEntries(seoEntries, sitemapUrls, errors);
 
   console.log(`Validated HTML files: ${htmlFiles.length}`);
   console.log(`Warnings: ${warnings.length}`);
