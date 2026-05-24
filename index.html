@@ -23,7 +23,7 @@
  <link rel="aeo-profile" href="https://aeo.washinmura.jp/ai/carkey.com.tw/">
  <meta name="aeo-verified" content="washinmura-aeo-carkey.com.tw">
  <script src="https://aeo.washinmura.jp/widget/crawler-track.js" data-site="carkey.com.tw"></script>
- <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="/assets/css/tailwind-procore.css">
  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;600&display=swap" rel="stylesheet">
  <style>
  :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.6); --border: rgba(255, 255, 255, 0.08); --gold-primary: #D4AF37; --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
@@ -523,7 +523,7 @@
 ];
  document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
  <div class="work-card group" onclick="location.href='${c.link}'">
- <img src="${c.img}" alt="${c.car}">
+ <img src="${c.img}" alt="${c.car}" loading="lazy" decoding="async">
  <div class="work-overlay"></div>
  <div class="absolute bottom-6 left-6">
  <p class="text-[9px] text-gold-primary font-bold tracking-widest mb-1">${c.car}</p>

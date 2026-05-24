@@ -1,6 +1,12 @@
 {
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i ./assets/css/tailwind-source.css -o ./assets/css/tailwind-procore.css --minify"
+  },
   "dependencies": {
     "canvas": "^3.2.1",
     "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
   }
 }
