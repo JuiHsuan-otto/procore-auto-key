@@ -7,7 +7,8 @@
     { "source": "/car-key-lost-rescue-central-taiwan.html", "destination": "/article-car-key-lost-rescue-central-taiwan", "permanent": true },
     { "source": "/local/changhua/:path*", "destination": "/changhua-car-key", "permanent": true },
     { "source": "/local/taichung/:path*", "destination": "/taichung-car-key", "permanent": true },
-    { "source": "/local/nantou/:path*", "destination": "/service-areas", "permanent": true }
+    { "source": "/local/nantou/:path*", "destination": "/service-areas", "permanent": true },
+    { "source": "/local/:path*", "destination": "/service-areas", "permanent": true }
   ],
   "headers": [
     {
@@ -38,6 +39,10 @@
     },
     {
       "source": "/seo_data/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/local/:path*",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
     }
   ]

@@ -10,11 +10,33 @@ const EXCLUDED_DIRS = new Set([
   "backup",
   "backups",
   "drafts",
+  "local",
   "node_modules",
   "secrets",
   "__pycache__",
 ]);
 const SITE_HOSTS = new Set(["carkey.com.tw", "www.carkey.com.tw"]);
+const SENSITIVE_PUBLIC_TERMS = [
+  "解碼實績",
+  "最新解碼實績",
+  "防盜系統解碼",
+  "解碼匹配",
+  "免拆電腦",
+  "FEM/BDC",
+  "FEM",
+  "BDC",
+  "CAS4",
+  "FBS3",
+  "FBS4",
+  "MQB",
+  "底層密碼",
+  "加密資料",
+  "資料讀取",
+  "動態密碼演算",
+  "EIS",
+  "電子點火開關",
+  "密碼採集",
+];
 
 function toPosix(value) {
   return value.split(path.sep).join("/");
@@ -107,6 +129,11 @@ function validateHtml(relPath, html, errors, warnings) {
   if (/\?{4,}/.test(html)) {
     warnings.push(`${relPath}: contains long question-mark run; check text encoding`);
   }
+  for (const term of SENSITIVE_PUBLIC_TERMS) {
+    if (html.includes(term)) {
+      errors.push(`${relPath}: contains sensitive public wording: ${term}`);
+    }
+  }
 
   parseJsonLdBlocks(html, relPath, errors);
 
@@ -132,10 +159,16 @@ function validateHtml(relPath, html, errors, warnings) {
 }
 
 async function validateJsonFile(relPath, errors) {
+  const raw = await fsp.readFile(path.join(ROOT, relPath), "utf8");
   try {
-    JSON.parse(await fsp.readFile(path.join(ROOT, relPath), "utf8"));
+    JSON.parse(raw);
   } catch (error) {
     errors.push(`${relPath}: invalid JSON (${error.message})`);
+  }
+  for (const term of SENSITIVE_PUBLIC_TERMS) {
+    if (raw.includes(term)) {
+      errors.push(`${relPath}: contains sensitive public wording: ${term}`);
+    }
   }
 }
 

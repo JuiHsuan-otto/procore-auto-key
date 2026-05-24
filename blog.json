@@ -145,7 +145,7 @@
   },
   {
     "date": "2026.04.28",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "新竹竹北 2022 Peugeot 508 SW 智慧鑰匙新增：現場備份紀錄 | 極致核心 ProCore",
     "summary": "新竹竹北 2022 Peugeot 508 SW 智慧鑰匙新增案例。整理車主備份鑰匙前可準備的資料、現場確認項目與完成後測試重點。",
     "link": "/article-peugeot-508sw-zhubei-smartkey",
@@ -171,7 +171,7 @@
   },
   {
     "date": "2026.04.03",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中龍井】2022 Honda HR-V 智慧鑰匙全丟救援：到場處理紀錄",
     "summary": "台中龍井 2022 年式 Honda HR-V 智慧鑰匙遺失案例。到場前先確認車款、年份、停放位置與鑰匙狀況，再依實車條件安排處理。",
     "link": "/article-honda-hrv-2022-akl-longjing",
@@ -184,7 +184,7 @@
   },
   {
     "date": "2026.03.31",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【林口拍場】2023 Toyota Auris 智慧鑰匙全丟救援：到場處理紀錄",
     "summary": "林口拍場 2023 年式 Toyota Auris 得標車鑰匙遺失案例。拍場車輛需先確認停放位置、車況與交車需求，再安排到場處理。",
     "link": "/article-toyota-auris-linkou-auction-akl",
@@ -198,9 +198,9 @@
   },
   {
     "date": "2026.03.30",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中拍場】2015 Range Rover Evoque 智慧鑰匙全丟：到場處理紀錄",
-    "summary": "台中拍場 Range Rover Evoque 得標車鑰匙遺失案例。到場前先確認年份、停放位置與鑰匙需求，文章內容不揭露車輛防盜操作細節。",
+    "summary": "台中拍場 Range Rover Evoque 得標車鑰匙遺失案例。到場前先確認年份、停放位置與鑰匙需求，文章內容不揭露車輛車輛安全操作細節。",
     "link": "/article-landrover-evoque-taichung-auction-akl",
     "keywords": [
       "台中行將拍賣",
@@ -212,7 +212,7 @@
   },
   {
     "date": "2026.03.28",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【新北林口】BMW X3 智慧鑰匙全丟救援：拍場得標車到場處理紀錄",
     "summary": "林口拍場 BMW X3 得標車鑰匙遺失案例。車輛停放於拍場時，需先確認現場條件、車況與取車需求，再判斷適合的處理方式。",
     "link": "/article-bmw-x3-linkou-auction-akl",
@@ -226,119 +226,119 @@
   },
   {
     "date": "2026.03.27",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中清水】Mazda CX-5 智慧鑰匙全丟救援：車主現場處理紀錄",
     "summary": "台中清水 Mazda CX-5 智慧感應鑰匙遺失案例。先確認車款年份、所在地與停放條件，再依實車狀態安排到場處理。",
     "link": "/article-mazda-cx5-qingshui-akl"
   },
   {
     "date": "2026.03.26",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中豐原】2021 Toyota RAV4 智慧鑰匙全丟救援：到場處理紀錄",
     "summary": "台中豐原五代 RAV4 智慧鑰匙遺失案例。詢問時建議先提供年份、所在地、鑰匙狀況與現場照片，方便判斷是否適合到場。",
     "link": "/article-toyota-rav4-fengyuan-akl"
   },
   {
     "date": "2026.03.23",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【高雄仁武】2012 BMW GT 535i 鑰匙全丟救援：到場處理紀錄",
-    "summary": "高雄仁武 BMW GT 535i 智慧鑰匙全丟案例。到場前先確認車輛資料、停放環境與急用程度，文章內容不揭露車輛防盜細節。",
+    "summary": "高雄仁武 BMW GT 535i 智慧鑰匙全丟案例。到場前先確認車輛資料、停放環境與急用程度，文章內容不揭露車輛車輛安全細節。",
     "link": "/article-bmw-gt535i-renwu-akl"
   },
   {
     "date": "2026.03.21",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中南屯】Kia Picanto 智慧鑰匙全丟救援：到場處理紀錄",
     "summary": "台中南屯 Kia Picanto 智慧感應鑰匙全丟案例。車主可先提供車款、年份、所在地與現場照片，方便初步評估處理條件。",
     "link": "/article-kia-picanto-nantun"
   },
   {
     "date": "2026.03.20",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "【技術救援】福斯 VW 點火開關卡死、鑰匙無法轉動：現場更換槍管紀錄",
     "summary": "福斯 VW 車系可能遇到點火開關磨損導致鑰匙無法轉動。需依車況確認是否適合現場維修與更換相關零件。",
     "link": "/article-vw-ignition-repair"
   },
   {
     "date": "2026.03.20",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中梧棲】2017 Mercedes-Benz C300 賓士智慧鑰匙新增案例",
     "summary": "台中梧棲 2017 賓士 C300 智慧鑰匙新增案例。到場前先確認車輛年份、鑰匙需求與現場條件，完成後依實車配備確認日常使用狀態。",
     "link": "/article-benz-c300-wuqi"
   },
   {
     "date": "2026.03.19",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【彰化和美】2018 Porsche Cayenne 智慧鑰匙新增案例",
     "summary": "彰化和美 2018 Porsche Cayenne 智慧鑰匙新增案例。進口車鑰匙新增需先確認車況、年份與需求，再依現場條件安排處理。",
     "link": "/article-porsche-cayenne-hemei"
   },
   {
     "date": "2026.03.18",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【南投埔里】Ford Focus Mk4 鑰匙全丟救援：智慧感應鑰匙到場處理紀錄",
     "summary": "南投埔里 Ford Focus Mk4 鑰匙全丟案例。車主可先提供所在地、年份、停放位置與鑰匙狀況，方便判斷處理方式。",
     "link": "/article-ford-focus-puli-akl"
   },
   {
     "date": "2026.03.18",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中北屯】BMW 118 (F20) 鑰匙全丟救援：到場處理紀錄",
     "summary": "台中北屯 BMW 118 鑰匙全丟案例。到場處理前會先確認年份、車況、停放環境與車主需求，文章內容不揭露不適合公開的操作細節。",
     "link": "/article-bmw-118-beitun-akl"
   },
   {
     "date": "2026.03.17",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【苗栗市】2011 Mercedes-Benz GLK 鑰匙全丟：到場處理紀錄",
     "summary": "苗栗市 2011 年 Mercedes-Benz GLK 鑰匙全丟案例。詢問時建議提供車款年份、所在地與現場照片，先判斷是否適合到場。",
     "link": "/article-benz-glk-miaoli-akl"
   },
   {
     "date": "2026.03.17",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【苗栗苑裡】BMW 740 (F01) 鑰匙全丟救援：到場處理紀錄",
     "summary": "苗栗苑裡 BMW 740 鑰匙全丟案例。進口車鑰匙遺失需依年份、車況與停放條件評估，公開文章不提供技術操作細節。",
     "link": "/article-bmw-740-yuanli-akl"
   },
   {
     "date": "2026.03.16",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【彰化市】2020 Honda HR-V 智慧鑰匙全丟救援：到場處理紀錄",
     "summary": "彰化市 2020 Honda HR-V 智慧感應鑰匙全丟案例。車輛無可用鑰匙時，先確認車況、停放位置與鑰匙需求，再安排後續處理。",
     "link": "/article-honda-hrv-2020-all-lost-changhua"
   },
   {
     "date": "2026.03.16",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【彰化北斗】Mini Clubman 鑰匙全丟救援：到場處理紀錄",
     "summary": "彰化北斗 Mini Clubman 鑰匙全丟案例。詢問時先提供年份、車款、所在地、鑰匙狀況與現場照片，方便判斷處理條件。",
     "link": "/article-mini-clubman-beidou-akl"
   },
   {
     "date": "2026.03.15",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "車子無法發動怎麼辦？先看鑰匙、電瓶與現場狀況",
-    "summary": "遇到車子發不動、沒反應，先記錄儀表訊息、鑰匙狀態與停放位置；若懷疑鑰匙或防盜相關問題，可先傳照片評估。",
+    "summary": "遇到車子發不動、沒反應，先記錄儀表訊息、鑰匙狀態與停放位置；若懷疑鑰匙或車輛安全相關問題，可先傳照片評估。",
     "link": "/article-car-wont-start-troubleshooting"
   },
   {
     "date": "2026.03.14",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【高雄楠梓】Benz W204 鑰匙全丟救援：到場處理紀錄",
-    "summary": "高雄楠梓 Benz W204 鑰匙全丟案例。到場前先確認年份、車況、停放環境與車主需求，文章內容不揭露車輛防盜細節。",
+    "summary": "高雄楠梓 Benz W204 鑰匙全丟案例。到場前先確認年份、車況、停放環境與車主需求，文章內容不揭露車輛車輛安全細節。",
     "link": "/article-benz-w204-nanzi-akl"
   },
   {
     "date": "2026.03.13",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【彰化花壇】Lexus NX200 智慧鑰匙全丟救援：到場處理紀錄",
     "summary": "彰化花壇 Lexus NX200 智慧鑰匙全丟案例。進口車鑰匙遺失需依車況與現場條件評估，完成後依實車配備確認使用需求。",
     "link": "/article-lexus-nx200-huatan-akl"
   },
   {
     "date": "2026.03.12",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【彰化和美】Mazda CX-3 智慧鑰匙新增：到場處理紀錄",
     "summary": "彰化和美 Mazda CX-3 智慧感應鑰匙新增案例。到場前先確認年份、鑰匙需求與現場條件，完成後依實車配備確認日常使用狀態。",
     "link": "/article-mazda-cx3-hemei-smartkey"
@@ -352,105 +352,105 @@
   },
   {
     "date": "2026.03.11",
-    "category": "解碼實績",
-    "title": "【彰化社頭】Mazda CX-30 智慧鑰匙全丟救援：烤漆爐內的緊急解碼任務",
+    "category": "到場案例",
+    "title": "【彰化社頭】Mazda CX-30 智慧鑰匙全丟救援：烤漆爐內的緊急車況確認任務",
     "summary": "彰化社頭 Mazda 救援紀錄：Mazda CX-30 智慧感應鑰匙遺失。極致核心技師現場執行專業到場處理，註銷舊鑰匙並匹配新鑰匙。",
     "link": "/case-shetou-mazda-cx30-rescue"
   },
   {
     "date": "2026.03.11",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "汽車鑰匙感應不到怎麼辦？聯繫救援前先確認這些狀況",
     "summary": "鑰匙沒反應、感應不到或無法發動時，先確認電池、備用鑰匙、儀表訊息與停放位置；必要時傳車款年份與照片詢問。",
     "link": "/article-car-key-not-detected-troubleshooting"
   },
   {
     "date": "2026.03.10",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中霧峰】Mazda CX-5 智慧鑰匙全丟救援紀錄",
     "summary": "台中霧峰 Mazda CX-5 智慧感應鑰匙全丟案例。先確認車款年份、所在地與現場條件，再依實車狀態安排到場處理。",
     "link": "/article-mazda-wufeng-rescue"
   },
   {
     "date": "2026.03.09",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【彰化和美】Toyota Sienta 智慧鑰匙新增：和美現場技術紀錄",
     "summary": "彰化和美 Toyota 救援紀錄。現場執行智慧鑰匙新增，恢復滑門感應與一鍵啟動。",
     "link": "/article-toyota-sienta-hemei-service"
   },
   {
     "date": "2026.03.08",
-    "category": "解碼實績",
+    "category": "到場案例",
     "title": "【台中清水】2020 Toyota Altis 智慧感應鑰匙全丟：到場處理紀錄",
     "summary": "台中清水 2020 Altis 智慧鑰匙全丟案例。詢問時建議先提供年份、所在地、停放照片與鑰匙狀況，方便初步評估。",
     "link": "/article-toyota-altis-qingshui-rescue"
   },
   {
     "date": "2026.03.04",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "台中汽車鑰匙遺失怎麼辦？先準備車款年份、所在地與照片",
     "summary": "台中汽車鑰匙遺失時，先整理車款、年份、所在地、鑰匙狀況與現場照片；是否適合到場處理需依車況與環境判斷。",
     "link": "/article-taichung-on-site-decoding"
   },
   {
     "date": "2026.03.04",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "汽車鑰匙沒反應？感應鑰匙故障與電池檢查指南",
     "summary": "遇到感應鑰匙沒反應、遙控失效時，可先確認電池、備用鑰匙與儀表提示；仍無法判斷時再提供車款年份詢問。",
     "link": "/article-keyless-troubleshooting-guide"
   },
   {
     "date": "2026.03.03",
-    "category": "技術專欄",
-    "title": "中古車購買後的第一件事：防盜安全、您應該檢查的「數據匹配」清單",
-    "summary": "購買二手車不僅是檢查外觀與引擎，防盜系統的安全性常被忽略。極致核心教您如何檢查現有鑰匙 ID，並註銷遺失 ID，確保車輛不會落入前車主或其他人之手。",
+    "category": "車主指南",
+    "title": "中古車購買後的第一件事：車輛安全安全、您應該檢查的「數據匹配」清單",
+    "summary": "購買二手車不僅是檢查外觀與引擎，車輛安全系統的安全性常被忽略。極致核心教您如何檢查現有鑰匙 ID，並註銷遺失 ID，確保車輛不會落入前車主或其他人之手。",
     "link": "/article-used-car-buying-guide"
   },
   {
     "date": "2026.03.02",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "保時捷晶片鑰匙全丟救援：BCM 數據重讀與高級匹配技術紀錄",
-    "summary": "針對保時捷 Porsche 進口車防盜系統，整理 BCM 數據重讀與匹配過程，展示極致核心如何在不影響車主保固前提下，提供依車系流程的車系解碼方案。",
+    "summary": "針對保時捷 Porsche 進口車車輛安全系統，整理 BCM 數據重讀與匹配過程，展示極致核心如何在不影響車主保固前提下，提供依車系流程的車系車況確認方案。",
     "link": "/article-porsche-bcm-decoding-tech"
   },
   {
     "date": "2026.03.02",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "VAG 車系鑰匙遺失：為什麼需要先評估車況與年份？",
     "summary": "福斯、Audi、Skoda 等 VAG 車系鑰匙遺失時，處理方式會受到年份、車況與現場條件影響；文章內容不揭露技術操作細節。",
     "link": "/article-vag-dashboard-immobilizer-tech"
   },
   {
     "date": "2026.02.26",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "Lexus 智慧鑰匙遺失：詢問前先準備哪些資料？",
     "summary": "Lexus 智慧鑰匙遺失或需新增時，建議先提供車型年份、所在地、鑰匙狀況與現場照片，方便判斷後續處理方式。",
     "link": "/article-lexus-taichung-service"
   },
   {
     "date": "2026.02.25",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "BMW G-Series 智慧感應鑰匙遺失：車主詢問前準備重點",
     "summary": "BMW G-Series 智慧感應鑰匙遺失時，請先準備車款年份、所在地、鑰匙狀況與現場照片；實際處理需依車況評估。",
     "link": "/article-bmw-gseries-keyless-rescue"
   },
   {
     "date": "2026.02.19",
-    "category": "技術專欄",
-    "title": "深入 MQB 平台：VAG 體系（VW/Skoda/Audi）鑰匙全丟技術解析",
-    "summary": "深入剖析福斯集團 MQB 平台的防盜架構。為什麼全丟比新增更難？數據讀取的核心技術是什麼？",
+    "category": "車主指南",
+    "title": "深入 VAG 車系平台：VAG 體系（VW/Skoda/Audi）鑰匙全丟車主說明",
+    "summary": "深入剖析福斯集團 VAG 車系平台的車輛安全架構。為什麼全丟比新增更難？車況確認的核心技術是什麼？",
     "link": "/article-vag-mqb-platform-tech"
   },
   {
     "date": "2026.02.18",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "BMW 智慧鑰匙遺失與備份：車主詢問前要準備什麼",
-    "summary": "BMW 智慧鑰匙牽涉車輛防盜安全，文章內容不揭露設備與操作細節；車主可先準備年份、車款、所在地與鑰匙狀況。",
+    "summary": "BMW 智慧鑰匙牽涉車輛車輛安全安全，文章內容不揭露設備與操作細節；車主可先準備年份、車款、所在地與鑰匙狀況。",
     "link": "/article-bmw-fem-advanced-tech"
   },
   {
     "date": "2026.02.15",
-    "category": "技術專欄",
+    "category": "車主指南",
     "title": "預防勝於治療：為什麼您需要第二把備份鑰匙？配製流程與成本解析",
     "summary": "備份鑰匙不是浪費，而是保險。分析新增與全丟匹配的價差與技術門檻。",
     "link": "/article-why-you-need-spare-car-key"

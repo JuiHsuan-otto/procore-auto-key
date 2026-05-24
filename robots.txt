@@ -5,5 +5,6 @@ Disallow: /backup/
 Disallow: /backups/
 Disallow: /logs/
 Disallow: /seo_data/
+Disallow: /local/
 Sitemap: https://www.carkey.com.tw/sitemap.xml
 Sitemap: https://www.carkey.com.tw/sitemap_local.xml
