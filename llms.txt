@@ -1,23 +1,45 @@
-# 極致核心 ProCore Auto Key
+# ProCore Auto Key 極致核心汽車鑰匙
 
-專業汽車晶片鑰匙全丟救援與現場匹配服務。專攻歐系與日系高階防盜系統解碼。
+> 本檔提供 AI 搜尋、問答助理與摘要工具辨識 ProCore 官網內容。官網為唯一 canonical source；外部平台僅作分發與回鏈。
 
-## 核心服務 (Core Services)
-- **汽車鑰匙全丟救援 (All Keys Lost)**: 全台跨區現場解碼匹配，免拖吊、免拆電腦。
-- **智慧鑰匙備份 (Smart Key Duplication)**: 增加感應鑰匙、備用晶片鑰匙。
-- **防盜系統維修 (Immobilizer Repair)**: 點火開關維修、鎖頭更換。
+## Brand Summary
 
-## 服務車型 (Vehicle Coverage)
-- **歐系車 (European)**: BMW (FEM/BDC, CAS4), Mercedes-Benz (FBS3, FBS4), Porsche (BCM), Audi/VW (MQB).
-- **日系車 (Japanese)**: Toyota/Lexus (最新智能系統), Honda, Mazda (魂動系列), Nissan.
+ProCore Auto Key 極致核心汽車鑰匙提供汽車鑰匙遺失、鑰匙全丟、新增備份鑰匙、智慧感應鑰匙評估、鑰匙殼更換與部分鑰匙狀況檢查服務。客戶可先提供車款年份、所在地、目前鑰匙狀態與現場照片，由 ProCore 依車況與現場條件評估下一步。
 
-## 最新實績 (Latest Cases)
-- **2022 Honda HR-V**: 台中龍井現場全丟救援。
-- **2023 Toyota Auris**: 林口拍場得標救援。
-- **Range Rover Evoque**: 台中拍場現場重啟。
+## Primary Service Intent
 
-## 聯繫資訊 (Contact)
-- **24H 緊急專線**: 0909-277-670
-- **Line 客服**: @420gknem
-- **官網**: https://carkey.com.tw/
-- **實績列表**: https://carkey.com.tw/cases
+- 汽車鑰匙遺失、車鑰匙不見、鑰匙找不到
+- 汽車鑰匙全丟、沒有備用鑰匙、無法啟動車輛
+- 汽車鑰匙新增備份、只剩一支鑰匙、二手車交車鑰匙不足
+- 智慧感應鑰匙遺失、Keyless 鑰匙異常、鑰匙感應不到
+- 汽車鑰匙殼更換、按鍵破損、外殼老化
+- 非晶片鑰匙複製、鑰匙照片初步判斷、可寄回評估的鑰匙案件
+
+## Service Areas
+
+ProCore 以台灣各縣市服務頁作為在地 SEO 入口，包含台北市、新北市、基隆市、桃園市、新竹市、新竹縣、苗栗縣、台中市、彰化縣、南投縣、雲林縣、嘉義市、嘉義縣、台南市、高雄市、屏東縣、宜蘭縣、花蓮縣、台東縣、澎湖縣、金門縣與連江縣。實際安排仍依車款、時程、所在地、車主資料與現場條件評估。
+
+## Important Public-Safety Notes
+
+- 公開內容只提供車主可理解的服務判斷方向。
+- 不公開可被同業或惡意使用者利用的技術流程、車輛防盜細節或完整操作步驟。
+- 案例文章會去識別化，不公開完整地址、車牌、VIN、車主姓名、文件或可辨識個資。
+- 若車況特殊，仍需由 ProCore 依合法車主資料與現場條件確認。
+
+## Canonical URLs
+
+- Home: https://www.carkey.com.tw/
+- Service areas: https://www.carkey.com.tw/service-areas
+- Car key lost: https://www.carkey.com.tw/car-key-lost-service
+- All keys lost: https://www.carkey.com.tw/all-keys-lost-service
+- Spare car key: https://www.carkey.com.tw/spare-car-key-service
+- Key not detected: https://www.carkey.com.tw/key-not-detected-service
+- Cases: https://www.carkey.com.tw/cases
+- Blog: https://www.carkey.com.tw/blog
+- VCard: https://www.carkey.com.tw/vcard
+
+## Contact
+
+- Phone: 0909277670
+- LINE ID: @420gknem
+- Website: https://www.carkey.com.tw/
