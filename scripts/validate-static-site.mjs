@@ -187,6 +187,41 @@ function parseJsonLdBlocks(html, relPath, errors) {
   }
 }
 
+function collectJsonLdNodes(html) {
+  const nodes = [];
+  const re = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+  let match;
+  while ((match = re.exec(html)) !== null) {
+    const payload = match[1].trim();
+    if (!payload) continue;
+    try {
+      appendJsonLdNodes(JSON.parse(payload), nodes);
+    } catch {
+      // parseJsonLdBlocks reports the exact error; this collector only powers SEO assertions.
+    }
+  }
+  return nodes;
+}
+
+function appendJsonLdNodes(value, nodes) {
+  if (Array.isArray(value)) {
+    for (const item of value) appendJsonLdNodes(item, nodes);
+    return;
+  }
+  if (!value || typeof value !== "object") return;
+  nodes.push(value);
+  if (Array.isArray(value["@graph"])) {
+    for (const item of value["@graph"]) appendJsonLdNodes(item, nodes);
+  }
+}
+
+function jsonLdHasType(html, typeName) {
+  return collectJsonLdNodes(html).some((node) => {
+    const type = node["@type"];
+    return type === typeName || (Array.isArray(type) && type.includes(typeName));
+  });
+}
+
 function decodeHtmlEntities(value) {
   return value
     .replace(/&quot;/g, '"')
@@ -243,6 +278,7 @@ function extractSeoMetadata(relPath, html) {
     h1Count: (html.match(/<h1\b/gi) || []).length,
     ogImage: getMetaContent(html, "property", "og:image"),
     twitterImage: getMetaContent(html, "name", "twitter:image"),
+    hasBreadcrumbList: jsonLdHasType(html, "BreadcrumbList"),
   };
 }
 
@@ -272,6 +308,9 @@ function validateSeoEntries(entries, sitemapUrls, incomingLinks, errors) {
     if (entry.h1Count !== 1) errors.push(`${entry.relPath}: expected exactly one h1, found ${entry.h1Count}`);
     if (!entry.ogImage) errors.push(`${entry.relPath}: missing og:image`);
     if (!entry.twitterImage) errors.push(`${entry.relPath}: missing twitter:image`);
+    if (entry.relPath !== "index.html" && !entry.hasBreadcrumbList) {
+      errors.push(`${entry.relPath}: missing BreadcrumbList JSON-LD`);
+    }
     const incomingCount = incomingLinks.get(entry.relPath) || 0;
     if (entry.relPath !== "index.html" && incomingCount === 0) {
       errors.push(`${entry.relPath}: indexable page has no internal inlinks`);
