@@ -16,6 +16,30 @@ const EXCLUDED_DIRS = new Set([
   "__pycache__",
 ]);
 const SITE_HOSTS = new Set(["carkey.com.tw", "www.carkey.com.tw"]);
+const COUNTY_AREA_PAGES = new Set([
+  "taipei-car-key.html",
+  "new-taipei-car-key.html",
+  "keelung-car-key.html",
+  "taoyuan-car-key.html",
+  "hsinchu-city-car-key.html",
+  "hsinchu-county-car-key.html",
+  "miaoli-car-key.html",
+  "taichung-car-key.html",
+  "changhua-car-key.html",
+  "nantou-car-key.html",
+  "yunlin-car-key.html",
+  "chiayi-city-car-key.html",
+  "chiayi-county-car-key.html",
+  "tainan-car-key.html",
+  "kaohsiung-car-key.html",
+  "pingtung-car-key.html",
+  "yilan-car-key.html",
+  "hualien-car-key.html",
+  "taitung-car-key.html",
+  "penghu-car-key.html",
+  "kinmen-car-key.html",
+  "lienchiang-car-key.html",
+]);
 const SENSITIVE_PUBLIC_TERMS = [
   "解碼實績",
   "最新解碼實績",
@@ -248,8 +272,12 @@ function validateSeoEntries(entries, sitemapUrls, incomingLinks, errors) {
     if (entry.h1Count !== 1) errors.push(`${entry.relPath}: expected exactly one h1, found ${entry.h1Count}`);
     if (!entry.ogImage) errors.push(`${entry.relPath}: missing og:image`);
     if (!entry.twitterImage) errors.push(`${entry.relPath}: missing twitter:image`);
-    if (entry.relPath !== "index.html" && (incomingLinks.get(entry.relPath) || 0) === 0) {
+    const incomingCount = incomingLinks.get(entry.relPath) || 0;
+    if (entry.relPath !== "index.html" && incomingCount === 0) {
       errors.push(`${entry.relPath}: indexable page has no internal inlinks`);
+    }
+    if (COUNTY_AREA_PAGES.has(entry.relPath) && incomingCount < 3) {
+      errors.push(`${entry.relPath}: county service page has only ${incomingCount} internal inlinks`);
     }
 
     if (entry.canonical) {
