@@ -276,6 +276,9 @@ function validateSeoEntries(entries, sitemapUrls, incomingLinks, errors) {
     if (entry.relPath !== "index.html" && incomingCount === 0) {
       errors.push(`${entry.relPath}: indexable page has no internal inlinks`);
     }
+    if (entry.relPath.startsWith("article-") && incomingCount < 3) {
+      errors.push(`${entry.relPath}: article page has only ${incomingCount} internal inlinks`);
+    }
     if (COUNTY_AREA_PAGES.has(entry.relPath) && incomingCount < 3) {
       errors.push(`${entry.relPath}: county service page has only ${incomingCount} internal inlinks`);
     }
