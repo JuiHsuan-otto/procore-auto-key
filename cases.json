@@ -1,5 +1,15 @@
 [
   {
+    "id": 22,
+    "date": "2026.05.27",
+    "location": "彰化花壇",
+    "brand": "BMW 118",
+    "type": "all_keys_lost",
+    "desc": "彰化花壇 2016 BMW 118 智慧感應鑰匙全丟，到場確認停放環境後處理，完成後確認可發動，功能與原鑰匙一致正常。",
+    "img": "img/cases/article-bmw-118-2016-changhua-akl.jpeg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 21,
     "date": "2026.05.24",
     "location": "跨區服務",
