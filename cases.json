@@ -1,5 +1,15 @@
 [
   {
+    "id": 23,
+    "date": "2026.06.03",
+    "location": "台中西屯",
+    "brand": "Lexus UX250",
+    "type": "all_keys_lost",
+    "desc": "台中西屯 2021 Lexus UX250 智慧感應鑰匙全丟，到場處理完成並確認可發動。車主可先提供年份、車款、地點與現場照片評估。",
+    "img": "img/cases/article-lexus-ux250-2021-taichung-akl.jpeg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 22,
     "date": "2026.05.27",
     "location": "彰化花壇",
