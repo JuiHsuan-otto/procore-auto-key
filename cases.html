@@ -124,35 +124,27 @@
   ]
 }
 </script>
+<link rel="stylesheet" href="/assets/css/procore-header.css">
 </head>
 <body class="antialiased">
  <!-- 手機版優化導航列 -->
- <nav class="sticky top-0 w-full z-50 py-4">
- <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
- <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</a>
- <!-- 桌機選單 -->
- <div class="hidden md:flex space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
- <a href="/" class="text-gray-400 hover:text-white transition">首頁</a>
- <a href="/car-key-lost-service" class="text-gray-400 hover:text-white transition">鑰匙遺失</a>
- <a href="/service-areas" class="text-gray-400 hover:text-white transition">服務區域</a>
- <a href="/cases" class="text-gold border-b border-gold pb-1">到場案例</a>
- <a href="/blog" class="text-gray-400 hover:text-white transition">車主指南</a>
- </div>
- <!-- 手機選單按鈕 (直接顯示文字提升直覺度) -->
-
- <div class="md:hidden flex items-center gap-4">
- <button id="mobile-search-toggle" class="text-white">
- <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
- </button>
- </div>
- <div class="md:hidden flex space-x-3 text-[10px] font-bold tracking-widest">
- <a href="/service-areas" class="text-white">地區</a>
- <a href="/cases" class="text-gold">案例</a>
- <a href="/blog" class="text-white">指南</a>
- <a href="tel:0909277670" class="text-gold">電話</a>
- </div>
- </div>
- </nav>
+ <nav id="navbar" class="procore-site-nav" aria-label="主要導覽">
+  <div class="procore-nav-inner">
+    <a class="procore-brand" href="/" aria-label="ProCore 首頁">PROCORE</a>
+    <div class="procore-nav-links">
+    <a href="/car-key-lost-service">鑰匙遺失</a>
+    <a href="/all-keys-lost-service">鑰匙全丟</a>
+    <a href="/spare-car-key-service">鑰匙新增</a>
+    <a href="/car-key-duplication-service">備用鑰匙</a>
+    <a href="/smart-key-lost-service">智慧感應</a>
+    <a href="/key-not-detected-service">未偵測到鑰匙</a>
+    <a href="/service-areas">服務區域</a>
+    <a href="/cases" class="is-active">案例</a>
+    <a href="/blog">指南</a>
+    <a href="tel:0909277670" class="procore-phone">電話</a>
+    </div>
+  </div>
+</nav>
 
  <header class="py-20 text-center">
  <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-4 block">Field Mission Logs</span>
