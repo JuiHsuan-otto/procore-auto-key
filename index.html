@@ -22,7 +22,7 @@
  <!-- AEO Crawler Tracking by Washinmura -->
  <link rel="aeo-profile" href="https://aeo.washinmura.jp/ai/carkey.com.tw/">
  <meta name="aeo-verified" content="washinmura-aeo-carkey.com.tw">
- <script src="https://aeo.washinmura.jp/widget/crawler-track.js" data-site="carkey.com.tw"></script>
+ <script src="https://aeo.washinmura.jp/widget/crawler-track.js" data-site="carkey.com.tw" defer></script>
  <link rel="stylesheet" href="/assets/css/tailwind-procore.css">
  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;600&display=swap" rel="stylesheet">
  <style>
@@ -87,7 +87,7 @@
  <a href="/blog" class="text-[10px] font-bold tracking-[0.18em] text-gray-400 hover:text-white transition uppercase whitespace-nowrap">車主指南 / Blog</a>
 
  <div class="hidden xl:flex items-center ml-6 relative group">
- <input type="text" id="global-search" placeholder="搜尋車款或地點..."
+ <input type="text" id="global-search" placeholder="搜尋車款、地區或狀況..."
  class="bg-zinc-900/50 border border-white/10 rounded-full px-4 py-1 text-[10px] text-white focus:outline-none focus:border-gold-primary/50 transition-all w-40 focus:w-64">
  <svg class="w-3 h-3 text-gray-500 absolute right-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
  <div id="search-results" class="absolute top-full right-0 mt-2 w-80 bg-zinc-900 border border-white/10 rounded shadow-2xl hidden z-[100] max-h-96 overflow-y-auto"></div>
@@ -100,13 +100,11 @@
  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
  </button>
  </div>
- <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
+ <div class="md:hidden flex space-x-3 text-[10px] font-bold tracking-widest">
  <a href="/car-key-lost-service" class="text-white">遺失</a>
- <a href="/spare-car-key-service" class="text-white">新增</a>
- <a href="/service-areas" class="text-white">AREAS</a>
- <a href="/cases" class="text-white">WORKS</a>
- <a href="/blog" class="text-white">BLOG</a>
- <a href="tel:0909277670" class="text-gold">CALL</a>
+ <a href="/service-areas" class="text-white">地區</a>
+ <a href="/cases" class="text-white">案例</a>
+ <a href="tel:0909277670" class="text-gold">電話</a>
  </div>
  </div>
  </nav>
@@ -155,6 +153,43 @@
  <a href="/all-keys-lost-service" class="text-gold-primary border border-gold-primary/30 px-4 py-2 rounded-full">沒有備用鑰匙 / 全丟</a>
  <a href="/key-not-detected-service" class="text-gold-primary border border-gold-primary/30 px-4 py-2 rounded-full">感應異常先判斷</a>
  <a href="/car-key-duplication-service" class="text-gold-primary border border-gold-primary/30 px-4 py-2 rounded-full">汽車備用鑰匙 / 複製</a>
+ </div>
+ </div>
+ </section>
+
+ <section class="py-16 bg-black border-b border-white/5">
+ <div class="max-w-7xl mx-auto px-6">
+ <div class="max-w-3xl mb-10">
+ <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-3 block">Quick Answers</span>
+ <h2 class="text-2xl md:text-4xl font-bold font-serif-tc text-white mb-4">先判斷你的狀況，再進入正確頁面</h2>
+ <p class="text-gray-400 text-sm leading-loose">車鑰匙不見、儀表顯示未偵測到鑰匙、只剩一支鑰匙或想找同款案例，看的資料不同。先選最接近的情境，能更快拿到正確評估。</p>
+ </div>
+ <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+ <a href="/car-key-lost-service" class="group border border-white/10 bg-zinc-900/30 p-5 hover:border-gold-primary/50 hover:bg-gold-primary/5 transition block">
+ <span class="text-[9px] text-gold-primary tracking-widest uppercase">Lost Key</span>
+ <h3 class="text-white font-bold mt-3 mb-3 leading-relaxed group-hover:text-gold-primary">汽車鑰匙不見怎麼辦？</h3>
+ <p class="text-gray-500 text-xs leading-loose">完全找不到鑰匙時，先準備車款年份、所在地、停放照片與是否急用車。</p>
+ </a>
+ <a href="/key-not-detected-service" class="group border border-white/10 bg-zinc-900/30 p-5 hover:border-gold-primary/50 hover:bg-gold-primary/5 transition block">
+ <span class="text-[9px] text-gold-primary tracking-widest uppercase">Key Not Detected</span>
+ <h3 class="text-white font-bold mt-3 mb-3 leading-relaxed group-hover:text-gold-primary">儀表顯示未偵測到鑰匙？</h3>
+ <p class="text-gray-500 text-xs leading-loose">先區分電池、感應距離、車輛電壓或鑰匙失效，不急著直接拖車。</p>
+ </a>
+ <a href="/spare-car-key-service" class="group border border-white/10 bg-zinc-900/30 p-5 hover:border-gold-primary/50 hover:bg-gold-primary/5 transition block">
+ <span class="text-[9px] text-gold-primary tracking-widest uppercase">Spare Key</span>
+ <h3 class="text-white font-bold mt-3 mb-3 leading-relaxed group-hover:text-gold-primary">只剩一支鑰匙要先做嗎？</h3>
+ <p class="text-gray-500 text-xs leading-loose">還能正常用車時最適合先做備份，避免日後變成鑰匙全丟。</p>
+ </a>
+ <a href="/cases" class="group border border-white/10 bg-zinc-900/30 p-5 hover:border-gold-primary/50 hover:bg-gold-primary/5 transition block">
+ <span class="text-[9px] text-gold-primary tracking-widest uppercase">Cases</span>
+ <h3 class="text-white font-bold mt-3 mb-3 leading-relaxed group-hover:text-gold-primary">想看同款車案例？</h3>
+ <p class="text-gray-500 text-xs leading-loose">用品牌、地區或情境比對實際到場紀錄，再傳資料評估。</p>
+ </a>
+ <a href="/service-areas" class="group border border-white/10 bg-zinc-900/30 p-5 hover:border-gold-primary/50 hover:bg-gold-primary/5 transition block">
+ <span class="text-[9px] text-gold-primary tracking-widest uppercase">Areas</span>
+ <h3 class="text-white font-bold mt-3 mb-3 leading-relaxed group-hover:text-gold-primary">想確認服務地區？</h3>
+ <p class="text-gray-500 text-xs leading-loose">先看所在地入口，再依車款、時程與現場條件安排。</p>
+ </a>
  </div>
  </div>
  </section>
@@ -242,7 +277,7 @@
  <span class="text-gold-primary text-xl">✓</span>
  <div>
  <p class="text-white font-bold mb-1">遺失鑰匙安全控管</p>
- <p class="text-gray-300 text-xs leading-relaxed">鑰匙遺失時，會一併討論舊鑰匙風險與後續使用安全；公開文章只保留車主判斷方向，不公開設備、操作方式或可照做流程。</p>
+ <p class="text-gray-300 text-xs leading-relaxed">鑰匙遺失時，會一併討論舊鑰匙風險與後續使用安全；公開文章只保留車主判斷方向，不公開設備、操作方式或可照做步驟。</p>
  </div>
  </li>
  </ul>
@@ -395,7 +430,7 @@
  </div>
  <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
  <h3 class="text-gold-primary text-base font-bold mb-4">Q: 配製新鑰匙時，遺失的舊鑰匙安全嗎？</h3>
- <p class="text-gray-300 text-sm leading-loose">鑰匙遺失時，會一併討論舊鑰匙風險與後續使用安全；文章內容只保留車主判斷方向，不公開設備、操作方式或可照做流程。</p>
+ <p class="text-gray-300 text-sm leading-loose">鑰匙遺失時，會一併討論舊鑰匙風險與後續使用安全；文章內容只保留車主判斷方向，不公開設備、操作方式或可照做步驟。</p>
  </div>
  <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
  <h3 class="text-gold-primary text-base font-bold mb-4">Q: 進口車款（如 BMW/Benz）也能現場做嗎？</h3>
@@ -553,24 +588,45 @@
  "@type": "FAQPage",
  "mainEntity": [{
  "@type": "Question",
- "name": "汽車智慧鑰匙全丟了，一定要拖回原廠嗎？",
+ "name": "鑰匙全丟了，真的不需要拖車嗎？",
  "acceptedAnswer": {
  "@type": "Answer",
  "text": "不一定要先拖車。建議先提供車款、年份、所在地與現場照片，確認車況與停放條件後，再判斷是否適合到場處理。"
  }
  }, {
  "@type": "Question",
- "name": "鑰匙遺失後，舊鑰匙安全風險怎麼處理？",
+ "name": "現場配製的鑰匙，功能與原廠一樣嗎？",
  "acceptedAnswer": {
  "@type": "Answer",
- "text": "鑰匙遺失時，會一併討論舊鑰匙風險與後續使用安全；文章內容只保留車主判斷方向，不公開設備、操作方式或可照做流程。"
+ "text": "會依實車配備與鑰匙規格確認日常使用需要的功能；沒有確認過的功能，不會在案例中做過度承諾。"
  }
  }, {
  "@type": "Question",
- "name": "哪些進口車款（如 BMW/Benz）可以現場處理全丟？",
+ "name": "服務範圍涵蓋哪些地區？",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "極致核心深耕中彰投地區，並提供新竹、苗栗、雲林、嘉義的跨區服務；實際安排仍依車款、時程、所在地與現場條件評估。"
+ }
+ }, {
+ "@type": "Question",
+ "name": "配製新鑰匙時，遺失的舊鑰匙安全嗎？",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "鑰匙遺失時，會一併討論舊鑰匙風險與後續使用安全；文章內容只保留車主判斷方向，不公開設備、操作方式或可照做步驟。"
+ }
+ }, {
+ "@type": "Question",
+ "name": "進口車款（如 BMW/Benz）也能現場做嗎？",
  "acceptedAnswer": {
  "@type": "Answer",
  "text": "BMW、Benz、VW、Porsche 等進口車都需要依年份、車況與鑰匙型式評估。詢問時請先傳車款年份、所在地與現場照片。"
+ }
+ }, {
+ "@type": "Question",
+ "name": "整個配製過程需要多久時間？",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "時間會受車款年份、鑰匙型式、停放環境與現場條件影響。先傳資料評估，能減少到場後才發現條件不足的情況。"
  }
  }]
  }
@@ -632,7 +688,7 @@
  <h3 class="text-gold-primary font-bold tracking-widest">SEARCH</h3>
  <button id="mobile-search-close" class="text-white text-2xl">&times;</button>
  </div>
- <input type="text" id="mobile-search-input" placeholder="搜尋車款或地點..."
+ <input type="text" id="mobile-search-input" placeholder="搜尋車款、地區或狀況..."
  class="bg-zinc-900 border border-white/10 rounded-lg px-6 py-4 text-white focus:outline-none focus:border-gold-primary transition-all w-full text-lg">
  <div id="mobile-search-results" class="mt-8 space-y-4 overflow-y-auto flex-grow"></div>
  </div>

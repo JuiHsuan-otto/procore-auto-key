@@ -25,6 +25,8 @@
  body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; }
  .blog-card { background: var(--glass); backdrop-filter: blur(12px); border-left: 2px solid rgba(255,255,255,0.05); padding: 3rem; transition: all 0.3s; }
  .blog-card:hover { border-left: 2px solid var(--gold); background: rgba(30, 30, 30, 0.6); transform: translateX(5px); }
+ .topic-card { display: block; background: rgba(20,20,20,0.7); border: 1px solid rgba(255,255,255,0.08); padding: 1.5rem; transition: all 0.3s; }
+ .topic-card:hover { border-color: var(--gold); background: rgba(30,30,30,0.6); transform: translateY(-2px); }
  nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
  </style>
  <script type="application/ld+json" data-seo="procore">
@@ -124,13 +126,17 @@
  <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
  <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest uppercase">PROCORE</a>
  <div class="hidden md:flex space-x-8 text-xs font-bold tracking-[0.2em] uppercase">
- <a href="/cases" class="text-gray-400 hover:text-white transition">到場案例 (Works)</a>
- <a href="/blog" class="text-gold border-b border-gold pb-1">車主指南 (Blog)</a>
+ <a href="/" class="text-gray-400 hover:text-white transition">首頁</a>
+ <a href="/car-key-lost-service" class="text-gray-400 hover:text-white transition">鑰匙遺失</a>
+ <a href="/service-areas" class="text-gray-400 hover:text-white transition">服務區域</a>
+ <a href="/cases" class="text-gray-400 hover:text-white transition">到場案例</a>
+ <a href="/blog" class="text-gold border-b border-gold pb-1">車主指南</a>
  </div>
- <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
- <a href="/cases" class="text-white">WORKS</a>
- <a href="/blog" class="text-gold">BLOG</a>
- <a href="tel:0909277670" class="text-gold">CALL</a>
+ <div class="md:hidden flex space-x-3 text-[10px] font-bold tracking-widest">
+ <a href="/service-areas" class="text-white">地區</a>
+ <a href="/cases" class="text-white">案例</a>
+ <a href="/blog" class="text-gold">指南</a>
+ <a href="tel:0909277670" class="text-gold">電話</a>
  </div>
  </div>
  </nav>
@@ -140,6 +146,35 @@
  <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 font-cinzel">鑰匙與用車安全筆記</h1>
  <p class="text-gray-500 font-light max-w-2xl mx-auto px-6 text-sm md:text-base leading-loose">整理車輛安全系統、鑰匙全丟、備份與感應異常的處理筆記，用實際案例說明車主可以先做哪些判斷。</p>
  </header>
+
+ <section class="max-w-5xl mx-auto px-6 pb-12">
+ <div class="mb-6">
+ <span class="text-gold text-[10px] tracking-[0.4em] uppercase mb-2 block">Topic Hubs</span>
+ <h2 class="text-2xl font-bold text-white">依照問題找指南</h2>
+ </div>
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+ <a href="/car-key-lost-service" class="topic-card rounded-sm">
+ <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">Lost / All Keys Lost</span>
+ <h3 class="text-white font-bold text-lg mb-3">汽車鑰匙不見、鑰匙全丟</h3>
+ <p class="text-gray-500 text-sm leading-loose">先看遺失鑰匙需要準備的資料、是否適合到場，以及詢問時該傳哪些照片。</p>
+ </a>
+ <a href="/key-not-detected-service" class="topic-card rounded-sm">
+ <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">Key Not Detected</span>
+ <h3 class="text-white font-bold text-lg mb-3">儀表顯示未偵測到鑰匙</h3>
+ <p class="text-gray-500 text-sm leading-loose">先區分電池、感應距離、車輛電壓與鑰匙狀況，再決定是否需要進一步評估。</p>
+ </a>
+ <a href="/spare-car-key-service" class="topic-card rounded-sm">
+ <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">Spare Key</span>
+ <h3 class="text-white font-bold text-lg mb-3">只剩一支鑰匙、新增備份</h3>
+ <p class="text-gray-500 text-sm leading-loose">還能正常用車時，先做備份通常比全丟後再處理更好安排。</p>
+ </a>
+ <a href="/service-areas" class="topic-card rounded-sm">
+ <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">Local Pages</span>
+ <h3 class="text-white font-bold text-lg mb-3">依地區找汽車鑰匙服務</h3>
+ <p class="text-gray-500 text-sm leading-loose">從縣市入口確認服務範圍，再依車款、時間與停放條件評估。</p>
+ </a>
+ </div>
+ </section>
 
  <main class="max-w-5xl mx-auto px-6 pb-32 space-y-12">
  <div id="blog-list" class="space-y-8">
@@ -158,8 +193,8 @@
  </article>
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">案件紀錄 | 2026.05.24</span>
- <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-volvo-keyless-lost-rescue">Volvo 智慧鑰匙遺失救援：Keyless 感應鑰匙全丟現場匹配 | 極致核心 ProCore</a></h2>
- <p class="text-gray-500 text-sm leading-loose mb-6">Volvo 智慧鑰匙遺失救援：Keyless 全丟現場匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。</p>
+<h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-volvo-keyless-lost-rescue">Volvo 智慧鑰匙遺失：Keyless 全丟到場評估紀錄 | 極致核心 ProCore</a></h2>
+<p class="text-gray-500 text-sm leading-loose mb-6">Volvo Keyless 感應鑰匙全丟時，先確認車款年份、所在地與停放條件。本文整理車主可準備的資料與到場評估重點。</p>
  <a href="/article-volvo-keyless-lost-rescue" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
  <article class="blog-card rounded-sm">
@@ -176,20 +211,20 @@
  </article>
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">案件紀錄 | 2026.05.24</span>
- <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-toyota-rav4-linkou-rescue">Toyota RAV4 智慧鑰匙全丟救援：林口現場匹配與免拖吊紀錄 | 極致核心 ProCore</a></h2>
- <p class="text-gray-500 text-sm leading-loose mb-6">Toyota RAV4 智慧鑰匙全丟救援：林口現場快速匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。</p>
+<h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-toyota-rav4-linkou-rescue">Toyota RAV4 智慧鑰匙全丟：林口到場評估紀錄 | 極致核心 ProCore</a></h2>
+<p class="text-gray-500 text-sm leading-loose mb-6">新北林口 Toyota RAV4 智慧鑰匙全丟案例，先確認車況、停放環境與車主資料，再依實車條件評估後續處理。</p>
  <a href="/article-toyota-rav4-linkou-rescue" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">台中服務 | 2026.05.24</span>
- <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-taichung-lost-key">台中汽車鑰匙遺失救援：24H 智慧鑰匙全丟與晶片匹配 | 極致核心 ProCore</a></h2>
- <p class="text-gray-500 text-sm leading-loose mb-6">台中汽車鑰匙遺失救援：24H 到場評估處理與智慧鑰匙匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。</p>
+<h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-taichung-lost-key">台中汽車鑰匙遺失：到場評估與準備資料｜極致核心 ProCore</a></h2>
+<p class="text-gray-500 text-sm leading-loose mb-6">台中汽車鑰匙遺失或全丟時，先整理車款年份、所在地、停放環境與照片，ProCore 依實車條件協助評估。</p>
  <a href="/article-taichung-lost-key" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">車主指南 | 2026.05.24</span>
- <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-porsche-lost-key-rescue">Porsche 保時捷智慧鑰匙全丟救援：車身控制系統/KESSY 車輛安全車況確認紀錄 | 極致核心 ProCore</a></h2>
- <p class="text-gray-500 text-sm leading-loose mb-6">Porsche 保時捷智慧鑰匙全丟救援：進口車車輛安全車輛狀態確認。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。</p>
+<h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-porsche-lost-key-rescue">Porsche 智慧鑰匙全丟：進口車車況確認與到場評估｜極致核心 ProCore</a></h2>
+<p class="text-gray-500 text-sm leading-loose mb-6">Porsche 智慧鑰匙全丟時，先確認車款年份、停放條件、車主資料與車輛狀態，再評估適合的處理方向。</p>
  <a href="/article-porsche-lost-key-rescue" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
  <article class="blog-card rounded-sm">
@@ -290,13 +325,13 @@
  </article>
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">到場案例 | 2026.03.28</span>
- <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-bmw-x3-linkou-auction-akl">【新北林口】BMW X3 智慧鑰匙全丟救援：拍場得標車到場處理紀錄</a></h2>
+ <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-bmw-x3-linkou-auction-akl">【新北林口】BMW X3 智慧鑰匙全丟：拍場得標車到場評估紀錄</a></h2>
  <p class="text-gray-500 text-sm leading-loose mb-6">林口拍場 BMW X3 得標車鑰匙遺失案例。車輛停放於拍場時，需先確認現場條件、車況與取車需求，再判斷適合的處理方式。</p>
  <a href="/article-bmw-x3-linkou-auction-akl" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">到場案例 | 2026.03.27</span>
- <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-mazda-cx5-qingshui-akl">【台中清水】Mazda CX-5 智慧鑰匙全丟救援：車主現場處理紀錄</a></h2>
+ <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-mazda-cx5-qingshui-akl">【台中清水】Mazda CX-5 智慧鑰匙全丟救援：車況確認紀錄</a></h2>
  <p class="text-gray-500 text-sm leading-loose mb-6">台中清水 Mazda CX-5 智慧感應鑰匙遺失案例。先確認車款年份、所在地與停放條件，再依實車狀態安排到場處理。</p>
  <a href="/article-mazda-cx5-qingshui-akl" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
@@ -321,7 +356,7 @@
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">車主指南 | 2026.03.20</span>
  <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-vw-ignition-repair">【技術救援】福斯 VW 點火開關卡死、鑰匙無法轉動：現場更換槍管紀錄</a></h2>
- <p class="text-gray-500 text-sm leading-loose mb-6">福斯 VW 車系可能遇到點火開關磨損導致鑰匙無法轉動。需依車況確認是否適合現場維修與更換相關零件。</p>
+ <p class="text-gray-500 text-sm leading-loose mb-6">福斯 VW 車系可能遇到點火開關磨損導致鑰匙無法轉動。需依車況確認是否適合到場檢查與零件狀況確認。</p>
  <a href="/article-vw-ignition-repair" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
  <article class="blog-card rounded-sm">
@@ -422,7 +457,7 @@
  </article>
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">到場案例 | 2026.03.09</span>
- <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-toyota-sienta-hemei-service">【彰化和美】Toyota Sienta 智慧鑰匙新增：和美現場技術紀錄</a></h2>
+ <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-toyota-sienta-hemei-service">【彰化和美】Toyota Sienta 智慧鑰匙新增：和美到場評估紀錄</a></h2>
  <p class="text-gray-500 text-sm leading-loose mb-6">彰化和美 Toyota 救援紀錄。現場執行智慧鑰匙新增，恢復滑門感應與一鍵啟動。</p>
  <a href="/article-toyota-sienta-hemei-service" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
@@ -452,8 +487,8 @@
  </article>
  <article class="blog-card rounded-sm">
  <span class="text-[10px] text-gold tracking-widest uppercase mb-2 block">車主指南 | 2026.03.02</span>
- <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-porsche-bcm-decoding-tech">保時捷晶片鑰匙全丟救援：車身控制系統 數據重讀與高級匹配技術紀錄</a></h2>
- <p class="text-gray-500 text-sm leading-loose mb-6">針對保時捷 Porsche 進口車車輛安全系統，整理 車身控制系統 數據重讀與匹配過程，展示極致核心如何在不影響車主保固前提下，提供依車系流程的車系車況確認方案。</p>
+ <h2 class="text-white font-bold text-xl mb-4 leading-tight"><a href="/article-porsche-bcm-decoding-tech">Porsche 智慧鑰匙全丟：進口車車況確認紀錄</a></h2>
+ <p class="text-gray-500 text-sm leading-loose mb-6">Porsche 智慧鑰匙全丟時，重點在車款年份、停放條件、車主資料與車輛狀態確認；公開內容只整理車主可準備的資料與評估方向。</p>
  <a href="/article-porsche-bcm-decoding-tech" class="text-xs text-white hover:text-gold transition tracking-widest uppercase">閱讀完整文章</a>
  </article>
  <article class="blog-card rounded-sm">
@@ -528,8 +563,8 @@
   {
     "date": "2026.05.24",
     "category": "案件紀錄",
-    "title": "Volvo 智慧鑰匙遺失救援：Keyless 感應鑰匙全丟現場匹配 | 極致核心 ProCore",
-    "summary": "Volvo 智慧鑰匙遺失救援：Keyless 全丟現場匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "title": "Volvo 智慧鑰匙遺失：Keyless 全丟到場評估紀錄 | 極致核心 ProCore",
+    "summary": "Volvo Keyless 感應鑰匙全丟時，先確認車款年份、所在地與停放條件。本文整理車主可準備的資料與到場評估重點。",
     "link": "/article-volvo-keyless-lost-rescue"
   },
   {
@@ -549,22 +584,22 @@
   {
     "date": "2026.05.24",
     "category": "案件紀錄",
-    "title": "Toyota RAV4 智慧鑰匙全丟救援：林口現場匹配與免拖吊紀錄 | 極致核心 ProCore",
-    "summary": "Toyota RAV4 智慧鑰匙全丟救援：林口現場快速匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "title": "Toyota RAV4 智慧鑰匙全丟：林口到場評估紀錄 | 極致核心 ProCore",
+    "summary": "新北林口 Toyota RAV4 智慧鑰匙全丟案例，先確認車況、停放環境與車主資料，再依實車條件評估後續處理。",
     "link": "/article-toyota-rav4-linkou-rescue"
   },
   {
     "date": "2026.05.24",
     "category": "台中服務",
-    "title": "台中汽車鑰匙遺失救援：24H 智慧鑰匙全丟與晶片匹配 | 極致核心 ProCore",
-    "summary": "台中汽車鑰匙遺失救援：24H 到場評估處理與智慧鑰匙匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "title": "台中汽車鑰匙遺失：到場評估與準備資料｜極致核心 ProCore",
+    "summary": "台中汽車鑰匙遺失或全丟時，先整理車款年份、所在地、停放環境與照片，ProCore 依實車條件協助評估。",
     "link": "/article-taichung-lost-key"
   },
   {
     "date": "2026.05.24",
     "category": "車主指南",
-    "title": "Porsche 保時捷智慧鑰匙全丟救援：車身控制系統/KESSY 車輛安全車況確認紀錄 | 極致核心 ProCore",
-    "summary": "Porsche 保時捷智慧鑰匙全丟救援：進口車車輛安全車輛狀態確認。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "title": "Porsche 智慧鑰匙全丟：進口車車況確認與到場評估｜極致核心 ProCore",
+    "summary": "Porsche 智慧鑰匙全丟時，先確認車款年份、停放條件、車主資料與車輛狀態，再評估適合的處理方向。",
     "link": "/article-porsche-lost-key-rescue"
   },
   {
@@ -733,7 +768,7 @@
     "keywords": [
       "汽車鑰匙全丟怎麼辦",
       "費用解析",
-      "現場匹配",
+      "到場評估",
       "24H救援"
     ]
   },
@@ -746,8 +781,8 @@
     "keywords": [
       "台中龍井",
       "Honda HR-V 鑰匙全丟",
-      "智慧鑰匙匹配",
-      "現場救援"
+      "智慧鑰匙評估",
+      "到場評估"
     ]
   },
   {
@@ -781,7 +816,7 @@
   {
     "date": "2026.03.28",
     "category": "到場案例",
-    "title": "【新北林口】BMW X3 智慧鑰匙全丟救援：拍場得標車到場處理紀錄",
+    "title": "【新北林口】BMW X3 智慧鑰匙全丟：拍場得標車到場評估紀錄",
     "summary": "林口拍場 BMW X3 得標車鑰匙遺失案例。車輛停放於拍場時，需先確認現場條件、車況與取車需求，再判斷適合的處理方式。",
     "link": "/article-bmw-x3-linkou-auction-akl",
     "keywords": [
@@ -795,7 +830,7 @@
   {
     "date": "2026.03.27",
     "category": "到場案例",
-    "title": "【台中清水】Mazda CX-5 智慧鑰匙全丟救援：車主現場處理紀錄",
+    "title": "【台中清水】Mazda CX-5 智慧鑰匙全丟救援：車況確認紀錄",
     "summary": "台中清水 Mazda CX-5 智慧感應鑰匙遺失案例。先確認車款年份、所在地與停放條件，再依實車狀態安排到場處理。",
     "link": "/article-mazda-cx5-qingshui-akl"
   },
@@ -824,7 +859,7 @@
     "date": "2026.03.20",
     "category": "車主指南",
     "title": "【技術救援】福斯 VW 點火開關卡死、鑰匙無法轉動：現場更換槍管紀錄",
-    "summary": "福斯 VW 車系可能遇到點火開關磨損導致鑰匙無法轉動。需依車況確認是否適合現場維修與更換相關零件。",
+    "summary": "福斯 VW 車系可能遇到點火開關磨損導致鑰匙無法轉動。需依車況確認是否適合到場檢查與零件狀況確認。",
     "link": "/article-vw-ignition-repair"
   },
   {
@@ -942,7 +977,7 @@
   {
     "date": "2026.03.09",
     "category": "到場案例",
-    "title": "【彰化和美】Toyota Sienta 智慧鑰匙新增：和美現場技術紀錄",
+    "title": "【彰化和美】Toyota Sienta 智慧鑰匙新增：和美到場評估紀錄",
     "summary": "彰化和美 Toyota 救援紀錄。現場執行智慧鑰匙新增，恢復滑門感應與一鍵啟動。",
     "link": "/article-toyota-sienta-hemei-service"
   },
@@ -977,8 +1012,8 @@
   {
     "date": "2026.03.02",
     "category": "車主指南",
-    "title": "保時捷晶片鑰匙全丟救援：車身控制系統 數據重讀與高級匹配技術紀錄",
-    "summary": "針對保時捷 Porsche 進口車車輛安全系統，整理 車身控制系統 數據重讀與匹配過程，展示極致核心如何在不影響車主保固前提下，提供依車系流程的車系車況確認方案。",
+    "title": "Porsche 智慧鑰匙全丟：進口車車況確認紀錄",
+    "summary": "Porsche 智慧鑰匙全丟時，重點在車款年份、停放條件、車主資料與車輛狀態確認；公開內容只整理車主可準備的資料與評估方向。",
     "link": "/article-porsche-bcm-decoding-tech"
   },
   {

@@ -25,7 +25,7 @@
     "location": "跨區服務",
     "brand": "Volvo Keyless",
     "type": "all_keys_lost",
-    "desc": "Volvo 智慧鑰匙遺失救援：Keyless 全丟現場匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "desc": "Volvo 智慧鑰匙遺失案例，車主手邊沒有可用鑰匙，先確認車款年份、所在地與停放條件後再評估處理方向。",
     "img": "img/procore_logo_main.jpg",
     "tag": "SUCCESS"
   },
@@ -35,7 +35,7 @@
     "location": "新北林口",
     "brand": "Toyota RAV4",
     "type": "all_keys_lost",
-    "desc": "Toyota RAV4 智慧鑰匙全丟救援：林口現場快速匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "desc": "新北林口 Toyota RAV4 智慧鑰匙全丟案例，先確認車況、停放環境與車主資料，再依實車條件評估後續處理。",
     "img": "img/toyota-rav4-linkou.jpg",
     "tag": "SUCCESS"
   },
