@@ -31,3 +31,48 @@ node_modules/
 .openclaw/browser_data/
 localStorage/
 cookies.json
+
+# Public repository / deployment boundary
+# Keep internal agent memory, SOPs, automation scripts, logs, drafts, and source-only assets local.
+/*.md
+/CARKEY_AGENT_MAINTENANCE_PLAYBOOK.md
+/memory/
+/ops/
+/posts/
+/backup/
+/backups/
+/drafts/
+/local/
+/logs/
+/seo_data/
+/busan_doc/
+/claude_integration/
+/.openclaw/
+/.uv-cache/
+/.uv-python/
+/vid/
+
+# Internal automation and private platform tooling
+/*.py
+/scripts/*.py
+/scripts/blogger/
+/scripts/content_automation/
+/scripts/discord/
+/scripts/google_business_profile/
+/scripts/hermes/
+
+# Root-only source photos and archive artifacts
+/*.jpg
+/*.JPG
+/*.jpeg
+/*.JPEG
+/*.png
+/*.PNG
+/*.HEIC
+/*.zip
+/*.bak
+/*.pre_fix
+/*.test
+/file_list*.txt
+/subfolder_list.txt
+/sitemap_local.xml

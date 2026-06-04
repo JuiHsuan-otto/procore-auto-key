@@ -1,0 +1,64 @@
+# Internal / non-public
+.git/
+.github/
+.openclaw/
+.uv-cache/
+.uv-python/
+__pycache__/
+node_modules/
+
+# Agent memory, operating notes, drafts, and automation data
+AGENTS.md
+SOUL.md
+USER.md
+MEMORY.md
+TOOLS.md
+HEARTBEAT.md
+IDENTITY.md
+CARKEY_AGENT_MAINTENANCE_PLAYBOOK.md
+*.md
+memory/
+ops/
+posts/
+drafts/
+
+# Internal tooling and platform integrations
+*.py
+scripts/blogger/
+scripts/content_automation/
+scripts/discord/
+scripts/google_business_profile/
+scripts/hermes/
+api_keys_config.json
+content_queue.local.json
+cookies.json
+localStorage/
+secrets/
+
+# Logs, backups, local analysis, source-only media
+*.log
+*.pyc
+*.zip
+*.bak
+*.pre_fix
+*.test
+backup/
+backups/
+local/
+logs/
+seo_data/
+busan_doc/
+claude_integration/
+vid/
+
+# Root-only uploaded/source photos; public images belong in /img
+/*.jpg
+/*.JPG
+/*.jpeg
+/*.JPEG
+/*.png
+/*.PNG
+/*.HEIC
+/file_list*.txt
+/subfolder_list.txt
+/sitemap_local.xml
