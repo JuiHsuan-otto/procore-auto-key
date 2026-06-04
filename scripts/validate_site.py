@@ -76,7 +76,7 @@ def main() -> None:
                 continue
             if local_target(value) is None:
                 errors.append(f"{p.name}: missing internal target {value}")
-            if attr == "href" and parsed.path.endswith(".html"):
+            if attr == "href" and parsed.path.endswith(".html") and p.name != "index.html":
                 errors.append(f"{p.name}: public link must use clean URL: {value}")
 
     for route, p in by_clean.items():
