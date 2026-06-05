@@ -48,6 +48,7 @@ cookies.json
 /busan_doc/
 /claude_integration/
 /.openclaw/
+/.codex-remote-attachments/
 /.uv-cache/
 /.uv-python/
 /vid/
