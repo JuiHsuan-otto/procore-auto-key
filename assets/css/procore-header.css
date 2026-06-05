@@ -75,23 +75,35 @@
 @media (max-width: 760px) {
   .procore-nav-inner {
     min-height: 44px;
-    padding: 0 14px;
-    gap: 16px;
+    padding: 0 12px 4px;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0;
   }
 
   .procore-brand {
-    font-size: 15px;
-    letter-spacing: 0.24em;
+    width: 100%;
+    padding: 10px 0 8px;
+    font-size: 13px;
+    letter-spacing: 0.20em;
   }
 
   .procore-nav-links {
-    flex: 1 1 auto;
+    flex: 0 0 100%;
+    width: 100%;
     justify-content: flex-start;
-    gap: 16px;
+    gap: 12px;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%);
   }
 
   .procore-nav-links a {
-    padding: 15px 0 13px;
-    font-size: 13px;
+    flex: 0 0 auto;
+    padding: 11px 0 10px;
+    font-size: 12px;
+    scroll-snap-align: start;
   }
 }
