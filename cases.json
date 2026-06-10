@@ -5,7 +5,7 @@
     "location": "彰化花壇",
     "brand": "Ford Kuga",
     "type": "鑰匙全丟",
-    "desc": "彰化花壇 Ford Kuga 鑰匙全丟案例。車主沒有可用鑰匙時，先提供車款、所在地、停放照片與車主資料，ProCore 依車況與停放條件評估。",
+    "desc": "彰化花壇 Ford Kuga 鑰匙全丟案例。車主沒有可用鑰匙時，可先提供車款、所在地與停放照片，ProCore 依車況與停放條件評估。",
     "img": "img/cases/article-ford-kuga-huatan-akl.jpg",
     "tag": "SUCCESS"
   },
@@ -55,7 +55,7 @@
     "location": "新北林口",
     "brand": "Toyota RAV4",
     "type": "all_keys_lost",
-    "desc": "新北林口 Toyota RAV4 智慧鑰匙全丟案例，先確認車況、停放環境與車主資料，再依實車條件評估後續處理。",
+    "desc": "新北林口 Toyota RAV4 智慧鑰匙全丟案例，先確認車款、停放環境與車輛狀態，再依實車條件評估後續處理。",
     "img": "img/toyota-rav4-linkou.jpg",
     "tag": "SUCCESS"
   },
