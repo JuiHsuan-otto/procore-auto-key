@@ -1,5 +1,15 @@
 [
   {
+    "id": 25,
+    "date": "2026.06.10",
+    "location": "彰化花壇",
+    "brand": "Ford Kuga",
+    "type": "鑰匙全丟",
+    "desc": "彰化花壇 Ford Kuga 鑰匙全丟案例。車主沒有可用鑰匙時，先提供車款、所在地、停放照片與車主資料，ProCore 依車況與停放條件評估。",
+    "img": "img/cases/article-ford-kuga-huatan-akl.jpg",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 24,
     "date": "2026.06.10",
     "location": "苗栗頭份",
