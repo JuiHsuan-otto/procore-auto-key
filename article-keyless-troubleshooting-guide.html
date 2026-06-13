@@ -1,254 +1,104 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>智慧鑰匙電池沒電與感應不到：Keyless 臨時啟動與更換判斷 | 極致核心 ProCore</title>
- <meta name="description" content="智慧鑰匙電池沒電、感應不到或儀表提示 Key Not Detected 時，先確認電池規格、臨時感應位置與車輛電壓，再判斷是否需要到場評估。">
-
- <link rel="canonical" href="https://www.carkey.com.tw/article-keyless-troubleshooting-guide">
- <meta name="robots" content="index, follow, max-image-preview:large">
- <meta property="og:type" content="article">
- <meta property="og:title" content="智慧鑰匙電池沒電與感應不到：Keyless 臨時啟動與更換判斷 | 極致核心 ProCore">
- <meta property="og:description" content="智慧鑰匙電池沒電、感應不到或儀表提示 Key Not Detected 時，先確認電池規格、臨時感應位置與車輛電壓，再判斷是否需要到場評估。">
- <meta property="og:url" content="https://www.carkey.com.tw/article-keyless-troubleshooting-guide">
- <meta property="og:image" content="https://www.carkey.com.tw/img/bmw_fem_board.jpg">
- <meta name="twitter:card" content="summary_large_image">
- <meta name="twitter:title" content="智慧鑰匙電池沒電與感應不到：Keyless 臨時啟動與更換判斷 | 極致核心 ProCore">
- <meta name="twitter:description" content="智慧鑰匙電池沒電、感應不到或儀表提示 Key Not Detected 時，先確認電池規格、臨時感應位置與車輛電壓，再判斷是否需要到場評估。">
- <meta name="twitter:image" content="https://www.carkey.com.tw/img/bmw_fem_board.jpg">
- <link rel="stylesheet" href="/assets/css/tailwind-procore.css">
- <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
- <style>
- body { font-family: 'Noto Sans TC', sans-serif; background: #050505; color: #e5e5e5; line-height: 1.8; }
- .gold-accent { color: #D4AF37; }
- .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2.5rem; border-radius: 16px; margin: 2rem 0; }
- .btn-call { background-color: #D4AF37; color: black; font-weight: bold; padding: 1rem 2rem; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 320px; text-decoration: none; }
- nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
- </style>
- <script type="application/ld+json" data-seo="procore">
-{
- "@context": "https://schema.org",
- "@graph": [
- {
- "@type": "WebSite",
- "@id": "https://www.carkey.com.tw/#website",
- "url": "https://www.carkey.com.tw/",
- "name": "極致核心 ProCore Auto Key",
- "inLanguage": "zh-TW",
- "publisher": {
- "@id": "https://www.carkey.com.tw/#business"
- }
- },
- {
- "@type": "LocalBusiness",
- "@id": "https://www.carkey.com.tw/#business",
- "name": "極致核心 ProCore Auto Key",
- "alternateName": "ProCore Auto Key",
- "url": "https://www.carkey.com.tw/",
- "telephone": "+886909277670",
- "image": "https://www.carkey.com.tw/img/procore_logo_main.jpg",
- "priceRange": "$$",
- "areaServed": [
- "台中市",
- "彰化縣",
- "南投縣",
- "苗栗縣",
- "雲林縣",
- "嘉義市",
- "新竹市",
- "新北市",
- "高雄市"
- ],
- "address": {
- "@type": "PostalAddress",
- "addressCountry": "TW"
- },
- "contactPoint": {
- "@type": "ContactPoint",
- "telephone": "+886909277670",
- "contactType": "customer service",
- "availableLanguage": [
- "zh-TW",
- "vi"
- ]
- }
- },
- {
- "@type": "Article",
- "@id": "https://www.carkey.com.tw/article-keyless-troubleshooting-guide#webpage",
- "url": "https://www.carkey.com.tw/article-keyless-troubleshooting-guide",
- "name": "智慧鑰匙電池沒電與感應不到：Keyless 臨時啟動與更換判斷 | 極致核心 ProCore",
- "headline": "智慧鑰匙電池沒電與感應不到：Keyless 臨時啟動與更換判斷 | 極致核心 ProCore",
- "description": "智慧鑰匙電池沒電、感應不到或儀表提示 Key Not Detected 時，先確認電池規格、臨時感應位置與車輛電壓，再判斷是否需要到場評估。",
- "image": "https://www.carkey.com.tw/img/bmw_fem_board.jpg",
- "inLanguage": "zh-TW",
- "isPartOf": {
- "@id": "https://www.carkey.com.tw/#website"
- },
- "publisher": {
- "@id": "https://www.carkey.com.tw/#business"
- },
- "author": {
- "@id": "https://www.carkey.com.tw/#business"
- },
- "mainEntityOfPage": "https://www.carkey.com.tw/article-keyless-troubleshooting-guide"
- }
- ]
-}
- </script>
-
-
-
-<script type="application/ld+json" data-seo="breadcrumb">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "@id": "https://www.carkey.com.tw/article-keyless-troubleshooting-guide#breadcrumb",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "首頁",
-      "item": "https://www.carkey.com.tw/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "車主指南",
-      "item": "https://www.carkey.com.tw/blog"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "智慧鑰匙電池沒電與感應不到判斷",
-      "item": "https://www.carkey.com.tw/article-keyless-troubleshooting-guide"
-    }
-  ]
-}
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>感應鑰匙電池沒電怎麼辦｜Keyless 臨時感應與車主檢查指南｜極致核心 ProCore</title>
+  <meta name="description" content="感應鑰匙電池沒電、Keyless 距離變短或臨時感應不穩時，先依車主手冊確認電池、備用鑰匙與儀表提示，無法啟動再找 ProCore 評估。">
+  <link rel="canonical" href="https://www.carkey.com.tw/article-keyless-troubleshooting-guide">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="感應鑰匙電池沒電怎麼辦｜Keyless 臨時感應與車主檢查指南｜極致核心 ProCore">
+  <meta property="og:description" content="感應鑰匙電池沒電、Keyless 距離變短或臨時感應不穩時，先依車主手冊確認電池、備用鑰匙與儀表提示，無法啟動再找 ProCore 評估。">
+  <meta property="og:url" content="https://www.carkey.com.tw/article-keyless-troubleshooting-guide">
+  <meta property="og:image" content="https://www.carkey.com.tw/img/bmw_fem_board.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="感應鑰匙電池沒電怎麼辦｜Keyless 臨時感應與車主檢查指南｜極致核心 ProCore">
+  <meta name="twitter:description" content="感應鑰匙電池沒電、Keyless 距離變短或臨時感應不穩時，先依車主手冊確認電池、備用鑰匙與儀表提示，無法啟動再找 ProCore 評估。">
+  <meta name="twitter:image" content="https://www.carkey.com.tw/img/bmw_fem_board.jpg">
+  <link rel="stylesheet" href="/assets/css/tailwind-procore.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans TC', sans-serif; background: #050505; color: #e5e5e5; line-height: 1.8; }
+    .gold-accent { color: #D4AF37; }
+    .glass-panel { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); padding: 2rem; border-radius: 16px; margin: 2rem 0; }
+    .btn-call { background-color: #D4AF37; color: #000; font-weight: 700; padding: 1rem 2rem; border-radius: 9999px; display: inline-flex; justify-content: center; width: 100%; max-width: 320px; text-decoration: none; }
+  </style>
+  <script type="application/ld+json" data-seo="procore">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {"@type":"WebSite","@id":"https://www.carkey.com.tw/#website","url":"https://www.carkey.com.tw/","name":"極致核心 ProCore Auto Key","inLanguage":"zh-TW","publisher":{"@id":"https://www.carkey.com.tw/#business"}},
+      {"@type":"LocalBusiness","@id":"https://www.carkey.com.tw/#business","name":"極致核心 ProCore Auto Key","url":"https://www.carkey.com.tw/","telephone":"+886909277670","image":"https://www.carkey.com.tw/img/procore_logo_main.jpg","priceRange":"$$","address":{"@type":"PostalAddress","addressCountry":"TW"},"areaServed":["台中市","彰化縣","南投縣","苗栗縣","雲林縣","嘉義縣市","新北市","高雄市"]},
+      {"@type":"Article","@id":"https://www.carkey.com.tw/article-keyless-troubleshooting-guide#article","url":"https://www.carkey.com.tw/article-keyless-troubleshooting-guide","headline":"感應鑰匙電池沒電怎麼辦｜Keyless 臨時感應與車主檢查指南","description":"感應鑰匙電池沒電、Keyless 距離變短或臨時感應不穩時，先依車主手冊確認電池、備用鑰匙與儀表提示，無法啟動再找 ProCore 評估。","image":"https://www.carkey.com.tw/img/bmw_fem_board.jpg","inLanguage":"zh-TW","author":{"@id":"https://www.carkey.com.tw/#business"},"publisher":{"@id":"https://www.carkey.com.tw/#business"},"mainEntityOfPage":"https://www.carkey.com.tw/article-keyless-troubleshooting-guide"},
+      {"@type":"FAQPage","@id":"https://www.carkey.com.tw/article-keyless-troubleshooting-guide#faq","mainEntity":[{"@type":"Question","name":"感應鑰匙電池沒電一定會完全不能用嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。有些車會先出現距離變短、偶爾感應不到或儀表提醒。不同車款設計不同，請以車主手冊和現場症狀為準。"}},{"@type":"Question","name":"換電池後還是未偵測到鑰匙怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"如果換電池後仍顯示未偵測到鑰匙，請整理車款年份、儀表照片、目前鑰匙數量與停放位置，再請專人評估。"}},{"@type":"Question","name":"只剩一支感應鑰匙可以先做備用嗎？","acceptedAnswer":{"@type":"Answer","text":"可以先詢問備用鑰匙評估。只剩一支時，越早整理越能降低完全遺失後的不便。"}}]},
+      {"@type":"BreadcrumbList","@id":"https://www.carkey.com.tw/article-keyless-troubleshooting-guide#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://www.carkey.com.tw/"},{"@type":"ListItem","position":2,"name":"車主指南","item":"https://www.carkey.com.tw/blog"},{"@type":"ListItem","position":3,"name":"感應鑰匙電池沒電指南","item":"https://www.carkey.com.tw/article-keyless-troubleshooting-guide"}]}
+    ]
+  }
+  </script>
 </head>
-<body class="antialiased">
- <nav class="sticky top-0 w-full z-50 py-4">
- <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
- <a href="/" class="font-cinzel text-xl text-white font-bold tracking-widest uppercase">PROCORE</a>
- <a href="tel:0909277670" class="text-gold-accent text-[10px] font-bold tracking-widest border border-gold-accent/30 px-4 py-2 rounded">24H CALL</a>
- </div>
- </nav>
+<body class="p-6 md:p-12">
+  <article class="max-w-4xl mx-auto">
+    <header class="mb-12">
+      <a href="/blog" class="text-gray-500 text-sm hover:text-white transition">回車主指南</a>
+      <div class="mt-8"><span class="gold-accent border border-yellow-600/30 px-3 py-1 text-[10px] uppercase tracking-widest">Keyless 電池與感應</span></div>
+      <h1 class="text-3xl md:text-5xl font-bold text-white mt-6 mb-8 leading-tight">感應鑰匙電池沒電怎麼辦：Keyless 臨時感應不穩時，先做安全檢查</h1>
+      <p class="text-lg text-gray-300">這頁只處理車主可以安全確認的範圍：電池、備用鑰匙、儀表提示、車主手冊與詢問前資料。若已經進入無法啟動或未偵測到鑰匙，請交給專人判斷。</p>
+    </header>
 
- <article class="max-w-4xl mx-auto py-20 px-6">
- <header class="mb-12">
- <a href="/blog" class="text-gray-500 text-sm hover:text-white transition">← 返回車主指南首頁</a>
- <div class="mt-8">
- <span class="text-gold-accent border border-yellow-600/30 px-3 py-1 text-[10px] uppercase tracking-widest">車主指南：車主必讀</span>
- </div>
- <h1 class="text-3xl md:text-5xl font-bold text-white mt-6 mb-8 leading-tight font-cinzel">
- 智慧鑰匙電池沒電？<br><span class="gold-accent">Keyless 感應不到</span> 的臨時啟動與更換判斷
- </h1>
- </header>
+    <section class="article-content">
+      <div class="glass-panel text-center">
+        <picture><source srcset="img/bmw_fem_board.webp" type="image/webp"><img src="img/bmw_fem_board.jpg" alt="感應鑰匙電池沒電與 Keyless 感應異常的車主檢查指南" class="w-full rounded-lg border border-white/10 shadow-xl mx-auto" decoding="async"></picture>
+        <p class="text-xs text-gray-500 italic mt-4">圖片為文章配圖；實際判斷仍需依車款年份、鑰匙狀態與儀表訊息。</p>
+      </div>
 
- <section class="article-content">
- <div class="glass-panel text-center">
- <picture><source srcset="img/bmw_fem_board.webp" type="image/webp"><img src="img/bmw_fem_board.jpg" alt="智慧感應鑰匙故障排除指南" class="w-full rounded-lg border border-white/10 shadow-xl mx-auto" decoding="async"></picture>
- <p class="text-xs text-gray-500 italic mt-4">車主說明：從電路板架構看智慧鑰匙的感應邏輯</p>
- </div>
+      <div class="glass-panel">
+        <h2 class="text-2xl font-bold text-white mb-6">車主可以先確認什麼</h2>
+        <ul class="list-disc ml-6 space-y-3 text-gray-300">
+          <li>按鍵距離是否明顯變短，或同一支鑰匙時好時壞。</li>
+          <li>車內是否出現低電量、未偵測到鑰匙或類似提示。</li>
+          <li>是否有備用鑰匙可比較，判斷問題偏向單支鑰匙或車輛端。</li>
+          <li>若要更換電池，請依車主手冊指定規格與方式處理，避免硬拆或錯裝。</li>
+        </ul>
+      </div>
 
- <div class="glass-panel prose prose-invert max-w-none">
- <p>Keyless 智慧鑰匙最常見的問題不是「整組壞掉」，而是電池偏弱、電池規格不對、鑰匙離臨時感應位置太遠，或車輛本身電壓不穩。這篇專門整理電池與臨時啟動判斷，若你的儀表明確顯示未偵測到鑰匙，可再看 <a href="/article-car-key-not-detected-troubleshooting" class="text-gold-primary underline">Key Not Detected 是什麼意思</a>。</p>
- <h3 class="text-white">第一步：先判斷是不是電池問題</h3>
- <p>按下遙控鍵時，如果燈號微弱、距離變短或要靠很近才有反應，通常先檢查電池。若完全無燈號，也要留意鑰匙外殼是否進水、摔裂或按鍵塌陷。</p>
- </div>
+      <div class="glass-panel">
+        <h2 class="text-2xl font-bold text-white mb-6">什麼情況不要再自行嘗試</h2>
+        <ul class="list-disc ml-6 space-y-3 text-gray-300">
+          <li>車輛已無法啟動，或儀表持續顯示未偵測到鑰匙。</li>
+          <li>鑰匙進水、摔落後變形，或按鍵、外殼明顯受損。</li>
+          <li>只剩一支鑰匙，而且感應已經不穩定。</li>
+          <li>停放位置不方便久留，或車輛在地下室、保管場、道路旁。</li>
+        </ul>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <a href="/key-not-detected-service" class="p-4 border border-white/10 hover:border-yellow-600/40 transition gold-accent">未偵測到鑰匙服務</a>
+          <a href="/spare-car-key-service" class="p-4 border border-white/10 hover:border-yellow-600/40 transition gold-accent">備用鑰匙評估</a>
+          <a href="/article-keyless-troubleshooting" class="p-4 border border-white/10 hover:border-yellow-600/40 transition gold-accent">Keyless 故障判斷</a>
+        </div>
+      </div>
 
- <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
- <div class="p-8 bg-white/5 rounded-xl border border-white/5">
- <h3 class="text-gold-accent font-bold mb-3 text-lg font-cinzel tracking-widest uppercase">Emergency Tips</h3>
- <p class="text-sm text-gray-400">部分車款在鑰匙沒電時，仍可把鑰匙貼近啟動鈕或車主手冊標示的臨時感應位置，再踩煞車嘗試啟動。不同車款位置不同，請以車主手冊與實車提示為準。</p>
- </div>
- <div class="p-8 bg-white/5 rounded-xl border border-white/5">
- <h3 class="text-gold-accent font-bold mb-3 text-lg font-cinzel tracking-widest uppercase">Maintenance</h3>
- <p class="text-sm text-gray-400">更換電池時請確認規格，例如 CR2032 或 CR2450，並確認正負極方向。若換新電池仍無效，先不要反覆拆裝，避免外殼或按鍵受損。</p>
- </div>
- </div>
+      <div class="glass-panel">
+        <h2 class="text-2xl font-bold text-white mb-6">常見問題</h2>
+        <div class="space-y-5 text-gray-300">
+          <div>
+            <h3 class="text-white font-bold mb-2">感應鑰匙電池沒電一定會完全不能用嗎？</h3>
+            <p>不一定。有些車會先出現距離變短、偶爾感應不到或儀表提醒。不同車款設計不同，請以車主手冊和現場症狀為準。</p>
+          </div>
+          <div>
+            <h3 class="text-white font-bold mb-2">換電池後還是未偵測到鑰匙怎麼辦？</h3>
+            <p>如果換電池後仍顯示未偵測到鑰匙，請整理車款年份、儀表照片、目前鑰匙數量與停放位置，再請專人評估。</p>
+          </div>
+          <div>
+            <h3 class="text-white font-bold mb-2">只剩一支感應鑰匙可以先做備用嗎？</h3>
+            <p>可以先詢問備用鑰匙評估。只剩一支時，越早整理越能降低完全遺失後的不便。</p>
+          </div>
+        </div>
+      </div>
 
- <div class="glass-panel">
- <h2 class="text-2xl font-bold text-white mb-6 italic">什麼時候需要進一步評估？</h2>
- <ul class="list-disc ml-6 space-y-3 text-gray-300">
- <li>更換正確規格新電池後，仍然無法遙控或啟動。</li>
- <li>儀表持續顯示 Key Not Detected、未偵測到鑰匙或鑰匙警示燈。</li>
- <li>只剩一支鑰匙，近期已出現感應距離變短或偶發失效。</li>
- <li>鑰匙曾泡水、摔落、外殼破裂或按鍵塌陷。</li>
- </ul>
- <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
- <a href="/key-not-detected-service" class="p-4 border border-white/10 hover:border-gold-primary/40 transition text-gold-primary">未偵測到鑰匙服務入口</a>
- <a href="/spare-car-key-service" class="p-4 border border-white/10 hover:border-gold-primary/40 transition text-gold-primary">只剩一支鑰匙先備份</a>
- <a href="/article-keyless-troubleshooting" class="p-4 border border-white/10 hover:border-gold-primary/40 transition text-gold-primary">Keyless 總診斷指南</a>
- </div>
- </div>
-
- <div class="glass-panel">
- <h2 class="text-2xl font-bold text-white mb-6 italic">常見問題</h2>
- <div class="space-y-5 text-gray-300">
- <div>
- <h3 class="text-white font-bold mb-2">Q: 智慧鑰匙沒電一定不能發動嗎？</h3>
- <p>不一定。部分車款可透過啟動鈕附近或車主手冊標示的臨時感應位置啟動，但位置依車款不同。</p>
- </div>
- <div>
- <h3 class="text-white font-bold mb-2">Q: 換新電池後還是顯示未偵測到鑰匙怎麼辦？</h3>
- <p>先確認電池規格與正負極方向；若仍無效，請提供車款年份、儀表照片與鑰匙照片評估。</p>
- </div>
- <div>
- <h3 class="text-white font-bold mb-2">Q: 只剩一支鑰匙但感應距離變短，需要先做備份嗎？</h3>
- <p>建議先評估新增備份。還能正常用車時，通常比鑰匙全丟後更容易安排。</p>
- </div>
- </div>
- </div>
-
- <div class="bg-gray-900 p-8 rounded-lg border-l-4 border-gold-primary my-12 shadow-2xl">
- <p class="font-bold mb-4 text-white text-xl tracking-wider uppercase font-cinzel">Technical Support</p>
- <div class="flex flex-col md:flex-row gap-6">
- <a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener noreferrer" class="flex-1 p-4 border border-white/10 hover:border-gold-primary/50 transition bg-black/50 group text-center">
- <span class="text-[9px] text-gray-500 uppercase tracking-widest block mb-1">Official LINE</span>
- <span class="text-gold-primary font-bold">@420gknem</span>
- </a>
- <a href="tel:0909277670" class="flex-1 p-4 border border-white/10 hover:border-gold-primary/50 transition bg-black/50 group text-center">
- <span class="text-[9px] text-gray-500 uppercase tracking-widest block mb-1">24H Hotline</span>
- <span class="text-white font-bold">0909-277-670</span>
- </a>
- </div>
- </div>
- </section>
- </article>
- <script type="application/ld+json">
- {
- "@context": "https://schema.org",
- "@type": "FAQPage",
- "mainEntity": [{
- "@type": "Question",
- "name": "智慧鑰匙沒電一定不能發動嗎？",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "不一定。部分車款可透過啟動鈕附近或車主手冊標示的臨時感應位置啟動，但位置依車款不同。"
- }
- }, {
- "@type": "Question",
- "name": "換新電池後還是顯示未偵測到鑰匙怎麼辦？",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "先確認電池規格與正負極方向；若仍無效，請提供車款年份、儀表照片與鑰匙照片評估。"
- }
- }, {
- "@type": "Question",
- "name": "只剩一支鑰匙但感應距離變短，需要先做備份嗎？",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "建議先評估新增備份。還能正常用車時，通常比鑰匙全丟後更容易安排。"
- }
- }]
- }
- </script>
-
- <footer class="py-12 text-center border-t border-white/5 text-[8px] text-gray-700 tracking-[0.5em] uppercase">
- © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
- </footer>
+      <div class="mt-12 flex justify-center">
+        <a href="tel:0909277670" class="btn-call">感應鑰匙問題諮詢 0909-277-670</a>
+      </div>
+    </section>
+  </article>
 </body>
 </html>

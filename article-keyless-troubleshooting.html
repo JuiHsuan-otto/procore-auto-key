@@ -1,220 +1,102 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Keyless 系統故障診斷：按鍵失靈、感應距離與車輛電壓判斷 | 極致核心</title>
- <meta name="description" content="Keyless 智慧鑰匙按鍵失靈、感應距離變短或車輛偶爾偵測不到鑰匙時，先依電池、鑰匙外觀、車輛電壓與停放環境判斷，再決定是否需要到場評估。">
-
- <link rel="canonical" href="https://www.carkey.com.tw/article-keyless-troubleshooting">
- <meta name="robots" content="index, follow, max-image-preview:large">
- <meta property="og:type" content="article">
- <meta property="og:title" content="Keyless 系統故障診斷：按鍵失靈、感應距離與車輛電壓判斷 | 極致核心">
- <meta property="og:description" content="Keyless 智慧鑰匙按鍵失靈、感應距離變短或車輛偶爾偵測不到鑰匙時，先依電池、鑰匙外觀、車輛電壓與停放環境判斷，再決定是否需要到場評估。">
- <meta property="og:url" content="https://www.carkey.com.tw/article-keyless-troubleshooting">
- <meta property="og:image" content="https://www.carkey.com.tw/img/procore_logo_main.jpg">
- <meta name="twitter:card" content="summary_large_image">
- <meta name="twitter:title" content="Keyless 系統故障診斷：按鍵失靈、感應距離與車輛電壓判斷 | 極致核心">
- <meta name="twitter:description" content="Keyless 智慧鑰匙按鍵失靈、感應距離變短或車輛偶爾偵測不到鑰匙時，先依電池、鑰匙外觀、車輛電壓與停放環境判斷，再決定是否需要到場評估。">
- <meta name="twitter:image" content="https://www.carkey.com.tw/img/procore_logo_main.jpg">
- <link rel="stylesheet" href="/assets/css/tailwind-procore.css">
- <style>
- body { font-family: sans-serif; background: #050505; color: #e5e5e5; line-height: 1.8; }
- .gold-accent { color: #D4AF37; }
- .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2rem; border-radius: 16px; margin: 2rem 0; }
- .btn-call { background-color: #D4AF37; color: black; font-weight: bold; padding: 1rem 2rem; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 320px; white-space: nowrap; text-decoration: none; }
- </style>
- <script type="application/ld+json" data-seo="procore">
-{
- "@context": "https://schema.org",
- "@graph": [
- {
- "@type": "WebSite",
- "@id": "https://www.carkey.com.tw/#website",
- "url": "https://www.carkey.com.tw/",
- "name": "極致核心 ProCore Auto Key",
- "inLanguage": "zh-TW",
- "publisher": {
- "@id": "https://www.carkey.com.tw/#business"
- }
- },
- {
- "@type": "LocalBusiness",
- "@id": "https://www.carkey.com.tw/#business",
- "name": "極致核心 ProCore Auto Key",
- "alternateName": "ProCore Auto Key",
- "url": "https://www.carkey.com.tw/",
- "telephone": "+886909277670",
- "image": "https://www.carkey.com.tw/img/procore_logo_main.jpg",
- "priceRange": "$$",
- "areaServed": [
- "台中市",
- "彰化縣",
- "南投縣",
- "苗栗縣",
- "雲林縣",
- "嘉義市",
- "新竹市",
- "新北市",
- "高雄市"
- ],
- "address": {
- "@type": "PostalAddress",
- "addressCountry": "TW"
- },
- "contactPoint": {
- "@type": "ContactPoint",
- "telephone": "+886909277670",
- "contactType": "customer service",
- "availableLanguage": [
- "zh-TW",
- "vi"
- ]
- }
- },
- {
- "@type": "Article",
- "@id": "https://www.carkey.com.tw/article-keyless-troubleshooting#webpage",
- "url": "https://www.carkey.com.tw/article-keyless-troubleshooting",
- "name": "Keyless 系統故障診斷：按鍵失靈、感應距離與車輛電壓判斷 | 極致核心",
- "headline": "Keyless 系統故障診斷：按鍵失靈、感應距離與車輛電壓判斷 | 極致核心",
- "description": "Keyless 智慧鑰匙按鍵失靈、感應距離變短或車輛偶爾偵測不到鑰匙時，先依電池、鑰匙外觀、車輛電壓與停放環境判斷，再決定是否需要到場評估。",
- "image": "https://www.carkey.com.tw/img/procore_logo_main.jpg",
- "inLanguage": "zh-TW",
- "isPartOf": {
- "@id": "https://www.carkey.com.tw/#website"
- },
- "publisher": {
- "@id": "https://www.carkey.com.tw/#business"
- },
- "author": {
- "@id": "https://www.carkey.com.tw/#business"
- },
- "mainEntityOfPage": "https://www.carkey.com.tw/article-keyless-troubleshooting"
- }
- ]
-}
- </script>
-
-
-
-<script type="application/ld+json" data-seo="breadcrumb">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "@id": "https://www.carkey.com.tw/article-keyless-troubleshooting#breadcrumb",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "首頁",
-      "item": "https://www.carkey.com.tw/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "車主指南",
-      "item": "https://www.carkey.com.tw/blog"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Keyless 系統故障診斷",
-      "item": "https://www.carkey.com.tw/article-keyless-troubleshooting"
-    }
-  ]
-}
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyless 智慧鑰匙故障怎麼判斷｜感應鑰匙異常與無法啟動｜極致核心 ProCore</title>
+  <meta name="description" content="Keyless 智慧鑰匙故障、感應不到或無法啟動時，先分辨電池、感應距離、車輛電力、備用鑰匙與儀表提示，再選擇服務入口。">
+  <link rel="canonical" href="https://www.carkey.com.tw/article-keyless-troubleshooting">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Keyless 智慧鑰匙故障怎麼判斷｜感應鑰匙異常與無法啟動｜極致核心 ProCore">
+  <meta property="og:description" content="Keyless 智慧鑰匙故障、感應不到或無法啟動時，先分辨電池、感應距離、車輛電力、備用鑰匙與儀表提示，再選擇服務入口。">
+  <meta property="og:url" content="https://www.carkey.com.tw/article-keyless-troubleshooting">
+  <meta property="og:image" content="https://www.carkey.com.tw/img/procore_logo_main.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Keyless 智慧鑰匙故障怎麼判斷｜感應鑰匙異常與無法啟動｜極致核心 ProCore">
+  <meta name="twitter:description" content="Keyless 智慧鑰匙故障、感應不到或無法啟動時，先分辨電池、感應距離、車輛電力、備用鑰匙與儀表提示，再選擇服務入口。">
+  <meta name="twitter:image" content="https://www.carkey.com.tw/img/procore_logo_main.jpg">
+  <link rel="stylesheet" href="/assets/css/tailwind-procore.css">
+  <style>
+    body { font-family: sans-serif; background: #050505; color: #e5e5e5; line-height: 1.8; }
+    .gold-accent { color: #D4AF37; }
+    .glass-panel { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); padding: 2rem; border-radius: 16px; margin: 2rem 0; }
+    .btn-call { background-color: #D4AF37; color: #000; font-weight: 700; padding: 1rem 2rem; border-radius: 9999px; display: inline-flex; justify-content: center; width: 100%; max-width: 320px; text-decoration: none; }
+  </style>
+  <script type="application/ld+json" data-seo="procore">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {"@type":"WebSite","@id":"https://www.carkey.com.tw/#website","url":"https://www.carkey.com.tw/","name":"極致核心 ProCore Auto Key","inLanguage":"zh-TW","publisher":{"@id":"https://www.carkey.com.tw/#business"}},
+      {"@type":"LocalBusiness","@id":"https://www.carkey.com.tw/#business","name":"極致核心 ProCore Auto Key","url":"https://www.carkey.com.tw/","telephone":"+886909277670","image":"https://www.carkey.com.tw/img/procore_logo_main.jpg","priceRange":"$$","address":{"@type":"PostalAddress","addressCountry":"TW"},"areaServed":["台中市","彰化縣","南投縣","苗栗縣","雲林縣","嘉義縣市","新北市","高雄市"]},
+      {"@type":"Article","@id":"https://www.carkey.com.tw/article-keyless-troubleshooting#article","url":"https://www.carkey.com.tw/article-keyless-troubleshooting","headline":"Keyless 智慧鑰匙故障怎麼判斷｜感應鑰匙異常與無法啟動","description":"Keyless 智慧鑰匙故障、感應不到或無法啟動時，先分辨電池、感應距離、車輛電力、備用鑰匙與儀表提示，再選擇服務入口。","image":"https://www.carkey.com.tw/img/procore_logo_main.jpg","inLanguage":"zh-TW","author":{"@id":"https://www.carkey.com.tw/#business"},"publisher":{"@id":"https://www.carkey.com.tw/#business"},"mainEntityOfPage":"https://www.carkey.com.tw/article-keyless-troubleshooting"},
+      {"@type":"FAQPage","@id":"https://www.carkey.com.tw/article-keyless-troubleshooting#faq","mainEntity":[{"@type":"Question","name":"Keyless 感應不到一定是鑰匙故障嗎？","acceptedAnswer":{"@type":"Answer","text":"不一定。電池、感應距離、車輛電力、車內提示與備用鑰匙狀態都會影響判斷，建議先用可見症狀分類。"}},{"@type":"Question","name":"鑰匙在手上但車子無法啟動要看哪一頁？","acceptedAnswer":{"@type":"Answer","text":"如果儀表顯示未偵測到鑰匙或 Key Not Detected，通常更接近未偵測到鑰匙服務頁的意圖。"}},{"@type":"Question","name":"只剩一支 Keyless 智慧鑰匙要先新增備用嗎？","acceptedAnswer":{"@type":"Answer","text":"建議提早評估。只剩一支時，遺失或感應不穩都會讓後續安排變得更受限制。"}}]},
+      {"@type":"BreadcrumbList","@id":"https://www.carkey.com.tw/article-keyless-troubleshooting#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://www.carkey.com.tw/"},{"@type":"ListItem","position":2,"name":"車主指南","item":"https://www.carkey.com.tw/blog"},{"@type":"ListItem","position":3,"name":"Keyless 智慧鑰匙故障判斷","item":"https://www.carkey.com.tw/article-keyless-troubleshooting"}]}
+    ]
+  }
+  </script>
 </head>
 <body class="p-6 md:p-12">
- <article class="max-w-4xl mx-auto">
- <header class="mb-12">
- <a href="/blog" class="text-gray-500 text-sm">← 返回車主指南首頁</a>
- <div class="mt-8">
- <span class="text-gold-accent border border-yellow-600/30 px-3 py-1 text-[10px] uppercase tracking-widest">故障診斷</span>
- </div>
- <h1 class="text-3xl md:text-5xl font-bold text-white mt-6 mb-4">Keyless 系統故障診斷：按鍵失靈、感應距離與車輛電壓判斷</h1>
- </header>
- <section>
- <div class="glass-panel">
- <h2 class="text-2xl font-bold text-gold-accent mb-6">先分清楚三種狀況</h2>
- <div class="space-y-6">
- <div class="p-4 border border-white/10 rounded-lg">
- <h3 class="font-bold text-white mb-2">1. 遙控按鍵沒有反應</h3>
- <p class="text-gray-400">先看鑰匙外殼是否破裂、按鍵是否塌陷、按下時指示燈是否亮。若只有按鍵無反應，但車仍能啟動，通常先從鑰匙端檢查。</p>
- </div>
- <div class="p-4 border border-white/10 rounded-lg">
- <h3 class="font-bold text-white mb-2">2. 感應距離變短或偶爾失效</h3>
- <p class="text-gray-400">常見原因包含鑰匙電池偏弱、附近干擾、停放環境或車輛電壓不穩。先記錄發生頻率與發生地點，比只說「感應不到」更容易判斷。</p>
- </div>
- <div class="p-4 border border-white/10 rounded-lg">
- <h3 class="font-bold text-white mb-2">3. 儀表顯示未偵測到鑰匙</h3>
- <p class="text-gray-400">若儀表明確顯示 Key Not Detected 或未偵測到鑰匙，請看 <a href="/article-car-key-not-detected-troubleshooting" class="text-gold-accent underline">未偵測到鑰匙意思</a> 或 <a href="/key-not-detected-service" class="text-gold-accent underline">未偵測到鑰匙服務入口</a>。</p>
- </div>
- </div>
- </div>
+  <article class="max-w-4xl mx-auto">
+    <header class="mb-12">
+      <a href="/blog" class="text-gray-500 text-sm">回車主指南</a>
+      <div class="mt-8"><span class="gold-accent border border-yellow-600/30 px-3 py-1 text-[10px] uppercase tracking-widest">Keyless 故障判斷</span></div>
+      <h1 class="text-3xl md:text-5xl font-bold text-white mt-6 mb-4">Keyless 智慧鑰匙故障怎麼判斷：感應不到、無法啟動和遙控器沒反應的差別</h1>
+      <p class="text-lg text-gray-300">這頁負責承接「keyless 故障」「感應鑰匙異常」「智慧鑰匙無法啟動」等較廣的判斷意圖；如果搜尋者已經明確是「汽車遙控器沒反應」或「未偵測到鑰匙」，會引導到更精準頁面。</p>
+    </header>
 
- <div class="glass-panel mt-8">
- <h2 class="text-2xl font-bold text-gold-accent mb-6">詢問前先準備這 5 項</h2>
- <ol class="space-y-4 text-gray-300">
- <li>1. <strong class="text-white">車款年份：</strong>例如 2018 Hyundai Tucson、2020 Toyota Altis。</li>
- <li>2. <strong class="text-white">目前症狀：</strong>按鍵失靈、感應距離短、未偵測到鑰匙或完全無法啟動。</li>
-<li>3. <strong class="text-white">鑰匙照片：</strong>拍正反面與按鍵狀況；車牌、證件與完整地址請改用官方 LINE 或電話確認。</li>
- <li>4. <strong class="text-white">所在地與停放環境：</strong>室內停車場、路邊、拍場或地下室都會影響安排。</li>
- <li>5. <strong class="text-white">是否還有備用鑰匙：</strong>只剩一支時可先看 <a href="/spare-car-key-service" class="text-gold-accent underline">汽車鑰匙新增備份</a>。</li>
- </ol>
- </div>
+    <section>
+      <div class="glass-panel">
+        <h2 class="text-2xl font-bold text-gold-accent mb-6">先把症狀分成三類</h2>
+        <div class="space-y-6">
+          <div class="p-4 border border-white/10 rounded-lg">
+            <h3 class="font-bold text-white mb-2">1. 遙控器按了沒反應</h3>
+            <p class="text-gray-400">如果主要問題是開關鎖距離變短、按鍵偶爾失效、車門沒反應，通常先看 <a href="/article-smart-key-troubleshooting" class="gold-accent underline">汽車遙控器沒反應指南</a>。</p>
+          </div>
+          <div class="p-4 border border-white/10 rounded-lg">
+            <h3 class="font-bold text-white mb-2">2. 鑰匙在手上但車子未偵測到</h3>
+            <p class="text-gray-400">如果儀表寫 Key Not Detected、未偵測到鑰匙，或踩煞車後仍無法啟動，請先看 <a href="/key-not-detected-service" class="gold-accent underline">未偵測到鑰匙服務</a>。</p>
+          </div>
+          <div class="p-4 border border-white/10 rounded-lg">
+            <h3 class="font-bold text-white mb-2">3. 鑰匙遺失或只剩一支</h3>
+            <p class="text-gray-400">如果問題其實是找不到鑰匙、只剩一支鑰匙或想先做備用，應分別看 <a href="/car-key-lost-service" class="gold-accent underline">汽車鑰匙遺失服務</a> 或 <a href="/spare-car-key-service" class="gold-accent underline">備用鑰匙評估</a>。</p>
+          </div>
+        </div>
+      </div>
 
- <div class="glass-panel mt-8">
- <h2 class="text-2xl font-bold text-gold-accent mb-6">常見問題</h2>
- <div class="space-y-5 text-gray-300">
- <div>
- <h3 class="text-white font-bold mb-2">Q: Keyless 感應不到一定是鑰匙壞掉嗎？</h3>
- <p>不一定。電池偏弱、停放環境干擾、車輛電壓或臨時感應位置不對，都可能造成偶發性失效。</p>
- </div>
- <div>
- <h3 class="text-white font-bold mb-2">Q: 更換電池後還是感應不到怎麼辦？</h3>
- <p>先確認電池規格、正負極與鑰匙外殼是否正常；若仍無法啟動，再提供車款年份、所在地與儀表照片評估。</p>
- </div>
- <div>
- <h3 class="text-white font-bold mb-2">Q: 只剩一支鑰匙但目前還能用，需要先處理嗎？</h3>
- <p>建議先做備份。還能正常用車時安排通常比全丟後更穩，也能降低臨時無法用車的風險。</p>
- </div>
- </div>
- </div>
+      <div class="glass-panel mt-8">
+        <h2 class="text-2xl font-bold text-gold-accent mb-6">詢問前整理 5 個資訊</h2>
+        <ol class="space-y-4 text-gray-300">
+          <li>1. 車款、年份與所在地，例如 2018 Hyundai Tucson、2020 Toyota Altis。</li>
+          <li>2. 目前是按鍵無反應、感應不到、無法啟動，還是鑰匙遺失。</li>
+          <li>3. 手上有幾支鑰匙，是否有備用鑰匙可交叉確認。</li>
+          <li>4. 儀表畫面、鑰匙正反面與停放環境照片。</li>
+          <li>5. 車輛是否能開門、是否能上電，以及問題是否間歇發生。</li>
+        </ol>
+      </div>
 
- <div class="mt-12 flex justify-center">
- <a href="tel:0909277670" class="btn-call">故障諮詢專線：0909-277-670</a>
- </div>
- </section>
- </article>
- <script type="application/ld+json">
- {
- "@context": "https://schema.org",
- "@type": "FAQPage",
- "mainEntity": [{
- "@type": "Question",
- "name": "Keyless 感應不到一定是鑰匙壞掉嗎？",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "不一定。電池偏弱、停放環境干擾、車輛電壓或臨時感應位置不對，都可能造成偶發性失效。"
- }
- }, {
- "@type": "Question",
- "name": "更換電池後還是感應不到怎麼辦？",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "先確認電池規格、正負極與鑰匙外殼是否正常；若仍無法啟動，再提供車款年份、所在地與儀表照片評估。"
- }
- }, {
- "@type": "Question",
- "name": "只剩一支鑰匙但目前還能用，需要先處理嗎？",
- "acceptedAnswer": {
- "@type": "Answer",
- "text": "建議先做備份。還能正常用車時安排通常比全丟後更穩，也能降低臨時無法用車的風險。"
- }
- }]
- }
- </script>
+      <div class="glass-panel mt-8">
+        <h2 class="text-2xl font-bold text-gold-accent mb-6">常見問題</h2>
+        <div class="space-y-5 text-gray-300">
+          <div>
+            <h3 class="text-white font-bold mb-2">Keyless 感應不到一定是鑰匙故障嗎？</h3>
+            <p>不一定。電池、感應距離、車輛電力、車內提示與備用鑰匙狀態都會影響判斷，建議先用可見症狀分類。</p>
+          </div>
+          <div>
+            <h3 class="text-white font-bold mb-2">鑰匙在手上但車子無法啟動要看哪一頁？</h3>
+            <p>如果儀表顯示未偵測到鑰匙或 Key Not Detected，通常更接近未偵測到鑰匙服務頁的意圖。</p>
+          </div>
+          <div>
+            <h3 class="text-white font-bold mb-2">只剩一支 Keyless 智慧鑰匙要先新增備用嗎？</h3>
+            <p>建議提早評估。只剩一支時，遺失或感應不穩都會讓後續安排變得更受限制。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 flex justify-center">
+        <a href="tel:0909277670" class="btn-call">Keyless 問題諮詢 0909-277-670</a>
+      </div>
+    </section>
+  </article>
 </body>
 </html>
