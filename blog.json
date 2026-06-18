@@ -1,5 +1,52 @@
 [
   {
+    "date": "2026.06.18",
+    "category": "技術專欄",
+    "title": "美系車購車維護與鑰匙備份成本評估",
+    "summary": "美系車購車後仍需把鑰匙備份、交車檢查與後續維護成本列入風險評估。",
+    "link": "/article-us-car-zero-tariff-consumer-impact"
+  },
+  {
+    "date": "2026.06.18",
+    "category": "技術專欄",
+    "title": "汽車鑰匙詢問準備指南",
+    "summary": "詢問汽車鑰匙遺失、備份或智慧鑰匙異常前，先準備車款年份、鑰匙照片、所在地與現場狀況。",
+    "link": "/article-decoding-equipment"
+  },
+  {
+    "date": "2026.06.18",
+    "category": "技術專欄",
+    "title": "中部汽車鑰匙遺失救援整理",
+    "summary": "中部車主遇到汽車鑰匙不見時，先整理所在地、車況與鑰匙狀態，再選擇正確服務入口。",
+    "link": "/article-car-key-lost-rescue-central-taiwan"
+  },
+  {
+    "date": "2026.06.18",
+    "category": "車主指南",
+    "title": "汽車遙控器沒反應怎麼辦？Keyless 感應不到先看這些狀況",
+    "summary": "汽車遙控器沒反應、感應鑰匙感應不到或 Keyless remote not detected 時，先分辨電池、備用鑰匙、儀表訊息與車況。",
+    "link": "/article-smart-key-troubleshooting",
+    "keywords": [
+      "汽車遙控器沒反應",
+      "感應鑰匙感應不到",
+      "Keyless remote not detected",
+      "汽車遙控器有電沒反應"
+    ]
+  },
+  {
+    "date": "2026.06.18",
+    "category": "車主指南",
+    "title": "Keyless 智慧鑰匙故障怎麼判斷｜感應不到、無法啟動與遙控器沒反應",
+    "summary": "Keyless 智慧鑰匙故障、感應不到或無法啟動時，先分辨電池、感應距離、車輛電力、備用鑰匙與儀表提示。",
+    "link": "/article-keyless-troubleshooting",
+    "keywords": [
+      "Keyless 智慧鑰匙故障",
+      "感應鑰匙異常",
+      "智慧鑰匙無法啟動",
+      "汽車遙控器沒反應"
+    ]
+  },
+  {
     "date": "2026.06.10",
     "category": "案例紀錄",
     "title": "彰化花壇 Ford Kuga 鑰匙全丟｜雨天停車場到場評估紀錄 | 極致核心 ProCore",
