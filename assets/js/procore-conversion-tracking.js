@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var GA_MEASUREMENT_ID = "G-VNT43EP3ME";
+  var GA_MEASUREMENT_ID = "G-KW1LHLVQHL";
   var MAX_TEXT_LENGTH = 160;
 
   function hasGaMeasurementId() {
