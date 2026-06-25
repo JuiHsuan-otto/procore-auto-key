@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "updated": "2026-04-28",
+  "version": "1.1",
+  "updated": "2026-06-10",
   "brand": {
     "name": "極致核心 ProCore",
     "site": "https://www.carkey.com.tw",
@@ -12,23 +12,42 @@
       "role": "canonical_source",
       "cleanUrls": true,
       "publishDefault": "validated_publish",
-      "required": ["title", "metaDescription", "canonical", "h1", "jsonLd", "sitemap", "internalLinks"]
+      "required": [
+        "title",
+        "metaDescription",
+        "canonical",
+        "h1",
+        "jsonLd",
+        "sitemap",
+        "internalLinks"
+      ]
     },
     "blogger": {
       "role": "supporting_article_backlink",
       "publishDefault": "draft",
       "preferredApi": "Blogger API v3 posts.insert",
-      "oauthScopes": ["https://www.googleapis.com/auth/blogger"],
+      "oauthScopes": [
+        "https://www.googleapis.com/auth/blogger"
+      ],
       "minCharsZh": 500,
       "maxCharsZh": 1200,
-      "required": ["uniqueIntro", "officialBacklink", "labels", "cta"]
+      "required": [
+        "uniqueIntro",
+        "officialBacklink",
+        "labels",
+        "cta"
+      ]
     },
     "threads": {
       "role": "short_form_conversation",
       "publishDefault": "draft",
       "maxChars": 500,
       "maxTopicTags": 1,
-      "required": ["plainText", "noHype", "optionalOfficialUrl"]
+      "required": [
+        "plainText",
+        "noHype",
+        "optionalOfficialUrl"
+      ]
     },
     "googleBusinessProfile": {
       "role": "local_discovery_cta",
@@ -37,7 +56,12 @@
       "topicType": "STANDARD",
       "summaryMaxChars": 700,
       "defaultCta": "LEARN_MORE",
-      "required": ["languageCode", "summary", "topicType", "callToAction"]
+      "required": [
+        "languageCode",
+        "summary",
+        "topicType",
+        "callToAction"
+      ]
     }
   },
   "bannedPhrases": [
@@ -49,7 +73,31 @@
     "守護您的駕駛權限",
     "魂動美學",
     "數據重構",
-    "全台．跨區．遠征"
+    "全台．跨區．遠征",
+    "流程大公開",
+    "完整教學",
+    "破解",
+    "bypass",
+    "保證免拖車",
+    "保證現場完成",
+    "快速匹配",
+    "現場匹配",
+    "到場配製",
+    "快速發動",
+    "數據重讀",
+    "匹配過程",
+    "高級匹配技術",
+    "專業數據修復",
+    "可照做流程",
+    "可複製流程",
+    "公開邊界",
+    "公開案例不揭露",
+    "不公開安全系統",
+    "安全系統細節",
+    "車籍資訊",
+    "車籍確認資料",
+    "身分確認資料",
+    "可複製操作"
   ],
   "utm": {
     "blogger": "utm_source=blogger&utm_medium=referral&utm_campaign=ai_content_pack",
