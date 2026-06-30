@@ -2,6 +2,7 @@
   "use strict";
 
   var GA_MEASUREMENT_ID = "G-KW1LHLVQHL";
+  var GA_SCRIPT_ID = "procore-ga4-loader";
   var MAX_TEXT_LENGTH = 160;
 
   function hasGaMeasurementId() {
@@ -27,7 +28,12 @@
       return;
     }
 
+    if (document.getElementById(GA_SCRIPT_ID)) {
+      return;
+    }
+
     script = document.createElement("script");
+    script.id = GA_SCRIPT_ID;
     script.async = true;
     script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(GA_MEASUREMENT_ID);
     document.head.appendChild(script);
@@ -65,6 +71,7 @@
       link_url: href,
       link_text: cleanText(link.textContent),
       page_path: window.location.pathname,
+      page_location: window.location.href,
       page_title: document.title
     };
   }
@@ -74,18 +81,33 @@
     window.dataLayer.push(payload);
   }
 
+  function getGtagEventParams(payload) {
+    return {
+      event_category: "conversion",
+      event_label: payload.link_url,
+      conversion_type: payload.conversion_type,
+      lead_source: payload.conversion_type,
+      method: payload.conversion_type,
+      link_text: payload.link_text,
+      link_url: payload.link_url,
+      page_path: payload.page_path,
+      page_location: payload.page_location,
+      transport_type: "beacon"
+    };
+  }
+
   function pushToGtag(payload, gtagEventName) {
     if (typeof window.gtag !== "function") {
       return;
     }
 
-    window.gtag("event", gtagEventName, {
-      event_category: "conversion",
-      event_label: payload.link_url,
-      conversion_type: payload.conversion_type,
-      link_text: payload.link_text,
-      page_path: payload.page_path
-    });
+    window.gtag("event", gtagEventName, getGtagEventParams(payload));
+  }
+
+  function pushLeadEvents(payload, gtagEventName) {
+    pushToDataLayer(payload);
+    pushToGtag(payload, gtagEventName);
+    pushToGtag(payload, "generate_lead");
   }
 
   function trackClick(event) {
@@ -100,15 +122,13 @@
     if (/^tel:/i.test(href)) {
       payload = getBasePayload(link, "procore_phone_click", "phone");
       payload.phone_number = normalizePhone(href);
-      pushToDataLayer(payload);
-      pushToGtag(payload, "click_to_call");
+      pushLeadEvents(payload, "click_to_call");
       return;
     }
 
     if (isLineHref(href)) {
       payload = getBasePayload(link, "procore_line_click", "line");
-      pushToDataLayer(payload);
-      pushToGtag(payload, "line_click");
+      pushLeadEvents(payload, "line_click");
     }
   }
 

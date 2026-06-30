@@ -16,6 +16,7 @@ const EXCLUDED_DIRS = new Set([
   "__pycache__",
 ]);
 const SITE_HOSTS = new Set(["carkey.com.tw", "www.carkey.com.tw"]);
+const CONVERSION_TRACKING_SCRIPT = "/assets/js/procore-conversion-tracking.js";
 const COUNTY_AREA_PAGES = new Set([
   "taipei-car-key.html",
   "new-taipei-car-key.html",
@@ -362,6 +363,9 @@ function validateHtml(relPath, html, errors, warnings) {
   }
   if (/unsafe-eval/i.test(html)) {
     errors.push(`${relPath}: CSP contains unsafe-eval`);
+  }
+  if (!html.includes(CONVERSION_TRACKING_SCRIPT)) {
+    errors.push(`${relPath}: missing ProCore conversion tracking script`);
   }
   if (/\?{4,}/.test(html)) {
     warnings.push(`${relPath}: contains long question-mark run; check text encoding`);
