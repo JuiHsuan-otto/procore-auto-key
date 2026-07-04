@@ -3,6 +3,8 @@ import fsp from "node:fs/promises";
 import path from "node:path";
 
 const ROOT = process.cwd();
+const ROBOTS_FILE = "robots.txt";
+const VERCEL_CONFIG_FILE = "vercel.json";
 const EXCLUDED_DIRS = new Set([
   ".git",
   ".uv-cache",
@@ -162,6 +164,50 @@ function fileExistsForRoute(ref) {
   if (!path.extname(ref) && fs.existsSync(path.join(ROOT, `${ref}.html`))) return true;
   if (!path.extname(ref) && fs.existsSync(path.join(ROOT, ref, "index.html"))) return true;
   return false;
+}
+
+function getRoutePrefix(routePattern) {
+  if (!routePattern || routePattern === "/") return "/";
+  let prefix = routePattern;
+  const specialIndex = prefix.search(/[:*]/);
+  if (specialIndex !== -1) {
+    prefix = prefix.slice(0, specialIndex);
+  }
+  return prefix || "/";
+}
+
+function robotsRuleBlocksPath(rule, pathname) {
+  if (!rule || !rule.startsWith("/")) return false;
+  if (rule === "/") return true;
+  if (rule.endsWith("/")) {
+    return pathname === rule.slice(0, -1) || pathname.startsWith(rule);
+  }
+  return pathname === rule || pathname.startsWith(`${rule}/`);
+}
+
+async function validateRobotsRedirects(errors) {
+  const robotsPath = path.join(ROOT, ROBOTS_FILE);
+  const vercelPath = path.join(ROOT, VERCEL_CONFIG_FILE);
+  if (!fs.existsSync(robotsPath) || !fs.existsSync(vercelPath)) return;
+
+  const robots = await fsp.readFile(robotsPath, "utf8");
+  const disallowRules = robots
+    .split(/\r?\n/)
+    .map((line) => line.replace(/#.*/, "").trim())
+    .filter((line) => /^disallow\s*:/i.test(line))
+    .map((line) => line.replace(/^disallow\s*:/i, "").trim())
+    .filter(Boolean);
+  const vercelConfig = JSON.parse(await fsp.readFile(vercelPath, "utf8"));
+
+  for (const redirect of vercelConfig.redirects || []) {
+    const sourcePrefix = getRoutePrefix(redirect.source);
+    const blockedBy = disallowRules.find((rule) => robotsRuleBlocksPath(rule, sourcePrefix));
+    if (blockedBy) {
+      errors.push(
+        `${ROBOTS_FILE}: ${blockedBy} blocks redirect source ${redirect.source}; crawlers must be able to see canonical redirects`,
+      );
+    }
+  }
 }
 
 function htmlFileForRoute(ref) {
@@ -436,6 +482,8 @@ async function main() {
       await validateJsonFile(jsonFile, errors);
     }
   }
+
+  await validateRobotsRedirects(errors);
 
   const sitemapUrls = new Set();
   for (const xmlFile of ["sitemap.xml", "sitemap_local.xml"]) {

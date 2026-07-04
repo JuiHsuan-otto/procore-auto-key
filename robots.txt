@@ -5,5 +5,5 @@ Disallow: /backup/
 Disallow: /backups/
 Disallow: /logs/
 Disallow: /seo_data/
-Disallow: /local/
+# Allow /local/ so crawlers can see Vercel redirects and consolidate to canonical pages.
 Sitemap: https://www.carkey.com.tw/sitemap.xml
