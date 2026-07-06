@@ -194,6 +194,18 @@
       const status = document.getElementById('form-status');
       const copyStatus = document.getElementById('copy-status');
 
+      const prefill = new URLSearchParams(window.location.search).get('location');
+      if (prefill) {
+        const safePrefill = prefill.trim().slice(0, 40);
+        const looksSensitive = /[路街巷弄號樓]|\d{2,}|\b[A-HJ-NPR-Z0-9]{17}\b|[A-Z]{2,3}[- ]?\d{3,4}|\d{3,4}[- ]?[A-Z]{2,3}/i.test(safePrefill);
+        if (!looksSensitive) {
+          document.getElementById('location').value = safePrefill;
+          status.textContent = '已從服務範圍頁帶入所在地，請確認只保留縣市／區域。';
+        } else {
+          status.textContent = '為保護隱私，未帶入可能包含地址或識別資訊的內容。';
+        }
+      }
+
       const setError = (id, text) => {
         const field = document.getElementById(id);
         const error = document.getElementById(id + '-error');
