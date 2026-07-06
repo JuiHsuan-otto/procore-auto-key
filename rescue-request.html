@@ -72,10 +72,21 @@
     .line { border:0; background:var(--line); color:#041d0d; }
     .button[hidden] { display:none; }
     .result-note { margin:14px 0 0; color:#999; font-size:12px; }
+    .draft-box { margin-top:24px; padding-top:22px; border-top:1px solid var(--border); }
+    .draft-box h3 { margin:0 0 6px; font-size:18px; }
+    .draft-intro { margin:0 0 14px; color:#bbb; font-size:13px; }
+    .draft-warning { margin:10px 0 14px; padding:11px 12px; border-radius:9px; background:rgba(212,175,55,.08); border:1px solid rgba(212,175,55,.28); color:#e8dcae; font-size:12px; }
+    .draft-option { display:flex; align-items:flex-start; gap:9px; margin:0; padding:10px 12px; border:1px solid #444; border-radius:9px; background:#0b0b0b; font-weight:600; }
+    .draft-option input { width:18px; min-height:18px; height:18px; margin:2px 0 0; accent-color:var(--gold); flex:0 0 auto; }
+    .draft-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin-top:12px; }
+    .draft-actions .button { width:100%; border:1px solid #555; background:#151515; color:#eee; }
+    .draft-actions .primary { border-color:var(--gold); color:var(--gold); }
+    #draft-link { min-height:86px; margin-top:12px; font-size:12px; overflow-wrap:anywhere; }
+    .draft-status { min-height:20px; margin:10px 0 0; color:#b9e8c7; font-size:12px; }
     .contact { margin-top:22px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:14px; color:#bbb; }
     .contact a { color:#f3d36f; text-decoration:none; font-weight:700; }
     footer { border-top:1px solid var(--border); color:#777; text-align:center; padding:24px 20px; font-size:12px; }
-    @media (max-width:760px) { .nav-links a:not(.call) { display:none; } main { padding-top:34px; } .layout { grid-template-columns:1fr; } .result { position:static; } .grid { grid-template-columns:1fr; gap:0; } .options { grid-template-columns:1fr; } }
+    @media (max-width:760px) { .nav-links a:not(.call) { display:none; } main { padding-top:34px; } .layout { grid-template-columns:1fr; } .result { position:static; } .grid { grid-template-columns:1fr; gap:0; } .options,.draft-actions { grid-template-columns:1fr; } }
   </style>
   <script type="application/ld+json">
   {
@@ -178,6 +189,28 @@
         </div>
         <p id="copy-status" class="result-note" role="status" aria-live="polite"></p>
         <p class="result-note">按下 LINE 按鈕才會離開本站。若手機未自動帶入文字，請先按「複製內容」，再貼到對話中。</p>
+        <section class="draft-box" aria-labelledby="draft-title">
+          <h3 id="draft-title">草稿留存／轉交</h3>
+          <p class="draft-intro">把目前安全欄位放進網址的 <code>#</code> 片段，方便稍後繼續，或交給家人、助理補完。片段不會送到網站伺服器，本站也不會儲存。</p>
+          <p class="draft-warning"><strong>連結仍可能被看到或轉傳：</strong>只放非識別化資訊，不要填車牌、VIN／車身號碼、完整地址或車主姓名。</p>
+          <label class="draft-option" for="draft-include-notes">
+            <input id="draft-include-notes" type="checkbox">
+            <span>草稿連結也帶入備註（預設不帶）<br><small>再次提醒：備註不可含車牌、VIN、完整地址或車主姓名。</small></span>
+          </label>
+          <div class="draft-actions">
+            <button id="draft-generate" class="button primary" type="button">產生草稿連結</button>
+            <button id="draft-regenerate" class="button" type="button" hidden>重新產生</button>
+          </div>
+          <label id="draft-link-label" class="hint" for="draft-link" hidden>可複製的草稿連結</label>
+          <textarea id="draft-link" readonly hidden aria-label="可複製的草稿連結"></textarea>
+          <div class="draft-actions">
+            <button id="draft-copy" class="button primary" type="button" hidden>複製連結</button>
+            <button id="draft-clear" class="button" type="button" hidden>清除草稿</button>
+            <button id="draft-edit" class="button" type="button">返回編輯</button>
+            <button id="draft-continue" class="button primary" type="button">繼續產生 LINE 訊息</button>
+          </div>
+          <p id="draft-status" class="draft-status" role="status" aria-live="polite"></p>
+        </section>
         <div class="contact">仍需要直接聯絡：<a href="tel:0909277670">0909-277-670</a><br>正確 LINE ID：<a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener noreferrer">@420gknem</a></div>
       </aside>
     </div>
@@ -193,18 +226,19 @@
       const lineButton = document.getElementById('line-button');
       const status = document.getElementById('form-status');
       const copyStatus = document.getElementById('copy-status');
-
-      const prefill = new URLSearchParams(window.location.search).get('location');
-      if (prefill) {
-        const safePrefill = prefill.trim().slice(0, 40);
-        const looksSensitive = /[路街巷弄號樓]|\d{2,}|\b[A-HJ-NPR-Z0-9]{17}\b|[A-Z]{2,3}[- ]?\d{3,4}|\d{3,4}[- ]?[A-Z]{2,3}/i.test(safePrefill);
-        if (!looksSensitive) {
-          document.getElementById('location').value = safePrefill;
-          status.textContent = '已從服務範圍頁帶入所在地，請確認只保留縣市／區域。';
-        } else {
-          status.textContent = '為保護隱私，未帶入可能包含地址或識別資訊的內容。';
-        }
-      }
+      const draftIncludeNotes = document.getElementById('draft-include-notes');
+      const draftGenerate = document.getElementById('draft-generate');
+      const draftRegenerate = document.getElementById('draft-regenerate');
+      const draftLinkLabel = document.getElementById('draft-link-label');
+      const draftLink = document.getElementById('draft-link');
+      const draftCopy = document.getElementById('draft-copy');
+      const draftClear = document.getElementById('draft-clear');
+      const draftEdit = document.getElementById('draft-edit');
+      const draftContinue = document.getElementById('draft-continue');
+      const draftStatus = document.getElementById('draft-status');
+      const issueValues = ['鑰匙全丟','新增備用鑰匙','智能鑰匙感應不到','車子發不動','其他'];
+      const photoValues = ['可以補照片','目前不方便補照片'];
+      let suppressDraftDirty = false;
 
       const setError = (id, text) => {
         const field = document.getElementById(id);
@@ -212,9 +246,133 @@
         if (error) error.textContent = text;
         if (field) field.setAttribute('aria-invalid', text ? 'true' : 'false');
       };
-
       const value = id => document.getElementById(id).value.trim();
       const selected = name => form.querySelector(`input[name="${name}"]:checked`);
+      const looksLikeVin = text => /\b[A-HJ-NPR-Z0-9]{17}\b/i.test(text);
+      const looksLikePlate = text => /[A-Z]{2,3}[- ]?\d{3,4}|\d{3,4}[- ]?[A-Z]{2,3}/i.test(text);
+      const looksLikeContact = text => /09(?:[-\s]?\d){8}|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/.test(text);
+      const looksLikeAddress = text => /(?:路|街|巷|弄|號|樓).{0,8}\d|\d.{0,8}(?:路|街|巷|弄|號|樓)/.test(text);
+      const looksLikeOwnerName = text => /(?:車主姓名|姓名|車主)\s*[:：]\s*[\u3400-\u9fff]{2,4}/.test(text);
+      const unsafeIdentity = text => looksLikeVin(text) || looksLikePlate(text) || looksLikeContact(text) || looksLikeAddress(text) || looksLikeOwnerName(text);
+      const unsafeSharedNotes = text => unsafeIdentity(text) || /[路街巷弄號樓]/.test(text);
+      const locationUnsafe = text => /[路街巷弄號樓]|\d{2,}/.test(text) || unsafeIdentity(text);
+
+      const applyLocationPrefill = () => {
+        const prefill = new URLSearchParams(window.location.search).get('location');
+        if (!prefill) return;
+        const safePrefill = prefill.trim().slice(0, 40);
+        if (!locationUnsafe(safePrefill)) {
+          document.getElementById('location').value = safePrefill;
+          status.textContent = '已從服務範圍頁帶入所在地，請確認只保留縣市／區域。';
+        } else {
+          status.textContent = '為保護隱私，未帶入可能包含地址或識別資訊的內容。';
+        }
+      };
+
+      const encodeDraft = data => {
+        const bytes = new TextEncoder().encode(JSON.stringify(data));
+        let binary = '';
+        bytes.forEach(byte => { binary += String.fromCharCode(byte); });
+        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+      };
+      const decodeDraft = encoded => {
+        const base64 = encoded.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - encoded.length % 4) % 4);
+        const binary = atob(base64);
+        const bytes = Uint8Array.from(binary, character => character.charCodeAt(0));
+        return JSON.parse(new TextDecoder().decode(bytes));
+      };
+      const validText = (input, max) => typeof input === 'string' && input.length <= max && !/[\u0000-\u001f\u007f]/.test(input);
+      const validateDraftData = data => {
+        if (!data || data.v !== 1) return false;
+        if (!validText(data.y || '', 4) || !/^\d{0,4}$/.test(data.y || '')) return false;
+        if (!validText(data.b || '', 30) || !validText(data.m || '', 40) || !validText(data.l || '', 40)) return false;
+        if (unsafeIdentity(data.b || '') || unsafeIdentity(data.m || '') || locationUnsafe(data.l || '')) return false;
+        if (data.i && !issueValues.includes(data.i)) return false;
+        if (data.p && !photoValues.includes(data.p)) return false;
+        if (data.n !== undefined && (!validText(data.n, 200) || unsafeSharedNotes(data.n))) return false;
+        return true;
+      };
+      const draftDataFromForm = () => {
+        const issue = selected('issue');
+        const photos = selected('photos');
+        const data = {v:1,y:value('year'),b:value('brand'),m:value('model'),l:value('location'),i:issue ? issue.value : '',p:photos ? photos.value : ''};
+        if (draftIncludeNotes.checked && value('notes')) data.n = value('notes');
+        return data;
+      };
+      const setDraftLink = url => {
+        draftLink.value = url;
+        draftLinkLabel.hidden = false;
+        draftLink.hidden = false;
+        draftCopy.hidden = false;
+        draftClear.hidden = false;
+        draftGenerate.hidden = true;
+        draftRegenerate.hidden = false;
+      };
+      const generateDraft = () => {
+        draftStatus.textContent = '';
+        ['year','brand','model','location','notes'].forEach(id => setError(id, ''));
+        const data = draftDataFromForm();
+        if (!Object.entries(data).some(([key, val]) => key !== 'v' && Boolean(val))) {
+          draftStatus.textContent = '請先填至少一項安全欄位，再產生草稿連結。';
+          document.getElementById('year').focus();
+          return;
+        }
+        if (!validateDraftData(data)) {
+          if (locationUnsafe(data.l || '')) setError('location', '草稿只能放大概縣市／區域，請刪除路名、門牌或識別資訊。');
+          if (unsafeIdentity(data.b || '')) setError('brand', '偵測到可能的個資或識別資訊，請只保留品牌。');
+          if (unsafeIdentity(data.m || '')) setError('model', '偵測到可能的個資或識別資訊，請只保留車型。');
+          if (data.n !== undefined && unsafeSharedNotes(data.n)) setError('notes', '備註可能含地址、車牌、VIN、姓名或聯絡資訊，請刪除後再分享。');
+          draftStatus.textContent = '為保護隱私，草稿連結尚未產生；請先修正標示欄位。';
+          return;
+        }
+        const url = new URL(window.location.href);
+        url.search = '';
+        url.hash = 'draft=' + encodeDraft(data);
+        history.replaceState(null, '', window.location.pathname + window.location.search + url.hash);
+        setDraftLink(url.href);
+        draftStatus.textContent = data.n ? '草稿連結已產生，包含您勾選的備註；分享前請再檢查個資。' : '草稿連結已產生；備註未放入連結。';
+      };
+      const restoreDraft = () => {
+        if (!window.location.hash.startsWith('#draft=')) return false;
+        try {
+          const encoded = window.location.hash.slice(7);
+          if (!encoded || encoded.length > 3000) throw new Error('invalid draft');
+          const data = decodeDraft(encoded);
+          if (!validateDraftData(data)) throw new Error('unsafe draft');
+          suppressDraftDirty = true;
+          document.getElementById('year').value = data.y || '';
+          document.getElementById('brand').value = data.b || '';
+          document.getElementById('model').value = data.m || '';
+          document.getElementById('location').value = data.l || '';
+          form.querySelectorAll('input[name="issue"],input[name="photos"]').forEach(input => { input.checked = false; });
+          if (data.i) form.querySelector(`input[name="issue"][value="${CSS.escape(data.i)}"]`).checked = true;
+          if (data.p) form.querySelector(`input[name="photos"][value="${CSS.escape(data.p)}"]`).checked = true;
+          document.getElementById('notes').value = data.n || '';
+          draftIncludeNotes.checked = Boolean(data.n);
+          setDraftLink(window.location.href);
+          status.textContent = '已從草稿連結帶回安全欄位，請確認後繼續編輯或產生 LINE 訊息。';
+          status.style.color = '#9be9b2';
+          draftStatus.textContent = data.n ? '已帶回草稿與備註；請再次確認沒有個資。' : '已帶回草稿；分享連結中不含備註。';
+          suppressDraftDirty = false;
+          return true;
+        } catch (_) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+          draftStatus.textContent = '這個草稿連結無法讀取，或可能含不安全內容；未帶入任何草稿資料。';
+          return false;
+        }
+      };
+
+      if (!restoreDraft()) applyLocationPrefill();
+
+      form.addEventListener('input', () => {
+        if (!suppressDraftDirty && !draftLink.hidden) draftStatus.textContent = '欄位已變更；請按「重新產生」更新草稿連結。';
+      });
+      form.addEventListener('change', () => {
+        if (!suppressDraftDirty && !draftLink.hidden) draftStatus.textContent = '欄位已變更；請按「重新產生」更新草稿連結。';
+      });
+      draftIncludeNotes.addEventListener('change', () => {
+        if (!draftLink.hidden) draftStatus.textContent = '備註分享設定已變更；請按「重新產生」更新草稿連結。';
+      });
 
       form.addEventListener('submit', event => {
         event.preventDefault();
@@ -237,13 +395,15 @@
         if (!year) { setError('year', '請填車輛年份。'); errors.push(document.getElementById('year')); }
         else if (!/^((19|20)\d{2})$/.test(year)) { setError('year', '請填四位數年份，例如 2020。'); errors.push(document.getElementById('year')); }
         if (!brand) { setError('brand', '請填車輛品牌；不確定可填「不確定」。'); errors.push(document.getElementById('brand')); }
+        else if (unsafeIdentity(brand)) { setError('brand', '請只填品牌，不要放入地址、車牌、VIN 或聯絡資訊。'); errors.push(document.getElementById('brand')); }
         if (!model) { setError('model', '請填車型；不確定可填「不確定」。'); errors.push(document.getElementById('model')); }
+        else if (unsafeIdentity(model)) { setError('model', '請只填車型，不要放入地址、車牌、VIN 或聯絡資訊。'); errors.push(document.getElementById('model')); }
         if (!location) { setError('location', '請填縣市與區域，例如台中市西屯區。'); errors.push(document.getElementById('location')); }
-        else if (/[路街巷弄號樓]|\d{2,}/.test(location)) { setError('location', '為保護隱私，請只保留縣市與區域，不要填路名或門牌。'); errors.push(document.getElementById('location')); }
+        else if (locationUnsafe(location)) { setError('location', '為保護隱私，請只保留縣市與區域，不要填路名、門牌或識別資訊。'); errors.push(document.getElementById('location')); }
         if (!issue) { document.getElementById('issue-error').textContent = '請選擇最接近的目前狀況。'; errors.push(form.querySelector('input[name="issue"]')); }
         if (!photos) { document.getElementById('photos-error').textContent = '請選擇是否方便補照片。'; errors.push(form.querySelector('input[name="photos"]')); }
-        if (notes && /\b[A-HJ-NPR-Z0-9]{17}\b/i.test(notes)) { setError('notes', '偵測到疑似 VIN／車身號碼，請刪除後再產生訊息。'); errors.push(document.getElementById('notes')); }
-        else if (notes && /[A-Z]{2,3}[- ]?\d{3,4}|\d{3,4}[- ]?[A-Z]{2,3}/i.test(notes)) { setError('notes', '偵測到疑似車牌，請刪除後再產生訊息。'); errors.push(document.getElementById('notes')); }
+        if (notes && looksLikeVin(notes)) { setError('notes', '偵測到疑似 VIN／車身號碼，請刪除後再產生訊息。'); errors.push(document.getElementById('notes')); }
+        else if (notes && looksLikePlate(notes)) { setError('notes', '偵測到疑似車牌，請刪除後再產生訊息。'); errors.push(document.getElementById('notes')); }
 
         if (errors.length) {
           status.textContent = '還有幾項需要確認，已在欄位下方標示。';
@@ -274,15 +434,36 @@
       });
 
       copyButton.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(message.value);
-        } catch (_) {
-          message.hidden = false;
-          message.select();
-          document.execCommand('copy');
-        }
+        try { await navigator.clipboard.writeText(message.value); }
+        catch (_) { message.hidden = false; message.select(); document.execCommand('copy'); }
         copyStatus.textContent = '內容已複製，可貼到 LINE 對話。';
       });
+      draftGenerate.addEventListener('click', generateDraft);
+      draftRegenerate.addEventListener('click', generateDraft);
+      draftCopy.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(draftLink.value); }
+        catch (_) { draftLink.hidden = false; draftLink.select(); document.execCommand('copy'); }
+        draftStatus.textContent = '草稿連結已複製；分享前請確認只含非識別化資訊。';
+      });
+      draftClear.addEventListener('click', () => {
+        suppressDraftDirty = true;
+        draftLink.value = '';
+        draftLinkLabel.hidden = true;
+        draftLink.hidden = true;
+        draftCopy.hidden = true;
+        draftClear.hidden = true;
+        draftGenerate.hidden = false;
+        draftRegenerate.hidden = true;
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+        draftStatus.textContent = '草稿片段已從網址移除；目前欄位仍保留，可繼續編輯。本站沒有其他留存副本。';
+        suppressDraftDirty = false;
+      });
+      draftEdit.addEventListener('click', () => {
+        document.getElementById('form-title').scrollIntoView({behavior:'smooth',block:'start'});
+        document.getElementById('year').focus({preventScroll:true});
+        draftStatus.textContent = '可繼續修改欄位；修改後請重新產生草稿連結。';
+      });
+      draftContinue.addEventListener('click', () => form.requestSubmit());
     })();
   </script>
 </body>
