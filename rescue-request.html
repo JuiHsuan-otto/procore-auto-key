@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>救援需求快速整理｜汽車鑰匙 LINE 詢問內容產生器｜極致核心</title>
+  <meta name="description" content="用手機快速整理汽車年份、品牌、車型、所在地與鑰匙狀況，產生可複製並傳給極致核心 LINE @420gknem 的詢問內容。資料只在瀏覽器中處理，不會儲存或送出。">
+  <link rel="canonical" href="https://www.carkey.com.tw/rescue-request">
+  <link rel="icon" href="img/procore_logo_main.jpg" type="image/jpeg">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="極致核心 ProCore Auto Key">
+  <meta property="og:title" content="救援需求快速整理｜極致核心 ProCore Auto Key">
+  <meta property="og:description" content="不用懂專業術語，快速整理車款、地區與目前狀況，再複製或傳到 LINE @420gknem。網站不儲存您的資料。">
+  <meta property="og:url" content="https://www.carkey.com.tw/rescue-request">
+  <meta property="og:image" content="https://www.carkey.com.tw/img/procore_logo_main.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="救援需求快速整理｜極致核心 ProCore Auto Key">
+  <meta name="twitter:description" content="快速產生汽車鑰匙救援 LINE 詢問內容；資料只在本機瀏覽器中整理。">
+  <meta name="twitter:image" content="https://www.carkey.com.tw/img/procore_logo_main.jpg">
+  <style>
+    :root { --bg:#050505; --panel:#111; --panel2:#171717; --text:#eee; --muted:#aaa; --gold:#d4af37; --line:#06c755; --danger:#ffb4ab; --border:rgba(255,255,255,.12); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--text); background:radial-gradient(circle at 50% 0,#251e0b 0,#080808 35%,#030303 100%); font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif; line-height:1.65; }
+    a { color:inherit; }
+    .nav { position:sticky; top:0; z-index:20; background:rgba(5,5,5,.92); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
+    .nav-inner { max-width:1040px; margin:auto; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .brand img { width:40px; height:40px; object-fit:cover; border-radius:50%; border:1px solid rgba(212,175,55,.45); }
+    .brand strong { display:block; letter-spacing:.18em; font-size:14px; }
+    .brand small { display:block; color:var(--muted); font-size:9px; letter-spacing:.15em; }
+    .nav-links { display:flex; gap:18px; align-items:center; font-size:13px; }
+    .nav-links a { text-decoration:none; color:#ccc; }
+    .nav-links a:hover { color:var(--gold); }
+    main { max-width:1040px; margin:auto; padding:48px 20px 80px; }
+    .hero { text-align:center; max-width:780px; margin:0 auto 34px; }
+    .eyebrow { color:var(--gold); font-size:11px; letter-spacing:.3em; text-transform:uppercase; }
+    h1 { margin:10px 0 14px; font-size:clamp(2rem,7vw,3.5rem); line-height:1.2; }
+    .lead { margin:0 auto; color:#ccc; max-width:680px; }
+    .privacy { margin:24px auto 0; padding:15px 18px; max-width:760px; text-align:left; background:rgba(212,175,55,.08); border:1px solid rgba(212,175,55,.32); border-radius:12px; color:#eee; font-size:14px; }
+    .privacy strong { color:#f6d778; }
+    .layout { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr); gap:24px; align-items:start; }
+    .card { background:linear-gradient(145deg,rgba(26,26,26,.96),rgba(12,12,12,.96)); border:1px solid var(--border); border-radius:16px; padding:clamp(20px,4vw,34px); box-shadow:0 22px 70px rgba(0,0,0,.35); }
+    .card h2 { margin:0 0 6px; font-size:22px; }
+    .card-intro { margin:0 0 24px; color:var(--muted); font-size:14px; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .field { margin-bottom:18px; }
+    label, legend { display:block; margin-bottom:7px; color:#f2f2f2; font-weight:700; font-size:14px; }
+    .required { color:#f6d778; }
+    input, textarea, select { width:100%; min-height:48px; padding:11px 13px; color:#fff; background:#090909; border:1px solid #444; border-radius:9px; font:inherit; font-size:16px; }
+    textarea { min-height:100px; resize:vertical; }
+    input:focus, textarea:focus, select:focus { outline:3px solid rgba(212,175,55,.2); border-color:var(--gold); }
+    [aria-invalid="true"] { border-color:var(--danger); }
+    .hint, .error { display:block; margin-top:6px; font-size:12px; }
+    .hint { color:#999; }
+    .error { color:var(--danger); min-height:1em; }
+    fieldset { margin:0 0 18px; padding:0; border:0; }
+    .options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+    .option { min-height:46px; display:flex; align-items:center; gap:9px; margin:0; padding:10px 12px; border:1px solid #444; border-radius:9px; background:#0b0b0b; font-weight:500; cursor:pointer; }
+    .option:has(input:checked) { border-color:var(--gold); background:rgba(212,175,55,.09); }
+    .option input { width:18px; min-height:18px; height:18px; margin:0; accent-color:var(--gold); }
+    .submit { width:100%; min-height:52px; border:0; border-radius:9px; padding:13px 18px; background:linear-gradient(135deg,#bf953f,#fcf6ba,#b38728); color:#080808; font:inherit; font-weight:900; letter-spacing:.08em; cursor:pointer; }
+    .submit:hover { filter:brightness(1.08); }
+    .status { min-height:24px; margin:10px 0 0; color:var(--danger); text-align:center; font-size:14px; }
+    .result { position:sticky; top:84px; }
+    .empty { color:#999; font-size:14px; }
+    #message { width:100%; min-height:270px; margin:12px 0; white-space:pre-wrap; }
+    .actions { display:grid; gap:10px; }
+    .button { display:flex; align-items:center; justify-content:center; min-height:50px; padding:12px 16px; border-radius:9px; text-align:center; text-decoration:none; font-weight:800; cursor:pointer; font:inherit; }
+    .copy { border:1px solid var(--gold); background:transparent; color:var(--gold); }
+    .line { border:0; background:var(--line); color:#041d0d; }
+    .button[hidden] { display:none; }
+    .result-note { margin:14px 0 0; color:#999; font-size:12px; }
+    .contact { margin-top:22px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:14px; color:#bbb; }
+    .contact a { color:#f3d36f; text-decoration:none; font-weight:700; }
+    footer { border-top:1px solid var(--border); color:#777; text-align:center; padding:24px 20px; font-size:12px; }
+    @media (max-width:760px) { .nav-links a:not(.call) { display:none; } main { padding-top:34px; } .layout { grid-template-columns:1fr; } .result { position:static; } .grid { grid-template-columns:1fr; gap:0; } .options { grid-template-columns:1fr; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"WebPage","@id":"https://www.carkey.com.tw/rescue-request#webpage","url":"https://www.carkey.com.tw/rescue-request","name":"救援需求快速整理｜極致核心 ProCore Auto Key","description":"快速整理汽車鑰匙救援需求並產生可傳送至 LINE 的詢問內容。","inLanguage":"zh-TW","isPartOf":{"@id":"https://www.carkey.com.tw/#website"}},
+      {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://www.carkey.com.tw/"},{"@type":"ListItem","position":2,"name":"救援需求快速整理","item":"https://www.carkey.com.tw/rescue-request"}]}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav" aria-label="主要導覽">
+    <div class="nav-inner">
+      <a class="brand" href="/">
+        <img src="img/procore_logo_main.jpg" alt="極致核心 ProCore">
+        <span><strong>PROCORE</strong><small>AUTO KEY RESCUE</small></span>
+      </a>
+      <div class="nav-links"><a href="/service-areas">服務區域</a><a href="/cases">服務實績</a><a class="call" href="tel:0909277670">電話 0909-277-670</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div class="eyebrow">Rescue Request</div>
+      <h1>救援需求快速整理</h1>
+      <p class="lead">不用懂專業術語。填入基本資訊後，這個頁面會在您的手機上整理成一段訊息，讓您複製或帶到 LINE 傳送。</p>
+      <div class="privacy"><strong>請先保護個資：</strong>只填縣市與區域，不要填車牌、VIN／車身號碼、完整地址、車主姓名，或可被利用的技術細節。資料只在此頁的瀏覽器中整理，網站不會儲存或傳送。</div>
+    </header>
+
+    <div class="layout">
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title">先填這幾項</h2>
+        <p class="card-intro">標示「必填」的欄位完成後即可產生訊息。</p>
+        <form id="request-form" novalidate>
+          <div class="grid">
+            <div class="field">
+              <label for="year">車輛年份 <span class="required">必填</span></label>
+              <input id="year" name="year" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="例如 2020" required>
+              <span class="error" id="year-error"></span>
+            </div>
+            <div class="field">
+              <label for="brand">品牌 <span class="required">必填</span></label>
+              <input id="brand" name="brand" type="text" autocomplete="organization" maxlength="30" placeholder="例如 Toyota" required>
+              <span class="error" id="brand-error"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="model">車型 <span class="required">必填</span></label>
+            <input id="model" name="model" type="text" maxlength="40" placeholder="例如 RAV4；不確定可填「不確定」" required>
+            <span class="error" id="model-error"></span>
+          </div>
+          <div class="field">
+            <label for="location">所在地縣市／區域 <span class="required">必填</span></label>
+            <input id="location" name="location" type="text" maxlength="40" placeholder="例如 台中市西屯區" required>
+            <span class="hint">請勿填路名、門牌、停車格或完整地址。</span>
+            <span class="error" id="location-error"></span>
+          </div>
+
+          <fieldset>
+            <legend>目前狀況 <span class="required">必填</span></legend>
+            <div class="options">
+              <label class="option"><input type="radio" name="issue" value="鑰匙全丟">鑰匙全丟</label>
+              <label class="option"><input type="radio" name="issue" value="新增備用鑰匙">新增備用</label>
+              <label class="option"><input type="radio" name="issue" value="智能鑰匙感應不到">智能鑰匙感應不到</label>
+              <label class="option"><input type="radio" name="issue" value="車子發不動">車子發不動</label>
+              <label class="option"><input type="radio" name="issue" value="其他">其他</label>
+            </div>
+            <span class="error" id="issue-error"></span>
+          </fieldset>
+
+          <fieldset>
+            <legend>是否方便補照片 <span class="required">必填</span></legend>
+            <div class="options">
+              <label class="option"><input type="radio" name="photos" value="可以補照片">可以</label>
+              <label class="option"><input type="radio" name="photos" value="目前不方便補照片">目前不方便</label>
+            </div>
+            <span class="hint">照片請避開車牌、證件、住址與個人資料。</span>
+            <span class="error" id="photos-error"></span>
+          </fieldset>
+
+          <div class="field">
+            <label for="notes">簡短備註（選填）</label>
+            <textarea id="notes" name="notes" maxlength="200" placeholder="例如：人在車旁、車門可開；請勿填個資或技術資料"></textarea>
+            <span class="hint">最多 200 字。只描述眼前狀況即可。</span>
+            <span class="error" id="notes-error"></span>
+          </div>
+          <button class="submit" type="submit">產生 LINE 詢問內容</button>
+          <p id="form-status" class="status" role="alert" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <aside class="card result" aria-labelledby="result-title">
+        <h2 id="result-title">整理好的訊息</h2>
+        <p id="empty-state" class="empty">填完左側欄位後，訊息會出現在這裡。您確認內容沒問題，再自行複製或傳送。</p>
+        <textarea id="message" readonly hidden aria-label="整理後的 LINE 詢問內容"></textarea>
+        <div class="actions">
+          <button id="copy-button" class="button copy" type="button" hidden>複製內容</button>
+          <a id="line-button" class="button line" href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener noreferrer" hidden>帶到 LINE @420gknem</a>
+        </div>
+        <p id="copy-status" class="result-note" role="status" aria-live="polite"></p>
+        <p class="result-note">按下 LINE 按鈕才會離開本站。若手機未自動帶入文字，請先按「複製內容」，再貼到對話中。</p>
+        <div class="contact">仍需要直接聯絡：<a href="tel:0909277670">0909-277-670</a><br>正確 LINE ID：<a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener noreferrer">@420gknem</a></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>© 2026 PROCORE AUTO KEY</footer>
+  <script>
+    (() => {
+      const form = document.getElementById('request-form');
+      const message = document.getElementById('message');
+      const empty = document.getElementById('empty-state');
+      const copyButton = document.getElementById('copy-button');
+      const lineButton = document.getElementById('line-button');
+      const status = document.getElementById('form-status');
+      const copyStatus = document.getElementById('copy-status');
+
+      const setError = (id, text) => {
+        const field = document.getElementById(id);
+        const error = document.getElementById(id + '-error');
+        if (error) error.textContent = text;
+        if (field) field.setAttribute('aria-invalid', text ? 'true' : 'false');
+      };
+
+      const value = id => document.getElementById(id).value.trim();
+      const selected = name => form.querySelector(`input[name="${name}"]:checked`);
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        status.textContent = '';
+        status.style.color = '';
+        copyStatus.textContent = '';
+        ['year','brand','model','location','notes'].forEach(id => setError(id, ''));
+        document.getElementById('issue-error').textContent = '';
+        document.getElementById('photos-error').textContent = '';
+
+        const errors = [];
+        const year = value('year');
+        const brand = value('brand');
+        const model = value('model');
+        const location = value('location');
+        const notes = value('notes');
+        const issue = selected('issue');
+        const photos = selected('photos');
+
+        if (!year) { setError('year', '請填車輛年份。'); errors.push(document.getElementById('year')); }
+        else if (!/^((19|20)\d{2})$/.test(year)) { setError('year', '請填四位數年份，例如 2020。'); errors.push(document.getElementById('year')); }
+        if (!brand) { setError('brand', '請填車輛品牌；不確定可填「不確定」。'); errors.push(document.getElementById('brand')); }
+        if (!model) { setError('model', '請填車型；不確定可填「不確定」。'); errors.push(document.getElementById('model')); }
+        if (!location) { setError('location', '請填縣市與區域，例如台中市西屯區。'); errors.push(document.getElementById('location')); }
+        else if (/[路街巷弄號樓]|\d{2,}/.test(location)) { setError('location', '為保護隱私，請只保留縣市與區域，不要填路名或門牌。'); errors.push(document.getElementById('location')); }
+        if (!issue) { document.getElementById('issue-error').textContent = '請選擇最接近的目前狀況。'; errors.push(form.querySelector('input[name="issue"]')); }
+        if (!photos) { document.getElementById('photos-error').textContent = '請選擇是否方便補照片。'; errors.push(form.querySelector('input[name="photos"]')); }
+        if (notes && /\b[A-HJ-NPR-Z0-9]{17}\b/i.test(notes)) { setError('notes', '偵測到疑似 VIN／車身號碼，請刪除後再產生訊息。'); errors.push(document.getElementById('notes')); }
+        else if (notes && /[A-Z]{2,3}[- ]?\d{3,4}|\d{3,4}[- ]?[A-Z]{2,3}/i.test(notes)) { setError('notes', '偵測到疑似車牌，請刪除後再產生訊息。'); errors.push(document.getElementById('notes')); }
+
+        if (errors.length) {
+          status.textContent = '還有幾項需要確認，已在欄位下方標示。';
+          errors[0].focus();
+          return;
+        }
+
+        const text = [
+          '您好，我想詢問汽車鑰匙服務：',
+          `・車輛：${year} ${brand} ${model}`,
+          `・所在地：${location}（僅縣市／區域）`,
+          `・目前狀況：${issue.value}`,
+          `・照片：${photos.value}`,
+          `・備註：${notes || '無'}`,
+          '',
+          '以上未提供車牌、VIN／車身號碼、完整地址或車主姓名；詳細位置可在確認服務後再私訊。'
+        ].join('\n');
+
+        message.value = text;
+        message.hidden = false;
+        empty.hidden = true;
+        copyButton.hidden = false;
+        lineButton.hidden = false;
+        lineButton.href = 'https://line.me/R/oaMessage/@420gknem/?' + encodeURIComponent(text);
+        status.textContent = '已整理完成，請確認右側內容。';
+        status.style.color = '#9be9b2';
+        message.focus();
+      });
+
+      copyButton.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(message.value);
+        } catch (_) {
+          message.hidden = false;
+          message.select();
+          document.execCommand('copy');
+        }
+        copyStatus.textContent = '內容已複製，可貼到 LINE 對話。';
+      });
+    })();
+  </script>
+</body>
+</html>
