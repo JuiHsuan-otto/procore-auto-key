@@ -328,7 +328,9 @@
         const url = new URL(window.location.href);
         url.search = '';
         url.hash = 'draft=' + encodeDraft(data);
-        history.replaceState(null, '', window.location.pathname + window.location.search + url.hash);
+        // A shareable draft must live only in the fragment; do not retain a
+        // service-area query parameter in the generated draft URL.
+        history.replaceState(null, '', window.location.pathname + url.hash);
         setDraftLink(url.href);
         draftStatus.textContent = data.n ? '草稿連結已產生，包含您勾選的備註；分享前請再檢查個資。' : '草稿連結已產生；備註未放入連結。';
       };
@@ -356,7 +358,7 @@
           suppressDraftDirty = false;
           return true;
         } catch (_) {
-          history.replaceState(null, '', window.location.pathname + window.location.search);
+          history.replaceState(null, '', window.location.pathname);
           draftStatus.textContent = '這個草稿連結無法讀取，或可能含不安全內容；未帶入任何草稿資料。';
           return false;
         }
@@ -466,6 +468,5 @@
       draftContinue.addEventListener('click', () => form.requestSubmit());
     })();
   </script>
-<script src="/assets/js/procore-conversion-tracking.js" defer></script>
 </body>
 </html>

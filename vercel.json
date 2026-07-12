@@ -3,6 +3,8 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/index.html", "destination": "/" },
+    { "source": "/quick-rescue", "destination": "/rescue-request", "permanent": true },
+    { "source": "/quick-rescue.html", "destination": "/rescue-request", "permanent": true },
     { "source": "/article-vag-dashboard-immobilizer-tech", "destination": "/article-vag-dashboard-key-safety-guide", "permanent": true },
     { "source": "/article-vag-dashboard-immobilizer-tech.html", "destination": "/article-vag-dashboard-key-safety-guide", "permanent": true },
     { "source": "/car-key-lost-rescue-central-taiwan", "destination": "/article-car-key-lost-rescue-central-taiwan", "permanent": true },

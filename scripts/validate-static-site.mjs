@@ -19,6 +19,7 @@ const EXCLUDED_DIRS = new Set([
 ]);
 const SITE_HOSTS = new Set(["carkey.com.tw", "www.carkey.com.tw"]);
 const CONVERSION_TRACKING_SCRIPT = "/assets/js/procore-conversion-tracking.js";
+const LOCAL_ONLY_PAGES = new Set(["rescue-request.html", "service-areas.html"]);
 const COUNTY_AREA_PAGES = new Set([
   "taipei-car-key.html",
   "new-taipei-car-key.html",
@@ -410,7 +411,11 @@ function validateHtml(relPath, html, errors, warnings) {
   if (/unsafe-eval/i.test(html)) {
     errors.push(`${relPath}: CSP contains unsafe-eval`);
   }
-  if (!html.includes(CONVERSION_TRACKING_SCRIPT)) {
+  if (LOCAL_ONLY_PAGES.has(relPath)) {
+    if (html.includes(CONVERSION_TRACKING_SCRIPT) || /\b(fetch|XMLHttpRequest|WebSocket)\s*\(|localStorage|sessionStorage|google\.maps/i.test(html)) {
+      errors.push(`${relPath}: local-only utility references tracking, storage, or a network API`);
+    }
+  } else if (!html.includes(CONVERSION_TRACKING_SCRIPT)) {
     errors.push(`${relPath}: missing ProCore conversion tracking script`);
   }
   if (/\?{4,}/.test(html)) {
