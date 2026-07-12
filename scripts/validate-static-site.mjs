@@ -450,6 +450,46 @@ function validateHtml(relPath, html, errors, warnings) {
   }
 }
 
+function validateRescueRequest(htmlByPath, sitemapUrls, errors) {
+  const relPath = "rescue-request.html";
+  const html = htmlByPath.get(relPath);
+  if (!html) { errors.push(`${relPath}: missing rescue request page`); return; }
+
+  const required = [
+    'id="year"', 'id="brand"', 'id="model"', 'id="location"',
+    'name="issue"', 'name="photos"', 'id="notes"',
+    'https://line.me/R/oaMessage/@420gknem/?', 'tel:0909277670',
+  ];
+  for (const marker of required) {
+    if (!html.includes(marker)) errors.push(`${relPath}: missing required marker: ${marker}`);
+  }
+  const forbidden = [
+    /<form\b[^>]*\baction=/i, /<script\b[^>]*\bsrc=/i,
+    /\bfetch\s*\(/, /XMLHttpRequest/, /WebSocket/, /sendBeacon/,
+    /localStorage/, /sessionStorage/, /document\.cookie/,
+  ];
+  for (const pattern of forbidden) {
+    if (pattern.test(html)) errors.push(`${relPath}: contains forbidden network/storage capability: ${pattern}`);
+  }
+  if (!sitemapUrls.has("https://www.carkey.com.tw/rescue-request")) {
+    errors.push("sitemap.xml: missing rescue request clean URL");
+  }
+  for (const source of ["index.html", "service-areas.html", "vcard.html"]) {
+    const sourceHtml = htmlByPath.get(source) || "";
+    if (!sourceHtml.includes('href="/rescue-request"')) {
+      errors.push(`${source}: missing rescue request entry link`);
+    }
+  }
+  const vcard = htmlByPath.get("vcard.html") || "";
+  if (/qrserver\.com|api\.qr/i.test(vcard)) {
+    errors.push("vcard.html: QR code must be a local asset, not an external API");
+  }
+  const serviceAreas = htmlByPath.get("service-areas.html") || "";
+  if (/\/rescue-request\?(?:location|area)=/.test(serviceAreas)) {
+    errors.push("service-areas.html: location prefill must use a URL fragment, not a server-visible query");
+  }
+}
+
 async function validateJsonFile(relPath, errors) {
   const raw = await fsp.readFile(path.join(ROOT, relPath), "utf8");
   try {
@@ -470,9 +510,11 @@ async function main() {
   const warnings = [];
   const seoEntries = [];
   const incomingLinks = new Map();
+  const htmlByPath = new Map();
 
   for (const relPath of htmlFiles) {
     const html = await fsp.readFile(path.join(ROOT, relPath), "utf8");
+    htmlByPath.set(relPath, html);
     validateHtml(relPath, html, errors, warnings);
     seoEntries.push(extractSeoMetadata(relPath, html));
     for (const target of collectInternalHtmlTargets(html)) {
@@ -505,6 +547,7 @@ async function main() {
   }
 
   validateSeoEntries(seoEntries, sitemapUrls, incomingLinks, errors);
+  validateRescueRequest(htmlByPath, sitemapUrls, errors);
 
   console.log(`Validated HTML files: ${htmlFiles.length}`);
   console.log(`Warnings: ${warnings.length}`);
