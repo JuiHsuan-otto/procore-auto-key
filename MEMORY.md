@@ -113,3 +113,4 @@
 - 新增 `/rescue-request` 純前端需求整理頁；不得儲存資料或接後端／外部 API。
 - 發文後必跑 `publish_tool.py` 與站點驗證，遇遠端更新只做安全整合，禁止 force push。
 - 服務範圍查詢採純前端名單，未列區域只做保守評估，不保證到府；所在地可透過 `/rescue-request?area=` 預填。
+- `/rescue-request` 草稿轉交只可使用 URL `#draft=`；備註預設排除，須主動勾選，不得使用 query、storage、cookie、後端或第三方服務。
