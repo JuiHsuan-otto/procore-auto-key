@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "updated": "2026-04-28",
+  "brand": {
+    "name": "極致核心 ProCore",
+    "site": "https://www.carkey.com.tw",
+    "phone": "0909277670",
+    "lineId": "@420gknem"
+  },
+  "channels": {
+    "website": {
+      "role": "canonical_source",
+      "cleanUrls": true,
+      "publishDefault": "validated_publish",
+      "required": ["title", "metaDescription", "canonical", "h1", "jsonLd", "sitemap", "internalLinks"]
+    },
+    "blogger": {
+      "role": "supporting_article_backlink",
+      "publishDefault": "draft",
+      "preferredApi": "Blogger API v3 posts.insert",
+      "oauthScopes": ["https://www.googleapis.com/auth/blogger"],
+      "minCharsZh": 500,
+      "maxCharsZh": 1200,
+      "required": ["uniqueIntro", "officialBacklink", "labels", "cta"]
+    },
+    "threads": {
+      "role": "short_form_conversation",
+      "publishDefault": "draft",
+      "maxChars": 500,
+      "maxTopicTags": 1,
+      "required": ["plainText", "noHype", "optionalOfficialUrl"]
+    },
+    "googleBusinessProfile": {
+      "role": "local_discovery_cta",
+      "publishDefault": "draft",
+      "preferredApi": "accounts.locations.localPosts",
+      "topicType": "STANDARD",
+      "summaryMaxChars": 700,
+      "defaultCta": "LEARN_MORE",
+      "required": ["languageCode", "summary", "topicType", "callToAction"]
+    }
+  },
+  "bannedPhrases": [
+    "職人",
+    "火速",
+    "攻克",
+    "深入解析",
+    "完美匹配",
+    "守護您的駕駛權限",
+    "魂動美學",
+    "數據重構",
+    "全台．跨區．遠征"
+  ],
+  "utm": {
+    "blogger": "utm_source=blogger&utm_medium=referral&utm_campaign=ai_content_pack",
+    "threads": "utm_source=threads&utm_medium=social&utm_campaign=ai_content_pack",
+    "googleBusinessProfile": "utm_source=google_business_profile&utm_medium=local_post&utm_campaign=ai_content_pack"
+  }
+}

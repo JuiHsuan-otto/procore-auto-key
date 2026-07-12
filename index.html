@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>極致核心 ProCore | 汽車鑰匙全丟、晶片鑰匙備份與到場配製</title>
+ <link rel="icon" href="img/procore_logo_main.jpg" type="image/jpeg">
+ <meta name="description" content="汽車鑰匙遺失、全丟或想先備份，可先提供車款年份與所在地。極致核心到場確認車況後，依 BMW、Benz、Toyota、Honda 等車系完成配製與啟動測試。">
+
+ <link rel="canonical" href="https://www.carkey.com.tw/">
+ <meta name="robots" content="index, follow, max-image-preview:large">
+ <meta property="og:type" content="website">
+ <meta property="og:title" content="極致核心 ProCore | 汽車鑰匙全丟、晶片鑰匙備份與到場配製">
+ <meta property="og:description" content="汽車鑰匙遺失、全丟或想先備份，可先提供車款年份與所在地。極致核心到場確認車況後，依 BMW、Benz、Toyota、Honda 等車系完成配製與啟動測試。">
+ <meta property="og:url" content="https://www.carkey.com.tw/">
+ <meta property="og:image" content="https://www.carkey.com.tw/img/procore_logo_main.jpg">
+ <meta name="twitter:card" content="summary_large_image">
+ <meta name="twitter:title" content="極致核心 ProCore | 汽車鑰匙全丟、晶片鑰匙備份與到場配製">
+ <meta name="twitter:description" content="汽車鑰匙遺失、全丟或想先備份，可先提供車款年份與所在地。極致核心到場確認車況後，依 BMW、Benz、Toyota、Honda 等車系完成配製與啟動測試。">
+ <meta name="twitter:image" content="https://www.carkey.com.tw/img/procore_logo_main.jpg">
+ <meta name="google-site-verification" content="VbOzrywNht_oNXRw-mPLIvYWNi4iKJVFaaQlb" />
+ <!-- AEO Crawler Tracking by Washinmura -->
+ <link rel="aeo-profile" href="https://aeo.washinmura.jp/ai/carkey.com.tw/">
+ <meta name="aeo-verified" content="washinmura-aeo-carkey.com.tw">
+ <script src="https://aeo.washinmura.jp/widget/crawler-track.js" data-site="carkey.com.tw"></script>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;600&display=swap" rel="stylesheet">
+ <style>
+ :root { --bg-deep: #050505; --glass: rgba(20, 20, 20, 0.6); --border: rgba(255, 255, 255, 0.08); --gold-primary: #D4AF37; --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
+ body { background-color: var(--bg-deep); color: #e5e5e5; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 80%); }
+
+ /* 浮動按鈕呼吸效果 */
+ @keyframes pulse-gold {
+ 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); }
+ 50% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); transform: scale(1.05); }
+ 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); }
+ }
+ .float-btn { position: fixed; bottom: 30px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
+ .btn-call-float { width: 65px; height: 65px; background: var(--gold-gradient); border-radius: 50%; display: flex; items-center; justify-content: center; animation: pulse-gold 2s infinite ease-in-out; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); }
+ .btn-line-float { width: 65px; height: 65px; background: #06C755; border-radius: 50%; display: flex; items-center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
+ .btn-line-float:hover { transform: scale(1.1); }
+
+ /* 數字滾動樣式 */
+ .stat-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; text-align: center; border-radius: 4px; }
+ .stat-number { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 0.5rem; }
+ .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 6s linear infinite; }
+ @keyframes shine { to { background-position: 200% center; } }
+ nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+ .nav-scrolled { border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
+ .work-card { position: relative; aspect-ratio: 1/1; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.1); transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
+ .work-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
+ .work-card:hover { border-color: var(--gold-primary); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
+ .work-card:hover img { transform: scale(1.08); }
+ .work-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); }
+ .btn-premium { border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 0.6rem 1.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; background: rgba(255,255,255,0.02); }
+ .btn-premium:hover { background: var(--gold-primary); color: black; box-shadow: 0 0 20px rgba(212,175,55,0.3); }
+ .btn-emergency { background: var(--gold-gradient); color: #000; font-weight: 800; padding: 1rem 2rem; border-radius: 2px; transition: all 0.3s; }
+ .btn-emergency:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(212,175,55,0.4); }
+ </style>
+ <script type="application/ld+json" data-seo="procore">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+ {
+ "@type": "WebSite",
+ "@id": "https://www.carkey.com.tw/#website",
+ "url": "https://www.carkey.com.tw/",
+ "name": "極致核心 ProCore Auto Key",
+ "inLanguage": "zh-TW",
+ "publisher": {
+ "@id": "https://www.carkey.com.tw/#business"
+ }
+ },
+ {
+ "@type": "LocalBusiness",
+ "@id": "https://www.carkey.com.tw/#business",
+ "name": "極致核心 ProCore Auto Key",
+ "alternateName": "ProCore Auto Key",
+ "url": "https://www.carkey.com.tw/",
+ "telephone": "+886909277670",
+ "image": "https://www.carkey.com.tw/img/procore_logo_main.jpg",
+ "priceRange": "$$",
+ "areaServed": [
+ "台中市",
+ "彰化縣",
+ "南投縣",
+ "苗栗縣",
+ "雲林縣",
+ "嘉義市",
+ "新竹市",
+ "新北市",
+ "高雄市"
+ ],
+ "address": {
+ "@type": "PostalAddress",
+ "addressCountry": "TW"
+ },
+ "contactPoint": {
+ "@type": "ContactPoint",
+ "telephone": "+886909277670",
+ "contactType": "customer service",
+ "availableLanguage": [
+ "zh-TW",
+ "vi"
+ ]
+ }
+ },
+ {
+ "@type": "WebSite",
+ "@id": "https://www.carkey.com.tw/#webpage",
+ "url": "https://www.carkey.com.tw/",
+ "name": "極致核心 ProCore | 全台汽車晶片鑰匙全丟救援 24H 跨區現場匹配",
+ "headline": "極致核心 ProCore | 汽車鑰匙全丟、晶片鑰匙備份與到場配製",
+ "description": "汽車鑰匙遺失、全丟或想先備份，可先提供車款年份與所在地。極致核心到場確認車況後，依 BMW、Benz、Toyota、Honda 等車系完成配製與啟動測試。",
+ "image": "https://www.carkey.com.tw/img/procore_logo_main.jpg",
+ "inLanguage": "zh-TW",
+ "isPartOf": {
+ "@id": "https://www.carkey.com.tw/#website"
+ },
+ "publisher": {
+ "@id": "https://www.carkey.com.tw/#business"
+ }
+ }
+ ]
+}
+ </script></head>
+<body class="antialiased">
+ <!-- 24H 浮動救援按鈕 -->
+ <div class="float-btn md:hidden">
+ <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="btn-line-float">
+ <img alt="中彰投為主・全台可預約 汽車晶片鑰匙現場救援" src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" class="w-8 h-8">
+ </a>
+ <a href="tel:0909277670" class="btn-call-float">
+ <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+ </a>
+ </div>
+
+ <nav id="navbar" class="sticky top-0 w-full z-50 py-4 transition-all duration-300">
+ <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+ <a href="/" class="group flex items-center gap-3">
+ <img alt="中彰投為主・全台可預約 汽車晶片鑰匙現場救援" src="img/procore_logo_main.jpg" class="w-10 h-10 rounded-full border border-gold-primary/30 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+ <div>
+ <div class="font-cinzel text-xl text-white font-bold tracking-widest">PROCORE</div>
+ <span class="text-[8px] text-gray-500 tracking-[0.4em] uppercase block">Artisan Auto Key</span>
+ </div>
+ </a>
+ <div class="hidden md:flex items-center gap-10">
+ <a href="/service-areas" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">服務區域 / Areas</a>
+ <a href="/cases" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">解碼實績 / Works</a>
+ <a href="/blog" class="text-[10px] font-bold tracking-[0.2em] text-gray-400 hover:text-white transition uppercase">技術專欄 / Blog</a>
+
+ <div class="hidden lg:flex items-center ml-10 relative group">
+ <input type="text" id="global-search" placeholder="搜尋車款或地點..."
+ class="bg-zinc-900/50 border border-white/10 rounded-full px-4 py-1 text-[10px] text-white focus:outline-none focus:border-gold-primary/50 transition-all w-40 focus:w-64">
+ <svg class="w-3 h-3 text-gray-500 absolute right-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+ <div id="search-results" class="absolute top-full right-0 mt-2 w-80 bg-zinc-900 border border-white/10 rounded shadow-2xl hidden z-[100] max-h-96 overflow-y-auto"></div>
+ </div>
+ <a href="tel:0909277670" class="btn-premium">24H Emergency</a>
+ </div>
+
+ <div class="md:hidden flex items-center gap-4">
+ <button id="mobile-search-toggle" class="text-white">
+ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+ </button>
+ </div>
+ <div class="md:hidden flex space-x-4 text-[10px] font-bold tracking-widest">
+ <a href="/service-areas" class="text-white">AREAS</a>
+ <a href="/cases" class="text-white">WORKS</a>
+ <a href="/blog" class="text-white">BLOG</a>
+ <a href="tel:0909277670" class="text-gold">CALL</a>
+ </div>
+ </div>
+ </nav>
+
+ <header class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+ <video class="absolute inset-0 w-full h-full object-cover opacity-20" autoplay loop muted playsinline>
+ <source src="vid/bmw_tech.mp4" type="video/mp4">
+ </video>
+ <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+ <div class="relative z-10 text-center px-4 max-w-5xl">
+ <span class="inline-block py-1 px-3 border border-gold-primary/30 text-gold-primary text-[9px] tracking-[0.4em] uppercase mb-8">Automotive Key Service</span>
+ <h1 class="font-serif-tc text-4xl md:text-8xl font-bold text-white leading-tight mb-8">
+ 中彰投為主・全台可預約<br>
+ <span class="text-gold-lux italic text-xl md:text-5xl">汽車晶片鑰匙現場救援</span>
+ </h1>
+ <div class="flex flex-col md:flex-row justify-center gap-6 mt-8">
+ <a href="/rescue-request" class="btn-emergency text-xs tracking-widest">快速整理救援需求</a>
+ <a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener" class="border border-white/20 px-10 py-4 text-[10px] tracking-widest text-white uppercase hover:bg-white/5 transition">LINE 預約諮詢</a>
+ </div>
+ </div>
+ </header>
+
+ <!-- 服務紀錄數據 -->
+ <section class="py-12 bg-zinc-900/50">
+ <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+ <div class="stat-card">
+ <div class="stat-number counter" data-target="5221">0</div>
+ <div class="text-[10px] text-gray-500 tracking-widest uppercase">累積處理車輛</div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-number counter" data-target="1514">0</div>
+ <div class="text-[10px] text-gray-500 tracking-widest uppercase">跨區到場紀錄</div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-number counter" data-target="100">0</div>
+ <div class="text-[10px] text-gray-500 tracking-widest uppercase">覆蓋汽車品牌</div>
+ </div>
+ <div class="stat-card">
+ <div class="stat-number counter" data-target="24">0</div>
+ <div class="text-[10px] text-gray-500 tracking-widest uppercase">24H 全年無休</div>
+ </div>
+ </div>
+ </section>
+
+ <!-- 救援對比模組 (New: SEO & Conversion Optimization) -->
+ <section class="py-24 bg-black relative overflow-hidden">
+ <div class="max-w-7xl mx-auto px-6">
+ <div class="text-center mb-16">
+ <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Why call first?</span>
+ <h2 class="text-3xl md:text-4xl font-bold font-serif-tc text-white">鑰匙不見時，先確認能不能現場處理</h2>
+ </div>
+
+ <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+ <!-- 原廠模式 -->
+ <div class="p-10 border border-white/5 bg-zinc-900/20 opacity-50 relative group grayscale hover:grayscale-0 transition-all duration-700">
+ <div class="absolute top-0 right-0 p-4 text-[10px] text-gray-600 font-bold tracking-widest uppercase">Traditional Path</div>
+ <h3 class="text-xl font-bold text-gray-400 mb-8 font-cinzel tracking-widest">原廠處理模式</h3>
+ <ul class="space-y-6">
+ <li class="flex items-start gap-4">
+ <span class="text-red-900 text-xl">✕</span>
+ <div>
+ <p class="text-white font-bold mb-1">高昂拖吊費</p>
+ <p class="text-gray-500 text-xs">必須自行聯繫拖吊車進入拍場或路邊，衍生額外作業風險與費用。</p>
+ </div>
+ </li>
+ <li class="flex items-start gap-4">
+ <span class="text-red-900 text-xl">✕</span>
+ <div>
+ <p class="text-white font-bold mb-1">漫長的等待期</p>
+ <p class="text-gray-500 text-xs">零件需向海外或總代理訂購，通常需要 7-14 個工作天方能交車。</p>
+ </div>
+ </li>
+ <li class="flex items-start gap-4">
+ <span class="text-red-900 text-xl">✕</span>
+ <div>
+ <p class="text-white font-bold mb-1">整組更換成本</p>
+ <p class="text-gray-500 text-xs">往往被要求更換整套電腦模組或鎖組，維修單據動輒數萬元起跳。</p>
+ </div>
+ </li>
+ </ul>
+ </div>
+
+ <!-- 極致核心模式 -->
+ <div class="p-10 border border-gold-primary/30 bg-zinc-900/40 relative shadow-[0_0_50px_rgba(212,175,55,0.1)]">
+ <div class="absolute top-0 right-0 p-4 text-[10px] text-gold-primary font-bold tracking-widest uppercase">ProCore Advantage</div>
+ <h3 class="text-xl font-bold text-gold-primary mb-8 font-cinzel tracking-widest">極致核心 救援實力</h3>
+ <ul class="space-y-6">
+ <li class="flex items-start gap-4">
+ <span class="text-gold-primary text-xl">✓</span>
+ <div>
+ <p class="text-white font-bold mb-1">現地免拖吊</p>
+ <p class="text-gray-300 text-xs leading-relaxed">行動工作車直接抵達現場。無論是在室內停車場、拍賣場或路邊，現地解決。</p>
+ </div>
+ </li>
+ <li class="flex items-start gap-4">
+ <span class="text-gold-primary text-xl">✓</span>
+ <div>
+ <p class="text-white font-bold mb-1">當日完工交車</p>
+ <p class="text-gray-300 text-xs leading-relaxed">依車系防盜流程處理資料，多數進口車約 1-2 小時完成匹配，交車前會測試遙控、感應與啟動。</p>
+ </div>
+ </li>
+ <li class="flex items-start gap-4">
+ <span class="text-gold-primary text-xl">✓</span>
+ <div>
+ <p class="text-white font-bold mb-1">防盜資料同步</p>
+ <p class="text-gray-300 text-xs leading-relaxed">多數案件不需更換原車模組；完成資料讀取與新鑰匙寫入後，會確認舊鑰匙 ID 是否需要停用。</p>
+ </div>
+ </li>
+ </ul>
+ <div class="mt-12">
+ <a href="tel:0909277670" class="btn-emergency w-full text-center block text-xs tracking-[0.2em] uppercase">啟動極速救援方案</a>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <section id="recent-works" class="py-24 bg-black">
+ <div class="max-w-7xl mx-auto px-6">
+ <!-- 車主指南固定區 (New) -->
+ <div class="mb-20">
+ <div class="flex items-center gap-4 mb-10">
+ <div class="h-[1px] flex-grow bg-gold-primary/20"></div>
+ <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase whitespace-nowrap">Professional Guides</span>
+ <div class="h-[1px] flex-grow bg-gold-primary/20"></div>
+ </div>
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+ <a href="/article-lost-key-rescue-guide" class="group relative overflow-hidden border border-gold-primary/30 bg-zinc-900/30 p-8 hover:bg-gold-primary/5 transition-all duration-500">
+ <div class="flex justify-between items-start mb-6">
+ <span class="text-[9px] text-gold-primary border border-gold-primary/50 px-2 py-1 tracking-widest uppercase">全丟救援百科</span>
+ <svg class="w-5 h-5 text-gold-primary opacity-50 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+ </div>
+ <h3 class="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-gold-primary transition-colors">汽車智慧鑰匙全丟怎麼辦？<br>免拖車流程與費用解析</h3>
+ <p class="text-gray-500 text-xs leading-loose">整理汽車鑰匙全丟後的處理流程，包含是否需要拖車、現場匹配與費用判斷...</p>
+ </a>
+ <a href="/article-used-car-security-guide" class="group relative overflow-hidden border border-gold-primary/30 bg-zinc-900/30 p-8 hover:bg-gold-primary/5 transition-all duration-500">
+ <div class="flex justify-between items-start mb-6">
+ <span class="text-[9px] text-gold-primary border border-gold-primary/50 px-2 py-1 tracking-widest uppercase">二手車安全專題</span>
+ <svg class="w-5 h-5 text-gold-primary opacity-50 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+ </div>
+ <h3 class="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-gold-primary transition-colors">中古車購車指南：<br>鑰匙 ID 清除才是防盜第一步</h3>
+ <p class="text-gray-300/60 text-xs leading-loose">您手中的鑰匙是唯一的嗎？整理鑰匙數量確認與 ID 註銷方式，降低不明鑰匙留下的風險...</p>
+ </a>
+ </div>
+ </div>
+
+ <div class="flex justify-between items-end mb-12">
+ <div>
+ <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Recent Missions</span>
+ <h2 class="text-2xl font-bold font-serif-tc text-white">最新解碼實績</h2>
+ </div>
+ <a href="/cases" class="text-[10px] text-gray-500 hover:text-white border-b border-gray-800 pb-2 tracking-widest transition">VIEW ALL →</a>
+ </div>
+ <div id="home-case-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+ <!-- 由 JS 聯動 -->
+ </div>
+ </div>
+ </section>
+
+ <section class="py-24 bg-black/50 border-y border-white/5">
+ <div class="max-w-4xl mx-auto px-6">
+ <div class="text-center mb-16">
+ <span class="text-gold-primary text-[10px] tracking-[0.4em] uppercase mb-2 block">Common Questions</span>
+ <h2 class="text-3xl font-bold font-serif-tc text-white italic">常見問題解答</h2>
+ </div>
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+ <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+ <h3 class="text-gold-primary text-base font-bold mb-4">Q: 鑰匙全丟了，真的不需要拖車嗎？</h3>
+ <p class="text-gray-300 text-sm leading-loose">多數車款可以到停車地點處理，依車系進行資料讀取、鑰匙匹配與啟動測試，減少拖吊與等待時間。</p>
+ </div>
+ <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+ <h3 class="text-gold-primary text-base font-bold mb-4">Q: 現場配製的鑰匙，功能與原廠一樣嗎？</h3>
+ <p class="text-gray-300 text-sm leading-loose">會依鑰匙規格確認遙控、Keyless、一鍵啟動等功能。交車前逐一測試，並說明後續使用注意事項。</p>
+ </div>
+ <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+ <h3 class="text-gold-primary text-base font-bold mb-4">Q: 服務範圍涵蓋哪些地區？</h3>
+ <p class="text-gray-300 text-sm leading-loose">極致核心深耕中彰投地區，並提供新竹、苗栗、雲林、嘉義的跨區服務。不論您在市區還是郊區，技師皆可預約抵達。</p>
+ </div>
+ <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+ <h3 class="text-gold-primary text-base font-bold mb-4">Q: 配製新鑰匙時，遺失的舊鑰匙安全嗎？</h3>
+ <p class="text-gray-300 text-sm leading-loose">我們會在匹配新鑰匙的同時，從車輛系統中註銷已遺失的鑰匙 ID。這意味著即便有人撿到舊鑰匙，也無法啟動您的車輛。</p>
+ </div>
+ <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+ <h3 class="text-gold-primary text-base font-bold mb-4">Q: 進口車款（如 BMW/Benz）也能現場做嗎？</h3>
+ <p class="text-gray-300 text-sm leading-loose">可以。我們專攻歐系車防盜系統，包含 BMW FEM/BDC、Mercedes-Benz FBS3/FBS4 等複雜架構，會依車系安排可行的現場處理流程。</p>
+ </div>
+ <div class="p-8 border border-white/5 bg-zinc-900/20 rounded-sm">
+ <h3 class="text-gold-primary text-base font-bold mb-4">Q: 整個配製過程需要多久時間？</h3>
+ <p class="text-gray-300 text-sm leading-loose">視車款複雜度而定，一般國產車約 30-40 分鐘，歐系進口車款約 1-2 小時即可完工交車，讓您當天就能重新啟動行程。</p>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <section class="py-20 bg-zinc-900/30">
+ <div class="max-w-4xl mx-auto px-6 text-center">
+ <h2 class="text-xl font-bold font-cinzel mb-10 uppercase tracking-[0.4em] text-gold-lux">Contact</h2>
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+ <a href="https://line.me/R/ti/p/@420gknem" target="_blank" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
+ <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">Official Line ID</span>
+ <span class="text-base font-bold text-white group-hover:text-gold-primary transition">@420gknem</span>
+ </a>
+ <a href="tel:0909277670" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
+ <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">24H Hotline</span>
+ <span class="text-base font-bold text-white group-hover:text-gold-primary transition">0909-277-670</span>
+ </a>
+ </div>
+ </div>
+ </section>
+
+ <section class="py-12 bg-black border-t border-white/5">
+ <div class="max-w-7xl mx-auto px-6 text-center">
+ <h3 class="text-gold-primary text-[8px] tracking-[0.4em] uppercase mb-6 opacity-60">Popular Service Areas</h3>
+ <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[10px] text-gray-600 tracking-widest">
+ <a href="/service-areas#taichung-xitun" class="hover:text-gold-primary transition">台中西屯</a>
+ <a href="/service-areas#taichung-nantun" class="hover:text-gold-primary transition">台中南屯</a>
+ <a href="/service-areas#taichung-beitun" class="hover:text-gold-primary transition">台中北屯</a>
+ <a href="/service-areas#taichung-dali" class="hover:text-gold-primary transition">台中大里</a>
+ <a href="/service-areas#taichung-fengyuan" class="hover:text-gold-primary transition">台中豐原</a>
+ <a href="/service-areas#changhua-city" class="hover:text-gold-primary transition">彰化市區</a>
+ <a href="/service-areas#changhua-yuanlin" class="hover:text-gold-primary transition">彰化員林</a>
+ <a href="/service-areas#changhua-lukang" class="hover:text-gold-primary transition">彰化鹿港</a>
+ <a href="/service-areas#nantou-caotun" class="hover:text-gold-primary transition">南投草屯</a>
+ <a href="/service-areas#nantou-puli" class="hover:text-gold-primary transition">南投埔里</a>
+ <a href="/dich-vu-lam-khoa-xe-o-to-tai-dai-loan" class="hover:text-gold-primary transition">Dịch vụ làm khóa xe ô tô (Vietnamese)</a>
+ </div>
+ </div>
+ </section>
+
+ <footer class="py-10 text-center border-t border-white/5 text-[8px] text-gray-700 tracking-[0.5em] uppercase">
+ © 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.
+ </footer>
+
+ <script>
+ // 數字滾動動畫
+ const counters = document.querySelectorAll('.counter');
+ const speed = 200;
+
+ const startCounters = () => {
+ counters.forEach(counter => {
+ const updateCount = () => {
+ const target = +counter.getAttribute('data-target');
+ const count = +counter.innerText;
+ const inc = target / speed;
+
+ if (count < target) {
+ counter.innerText = Math.ceil(count + inc);
+ setTimeout(updateCount, 1);
+ } else {
+ counter.innerText = target + '+';
+ }
+ };
+ updateCount();
+ });
+ };
+
+ // 偵測滾動啟動動畫
+ let animated = false;
+ window.addEventListener('scroll', () => {
+ const section = document.querySelector('.stat-card');
+ if (section) {
+ const rect = section.getBoundingClientRect();
+ if (rect.top < window.innerHeight && !animated) {
+ startCounters();
+ animated = true;
+ }
+ }
+ });
+
+ const latestCases = [
+ { "car": "Chevrolet Camaro", "label": "林口拍場全丟救援", "img": "img/cases/camaro-2017-linkou-akl.jpg", "link": "/article-camaro-2017-linkou-akl" },
+ { "car": "BMW E-Series", "label": "紅色方向盤鎖死修復", "img": "img/cases/bmw-elv-red-lock-fix.jpg", "link": "/article-bmw-elv-red-lock-fix" },
+ { "car": "Porsche Panamera", "label": "台北五股全丟救援", "img": "img/cases/porsche-panamera-wugu-akl.jpg", "link": "/article-porsche-panamera-wugu-akl" },
+ { "car": "BMW 220i", "label": "雲林斗南全丟救援", "img": "img/cases/bmw-220i-2015-yunlin-akl.jpg", "link": "/article-bmw-220i-2015-yunlin-akl" }
+ ];
+ document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
+ <div class="work-card group" onclick="location.href='${c.link}'">
+ <img src="${c.img}" alt="${c.car}">
+ <div class="work-overlay"></div>
+ <div class="absolute bottom-6 left-6">
+ <p class="text-[9px] text-gold-primary font-bold tracking-widest mb-1">${c.car}</p>
+ <h4 class="text-white text-xs font-bold">${c.label}</h4>
+ </div>
+ </div>
+ `).join('');
+ </script>
+ <!-- FAQ Schema 結構化數據 -->
+ <script type="application/ld+json">
+ {
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [{
+ "@type": "Question",
+ "name": "汽車智慧鑰匙全丟了，一定要拖回原廠嗎？",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "不需要。極致核心提供專業行動救援服務，能直接前往您的停車地點（包含地下室或拍賣場），現場進行資料讀取與晶片匹配。相較於原廠需要拖車且等待 7-14 天，我們能在 1-2 小時內現地完工，為您省下高昂拖吊費與零件等待時間。"
+ }
+ }, {
+ "@type": "Question",
+ "name": "現場配製鑰匙的安全性如何？比原廠好嗎？",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "極致核心在配製新鑰匙時，會同步從系統中註銷已遺失的舊鑰匙 ID。這意味著撿到舊鑰匙的人無法啟動車輛。我們直接重構防盜資料，不需像原廠那樣要求更換整套電腦模組，既保留了原車硬體，也確保了防盜資料的唯一性與安全性。"
+ }
+ }, {
+ "@type": "Question",
+ "name": "哪些進口車款（如 BMW/Benz）可以現場處理全丟？",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "我們專攻歐系車防盜架構，包含 BMW FEM/BDC、Mercedes-Benz FBS3/FBS4、VAG MQB 以及 Porsche 等複雜系統。無論是 2026 最新車款或常見車型，會依車系安排可行的現場處理流程。"
+ }
+ }]
+ }
+ </script>
+
+ <script>
+ // 全局搜尋邏輯
+ const searchInput = document.getElementById('global-search');
+ const resultsDiv = document.getElementById('search-results');
+
+ if (searchInput) {
+ searchInput.addEventListener('input', async (e) => {
+ const query = e.target.value.toLowerCase().trim();
+ if (query.length < 1) {
+ resultsDiv.classList.add('hidden');
+ return;
+ }
+
+ try {
+ const response = await fetch('/blog.json?t=' + new Date().getTime());
+ const data = await response.json();
+
+ const filtered = data.filter(item =>
+ item.title.toLowerCase().includes(query) ||
+ item.summary.toLowerCase().includes(query) ||
+ (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query)))
+ ).slice(0, 5);
+
+ if (filtered.length > 0) {
+ resultsDiv.innerHTML = filtered.map(item => `
+ <a href="${item.link}" class="block p-4 border-b border-white/5 hover:bg-white/5 transition">
+ <span class="text-[9px] text-gold-primary uppercase tracking-widest">${item.category}</span>
+ <h5 class="text-white text-xs font-bold mt-1">${item.title}</h5>
+ </a>
+ `).join('');
+ resultsDiv.classList.remove('hidden');
+ } else {
+ resultsDiv.innerHTML = '<div class="p-4 text-gray-500 text-[10px]">找不到相關結果</div>';
+ resultsDiv.classList.remove('hidden');
+ }
+ } catch (err) {
+ console.error('Search failed:', err);
+ }
+ });
+
+ // 點擊外部關閉搜尋結果
+ document.addEventListener('click', (e) => {
+ if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+ resultsDiv.classList.add('hidden');
+ }
+ });
+ }
+ </script>
+
+
+ <!-- 手機版搜尋遮罩 -->
+ <div id="mobile-search-overlay" class="fixed inset-0 bg-black/95 z-[200] hidden flex-col p-6">
+ <div class="flex justify-between items-center mb-8">
+ <h3 class="text-gold-primary font-bold tracking-widest">SEARCH</h3>
+ <button id="mobile-search-close" class="text-white text-2xl">&times;</button>
+ </div>
+ <input type="text" id="mobile-search-input" placeholder="搜尋車款或地點..."
+ class="bg-zinc-900 border border-white/10 rounded-lg px-6 py-4 text-white focus:outline-none focus:border-gold-primary transition-all w-full text-lg">
+ <div id="mobile-search-results" class="mt-8 space-y-4 overflow-y-auto flex-grow"></div>
+ </div>
+ <script>
+ const mobileToggle = document.getElementById('mobile-search-toggle');
+ const mobileOverlay = document.getElementById('mobile-search-overlay');
+ const mobileClose = document.getElementById('mobile-search-close');
+ const mobileInput = document.getElementById('mobile-search-input');
+ const mobileResults = document.getElementById('mobile-search-results');
+
+ if (mobileToggle) {
+ mobileToggle.onclick = () => {
+ mobileOverlay.classList.remove('hidden');
+ mobileInput.focus();
+ };
+ mobileClose.onclick = () => mobileOverlay.classList.add('hidden');
+
+ mobileInput.addEventListener('input', async (e) => {
+ const query = e.target.value.toLowerCase().trim();
+ if (query.length < 1) {
+ mobileResults.innerHTML = '';
+ return;
+ }
+ try {
+ const response = await fetch('/blog.json?t=' + new Date().getTime());
+ const data = await response.json();
+ const filtered = data.filter(item =>
+ item.title.toLowerCase().includes(query) ||
+ item.summary.toLowerCase().includes(query)
+ );
+ mobileResults.innerHTML = filtered.map(item => `
+ <a href="${item.link}" class="block p-5 bg-white/5 border border-white/5 rounded-lg">
+ <span class="text-[10px] text-gold-primary uppercase tracking-widest">${item.category}</span>
+ <h5 class="text-white font-bold mt-2">${item.title}</h5>
+ </a>
+ `).join('');
+ } catch (err) {}
+ });
+ }
+ </script>
+
+</body>
+</html>

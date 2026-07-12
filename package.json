@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "audit": "python scripts/site_audit.py"
+  },
+  "dependencies": {
+    "canvas": "^3.2.1",
+    "sharp": "^0.34.5"
+  }
+}

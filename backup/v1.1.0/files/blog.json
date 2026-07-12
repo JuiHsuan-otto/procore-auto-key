@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "date": "2026.02.23",
+    "category": "價值分析",
+    "title": "汽車晶片鑰匙遺失怎麼辦？找原廠還是找專業鎖匠最划算？",
+    "summary": "專業分析汽車鑰匙全丟後的處理方案，從成本、時間到穩定性，深度對比原廠與極致核心的差異，為您提供最經濟高效的選擇。",
+    "keywords": ["台中汽車鑰匙遺失", "晶片鑰匙配製", "專業鎖匠推薦"],
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "汽車晶片鑰匙遺失怎麼辦？找原廠還是找專業鎖匠最划算？",
+      "author": {"@type": "Person", "name": "Meico"},
+      "publisher": {"@type": "Organization", "name": "極致核心"},
+      "description": "專業分析汽車鑰匙全丟後的處理方案，對比原廠與專業鎖匠的成本、時間與穩定性。"
+    }
+  },
+  {
+    "id": 2,
+    "date": "2026.02.22",
+    "category": "技術維修",
+    "title": "2026 智慧型免鑰匙啟動系統 (Keyless) 常見故障與維修指南",
+    "summary": "深入剖析LF低頻訊號干擾、BCM模組數據偏移等深層故障原因。極致核心教您如何精準定位故障，避免誤換昂貴模組。",
+    "keywords": ["Keyless故障維修", "智慧感應鑰匙感應不到", "免鑰匙啟動原理"],
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "2026 Keyless 系統故障排除指南",
+      "step": [
+        {"@type": "HowToStep", "text": "檢查遙控器電池電壓"},
+        {"@type": "HowToStep", "text": "使用專用設備掃描 OBD 故障碼"},
+        {"@type": "HowToStep", "text": "重新進行晶片與車體同步匹配"}
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "date": "2026.02.21",
+    "category": "設備解析",
+    "title": "為什麼專業汽車鑰匙拷貝需要用到昂貴的解碼設備？",
+    "summary": "解析 BMW G-Series 與賓士 FBS4 等高階加密系統。極致核心重金引進全球頂規設備，確保數據讀寫不傷電腦、不留暗病。",
+    "keywords": ["汽車鑰匙拷貝推薦", "專業晶片解碼", "進口車鑰匙配製"],
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "為什麼專業汽車鑰匙拷貝需要用到昂貴的解碼設備？",
+      "articleSection": "技術工藝",
+      "keywords": "晶片解碼, OBD2, 數據備份, 極致核心"
+    }
+  }
+]
