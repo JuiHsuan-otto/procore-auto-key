@@ -459,6 +459,9 @@ function validateRescueRequest(htmlByPath, sitemapUrls, errors) {
     'id="year"', 'id="brand"', 'id="model"', 'id="location"',
     'name="issue"', 'name="photos"', 'id="notes"',
     'https://line.me/R/oaMessage/@420gknem/?', 'tel:0909277670',
+    'id="include-notes"', 'id="make-draft"', 'id="copy-draft"',
+    'id="clear-draft"', 'id="back-edit"', "'#draft='", 'history.replaceState',
+    '草稿只放在網址的 # 片段，不會送到伺服器', '連結仍可能被他人看到',
   ];
   for (const marker of required) {
     if (!html.includes(marker)) errors.push(`${relPath}: missing required marker: ${marker}`);
@@ -467,6 +470,7 @@ function validateRescueRequest(htmlByPath, sitemapUrls, errors) {
     /<form\b[^>]*\baction=/i, /<script\b[^>]*\bsrc=/i,
     /\bfetch\s*\(/, /XMLHttpRequest/, /WebSocket/, /sendBeacon/,
     /localStorage/, /sessionStorage/, /document\.cookie/,
+    /[?&]draft=/,
   ];
   for (const pattern of forbidden) {
     if (pattern.test(html)) errors.push(`${relPath}: contains forbidden network/storage capability: ${pattern}`);
