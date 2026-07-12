@@ -382,7 +382,7 @@
     title.textContent = heading;
     text.textContent = message;
     actions.hidden = !location;
-    if (location) rescueLink.href = '/rescue-request?location=' + encodeURIComponent(location);
+    if (location) rescueLink.href = '/rescue-request?area=' + encodeURIComponent(location);
     pageLink.hidden = !area;
     if (area) {
       pageLink.href = area.url;

@@ -114,7 +114,7 @@
       <div class="eyebrow">Rescue Request</div>
       <h1>救援需求快速整理</h1>
       <p class="lead">不用懂專業術語。填入基本資訊後，這個頁面會在您的手機上整理成一段訊息，讓您複製或帶到 LINE 傳送。</p>
-      <div class="privacy"><strong>請先保護個資：</strong>只填縣市與區域，不要填車牌、VIN／車身號碼、完整地址、車主姓名，或可被利用的技術細節。資料只在此頁的瀏覽器中整理，網站不會儲存或傳送。</div>
+      <div class="privacy"><strong>請先保護個資：</strong>只填縣市與區域，不要填車牌、VIN／車身號碼、完整地址、車主姓名，或可被利用的技術細節。資料只在此頁的瀏覽器中整理；除非您自行複製分享或按下 LINE，網站不會儲存或送出內容。</div>
     </header>
 
     <div class="layout">
@@ -258,7 +258,8 @@
       const locationUnsafe = text => /[路街巷弄號樓]|\d{2,}/.test(text) || unsafeIdentity(text);
 
       const applyLocationPrefill = () => {
-        const prefill = new URLSearchParams(window.location.search).get('location');
+        const params = new URLSearchParams(window.location.search);
+        const prefill = params.get('area') || params.get('location');
         if (!prefill) return;
         const safePrefill = prefill.trim().slice(0, 40);
         if (!locationUnsafe(safePrefill)) {
@@ -328,8 +329,6 @@
         const url = new URL(window.location.href);
         url.search = '';
         url.hash = 'draft=' + encodeDraft(data);
-        // A shareable draft must live only in the fragment; do not retain a
-        // service-area query parameter in the generated draft URL.
         history.replaceState(null, '', window.location.pathname + url.hash);
         setDraftLink(url.href);
         draftStatus.textContent = data.n ? '草稿連結已產生，包含您勾選的備註；分享前請再檢查個資。' : '草稿連結已產生；備註未放入連結。';
@@ -358,7 +357,7 @@
           suppressDraftDirty = false;
           return true;
         } catch (_) {
-          history.replaceState(null, '', window.location.pathname);
+          history.replaceState(null, '', window.location.pathname + window.location.search);
           draftStatus.textContent = '這個草稿連結無法讀取，或可能含不安全內容；未帶入任何草稿資料。';
           return false;
         }
@@ -429,7 +428,7 @@
         empty.hidden = true;
         copyButton.hidden = false;
         lineButton.hidden = false;
-        lineButton.href = 'https://line.me/R/oaMessage/@420gknem/?' + encodeURIComponent(text);
+        lineButton.href = 'https://line.me/R/ti/p/@420gknem';
         status.textContent = '已整理完成，請確認右側內容。';
         status.style.color = '#9be9b2';
         message.focus();
