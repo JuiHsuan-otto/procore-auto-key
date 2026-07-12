@@ -1,3 +1,4 @@
+import argparse
 import sys
 import smtplib
 import os
@@ -32,12 +33,20 @@ def send_post(title, html_body):
         print("SUCCESS")
     except Exception as e:
         print(f"FAILED: {str(e)}")
+        raise SystemExit(1)
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print("Usage: python send_post.py <title> <body>")
-        sys.exit(1)
-    
-    title = sys.argv[1]
-    body = sys.argv[2]
-    send_post(title, body)
+    parser = argparse.ArgumentParser(description="Preview or explicitly publish a Blogger email draft")
+    parser.add_argument("title")
+    parser.add_argument("body_file", help="UTF-8 HTML file containing the draft")
+    parser.add_argument("--publish", action="store_true")
+    parser.add_argument("--approved", action="store_true")
+    args = parser.parse_args()
+    with open(args.body_file, encoding="utf-8") as handle:
+        body = handle.read()
+    if "https://www.carkey.com.tw/" not in body:
+        parser.error("draft must link back to the canonical website")
+    if not (args.publish and args.approved):
+        print("DRY RUN: draft validated; add both --publish and --approved after explicit approval")
+        sys.exit(0)
+    send_post(args.title, body)
