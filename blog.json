@@ -336,5 +336,278 @@
     "title": "預防勝於治療：為什麼您需要第二把備份鑰匙？配製流程與成本解析",
     "summary": "備份鑰匙不是浪費，而是保險。分析新增與全丟匹配的價差與技術門檻。",
     "link": "/article-why-you-need-spare-car-key"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "台北新店賓士 FBS3 智慧鑰匙全丟救援：電子啟動模組 資料重建紀錄",
+    "summary": "賓士 FBS3 系統鑰匙全丟 現場資料重建紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-benz-fbs3-xindian-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "賓士 GLC300 彰化員林現場智慧鑰匙新增",
+    "summary": "Mercedes-Benz GLC300 智慧感應鑰匙新增 員林現場技術紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-benz-glc300-yuanlin-service"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "Mercedes-Benz ML350 智慧鑰匙新增：彰化和美現場匹配",
+    "summary": "Mercedes-Benz ML350 FBS3 系統鑰匙新增 彰化和美實測紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-benz-ml350-hemei-service"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "2015 BMW 220i (F22) 智能鑰匙全丟救援：雲林斗南現地資料重建紀錄",
+    "summary": "2015 BMW 220i (F22) 智能鑰匙全丟：現地資料重建紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-bmw-220i-2015-yunlin-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "BMW 3系列 鑰匙全丟救援：彰化花壇現場資料重建",
+    "summary": "BMW 3系列 (E90/E92) 晶片鑰匙全丟救援 彰化花壇現場紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-bmw-3series-huatan-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "高雄拍場：2014 BMW 730d (F01 LCI) 智能鑰匙全丟救援：現場資料重建紀錄",
+    "summary": "2014 BMW 730d (F01 LCI) 智能鑰匙全丟救援紀錄。整理常見原因與處理順序，協助車主先判斷電池、感應、方向盤鎖或防盜系統問題，再決定是否需要到場檢測。",
+    "link": "/article-bmw-730d-kaohsiung-auction-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "技術專欄",
+    "title": "BMW 儀表紅色方向盤鎖死、無法啟動：資料重建修復紀錄",
+    "summary": "BMW 紅色方向盤鎖死 無法啟動：專業數據修復紀錄。整理常見原因與處理順序，協助車主先判斷電池、感應、方向盤鎖或防盜系統問題，再決定是否需要到場檢測。",
+    "link": "/article-bmw-elv-red-lock-fix"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "[彰化特輯] BMW X5 E70 遙控器充電電池耗盡救援：極致核心現場維修紀錄",
+    "summary": "BMW X5 E70 遙控器充電電池耗盡救援 現場維修紀錄。記錄實際到場處理流程：確認車籍與停車環境、判斷防盜系統、配製新鑰匙，最後測試遙控、感應與啟動。",
+    "link": "/article-bmw-x5-battery-fix"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "紀錄：Chevrolet Camaro 大黃蜂鑰匙全丟救援：林口拍場現地解碼",
+    "summary": "Chevrolet Camaro 大黃蜂鑰匙全丟：現地解碼紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-camaro-2017-linkou-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "汽車鑰匙全丟救援",
+    "summary": "汽車鑰匙全丟怎麼辦？ 極致核心 ProCore 提供專業現場解碼救援。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-car-key-lost-rescue-central-taiwan"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "技術專欄",
+    "title": "為什麼鑰匙配製需要頂尖解碼工藝？解碼設備完整分析",
+    "summary": "解碼設備完整分析：資深技師專用解碼設備的重要性。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-decoding-equipment"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "車主自救指南：半夜/荒郊野外汽車鑰匙全丟怎麼辦？免拖吊現場救援詳解",
+    "summary": "半夜/荒郊野外汽車鑰匙全丟怎麼辦？ 免拖吊現場救援的終極自救指南。記錄實際到場處理流程：確認車籍與停車環境、判斷防盜系統、配製新鑰匙，最後測試遙控、感應與啟動。",
+    "link": "/article-emergency-akl-guide"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "高雄前鎮：2018 Honda Fit 智能鑰匙全丟救援：現場免拖吊重構紀錄",
+    "summary": "2018 Honda Fit 智能鑰匙全丟現場救援紀錄。整理常見原因與處理順序，協助車主先判斷電池、感應、方向盤鎖或防盜系統問題，再決定是否需要到場檢測。",
+    "link": "/article-honda-fit-2018-kaohsiung-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "彰化田中 Honda Fit 智能鑰匙全丟救援紀錄",
+    "summary": "彰化田中 Honda Fit 智能鑰匙全丟：免拖吊現場發動。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-honda-fit-tanaka-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "2021 Hyundai Tucson 油電版：彰化和美現場感應鑰匙全丟救援紀錄",
+    "summary": "Hyundai Tucson Hybrid 智慧鑰匙全丟 現場解碼紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-hyundai-tucson-hemei-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "雨中跨區社頭：Infiniti FX35 智慧鑰匙全丟現場救援",
+    "summary": "Infiniti FX35 智慧鑰匙全丟 現場資料重建。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-infiniti-fx35-shetou-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "技術專欄",
+    "title": "Keyless 系統故障診斷指南：從按鍵失靈到天線異常",
+    "summary": "Keyless 智慧鑰匙系統：完整故障診斷指南。整理常見原因與處理順序，協助車主先判斷電池、感應、方向盤鎖或防盜系統問題，再決定是否需要到場檢測。",
+    "link": "/article-keyless-troubleshooting"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "Kia Picanto 智能鑰匙全丟救援：彰化伸港現場匹配紀錄",
+    "summary": "Kia Picanto 智能鑰匙全丟 伸港現場匹配紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-kia-picanto-shengang-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "BMW/Benz 鑰匙全丟怎麼辦？原廠與解碼團隊的「時間與費用」真實比較",
+    "summary": "BMW/Benz 鑰匙全丟怎麼辦？ 原廠與外廠的「時間與費用」真實比較。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-lost-key-comparison"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "台中中科 Nissan Kicks 智能鑰匙全丟救援：極速資料重建發動紀錄",
+    "summary": "中科 Nissan Kicks智能鑰匙全丟 現場解碼紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-nissan-kicks-zhongke-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "Porsche 保時捷智慧鑰匙全丟救援：BCM/KESSY 防盜解碼紀錄",
+    "summary": "Porsche 保時捷智慧鑰匙全丟救援：進口車防盜資料重建。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-porsche-lost-key-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "Porsche Panamera 智慧鑰匙全丟救援：台北五股拍場車系資料處理紀錄",
+    "summary": "Porsche Panamera 智慧鑰匙全丟：車系資料處理紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-porsche-panamera-wugu-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "Range Rover 智慧鑰匙新增：台中龍井現場技術紀錄",
+    "summary": "Range Rover 智慧感應鑰匙新增 台中龍井現場解碼。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-range-rover-huatan-service"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "Skoda Kamiq 智慧鑰匙慘遭輾壓？極致核心現場資料重建救援紀錄",
+    "summary": "Skoda Kamiq 智慧鑰匙輾壓損毀 現場數據救援。記錄實際到場處理流程：確認車籍與停車環境、判斷防盜系統、配製新鑰匙，最後測試遙控、感應與啟動。",
+    "link": "/article-skoda-kamiq-crushed-key"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "技術專欄",
+    "title": "雲林 Skoda Kodiaq 晶片鑰匙遺失：解碼技術展現",
+    "summary": "雲林 Skoda Kodiaq 晶片鑰匙遺失：德系精密防盜架構解碼紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-skoda-kodiaq-yunlin-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "技術專欄",
+    "title": "汽車鑰匙感應不到怎麼辦？5招排除Keyless故障與緊急啟動指南",
+    "summary": "汽車鑰匙感應不到？5大步驟 快速排除故障與緊急發動。整理常見原因與處理順序，協助車主先判斷電池、感應、方向盤鎖或防盜系統問題，再決定是否需要到場檢測。",
+    "link": "/article-smart-key-troubleshooting"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "台中汽車鑰匙遺失救援：24H 智慧鑰匙全丟與晶片匹配",
+    "summary": "台中汽車鑰匙遺失救援：24H 現場解碼與智慧鑰匙匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-taichung-lost-key"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "彰化員林：2020 Toyota Altis 智能鑰匙全丟救援：無損開鎖與現場防盜匹配紀錄",
+    "summary": "2020 Toyota Altis 12代 智能感應鑰匙全丟救援紀錄。整理常見原因與處理順序，協助車主先判斷電池、感應、方向盤鎖或防盜系統問題，再決定是否需要到場檢測。",
+    "link": "/article-toyota-altis-2020-yuanlin-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "Toyota RAV4 智慧鑰匙全丟救援：林口現場匹配與免拖吊紀錄",
+    "summary": "Toyota RAV4 智慧鑰匙全丟救援：林口現場快速匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-toyota-rav4-linkou-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "南投草屯 Toyota RAV4 智慧鑰匙全丟救援：現場資料重建紀錄",
+    "summary": "草屯 Toyota RAV4智慧鑰匙全丟 現場快速發動紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-toyota-rav4-nantou-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "技術專欄",
+    "title": "貿易商必讀：美系車市場擴張下的售後技術戰",
+    "summary": "整理汽車市場與用車安全趨勢，從車主角度看智慧鑰匙、防盜系統、二手車流通與備用鑰匙規劃，協助判斷購車後該注意的鑰匙風險。",
+    "link": "/article-us-car-market-growth-security-tech"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "技術專欄",
+    "title": "2026 美系車購車趨勢：Ford 鑰匙解碼與維修挑戰",
+    "summary": "買二手車後先確認鑰匙數量與防盜 ID，必要時可註銷不明鑰匙並備份常用鑰匙，降低交車後才發現鑰匙風險的機會。",
+    "link": "/article-us-car-market-tech"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "技術專欄",
+    "title": "美系車零關稅時代：消費者該如何評估「隱形成本」？",
+    "summary": "整理汽車市場與用車安全趨勢，從車主角度看智慧鑰匙、防盜系統、二手車流通與備用鑰匙規劃，協助判斷購車後該注意的鑰匙風險。",
+    "link": "/article-us-car-zero-tariff-consumer-impact"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "Volvo 智慧鑰匙遺失救援：Keyless 感應鑰匙全丟現場匹配",
+    "summary": "Volvo 智慧鑰匙遺失救援：Keyless 全丟現場匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-volvo-keyless-lost-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "VW Arteon 獵跑美學：MQB 系統智慧感應鑰匙新增紀錄",
+    "summary": "VW Arteon 智慧感應鑰匙新增 現場技術紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-vw-arteon-mqb-smartkey"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "2020 VW Golf 智能鑰匙新增 | 台中大肚紀錄",
+    "summary": "2020 VW Golf 智能鑰匙新增：台中大肚現場匹配。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-vw-golf-dadu-service"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "2015 VW Golf 7 MQB 智能鑰匙全丟救援：台中東區拍場 JCI 儀表資料重建全紀錄",
+    "summary": "2015 VW Golf 7 MQB 智能鑰匙全丟：資料重建紀錄。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-vw-golf7-2015-taichung-akl"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "彰化線西 VW Pointer 小獵犬鑰匙全丟救援：引擎電腦 ECU 解碼發動紀錄",
+    "summary": "經典福斯 Pointer 小獵犬鑰匙全丟 引擎電腦現場解碼紀錄。整理常見原因與處理順序，協助車主先判斷電池、感應、方向盤鎖或防盜系統問題，再決定是否需要到場檢測。",
+    "link": "/article-vw-pointer-xianxi-rescue"
+  },
+  {
+    "date": "2026.03.01",
+    "category": "案例分享",
+    "title": "高雄福斯 VW T5 晶片鑰匙全丟救援紀錄",
+    "summary": "高雄 VW T5 晶片鑰匙全丟：現場快速發動救援。用車主能理解的方式說明常見症狀、處理流程與現場匹配時需要注意的風險。",
+    "link": "/article-vw-t5-kaohsiung-rescue"
   }
 ]

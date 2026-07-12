@@ -125,12 +125,40 @@ def sync_sitemap(link: str, lastmod: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+def sync_existing_articles() -> None:
+    """Backfill articles that exist on disk but were omitted from the site index."""
+    from html import unescape
+
+    items = read_json(ROOT / "blog.json")
+    known = {entry.get("link") for entry in items}
+    for path in sorted(ROOT.glob("article-*.html")):
+        link = f"/{path.stem}"
+        text = path.read_text(encoding="utf-8")
+        if "\ufffd" in text or re.search(r"\?{4,}", text):
+            raise SystemExit(f"Encoding check failed: {path.name}")
+        if link not in known:
+            title_match = re.search(r"<title>(.*?)</title>", text, re.I | re.S)
+            desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', text, re.I | re.S)
+            title = unescape(re.sub(r"\s+", " ", title_match.group(1)).strip()) if title_match else path.stem
+            summary = unescape(re.sub(r"\s+", " ", desc_match.group(1)).strip()) if desc_match else "汽車鑰匙服務與車主注意事項。"
+            title_plain = re.sub(r"\s*[|｜-]\s*極致核心.*$", "", title)
+            category = "案例分享" if any(word in title for word in ("案例", "救援", "全丟", "新增")) else "技術專欄"
+            items.append({"date": "2026.03.01", "category": category, "title": title_plain, "summary": summary, "link": link})
+            known.add(link)
+        sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+        if f"<loc>{SITE}{link}</loc>" not in sitemap:
+            sync_sitemap(link, date.today().isoformat())
+    write_json(ROOT / "blog.json", items)
+    replace_js_array(ROOT / "blog.html", "blogData", items)
+    print(f"SYNCED_EXISTING={len(items)}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Sync a ProCore article into indexes.")
-    parser.add_argument("title")
-    parser.add_argument("path", help="Article path, with or without .html")
-    parser.add_argument("category")
-    parser.add_argument("summary")
+    parser.add_argument("title", nargs="?")
+    parser.add_argument("path", nargs="?", help="Article path, with or without .html")
+    parser.add_argument("category", nargs="?")
+    parser.add_argument("summary", nargs="?")
     parser.add_argument("--date", default=date.today().strftime("%Y.%m.%d"))
     parser.add_argument("--lastmod", default=date.today().isoformat())
     parser.add_argument("--keywords", default="")
@@ -138,13 +166,29 @@ def main() -> None:
     parser.add_argument("--case-car", default="")
     parser.add_argument("--case-img", default="")
     parser.add_argument("--case-type", default="")
-    parser.add_argument("--sitemap-only", action="store_true", help="Only register a non-article page in sitemap")
+    parser.add_argument("--sitemap-only", action="store_true", help="Add/update a non-article page in sitemap only")
+    parser.add_argument("--sync-existing", action="store_true", help="Backfill all on-disk articles into blog and sitemap")
     args = parser.parse_args()
 
+    if args.sync_existing:
+        sync_existing_articles()
+        return
+    if not all((args.title, args.path, args.category, args.summary)):
+        parser.error("title, path, category and summary are required")
+
     link = clean_link(args.path)
-    if not args.sitemap_only:
-        sync_blog(args, link)
-        sync_cases(args, link)
+    target = ROOT / (link.lstrip("/") + ".html")
+    if not target.exists():
+        raise SystemExit(f"Article/page not found: {target.name}")
+    source = target.read_text(encoding="utf-8")
+    if "\ufffd" in source or re.search(r"\?{4,}", source):
+        raise SystemExit(f"Encoding check failed: {target.name}")
+    if args.sitemap_only:
+        sync_sitemap(link, args.lastmod)
+        print(f"SITEMAP_ONLY={link}")
+        return
+    sync_blog(args, link)
+    sync_cases(args, link)
     sync_sitemap(link, args.lastmod)
     print(f"PUBLISHED_INDEX={link}")
 

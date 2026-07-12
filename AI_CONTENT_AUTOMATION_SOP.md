@@ -368,13 +368,10 @@ GBP_LOCATION_ID=
 - Meta Threads API docs：https://developers.facebook.com/docs/threads/
 - Meta Threads API Postman collection：https://www.postman.com/meta/threads/documentation/dht3nzz/threads-api
 
+## 15. 網站工具頁與自動檢查
 
-## 15. 救援需求與服務區域前端工具
-
-- `rescue-request.html` 與服務區域查詢只可在瀏覽器端運作；不得加入後端、分析事件、地圖、Google 商家或其他外部 API。
-- 表單不得儲存內容。允許的輸入僅為概略車款、縣市／行政區、狀況、照片可否補充與簡短備註；介面必須提醒略去車牌、VIN、完整地址、姓名及技術細節。
-- 服務區域命中只代表官網已列為常見區域，不代表保證到府；未命中時一律用保守文字請使用者透過 LINE 詢問。
-- 區域頁可用 query string 將 `location` 預填到 `/rescue-request`，但不得寫入 localStorage、cookie 或伺服器。
-- Google Business Profile API 路徑目前停用；排程只產生人工可審核草稿。官網仍是唯一 canonical source，Blogger、Threads、GBP 未被明確點名批准時不得自動公開。
-- 新增 HTML 後仍須以 `publish_tool.py` 同步 sitemap，並執行 `npm run audit`、檢查 UTF-8、內部連結、聯絡資訊與乾淨網址後才可提交。
-- 「草稿留存／轉交」只能使用 URL `#` fragment 保存白名單欄位；不得使用 query string、Web Storage、cookie、後端、短網址、QR 或第三方服務。備註預設排除，勾選加入時必須再次提示個資風險。草稿 fragment 不得出現在 canonical、OG 或 sitemap。
+- 非文章頁加入 sitemap：`python publish_tool.py "頁名" "/clean-path.html" "服務工具" "摘要" --sitemap-only`。
+- 修復舊站文章清單缺漏：`python publish_tool.py --sync-existing`；此模式只補缺項，不覆寫既有 sitemap 日期。
+- 每次提交前執行：`python scripts/validate_site.py` 與 `git diff --check`。
+- GitHub Actions 會在 push / pull request 重跑相同檢查；失敗時不得視為已完成部署。
+- `/rescue-request` 與服務區域查詢只在瀏覽器處理資料，不使用後端、地圖、GBP 或其他外部 API，也不得新增追蹤個資的程式。

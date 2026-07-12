@@ -121,10 +121,11 @@
  <div>
  <p class="text-gold-lux font-cinzel tracking-[0.42em] text-[10px] uppercase mb-6">Service Areas</p>
  <h1 class="font-serif-tc text-4xl md:text-6xl font-bold text-white leading-tight mb-6">台中彰化南投<br><span class="text-gold-lux">汽車鑰匙救援服務區域</span></h1>
- <p class="text-gray-300 leading-8 max-w-2xl">極致核心 ProCore 以行動解碼設備到場處理汽車鑰匙全丟、智慧鑰匙匹配、晶片鑰匙備份與防盜系統資料重建。以中部為核心，可先依區域與車況評估是否能安排到場；跨縣市請先詢問，不預先保證。</p>
+ <p class="text-gray-300 leading-8 max-w-2xl">極致核心 ProCore 以行動解碼設備到場處理汽車鑰匙全丟、智慧鑰匙匹配、晶片鑰匙備份與防盜系統資料重建。以中部為核心，支援跨縣市到場，減少拖吊、等待與原廠高額總成更換。</p>
  <div class="flex flex-col sm:flex-row gap-4 mt-10">
+ <a href="/rescue-request" class="btn-gold px-8 py-4 text-center text-xs">快速整理救援需求</a>
  <a href="tel:0909277670" class="btn-gold px-8 py-4 text-center text-xs">立即電話救援</a>
- <a href="/rescue-request" class="btn-line px-8 py-4 text-center text-xs hover:bg-white/5 transition">快速整理救援需求</a>
+ <a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener" class="btn-line px-8 py-4 text-center text-xs hover:bg-white/5 transition">LINE 傳送定位與車款</a>
  </div>
  </div>
  <div class="glass p-8 md:p-10">
@@ -146,8 +147,22 @@
  </header>
 
  <main>
+ <section class="py-14 border-b border-white/10" aria-labelledby="area-check-title">
+ <div class="max-w-3xl mx-auto px-6">
+ <div class="glass p-6 md:p-8">
+ <h2 id="area-check-title" class="text-2xl md:text-3xl font-bold text-white mb-3">查詢大概服務區域</h2>
+ <p class="text-gray-400 text-sm leading-7 mb-5">輸入縣市或行政區即可，不要填完整地址、車牌、VIN 或車主姓名。結果是初步參考，實際仍依當天路線與車況確認。</p>
+ <label for="area-query" class="block text-sm text-white mb-2">縣市／區域</label>
+ <div class="flex flex-col sm:flex-row gap-3">
+ <input id="area-query" list="area-options" autocomplete="address-level2" placeholder="例如：台中西屯、彰化員林" class="min-w-0 flex-1 bg-black/40 border border-white/20 rounded px-4 py-3 text-white">
+ <datalist id="area-options"><option value="台中西屯"><option value="台中南屯"><option value="台中北屯"><option value="台中大里"><option value="台中豐原"><option value="彰化市"><option value="彰化員林"><option value="彰化鹿港"><option value="南投草屯"><option value="南投埔里"></datalist>
+ <button id="area-check" type="button" class="btn-gold px-7 py-3 text-xs">查看支援情況</button>
+ </div>
+ <p id="area-result" class="mt-4 text-sm leading-7 text-gray-300" role="status" aria-live="polite">可輸入部分地名；若不確定行政區，先填縣市即可。</p>
+ <a id="area-to-request" href="/rescue-request" class="hidden mt-4 btn-gold px-7 py-3 text-center text-xs">帶入地區並整理需求</a>
+ </div></div>
+ </section>
 
- <section class="py-12 border-b border-white/10" aria-labelledby="area-check-title"><div class="max-w-3xl mx-auto px-6"><div class="glass p-6 md:p-8"><h2 id="area-check-title" class="text-2xl font-bold text-white mb-3">先查詢大概服務區域</h2><p class="text-gray-400 mb-5">選擇或輸入縣市、行政區即可。請勿填完整地址、車牌、VIN／車身號碼或車主姓名。</p><label for="areaQuery" class="block text-sm font-bold mb-2">縣市／區域</label><input id="areaQuery" list="areaOptions" autocomplete="off" placeholder="例如：台中西屯、新竹竹北" class="w-full p-4 rounded-lg bg-black/60 border border-white/20 text-white"><datalist id="areaOptions"><option value="台中西屯"><option value="台中南屯"><option value="台中北屯"><option value="台中大里"><option value="台中豐原"><option value="彰化市"><option value="彰化員林"><option value="彰化鹿港"><option value="南投草屯"><option value="南投埔里"></datalist><button id="areaCheck" type="button" class="btn-gold px-7 py-3 mt-4 w-full sm:w-auto">查看建議</button><p id="areaResult" class="mt-4 text-gray-200" role="status" aria-live="polite">輸入大概區域後即可查看；資料只在這個頁面比對。</p><a id="areaToRequest" href="/rescue-request" class="btn-line px-7 py-3 mt-4 text-center block sm:inline-block">帶到救援需求快速整理</a></div></div></section>
  <section class="py-20 border-b border-white/10">
  <div class="max-w-7xl mx-auto px-6">
  <div class="grid md:grid-cols-3 gap-6 mb-14">
@@ -218,7 +233,7 @@
  <article id="changhua-yuanlin" class="area-card glass p-7">
  <p class="text-[10px] text-gold-lux tracking-[0.3em] uppercase mb-3">Changhua</p>
  <h3 class="text-2xl font-bold text-white mb-4">彰化員林 Benz / Toyota 鑰匙服務</h3>
- <p class="text-gray-400 leading-7 text-sm mb-5">員林案件常見家庭用車備份與歐系車防盜系統維修。若是 Benz、BMW 或 Lexus，建議先提供年份、車型與不含個資的儀表畫面。</p>
+ <p class="text-gray-400 leading-7 text-sm mb-5">員林案件常見家庭用車備份與歐系車防盜系統維修。若是 Benz、BMW 或 Lexus，建議先提供車型年份與儀表畫面；請勿在表單填寫 VIN。</p>
  <a href="/article-benz-glc300-yuanlin-service" class="text-gold-lux text-xs tracking-[0.24em] uppercase">查看員林 Benz 案例</a>
  </article>
  <article id="changhua-lukang" class="area-card glass p-7">
@@ -249,11 +264,11 @@
  <h2 class="font-serif-tc text-3xl md:text-5xl font-bold text-white mb-6">救援前先準備三項資訊</h2>
  <div class="grid md:grid-cols-3 gap-4 text-left mt-10">
  <div class="glass p-6"><h3 class="text-white font-bold mb-3">車款與年份</h3><p class="text-gray-400 text-sm leading-7">例如 BMW 3 Series 2018、Toyota RAV4 2020，可協助判斷防盜系統。</p></div>
- <div class="glass p-6"><h3 class="text-white font-bold mb-3">停車位置</h3><p class="text-gray-400 text-sm leading-7">先提供縣市、行政區及是否位於地下室即可；確認服務前不要傳完整地址。</p></div>
+ <div class="glass p-6"><h3 class="text-white font-bold mb-3">停車位置</h3><p class="text-gray-400 text-sm leading-7">提供定位、樓層、是否地下室與車輛周邊空間，方便安排設備。</p></div>
  <div class="glass p-6"><h3 class="text-white font-bold mb-3">目前狀態</h3><p class="text-gray-400 text-sm leading-7">是否可開門、有無備用鑰匙、儀表是否顯示 Key Not Detected。</p></div>
  </div>
  <div class="flex flex-col sm:flex-row justify-center gap-4 mt-10">
- <a href="tel:0909277670" class="btn-gold px-8 py-4 text-xs">0909-277-670</a>
+ <a href="tel:0909277670" class="btn-gold px-8 py-4 text-xs">0909277670</a>
  <a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener" class="btn-line px-8 py-4 text-xs hover:bg-white/5 transition">LINE 線上評估</a>
  </div>
  </div>
@@ -264,7 +279,8 @@
  <div class="mb-4"><a href="/" class="hover:text-white transition">首頁</a> / <a href="/cases" class="hover:text-white transition">實績</a> / <a href="/blog" class="hover:text-white transition">技術專欄</a></div>
  <p>© 2026 PROCORE AUTO KEY. ALL RIGHTS RESERVED.</p>
  </footer>
-
-<script>(()=>{const listed=['台中西屯','台中南屯','台中北屯','台中大里','台中豐原','彰化市','彰化員林','彰化鹿港','南投草屯','南投埔里'];const q=document.getElementById('areaQuery'),out=document.getElementById('areaResult'),go=document.getElementById('areaToRequest');function run(){const v=q.value.trim().replace(/\s+/g,'');go.href='/rescue-request?location='+encodeURIComponent(v);if(!v){out.textContent='請先輸入縣市或行政區；只要大概區域，不要填完整地址。';return}let hit=listed.find(x=>x.includes(v)||v.includes(x));if(hit){out.textContent=hit+' 是官網目前列出的常見服務區域。實際安排仍需依車況、時間與現場條件確認，下一步可整理需求後用 LINE 詢問。'}else{const partial=listed.filter(x=>[...v].filter(c=>c.length&&x.includes(c)).length>=2);out.textContent=partial.length?'目前沒有完全相符的項目，可能是簡稱或文字尚未輸入完整。可再補上縣市／行政區，或直接用 LINE 詢問。':'這個區域目前未列在官網清單內，不代表一定無法服務；請先用 LINE 詢問，我們會依實際條件評估，不預先保證到府。'}}document.getElementById('areaCheck').addEventListener('click',run);q.addEventListener('input',run)})();</script>
-</body>
+ <script>
+ (()=>{const known=['台中西屯','台中南屯','台中北屯','台中大里','台中豐原','彰化市','彰化員林','彰化鹿港','南投草屯','南投埔里'];const input=document.querySelector('#area-query'),result=document.querySelector('#area-result'),next=document.querySelector('#area-to-request');function check(){const q=input.value.trim().replace(/臺/g,'台');if(!q){result.textContent='請先輸入大概縣市或區域，例如「台中西屯」。不需要完整地址。';next.classList.add('hidden');return}const hits=known.filter(x=>x.includes(q)||q.includes(x));if(hits.length){result.textContent='官網目前列有「'+hits.join('、')+'」服務資訊。建議下一步整理車型、年份與狀況，再由 LINE 確認時段；不代表未確認前保證到府。'}else if(q.length<2){result.textContent='地名似乎還不完整，請再多輸入一點，例如縣市加行政區。';next.classList.add('hidden');return}else{result.textContent='官網目前沒有列出「'+q+'」的明確區域資料。仍可先用 LINE 詢問，我們會依路線與車況評估，不先保證可到府。'}next.href='/rescue-request?area='+encodeURIComponent(q);next.classList.remove('hidden')}document.querySelector('#area-check').addEventListener('click',check);input.addEventListener('input',check);input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check()}})})();
+ </script>
+ </body>
 </html>
