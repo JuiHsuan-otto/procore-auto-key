@@ -490,6 +490,23 @@ function validateRescueRequest(htmlByPath, sitemapUrls, errors) {
   }
 }
 
+function validateServiceAreaChecker(htmlByPath, errors) {
+  const relPath = "service-areas.html";
+  const html = htmlByPath.get(relPath) || "";
+  const required = [
+    'id="county-select"', 'id="area-input"', 'id="area-result"',
+    'aria-live="polite"', 'id="area-rescue-link"',
+    "'/rescue-request#area=' + encodeURIComponent(location)",
+    '請勿填完整地址、車牌、VIN／車身號碼或車主姓名',
+    '不保證一定可到府',
+    '@media(max-width:759px)',
+    '.checker-button,.checker-actions .btn{width:100%}',
+  ];
+  for (const marker of required) {
+    if (!html.includes(marker)) errors.push(`${relPath}: missing area-checker safeguard: ${marker}`);
+  }
+}
+
 async function validateJsonFile(relPath, errors) {
   const raw = await fsp.readFile(path.join(ROOT, relPath), "utf8");
   try {
@@ -548,6 +565,7 @@ async function main() {
 
   validateSeoEntries(seoEntries, sitemapUrls, incomingLinks, errors);
   validateRescueRequest(htmlByPath, sitemapUrls, errors);
+  validateServiceAreaChecker(htmlByPath, errors);
 
   console.log(`Validated HTML files: ${htmlFiles.length}`);
   console.log(`Warnings: ${warnings.length}`);
