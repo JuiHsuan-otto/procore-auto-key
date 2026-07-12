@@ -5,6 +5,7 @@ import path from "node:path";
 const ROOT = process.cwd();
 const TRACKING_SCRIPT = "/assets/js/procore-conversion-tracking.js";
 const TRACKING_SOURCE = "assets/js/procore-conversion-tracking.js";
+const PRIVACY_ONLY_PAGES = new Set(["rescue-request.html", "service-areas.html"]);
 const REQUIRED_TRACKING_TOKENS = [
   "G-KW1LHLVQHL",
   "procore_phone_click",
@@ -99,8 +100,9 @@ async function main() {
     const lineCount = countMatches(html, /href=["']https?:\/\/(?:line\.me|lin\.ee)\//gi);
     const route = getRoute(relPath);
 
-    if (trackingCount !== 1) {
-      errors.push(`${relPath}: expected exactly one tracking script, found ${trackingCount}`);
+    const expectedTrackingCount = PRIVACY_ONLY_PAGES.has(relPath) ? 0 : 1;
+    if (trackingCount !== expectedTrackingCount) {
+      errors.push(`${relPath}: expected ${expectedTrackingCount} tracking script, found ${trackingCount}`);
     }
 
     if (telCount === 0) {

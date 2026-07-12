@@ -77,3 +77,6 @@ cookies.json
 /file_list*.txt
 /subfolder_list.txt
 /sitemap_local.xml
+
+# Local runtime metadata (may contain credentials)
+.codex_flywheel_materialized.json
