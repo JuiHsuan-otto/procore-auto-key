@@ -133,15 +133,14 @@
     window.gtag("event", gtagEventName, getGtagEventParams(payload));
   }
 
-  function pushLeadEvents(payload, gtagEventName) {
+  function pushClickEvents(payload, gtagEventName) {
     pushToDataLayer(payload);
-    pushToDataLayer(payload, LEAD_EVENT_NAME);
-    pushToGtag(payload, LEAD_EVENT_NAME);
+    pushToGtag(payload, gtagEventName);
+  }
 
-    if (gtagEventName !== LEAD_EVENT_NAME) {
-      pushToDataLayer(payload, gtagEventName);
-      pushToGtag(payload, gtagEventName);
-    }
+  function pushDiagnosticLeadEvent(payload) {
+    pushToDataLayer(payload);
+    pushToGtag(payload, LEAD_EVENT_NAME);
   }
 
   function getSearchParam(name) {
@@ -190,7 +189,7 @@
       debug_mode: true
     };
 
-    pushLeadEvents(payload, LEAD_EVENT_NAME);
+    pushDiagnosticLeadEvent(payload);
   }
 
   function trackClick(event) {
@@ -205,13 +204,13 @@
     if (/^tel:/i.test(href)) {
       payload = getBasePayload(link, "procore_phone_click", "phone");
       payload.phone_number = normalizePhone(href);
-      pushLeadEvents(payload, "click_to_call");
+      pushClickEvents(payload, "click_to_call");
       return;
     }
 
     if (isLineHref(href)) {
       payload = getBasePayload(link, "procore_line_click", "line");
-      pushLeadEvents(payload, "line_click");
+      pushClickEvents(payload, "line_click");
     }
   }
 

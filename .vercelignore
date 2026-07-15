@@ -6,6 +6,8 @@
 .uv-python/
 __pycache__/
 node_modules/
+/data/
+/scripts/
 
 # Agent memory, operating notes, drafts, and automation data
 AGENTS.md

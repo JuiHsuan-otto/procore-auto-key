@@ -83,6 +83,20 @@ async function auditTrackingSource(errors) {
       errors.push(`${TRACKING_SOURCE}: missing required token ${token}`);
     }
   }
+
+  const trackClickMatch = source.match(/function trackClick\(event\) \{([\s\S]*?)\n  \}\n\n  loadGa4\(\)/);
+  if (!trackClickMatch) {
+    errors.push(`${TRACKING_SOURCE}: unable to statically inspect trackClick`);
+    return;
+  }
+
+  const trackClickSource = trackClickMatch[1];
+  if (!trackClickSource.includes("pushClickEvents")) {
+    errors.push(`${TRACKING_SOURCE}: CTA clicks must use pushClickEvents`);
+  }
+  if (/generate_lead|LEAD_EVENT_NAME|pushDiagnosticLeadEvent|pushLeadEvents/.test(trackClickSource)) {
+    errors.push(`${TRACKING_SOURCE}: CTA click path must not emit generate_lead`);
+  }
 }
 
 async function main() {
@@ -139,6 +153,7 @@ async function main() {
   console.log(`LINE CTA links: ${totalLineLinks}`);
   console.log(`Warnings: ${warnings.length}`);
   console.log(`Errors: ${errors.length}`);
+  console.log(`Static CTA taxonomy: ${errors.length ? "FAILED" : "verified (click paths do not emit generate_lead)"}`);
 
   if (noPhoneRows.length) {
     console.log("\nPages without phone CTA (first 20):");

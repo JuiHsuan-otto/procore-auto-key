@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "entity_id": "carkey-business",
+  "schema_identity": {
+    "id": "https://www.carkey.com.tw/#business",
+    "types": ["Organization", "LocalBusiness"],
+    "rule": "Generate one multi-typed node with this shared @id; pages reference it instead of defining competing business nodes."
+  },
+  "publication_policy": {
+    "default": "unpublished",
+    "eligible_status": "verified",
+    "required_evidence_fields": ["source", "verified_by", "verified_at"],
+    "pilot_before_rollout": true
+  },
+  "observed_brand_variants": [
+    "CarKey",
+    "ProCore",
+    "極致核心",
+    "ProCore Auto Key",
+    "極致核心 ProCore Auto Key"
+  ],
+  "fields": {
+    "legalName": {
+      "value": null,
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "publicBrandName": {
+      "value": null,
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "alternateName": {
+      "value": [],
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "domain": {
+      "value": "carkey.com.tw",
+      "status": "verified",
+      "publish": true,
+      "source": "production canonical URLs and DNS-served website",
+      "verified_by": "Stage A repository/production comparison",
+      "verified_at": "2026-07-16"
+    },
+    "url": {
+      "value": "https://www.carkey.com.tw/",
+      "status": "verified",
+      "publish": true,
+      "source": "production canonical origin",
+      "verified_by": "Stage A repository/production comparison",
+      "verified_at": "2026-07-16"
+    },
+    "logo": {
+      "value": "https://www.carkey.com.tw/img/procore_logo_main.jpg",
+      "status": "verified",
+      "publish": true,
+      "source": "repository asset and production HTTP 200",
+      "verified_by": "Stage A source inspection",
+      "verified_at": "2026-07-16"
+    },
+    "telephone": {
+      "value": "+886909277670",
+      "status": "verified",
+      "publish": true,
+      "source": "135-page published CTA inventory",
+      "verified_by": "Stage A repository/production comparison",
+      "verified_at": "2026-07-16"
+    },
+    "line": {
+      "value": "@420gknem",
+      "status": "verified",
+      "publish": true,
+      "source": "135-page published CTA inventory",
+      "verified_by": "Stage A repository/production comparison",
+      "verified_at": "2026-07-16"
+    },
+    "address": {
+      "value": null,
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "serviceArea": {
+      "value": [],
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "sameAs": {
+      "value": [],
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "gbpUrl": {
+      "value": null,
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "taxID": {
+      "value": null,
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "openingHours": {
+      "value": null,
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null
+    },
+    "priceRange": {
+      "value": null,
+      "status": "unverified",
+      "publish": false,
+      "source": null,
+      "verified_by": null,
+      "verified_at": null,
+      "legacy_observation": {
+        "baseline_count": 134,
+        "baseline_evidence": "Stage A deterministic repository inventory on remote main 15301685c7d8dcb709c253b0759c770361840a54",
+        "pilot_removed_files": [
+          "index.html",
+          "car-key-lost-service.html",
+          "article-bmw-smart-key-owner-guide.html"
+        ],
+        "expected_remaining_after_pilot": 131,
+        "rollout_status": "pilot_only"
+      }
+    }
+  }
+}
