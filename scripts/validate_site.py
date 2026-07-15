@@ -101,13 +101,18 @@ def main() -> None:
             errors.append(f"rescue-request.html: missing #{element_id}")
     if "location.hash" not in rescue or "#draft=" not in rescue:
         errors.append("rescue-request.html: draft handoff must use a URL fragment")
-    for forbidden in ("localStorage", "sessionStorage", "document.cookie"):
+    for forbidden in (
+        "localStorage", "sessionStorage", "document.cookie",
+        "fetch(", "XMLHttpRequest", "sendBeacon(",
+    ):
         if forbidden in rescue:
-            errors.append(f"rescue-request.html: forbidden browser persistence {forbidden}")
+            errors.append(f"rescue-request.html: forbidden client-side mechanism {forbidden}")
     if "location.origin+location.pathname+'#draft='" not in rescue:
         errors.append("rescue-request.html: draft URL may not include query parameters")
     if "<loc>" + SITE + "/rescue-request#" in sitemap or "#draft=" in sitemap:
         errors.append("sitemap.xml: personalized rescue draft must not be indexed")
+    if re.search(r'<(?:link rel="canonical"|meta property="og:url")[^>]+#', rescue):
+        errors.append("rescue-request.html: canonical/OG URL may not contain draft state")
 
     if errors:
         print("SITE_VALID=0")

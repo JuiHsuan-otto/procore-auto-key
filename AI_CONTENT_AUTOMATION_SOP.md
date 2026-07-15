@@ -377,3 +377,5 @@ GBP_LOCATION_ID=
 - 每次提交前執行：`python scripts/validate_site.py` 與 `git diff --check`。
 - GitHub Actions 會在 push / pull request 重跑相同檢查；失敗時不得視為已完成部署。
 - `/rescue-request` 與服務區域查詢只在瀏覽器處理資料，不使用後端、地圖、GBP 或其他外部 API，也不得新增追蹤個資的程式。
+- 救援草稿轉交只能使用 URL `#` 片段；禁止 query string、localStorage、sessionStorage、cookie、短網址或第三方服務。產生的分享網址不得寫入 canonical、OG 或 sitemap。
+- 草稿預設只帶年份、品牌、車型、大概區域、需求狀況與照片選項；備註預設排除，使用者主動勾選時仍須再次提醒不可包含車牌、VIN、完整地址或姓名。

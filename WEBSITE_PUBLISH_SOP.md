@@ -1,41 +1,43 @@
-# SDD 規格書：網站發布自動化流程 (Website Publish SOP)
-版本：v1.0
-日期：2026-03-27
+# 官網文章發布規格（Website Publish SOP）
 
-## 1. 核心目標
-確保「實績案例」在官網 (carkey.com.tw) 與 Blogger 之間同步發布時，維持資料一致性，避免遺漏靜態頁面更新。
+版本：v2.0
+日期：2026-07-15
 
-## 2. 檔案異動清單 (Schema)
-每次發布新案例，Agent 必須按順序更新以下檔案：
+## 1. 適用範圍
 
-| 順序 | 檔案路徑 | 作用 | 規格限制 |
-| :--- | :--- | :--- | :--- |
-| 1 | `img/[brand]/[filename].jpg` | 存儲施工圖片 | 圖片需存入對應品牌資料夾 |
-| 2 | `article-[slug].html` | 建立專屬文章頁面 | 需包含 SEO Meta、Canonical 標籤 |
-| 3 | `blog.json` | 更新全站搜尋索引 | 最新案例必須置於陣列首位 (Unshift) |
-| 4 | `cases.html` | 更新實績列表頁 | 必須更新 `caseData` 靜態 JS 陣列 |
-| 5 | `index.html` | 更新首頁「最新實績」 | 必須更新 `latestCases` 靜態 JS 陣列 |
+適用於案例文、指南文與地區服務文。完整語氣、SEO、隱私及跨平台規範見 `AI_CONTENT_AUTOMATION_SOP.md`。
 
-## 3. Blogger 發布規格
-- **語氣控制**：套用 `Stop Slop` 規則，移除 AI 冗贅詞。
-- **排版風格**：黑金高質感 (`#050505` 背景, `#D4AF37` 文字)。
-- **外部連結**：
-    - 必須嵌入 Amazon 推薦連結 (`decoder2026-20`)。
-    - 必須提供官網原文回鏈。
-- **圖片處理**：圖片必須置中顯示。
+## 2. 新文章必要內容
 
-## 5. 法拍/租賃案場 SEO 規範 (隱藏式攔截)
-針對「行將拍賣、和運租賃、SAA、HAA」等拍場/企業案件，嚴格執行以下邏輯：
-- **視覺避開**：標題與內文嚴禁出現品牌原文。
-    - 取代詞：*大型車輛拍賣中心、中古車競拍場、大型連鎖租賃體系、企業長租收回車輛*。
-- **後台植入**：在 HTML `<head>` 的 `keywords` 或 `ld+json` 中悄悄植入品牌原文（Google 機器人專用）。
-- **關鍵痛點**：內容需圍繞「法拍得標全丟救援」、「拍場現場重啟」等關鍵字眼。
-- **目的**：獲取精準流量，但不模糊主品牌視覺。
+- `article-[slug].html`，UTF-8、單一 H1、唯一 title、meta description、canonical、OG/Twitter metadata。
+- Article（或適合頁型）JSON-LD；若加入 FAQ，畫面內容與 FAQ schema 必須一致。
+- 2–4 個自然內部連結、可理解的圖片 alt、電話 `0909277670`、LINE `@420gknem`。
+- 公開內容只保留行政區、車款、外顯問題與結果；不得放車牌、VIN、完整地址、姓名、證件或可被複製的技術流程。
+- 使用者提供的照片預設可用；只在發現 GPS metadata 時移除 metadata，不改畫面，除非使用者另有要求。
 
-## 6. 部署驗證流程 (Verification)
-1. **本地校對**：確認 `git status` 無遺漏未追蹤檔案。
-2. **部署執行**：執行 `git push origin main:production --force`。
-3. **線上驗證**：Agent 需使用 `browser` 工具存取官網首頁，確認「最新實績」第一格是否正確顯示。
+## 3. 強制同步
 
----
-**確認執行：** 凡收到「上線」指令，Agent 必須依照此 SDD 規格逐項核對。
+不要手動維護多份索引。建立 HTML 後執行：
+
+```bash
+python publish_tool.py "文章標題" "/article-slug.html" "分類" "摘要"
+```
+
+案例文依需要加上 `--case-region`、`--case-car`、`--case-img`、`--case-type`。工具負責同步 `blog.json`、`blog.html`、`cases.html`、`cases.json` 與 `sitemap.xml`。
+
+## 4. 發布前驗證
+
+```bash
+python scripts/site_audit.py
+git diff --check
+```
+
+另確認圖片存在、JSON 可解析、乾淨網址可由 `vercel.json` 規則提供、沒有亂碼或連續問號、CTA 聯絡值正確。若頁面含 JavaScript，額外對抽出的 script 執行 `node --check`。
+
+## 5. Git 與部署
+
+只提交本次相關檔案，使用一般 commit 與 push。禁止 `--force`，禁止把草稿、token、OAuth 檔或客戶資料提交。部署後抽查實際網址；不可達時如實回報。
+
+## 6. 外部平台
+
+Blogger、Threads、Google Business Profile 預設僅草稿。不得加入未經同意的聯盟行銷連結，也不得在 metadata 藏入畫面未揭露的競品／場域品牌關鍵字。GBP API 發布目前停用。

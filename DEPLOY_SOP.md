@@ -1,36 +1,42 @@
-# 🚀 CarKey 自動化部署計畫 (carkey-deploy)
+# CarKey 官網部署 SOP
 
-本文件定義了 Meico 處理「極致核心 ProCore」網站內容時的**強制性作業流程**。
+版本：v2.0
+日期：2026-07-15
 
-## 核心目標
-**消滅所有隱形文章**。確保任何 `article-*.html` 產出後，必須在官網列表可見、且被搜尋引擎索引。
+本文件只處理 `carkey.com.tw` 靜態官網。內容規範與跨平台邊界以 `AI_CONTENT_AUTOMATION_SOP.md` 為準；兩者衝突時，以該文件與根目錄 `AGENTS.md` 為準。
 
-## 🛡️ 備份優先原則 (Pre-action Backup)
-在執行任何 Indexing 或重構作業前，**必須**先將 `blog.json`, `blog.html`, `sitemap.xml` 複製一份至 `C:\Users\ottoy\.openclaw\workspace-carkey\backups\` 目錄，作為災難復原的基準點。
+## 原則
 
-## 強制執行 Feedback Loop
-當生成、修改或刪除任何文章檔案後，**必須**依序執行以下步驟：
+- 官網是唯一 canonical source；公開網址使用無 `.html` 的乾淨路徑。
+- 不使用 force push，不直接改寫遠端歷史，不把憑證寫進 Git。
+- 新增文章必須用 `publish_tool.py` 同步清單與 sitemap；不得手動修改 `blog.html`、`cases.html` 或 `sitemap.xml` 來取代同步工具。
+- 修改舊文不等於新增文章；若標題、摘要、分類、案例圖片或網址沒有變，只需更新 sitemap 的 `lastmod`（可透過同步工具重跑同一文章）。
+- 外部平台預設只產草稿；GBP API 路徑目前停用。
 
-1.  **Indexing (索引同步)**
-    - 使用 `publish_tool.py` 或手動更新 `blog.json`。
-    - 更新 `blog.html` 中的 `blogData` JavaScript 陣列。
-    - *原則：新文章必須出現在網頁列表。*
+## 發布步驟
 
-2.  **SEO Sync (地圖同步)**
-    - 呼叫 `rebuild_sitemap.py` 重新生成完整的 `sitemap.xml`。
-    - 確認 `lastmod` 更新為當天日期。
+1. 確認工作樹與分支：`git status --short`、`git branch --show-current`。
+2. 新文章先完成 HTML、圖片與去識別化檢查，再執行：
+   ```bash
+   python publish_tool.py "文章標題" "/article-slug.html" "分類" "摘要" [案例參數]
+   ```
+3. 執行發布閘門：
+   ```bash
+   python scripts/site_audit.py
+   python -m json.tool vercel.json >/dev/null
+   git diff --check
+   ```
+4. 人工抽查：手機版 CTA、電話、LINE、圖片、canonical、OG 預覽、表單（若有）及主要內部連結。
+5. 提交並正常推送目前分支：
+   ```bash
+   git add <本次相關檔案>
+   git commit -m "fix: ..."   # 新文章可用 feat: publish ...
+   git push -u origin <目前分支>
+   ```
+6. 等部署完成後，以實際網址確認首頁、文章、sitemap、別名導向與聯絡 CTA。若線上環境不可達，保留本地驗證結果並明確回報，不能假稱已上線。
 
-3.  **Verification (資料驗證)**
-    - 執行 `Get-Content blog.json | ConvertFrom-Json` 確保 JSON 格式無誤。
-    - 檢查 `sitemap.xml` 是否包含最新的網址。
+## 回復方式
 
-4.  **Final Action (部署回報)**
-    - 執行 `git add .`, `git commit`, `git push`。
-    - **主動回報**：告知老闆 Vercel 部署後的驗證結果（例如使用 `web_fetch` 確認頁面已上線）。
-
-## 定期維護 (Heartbeat)
-- 每次 Session 啟動時，主動檢查是否有未同步的 HTML 檔案。
-- 定期執行 Sitemap 全量重構，確保索引完整性。
-
----
-**Meico 指令：此流程優先級高於一切內容創作，未完成同步不得結束任務。**
+- 發布失敗時不要 force push；先保留 commit，檢查網路、權限、預設分支與 Vercel 專案連結。
+- 回退使用新的 revert commit：`git revert <commit>`，再正常 push。
+- 舊備份可作參考，但不得把含憑證或個資的備份加入版控。
