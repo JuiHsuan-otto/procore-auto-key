@@ -157,7 +157,7 @@
  <div><label for="area-county" class="block text-sm text-white mb-2">選擇縣市</label><select id="area-county" class="w-full bg-black/40 border border-white/20 rounded px-4 py-3 text-white"><option value="">請選擇</option><option value="台中市">台中市</option><option value="彰化縣">彰化縣</option><option value="南投縣">南投縣</option><option value="其他縣市">其他縣市</option></select></div>
  <div><label for="area-query" class="block text-sm text-white mb-2">行政區或大概區域</label><input id="area-query" list="area-options" autocomplete="address-level2" maxlength="24" aria-describedby="area-help" placeholder="例如：西屯區、員林市" class="w-full bg-black/40 border border-white/20 rounded px-4 py-3 text-white"></div>
  </div>
- <datalist id="area-options"><option value="西屯區"><option value="南屯區"><option value="北屯區"><option value="大里區"><option value="豐原區"><option value="彰化市"><option value="員林市"><option value="鹿港鎮"><option value="草屯鎮"><option value="埔里鎮"></datalist>
+ <datalist id="area-options"><option value="西屯區"><option value="南屯區"><option value="北屯區"><option value="大里區"><option value="豐原區"><option value="太平區"><option value="霧峰區"><option value="清水區"><option value="沙鹿區"><option value="梧棲區"><option value="彰化市"><option value="員林市"><option value="鹿港鎮"><option value="和美鎮"><option value="南投市"><option value="草屯鎮"><option value="埔里鎮"></datalist>
  <button id="area-check" type="button" class="btn-gold w-full mt-3 px-7 py-3 text-xs">查看支援情況</button>
  <p id="area-help" class="mt-3 text-xs leading-6 text-gray-500">只需大約行政區；請勿輸入完整地址、車牌、VIN／車身號碼或姓名。</p>
  <p id="area-result" class="mt-3 text-sm leading-7 text-gray-300" role="status" aria-live="polite">可輸入部分地名；若不確定行政區，先填縣市即可。</p>
@@ -283,8 +283,9 @@
  </footer>
  <script>
  (()=>{
- const listed=['台中西屯','台中南屯','台中北屯','台中大里','台中豐原','彰化市','彰化員林','彰化鹿港','南投草屯','南投埔里'];
- const aliases={'台中市西屯區':'台中西屯','台中市南屯區':'台中南屯','台中市北屯區':'台中北屯','台中市大里區':'台中大里','台中市豐原區':'台中豐原','彰化縣彰化市':'彰化市','彰化縣員林市':'彰化員林','彰化縣鹿港鎮':'彰化鹿港','南投縣草屯鎮':'南投草屯','南投縣埔里鎮':'南投埔里','台中市xitun':'台中西屯','台中市nantun':'台中南屯','台中市beitun':'台中北屯','台中市dali':'台中大里','台中市fengyuan':'台中豐原','彰化縣changhua':'彰化市','彰化縣yuanlin':'彰化員林','彰化縣lukang':'彰化鹿港','南投縣caotun':'南投草屯','南投縣puli':'南投埔里','taichungxitun':'台中西屯','taichungnantun':'台中南屯','taichungbeitun':'台中北屯','taichungdali':'台中大里','taichungfengyuan':'台中豐原','changhuachanghua':'彰化市','changhuayuanlin':'彰化員林','changhualukang':'彰化鹿港','nantoucaotun':'南投草屯','nantoupuli':'南投埔里'};
+ const listed=['台中西屯','台中南屯','台中北屯','台中大里','台中豐原','台中太平','台中霧峰','台中清水','台中沙鹿','台中梧棲','彰化市','彰化員林','彰化鹿港','彰化和美','南投市','南投草屯','南投埔里'];
+ const hot=new Set(['台中西屯','台中南屯','台中北屯','台中大里','台中豐原','彰化市','彰化員林','彰化鹿港','南投草屯','南投埔里']);
+ const aliases={'台中市西屯區':'台中西屯','台中市南屯區':'台中南屯','台中市北屯區':'台中北屯','台中市大里區':'台中大里','台中市豐原區':'台中豐原','台中市太平區':'台中太平','台中市霧峰區':'台中霧峰','台中市清水區':'台中清水','台中市沙鹿區':'台中沙鹿','台中市梧棲區':'台中梧棲','彰化縣彰化市':'彰化市','彰化縣員林市':'彰化員林','彰化縣鹿港鎮':'彰化鹿港','彰化縣和美鎮':'彰化和美','南投縣南投市':'南投市','南投縣草屯鎮':'南投草屯','南投縣埔里鎮':'南投埔里','台中市xitun':'台中西屯','台中市nantun':'台中南屯','台中市beitun':'台中北屯','台中市dali':'台中大里','台中市fengyuan':'台中豐原','彰化縣changhua':'彰化市','彰化縣yuanlin':'彰化員林','彰化縣lukang':'彰化鹿港','南投縣caotun':'南投草屯','南投縣puli':'南投埔里','taichungxitun':'台中西屯','taichungnantun':'台中南屯','taichungbeitun':'台中北屯','taichungdali':'台中大里','taichungfengyuan':'台中豐原','changhuachanghua':'彰化市','changhuayuanlin':'彰化員林','changhualukang':'彰化鹿港','nantoucaotun':'南投草屯','nantoupuli':'南投埔里'};
  const county=document.querySelector('#area-county'),input=document.querySelector('#area-query'),result=document.querySelector('#area-result'),next=document.querySelector('#area-to-request');
  const clean=v=>v.trim().toLowerCase().replace(/臺/g,'台').replace(/区/g,'區').replace(/[^a-z0-9\u3400-\u9fff]/g,'');
  function check(){
@@ -295,13 +296,14 @@
   if(!c&&!a){result.textContent='請先選擇縣市或輸入大概區域，例如「台中市、西屯區」。不需要完整地址。';return}
   if(c==='其他縣市'&&!a){result.textContent='請再輸入縣市或大概區域，讓我們知道要查哪裡；不需要完整地址。';return}
   if(a&&a.length<2){result.textContent='地名似乎還不完整，請多輸入一點，例如縣市加行政區。';return}
+  if(/(路|街|巷|弄|號|樓|棟|停車格)/.test(a)||/\d{4,}/.test(a)){result.textContent='為保護隱私，請只輸入縣市或行政區；不要填完整地址、門牌、車牌、VIN 或姓名。';return}
   const stripped=raw.replace(/[縣市區鎮鄉]/g,'');
   const normalized=aliases[raw]||aliases[stripped]||stripped;
   const countyOnly={'台中':'台中市','彰化':'彰化縣','南投':'南投縣','taichung':'台中市','changhua':'彰化縣','nantou':'南投縣'}[normalized];
   const hit=countyOnly?null:listed.find(x=>x===normalized||x.includes(normalized)||normalized.includes(x));
   let area=raw||a;
   if((!a&&['台中市','彰化縣','南投縣'].includes(c))||countyOnly){if(countyOnly)area=countyOnly;result.textContent='支援程度：'+(countyOnly?countyOnly:'此縣市')+'屬於主要服務縣市，但尚未指定行政區。可直接整理需求或補充區域；仍需依路線與車況確認。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
-  else if(hit){result.textContent='支援程度：官網已有「'+hit+'」服務資訊。下一步可整理需求，再由 LINE 確認當天路線與時段；尚未確認前不保證到府。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
+  else if(hit){result.textContent=(hot.has(hit)?'支援程度：常見服務熱點。':'支援程度：官網已列服務區域。')+'官網已有「'+hit+'」服務資訊。下一步可整理需求，再由 LINE 確認當天路線與時段；尚未確認前不保證到府。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
   else {result.textContent='支援程度：官網目前未列「'+area+'」的明確服務資訊。歡迎先用 LINE 詢問，我們會依當天路線與車況評估，不先保證可到府。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
   next.href='/rescue-request#area='+encodeURIComponent(area);next.classList.remove('hidden');
  }

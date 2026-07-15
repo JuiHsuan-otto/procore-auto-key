@@ -11,5 +11,6 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
-      - run: python -m py_compile publish_tool.py scripts/validate_site.py
+      - run: python -m py_compile publish_tool.py scripts/validate_site.py scripts/site_quality_check.py scripts/remove_gps_metadata.py
       - run: python scripts/validate_site.py
+      - run: python scripts/site_quality_check.py
