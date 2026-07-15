@@ -1,0 +1,15 @@
+{
+  "keywords": [
+    "汽車鑰匙遺失",
+    "賓士全丟救援",
+    "BMW 晶片鑰匙",
+    "福特汽車鑰匙配製",
+    "Skoda 鑰匙全丟",
+    "Honda Fit 彰化配鑰匙",
+    "Lexus 台中配鑰匙"
+  ],
+  "tracking_interval_hours": 24,
+  "telegram_enabled": false,
+  "report_path": "memory/reports/",
+  "site_url": "https://www.carkey.com.tw"
+}

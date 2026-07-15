@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>救援需求快速整理｜汽車鑰匙 LINE 諮詢｜極致核心 ProCore</title>
+  <meta name="description" content="用手機快速整理汽車鑰匙救援需求：年份、品牌車型、所在區域與目前狀況。資料只在你的瀏覽器產生，不上傳、不儲存，可複製後傳給極致核心 LINE @420gknem。">
+  <link rel="canonical" href="https://www.carkey.com.tw/rescue-request">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="極致核心 ProCore Auto Key">
+  <meta property="og:title" content="救援需求快速整理｜極致核心 ProCore">
+  <meta property="og:description" content="不懂專業術語也沒關係。用手機整理車款、區域與狀況，再複製或帶到 LINE @420gknem；內容不會上傳或儲存。">
+  <meta property="og:url" content="https://www.carkey.com.tw/rescue-request">
+  <meta property="og:image" content="https://www.carkey.com.tw/img/vcard-preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="救援需求快速整理｜極致核心 ProCore">
+  <meta name="twitter:description" content="整理汽車鑰匙救援資訊後，複製或帶到正確 LINE ID；純前端、不留資料。">
+  <meta name="twitter:image" content="https://www.carkey.com.tw/img/vcard-preview.jpg">
+  <link rel="icon" href="img/procore_logo_main.jpg" type="image/jpeg">
+  <style>
+    :root { color-scheme: dark; --bg:#050505; --panel:#121212; --soft:#1b1b1b; --gold:#d4af37; --gold2:#f4dfa0; --text:#f5f5f5; --muted:#b3b3b3; --danger:#ffb4a8; --ok:#9be7ae; }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% -10%,#30260d 0,#0b0b0b 35%,#030303 73%); color:var(--text); font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif; line-height:1.65; }
+    a { color:inherit; }
+    .wrap { width:min(760px,100%); margin:auto; padding:20px 16px 56px; }
+    nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:8px 0 24px; }
+    .brand { text-decoration:none; font-weight:900; letter-spacing:.18em; }
+    .back { color:var(--muted); font-size:.9rem; text-underline-offset:4px; }
+    header { text-align:center; margin:18px auto 28px; }
+    .eyebrow { color:var(--gold); font-size:.75rem; font-weight:800; letter-spacing:.2em; }
+    h1 { font-size:clamp(1.9rem,7vw,3rem); line-height:1.2; margin:.7rem 0 1rem; }
+    header p { color:#d0d0d0; margin:auto; max-width:640px; }
+    .privacy { background:#17130a; border:1px solid rgba(212,175,55,.42); border-radius:16px; padding:16px 18px; margin:24px 0; color:#e7dcae; }
+    .privacy strong { color:var(--gold2); }
+    .card { background:rgba(18,18,18,.94); border:1px solid rgba(255,255,255,.11); border-radius:20px; padding:clamp(18px,4vw,30px); box-shadow:0 24px 70px rgba(0,0,0,.38); }
+    .field { margin-bottom:22px; }
+    label, legend { display:block; font-weight:800; margin-bottom:8px; }
+    .hint { display:block; color:var(--muted); font-size:.82rem; margin-top:6px; }
+    input, select, textarea { width:100%; border:1px solid #444; background:#0a0a0a; color:#fff; border-radius:12px; padding:14px 13px; font:inherit; min-height:50px; }
+    textarea { min-height:108px; resize:vertical; }
+    input:focus, select:focus, textarea:focus, button:focus-visible, a:focus-visible { outline:3px solid rgba(212,175,55,.42); outline-offset:2px; border-color:var(--gold); }
+    fieldset { border:0; padding:0; margin:0 0 22px; }
+    .choice-grid { display:grid; grid-template-columns:1fr; gap:9px; }
+    .choice { display:flex; align-items:flex-start; gap:10px; border:1px solid #3b3b3b; border-radius:12px; padding:12px; background:#0b0b0b; cursor:pointer; }
+    .choice input { width:20px; min-height:20px; margin:2px 0 0; accent-color:var(--gold); }
+    .choice span { flex:1; }
+    .required { color:var(--gold2); font-size:.78rem; }
+    .error { color:var(--danger); font-size:.86rem; min-height:1.4em; margin:7px 0 0; }
+    .actions { display:grid; gap:10px; margin-top:10px; }
+    button, .line-button { appearance:none; border:0; border-radius:13px; min-height:52px; padding:13px 18px; font:inherit; font-weight:900; cursor:pointer; text-align:center; text-decoration:none; }
+    .primary { background:linear-gradient(135deg,#f5e6a5,#d4af37 55%,#a87e1d); color:#080808; }
+    .secondary { background:#242424; color:#fff; border:1px solid #555; }
+    .line-button { display:none; background:#06c755; color:#06150b; }
+    .output { display:none; margin-top:24px; }
+    .output h2 { margin:0 0 10px; font-size:1.2rem; }
+    #result { white-space:pre-wrap; background:#070707; border:1px solid #3c3c3c; border-radius:13px; padding:16px; color:#eee; min-height:170px; }
+    .status { min-height:1.5em; margin:10px 0 0; font-weight:700; color:var(--ok); }
+    .draft-box { margin:24px 0; padding:18px; border:1px solid rgba(212,175,55,.32); border-radius:16px; background:#12100a; }
+    .draft-box h2 { margin:0 0 8px; font-size:1.15rem; }
+    .draft-warning { color:#e7dcae; font-size:.82rem; }
+    .draft-option { display:flex; align-items:flex-start; gap:10px; margin:14px 0; color:#eee; font-size:.9rem; cursor:pointer; }
+    .draft-option input { width:20px; min-height:20px; margin:3px 0 0; accent-color:var(--gold); }
+    .draft-actions { display:grid; gap:9px; }
+    #draft-link { margin-top:12px; font-size:.82rem; }
+    .draft-loaded { display:none; margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.12); }
+    .fine { color:var(--muted); font-size:.78rem; margin-top:14px; }
+    footer { text-align:center; color:#888; font-size:.82rem; margin-top:28px; }
+    @media (min-width:620px) { .choice-grid { grid-template-columns:1fr 1fr; } .actions, .draft-actions { grid-template-columns:1fr 1fr; } .line-button { grid-column:1/-1; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"救援需求快速整理",
+    "url":"https://www.carkey.com.tw/rescue-request",
+    "description":"純前端的汽車鑰匙救援需求整理工具，不儲存或上傳使用者輸入。",
+    "inLanguage":"zh-TW",
+    "isPartOf":{"@id":"https://www.carkey.com.tw/#website"},
+    "about":{"@type":"Service","name":"汽車鑰匙救援諮詢","provider":{"@id":"https://www.carkey.com.tw/#business"}}
+  }
+  </script>
+</head>
+<body>
+  <main class="wrap">
+    <nav aria-label="頁面導覽">
+      <a class="brand" href="/">PROCORE</a>
+      <a class="back" href="/">回官網首頁</a>
+    </nav>
+
+    <header>
+      <div class="eyebrow">RESCUE REQUEST</div>
+      <h1>救援需求快速整理</h1>
+      <p>不知道專業名稱也沒關係。填寫你目前知道的資訊，頁面會整理成一段訊息，方便複製或傳到 LINE。</p>
+    </header>
+
+    <div class="privacy" role="note">
+      <strong>隱私提醒：</strong>只填縣市與行政區。請勿輸入車牌、VIN／車身號碼、完整地址、車主姓名、證件或任何技術作業細節。所有內容只在此裝置的瀏覽器內整理，不會上傳或儲存。
+    </div>
+
+    <form id="request-form" class="card" novalidate>
+      <div class="field">
+        <label for="year">車輛年份 <span class="required">必填</span></label>
+        <input id="year" name="year" inputmode="text" autocomplete="off" maxlength="6" placeholder="例如：2019" aria-describedby="year-hint year-error">
+        <small id="year-hint" class="hint">不知道確切年份，可填「約 2019」。</small>
+        <p id="year-error" class="error"></p>
+      </div>
+
+      <div class="field">
+        <label for="brand">品牌 <span class="required">必填</span></label>
+        <input id="brand" name="brand" autocomplete="off" maxlength="40" placeholder="例如：Toyota、BMW、Audi" aria-describedby="brand-error">
+        <p id="brand-error" class="error"></p>
+      </div>
+
+      <div class="field">
+        <label for="model">車型 <span class="required">必填</span></label>
+        <input id="model" name="model" autocomplete="off" maxlength="50" placeholder="例如：RAV4、320i、A4" aria-describedby="model-error">
+        <p id="model-error" class="error"></p>
+      </div>
+
+      <div class="field">
+        <label for="location">所在地縣市／區域 <span class="required">必填</span></label>
+        <input id="location" name="location" autocomplete="address-level2" maxlength="40" placeholder="例如：台中市西屯區" aria-describedby="location-hint location-error">
+        <small id="location-hint" class="hint">請停在行政區層級，不要填路名、門牌或停車格。</small>
+        <p id="location-error" class="error"></p>
+      </div>
+
+      <div class="field">
+        <label for="situation">目前狀況 <span class="required">必填</span></label>
+        <select id="situation" name="situation" aria-describedby="situation-error">
+          <option value="">請選擇最接近的狀況</option>
+          <option>鑰匙全丟</option>
+          <option>新增備用鑰匙</option>
+          <option>智能鑰匙感應不到</option>
+          <option>車子發不動</option>
+          <option>其他</option>
+        </select>
+        <p id="situation-error" class="error"></p>
+      </div>
+
+      <fieldset>
+        <legend>是否方便補照片？ <span class="required">必填</span></legend>
+        <div class="choice-grid">
+          <label class="choice"><input type="radio" name="photos" value="可以補照片"><span>可以，稍後提供不含個資的照片</span></label>
+          <label class="choice"><input type="radio" name="photos" value="目前不方便補照片"><span>目前不方便</span></label>
+        </div>
+        <p id="photos-error" class="error"></p>
+      </fieldset>
+
+      <div class="field">
+        <label for="notes">簡短備註 <span class="hint" style="display:inline">選填</span></label>
+        <textarea id="notes" name="notes" maxlength="200" placeholder="例如：停在地下室、手邊仍有一把鑰匙。不要寫完整地址或技術細節。" aria-describedby="notes-hint notes-error"></textarea>
+        <small id="notes-hint" class="hint">最多 200 字；只描述外顯狀況與停放環境。</small>
+        <p id="notes-error" class="error"></p>
+      </div>
+
+      <section class="draft-box" aria-labelledby="draft-title">
+        <h2 id="draft-title">草稿留存／轉交</h2>
+        <p class="draft-warning"><strong>連結不是加密內容，仍可能被收到連結的人看到。</strong>只放非識別化資訊；草稿資料只寫在網址 <code>#</code> 片段，不會送到本站伺服器。</p>
+        <label class="draft-option" for="include-notes">
+          <input type="checkbox" id="include-notes">
+          <span>我確認備註不含車牌、VIN、完整地址或車主姓名，並要把備註放進分享連結。<small class="hint">預設不分享備註；姓名等內容無法由程式可靠辨識，請自行再次檢查。</small></span>
+        </label>
+        <div class="draft-actions">
+          <button type="button" id="draft-generate" class="secondary">產生／更新草稿連結</button>
+          <button type="button" id="draft-copy" class="secondary" disabled>複製草稿連結</button>
+        </div>
+        <input id="draft-link" type="text" readonly hidden aria-label="可複製的草稿連結">
+        <p id="draft-status" class="status" role="status"></p>
+        <div id="draft-loaded" class="draft-loaded">
+          <p class="draft-warning">已由草稿連結帶回安全欄位，請先檢查內容，再繼續編輯或產生 LINE 訊息。</p>
+          <div class="draft-actions">
+            <button type="button" id="draft-edit" class="secondary">返回編輯</button>
+            <button type="button" id="draft-clear" class="secondary">清除草稿連結（保留表單）</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button type="submit" class="primary">繼續產生 LINE 訊息</button>
+        <button type="button" id="reset-btn" class="secondary">清除重填</button>
+      </div>
+
+      <section id="output" class="output" aria-live="polite">
+        <h2>已整理完成</h2>
+        <div id="result" tabindex="0"></div>
+        <div class="actions">
+          <button type="button" id="copy-btn" class="primary">複製訊息</button>
+          <a id="line-btn" class="line-button" href="#" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">帶到 LINE @420gknem</a>
+        </div>
+        <p id="status" class="status" role="status"></p>
+        <p class="fine">若 LINE 未自動帶入文字，請先按「複製訊息」，再貼到極致核心官方 LINE：@420gknem。</p>
+      </section>
+    </form>
+
+    <footer>
+      <p>電話：<a href="tel:0909277670">0909277670</a>　LINE：<a href="https://line.me/R/ti/p/@420gknem" rel="noreferrer" referrerpolicy="no-referrer">@420gknem</a></p>
+      <p>本頁無後端、無資料庫，也不呼叫 Google 商家或其他外部 API。</p>
+    </footer>
+  </main>
+
+  <script>
+  (() => {
+    'use strict';
+    const form = document.getElementById('request-form');
+    const output = document.getElementById('output');
+    const result = document.getElementById('result');
+    const lineBtn = document.getElementById('line-btn');
+    const status = document.getElementById('status');
+    const clean = value => value.trim().replace(/\s+/g, ' ');
+    const fields = ['year', 'brand', 'model', 'location', 'situation'];
+    const draftLink = document.getElementById('draft-link');
+    const draftStatus = document.getElementById('draft-status');
+    const draftCopy = document.getElementById('draft-copy');
+    const draftLoaded = document.getElementById('draft-loaded');
+    const allowedSituations = new Set([...document.getElementById('situation').options].map(option => option.value).filter(Boolean));
+    const allowedPhotos = new Set(['可以補照片', '目前不方便補照片']);
+
+    // Accept only a short, non-sensitive administrative-area hint from our own
+    // service-area flow. Query data is never stored or sent automatically.
+    const locationHint = new URLSearchParams(window.location.search).get('location');
+    if (locationHint) {
+      const hint = clean(locationHint).slice(0, 40);
+      if (hint && !looksLikeFullAddress(hint) && !hasSensitiveText(hint)) {
+        document.getElementById('location').value = hint;
+      }
+    }
+
+    function setError(id, message) {
+      const node = document.getElementById(id + '-error');
+      if (node) node.textContent = message;
+      const input = document.getElementById(id);
+      if (input) input.setAttribute('aria-invalid', message ? 'true' : 'false');
+    }
+
+    function hasSensitiveText(value) {
+      const vin = /\b[A-HJ-NPR-Z0-9]{17}\b/i;
+      const plate = /\b[A-Z]{2,3}[- ]?\d{3,4}\b/i;
+      return vin.test(value) || plate.test(value);
+    }
+
+    function looksLikeFullAddress(value) {
+      // Block road/building details while allowing the district name「路竹區」.
+      return /(?:大道|街|巷|弄)|路(?!竹區)|(?:\d+\s*號|\d+\s*樓)/.test(value);
+    }
+
+    function encodeDraft(payload) {
+      const bytes = new TextEncoder().encode(JSON.stringify(payload));
+      let binary = '';
+      bytes.forEach(byte => { binary += String.fromCharCode(byte); });
+      return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+    }
+
+    function decodeDraft(token) {
+      const base64 = token.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - token.length % 4) % 4);
+      const binary = atob(base64);
+      return JSON.parse(new TextDecoder().decode(Uint8Array.from(binary, char => char.charCodeAt(0))));
+    }
+
+    function showDraftLink(url, message) {
+      draftLink.value = url;
+      draftLink.hidden = false;
+      draftCopy.disabled = false;
+      draftStatus.textContent = message;
+    }
+
+    function clearDraftLink(message) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      draftLink.value = '';
+      draftLink.hidden = true;
+      draftCopy.disabled = true;
+      draftLoaded.style.display = 'none';
+      draftStatus.textContent = message;
+    }
+
+    function draftPayload() {
+      const values = {
+        v: 1,
+        y: clean(document.getElementById('year').value),
+        b: clean(document.getElementById('brand').value),
+        m: clean(document.getElementById('model').value),
+        l: clean(document.getElementById('location').value),
+        s: clean(document.getElementById('situation').value),
+        p: form.querySelector('input[name="photos"]:checked')?.value || ''
+      };
+      const note = clean(document.getElementById('notes').value);
+      const includeNotes = document.getElementById('include-notes').checked;
+      if (values.y && !/^(?:約\s*)?(?:19|20)\d{2}$/.test(values.y)) throw new Error('年份格式請用 2019 或「約 2019」。');
+      if (values.l && looksLikeFullAddress(values.l)) throw new Error('所在地請只保留縣市／行政區，不要放路名或門牌。');
+      if (hasSensitiveText([values.b, values.m, values.l, includeNotes ? note : ''].join(' '))) throw new Error('草稿看起來可能含車牌或 VIN，請移除後再產生。');
+      if (values.s && !allowedSituations.has(values.s)) throw new Error('需求狀況不在可用選項中，請重新選擇。');
+      if (values.p && !allowedPhotos.has(values.p)) throw new Error('照片選項無法辨識，請重新選擇。');
+      if (includeNotes && note) {
+        if (looksLikeFullAddress(note)) throw new Error('備註可能含完整地址；請移除路名、門牌後再分享。');
+        values.n = note;
+      }
+      return values;
+    }
+
+    function restoreDraft() {
+      if (!window.location.hash.startsWith('#draft=')) return;
+      try {
+        const data = decodeDraft(window.location.hash.slice(7));
+        if (!data || data.v !== 1) throw new Error('version');
+        const lengths = { y:6, b:40, m:50, l:40, n:200 };
+        for (const key of Object.keys(lengths)) {
+          if (data[key] != null && (typeof data[key] !== 'string' || data[key].length > lengths[key])) throw new Error('length');
+        }
+        if (data.y && !/^(?:約\s*)?(?:19|20)\d{2}$/.test(clean(data.y))) throw new Error('year');
+        if (data.l && (looksLikeFullAddress(data.l) || hasSensitiveText(data.l))) throw new Error('location');
+        if (data.n && (looksLikeFullAddress(data.n) || hasSensitiveText(data.n))) throw new Error('notes');
+        if ([data.b, data.m].some(value => value && hasSensitiveText(value))) throw new Error('sensitive');
+        if (data.s && !allowedSituations.has(data.s)) throw new Error('situation');
+        if (data.p && !allowedPhotos.has(data.p)) throw new Error('photos');
+        const mapping = { y:'year', b:'brand', m:'model', l:'location', s:'situation', n:'notes' };
+        Object.entries(mapping).forEach(([key, id]) => {
+          if (typeof data[key] === 'string' && data[key]) document.getElementById(id).value = data[key];
+        });
+        if (data.p) {
+          const radio = form.querySelector(`input[name="photos"][value="${CSS.escape(data.p)}"]`);
+          if (radio) radio.checked = true;
+        }
+        document.getElementById('include-notes').checked = Boolean(data.n);
+        draftLoaded.style.display = 'block';
+        showDraftLink(window.location.href, '已載入草稿。連結內容未加密，轉傳前請再次檢查。');
+      } catch (_) {
+        draftStatus.textContent = '這個草稿連結無法安全讀取，已忽略其中內容；你仍可直接填寫表單。';
+        draftLoaded.style.display = 'block';
+      }
+    }
+
+    function validate() {
+      let firstInvalid = null;
+      fields.forEach(id => setError(id, ''));
+      setError('photos', '');
+      setError('notes', '');
+
+      for (const id of fields) {
+        const input = document.getElementById(id);
+        if (!clean(input.value)) {
+          setError(id, id === 'situation' ? '請選擇目前狀況。' : '這一欄還沒填，請補上你知道的資訊。');
+          firstInvalid ||= input;
+        }
+      }
+      const photos = form.querySelector('input[name="photos"]:checked');
+      if (!photos) {
+        setError('photos', '請選擇是否方便補照片。');
+        firstInvalid ||= form.querySelector('input[name="photos"]');
+      }
+
+      const year = clean(document.getElementById('year').value);
+      if (year && !/^(?:約\s*)?(?:19|20)\d{2}$/.test(year)) {
+        setError('year', '請填四位年份，例如 2019；不確定可填「約 2019」。');
+        firstInvalid ||= document.getElementById('year');
+      }
+      const location = clean(document.getElementById('location').value);
+      if (looksLikeFullAddress(location)) {
+        setError('location', '為保護隱私，請只保留縣市與行政區，不要填路名或門牌。');
+        firstInvalid ||= document.getElementById('location');
+      }
+      const allText = [document.getElementById('brand').value, document.getElementById('model').value, location, document.getElementById('notes').value].join(' ');
+      if (hasSensitiveText(allText)) {
+        setError('notes', '內容看起來可能含車牌或 VIN，請移除後再產生。');
+        firstInvalid ||= document.getElementById('notes');
+      }
+      if (firstInvalid) firstInvalid.focus();
+      return !firstInvalid;
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      status.textContent = '';
+      if (!validate()) return;
+      const photos = form.querySelector('input[name="photos"]:checked').value;
+      const notes = clean(document.getElementById('notes').value) || '無';
+      const message = [
+        '您好，我想詢問汽車鑰匙服務：',
+        `車輛：${clean(document.getElementById('year').value)} ${clean(document.getElementById('brand').value)} ${clean(document.getElementById('model').value)}`,
+        `所在地：${clean(document.getElementById('location').value)}`,
+        `目前狀況：${clean(document.getElementById('situation').value)}`,
+        `照片：${photos}`,
+        `備註：${notes}`,
+        '（已確認未填車牌、VIN、完整地址、姓名或技術細節）'
+      ].join('\n');
+      result.textContent = message;
+      lineBtn.href = 'https://line.me/R/oaMessage/@420gknem/?' + encodeURIComponent(message);
+      lineBtn.style.display = 'block';
+      output.style.display = 'block';
+      output.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+
+    document.getElementById('draft-generate').addEventListener('click', () => {
+      try {
+        const token = encodeDraft(draftPayload());
+        const url = new URL(window.location.href);
+        url.search = '';
+        url.hash = 'draft=' + token;
+        history.replaceState(null, '', url.pathname + url.hash);
+        draftLoaded.style.display = 'block';
+        showDraftLink(url.href, '草稿連結已產生；可複製轉交，或繼續編輯後重新產生。');
+      } catch (error) {
+        draftStatus.textContent = error.message;
+      }
+    });
+
+    document.getElementById('draft-copy').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(draftLink.value);
+        draftStatus.textContent = '草稿連結已複製。請只轉交給需要協助的人。';
+      } catch (_) {
+        draftLink.hidden = false;
+        draftLink.focus();
+        draftLink.select();
+        draftStatus.textContent = '已選取草稿連結，請使用系統的「複製」。';
+      }
+    });
+
+    document.getElementById('draft-edit').addEventListener('click', () => {
+      document.getElementById('year').focus();
+      document.getElementById('year').scrollIntoView({ behavior:'smooth', block:'center' });
+    });
+
+    document.getElementById('draft-clear').addEventListener('click', () => {
+      clearDraftLink('草稿連結已從網址移除；表單內容仍保留，可繼續編輯。');
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', async () => {
+      const text = result.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        status.textContent = '已複製，可以貼到 LINE @420gknem。';
+      } catch (_) {
+        const range = document.createRange();
+        range.selectNodeContents(result);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        status.textContent = '已選取文字，請長按或使用系統的「複製」。';
+      }
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      form.reset();
+      output.style.display = 'none';
+      result.textContent = '';
+      status.textContent = '';
+      clearDraftLink('表單與草稿連結已清除。');
+      [...fields, 'photos', 'notes'].forEach(id => setError(id, ''));
+      document.getElementById('year').focus();
+    });
+
+    restoreDraft();
+  })();
+  </script>
+</body>
+</html>
