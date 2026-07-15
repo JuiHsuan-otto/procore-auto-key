@@ -303,7 +303,7 @@
   if((!a&&['台中市','彰化縣','南投縣'].includes(c))||countyOnly){if(countyOnly)area=countyOnly;result.textContent='支援程度：'+(countyOnly?countyOnly:'此縣市')+'屬於主要服務縣市，但尚未指定行政區。可直接整理需求或補充區域；仍需依路線與車況確認。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
   else if(hit){result.textContent='支援程度：官網已有「'+hit+'」服務資訊。下一步可整理需求，再由 LINE 確認當天路線與時段；尚未確認前不保證到府。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
   else {result.textContent='支援程度：官網目前未列「'+area+'」的明確服務資訊。歡迎先用 LINE 詢問，我們會依當天路線與車況評估，不先保證可到府。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
-  next.href='/rescue-request?area='+encodeURIComponent(area);next.classList.remove('hidden');
+  next.href='/rescue-request#area='+encodeURIComponent(area);next.classList.remove('hidden');
  }
  document.querySelector('#area-check').addEventListener('click',check);county.addEventListener('change',check);input.addEventListener('input',check);input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check()}});
  })();
