@@ -288,18 +288,19 @@
  const county=document.querySelector('#area-county'),input=document.querySelector('#area-query'),result=document.querySelector('#area-result'),next=document.querySelector('#area-to-request');
  const clean=v=>v.trim().toLowerCase().replace(/臺/g,'台').replace(/区/g,'區').replace(/[^a-z0-9\u3400-\u9fff]/g,'');
  function check(){
-  const c=clean(county.value),a=clean(input.value),raw=(c==='其他縣市'?'':c)+a;
+  const c=clean(county.value),a=clean(input.value),selected=c==='其他縣市'?'':c;
+  const shortCounty=selected.replace(/[縣市]$/,'');
+  const raw=selected&&a&&(a.startsWith(selected)||a.startsWith(shortCounty))?a:selected+a;
   next.classList.add('hidden');
   if(!c&&!a){result.textContent='請先選擇縣市或輸入大概區域，例如「台中市、西屯區」。不需要完整地址。';return}
   if(c==='其他縣市'&&!a){result.textContent='請再輸入縣市或大概區域，讓我們知道要查哪裡；不需要完整地址。';return}
   if(a&&a.length<2){result.textContent='地名似乎還不完整，請多輸入一點，例如縣市加行政區。';return}
   const stripped=raw.replace(/[縣市區鎮鄉]/g,'');
   const normalized=aliases[raw]||aliases[stripped]||stripped;
-  const hit=listed.find(x=>x===normalized||x.includes(normalized)||normalized.includes(x));
   const countyOnly={'台中':'台中市','彰化':'彰化縣','南投':'南投縣','taichung':'台中市','changhua':'彰化縣','nantou':'南投縣'}[normalized];
+  const hit=countyOnly?null:listed.find(x=>x===normalized||x.includes(normalized)||normalized.includes(x));
   let area=raw||a;
-  if(!a&&['台中市','彰化縣','南投縣'].includes(c)){result.textContent='支援程度：屬於主要服務縣市，但尚未指定行政區。可直接整理需求或補充區域；仍需依路線與車況確認。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
-  else if(!c&&countyOnly){area=countyOnly;result.textContent='支援程度：'+countyOnly+'屬於主要服務縣市，但尚未指定行政區。可直接整理需求或補充區域；仍需依路線與車況確認。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
+  if((!a&&['台中市','彰化縣','南投縣'].includes(c))||countyOnly){if(countyOnly)area=countyOnly;result.textContent='支援程度：'+(countyOnly?countyOnly:'此縣市')+'屬於主要服務縣市，但尚未指定行政區。可直接整理需求或補充區域；仍需依路線與車況確認。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
   else if(hit){result.textContent='支援程度：官網已有「'+hit+'」服務資訊。下一步可整理需求，再由 LINE 確認當天路線與時段；尚未確認前不保證到府。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
   else {result.textContent='支援程度：官網目前未列「'+area+'」的明確服務資訊。歡迎先用 LINE 詢問，我們會依當天路線與車況評估，不先保證可到府。只需大概區域，請勿填完整地址、車牌、VIN 或車主姓名。';}
   next.href='/rescue-request?area='+encodeURIComponent(area);next.classList.remove('hidden');
