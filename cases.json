@@ -1,5 +1,16 @@
 [
   {
+    "id": 6,
+    "date": "2026.02.27",
+    "location": "台北內湖",
+    "brand": "Audi R8",
+    "type": "鑰匙全丟",
+    "desc": "台北內湖 Audi R8 鑰匙全數遺失案例紀錄。到場確認車況與需求，完成後逐項測試交付。",
+    "img": "img/audi-r8-neihu-all-keys-lost/case-1.jpg",
+    "link": "/article-audi-r8-neihu-all-keys-lost",
+    "tag": "SUCCESS"
+  },
+  {
     "id": 7,
     "date": "2026.02.27",
     "location": "台北市內湖區",
@@ -7,16 +18,6 @@
     "type": "鑰匙全丟",
     "desc": "台北內湖 Audi R8 鑰匙全數遺失，確認車主與車輛資料後到場完成處理及功能確認。",
     "img": "/img/audi-r8-neihu-all-keys-lost/case-1.jpg",
-    "tag": "SUCCESS"
-  },
-  {
-    "id": 6,
-    "date": "2026.02.18",
-    "location": "台北內湖",
-    "brand": "Audi R8",
-    "type": "鑰匙全丟",
-    "desc": "台北內湖 Audi R8 鑰匙全丟案例，協助車主確認車況並完成可正常使用的智慧鑰匙，不公開作業細節，以車輛安全與車主隱私為優先。",
-    "img": "img/audi-r8-neihu-all-keys-lost/case-1.jpg",
     "tag": "SUCCESS"
   },
   {

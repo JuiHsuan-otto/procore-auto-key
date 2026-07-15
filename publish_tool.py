@@ -11,11 +11,12 @@ from __future__ import annotations
 import argparse
 import json
 import re
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SITE = "https://www.carkey.com.tw"
+MAX_CLOCK_DRIFT_DAYS = 45
 
 
 def clean_link(value: str) -> str:
@@ -91,14 +92,32 @@ def sync_cases(args: argparse.Namespace, link: str) -> None:
     cases_path = ROOT / "cases.html"
     cases = dedupe_prepend(extract_js_array(cases_path, "caseData"), case_item)
     replace_js_array(cases_path, "caseData", cases)
-    sync_cases_json(args)
+    sync_cases_json(args, link)
+    sync_home_cases(cases)
 
 
-def sync_cases_json(args: argparse.Namespace) -> None:
+def sync_home_cases(cases: list[dict]) -> None:
+    """Keep the homepage cards in the same order as the canonical case list."""
+    home_items = [
+        {
+            "car": entry["car"],
+            "label": f'{entry["region"]}｜到場處理紀錄',
+            "img": entry["img"],
+            "link": entry["link"],
+        }
+        for entry in cases[:4]
+    ]
+    replace_js_array(ROOT / "index.html", "latestCases", home_items)
+
+
+def sync_cases_json(args: argparse.Namespace, link: str) -> None:
     path = ROOT / "cases.json"
     cases = read_json(path)
+    previous = next((entry for entry in cases if entry.get("img") == args.case_img), None)
     kept = [entry for entry in cases if entry.get("img") != args.case_img]
-    next_id = max([int(entry.get("id", 0)) for entry in kept] or [0]) + 1
+    next_id = int(previous["id"]) if previous and previous.get("id") else max(
+        [int(entry.get("id", 0)) for entry in kept] or [0]
+    ) + 1
     item = {
         "id": next_id,
         "date": args.date,
@@ -107,6 +126,7 @@ def sync_cases_json(args: argparse.Namespace) -> None:
         "type": args.case_type or args.category,
         "desc": args.summary,
         "img": args.case_img,
+        "link": link,
         "tag": "SUCCESS",
     }
     write_json(path, [item, *kept])
@@ -125,71 +145,88 @@ def sync_sitemap(link: str, lastmod: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def sync_existing_articles() -> None:
-    """Backfill articles that exist on disk but were omitted from the site index."""
-    from html import unescape
+def latest_known_publish_date() -> date | None:
+    """Return the newest date already recorded in blog.json."""
+    known: list[date] = []
+    for entry in read_json(ROOT / "blog.json"):
+        raw = str(entry.get("date", "")).replace(".", "-")
+        try:
+            known.append(date.fromisoformat(raw))
+        except ValueError:
+            continue
+    return max(known) if known else None
 
-    items = read_json(ROOT / "blog.json")
-    known = {entry.get("link") for entry in items}
-    for path in sorted(ROOT.glob("article-*.html")):
-        link = f"/{path.stem}"
-        text = path.read_text(encoding="utf-8")
-        if "\ufffd" in text or re.search(r"\?{4,}", text):
-            raise SystemExit(f"Encoding check failed: {path.name}")
-        if link not in known:
-            title_match = re.search(r"<title>(.*?)</title>", text, re.I | re.S)
-            desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', text, re.I | re.S)
-            title = unescape(re.sub(r"\s+", " ", title_match.group(1)).strip()) if title_match else path.stem
-            summary = unescape(re.sub(r"\s+", " ", desc_match.group(1)).strip()) if desc_match else "汽車鑰匙服務與車主注意事項。"
-            title_plain = re.sub(r"\s*[|｜-]\s*極致核心.*$", "", title)
-            category = "案例分享" if any(word in title for word in ("案例", "救援", "全丟", "新增")) else "技術專欄"
-            items.append({"date": "2026.03.01", "category": category, "title": title_plain, "summary": summary, "link": link})
-            known.add(link)
-        sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
-        if f"<loc>{SITE}{link}</loc>" not in sitemap:
-            sync_sitemap(link, date.today().isoformat())
-    write_json(ROOT / "blog.json", items)
-    replace_js_array(ROOT / "blog.html", "blogData", items)
-    print(f"SYNCED_EXISTING={len(items)}")
+
+def resolve_dates(args: argparse.Namespace) -> None:
+    """Resolve defaults while refusing obviously drifted machine clocks."""
+    if args.date:
+        publish_date = date.fromisoformat(args.date.replace(".", "-"))
+        args.date = publish_date.strftime("%Y.%m.%d")
+    else:
+        publish_date = date.today()
+        known = latest_known_publish_date()
+        if known and publish_date > known + timedelta(days=MAX_CLOCK_DRIFT_DAYS):
+            raise SystemExit(
+                "System clock is far ahead of existing content. "
+                "Pass --date YYYY.MM.DD and --lastmod YYYY-MM-DD explicitly."
+            )
+        args.date = publish_date.strftime("%Y.%m.%d")
+    args.lastmod = args.lastmod or publish_date.isoformat()
+    date.fromisoformat(args.lastmod)
+
+
+def clamp_sitemap_dates(as_of: str) -> None:
+    """Clamp impossible future lastmod values to a trusted publication date."""
+    trusted = date.fromisoformat(as_of)
+    path = ROOT / "sitemap.xml"
+    content = path.read_text(encoding="utf-8")
+
+    def replace(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        try:
+            return f"<lastmod>{as_of}</lastmod>" if date.fromisoformat(raw) > trusted else match.group(0)
+        except ValueError:
+            return match.group(0)
+
+    path.write_text(
+        re.sub(r"<lastmod>(\d{4}-\d{2}-\d{2})</lastmod>", replace, content),
+        encoding="utf-8",
+    )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Sync a ProCore article into indexes.")
-    parser.add_argument("title", nargs="?")
-    parser.add_argument("path", nargs="?", help="Article path, with or without .html")
-    parser.add_argument("category", nargs="?")
-    parser.add_argument("summary", nargs="?")
-    parser.add_argument("--date", default=date.today().strftime("%Y.%m.%d"))
-    parser.add_argument("--lastmod", default=date.today().isoformat())
+    parser.add_argument("title")
+    parser.add_argument("path", help="Article path, with or without .html")
+    parser.add_argument("category")
+    parser.add_argument("summary")
+    parser.add_argument("--date", default="")
+    parser.add_argument("--lastmod", default="")
+    parser.add_argument(
+        "--normalize-sitemap-as-of",
+        default="",
+        metavar="YYYY-MM-DD",
+        help="Clamp sitemap lastmod values later than this trusted date.",
+    )
     parser.add_argument("--keywords", default="")
     parser.add_argument("--case-region", default="")
     parser.add_argument("--case-car", default="")
     parser.add_argument("--case-img", default="")
     parser.add_argument("--case-type", default="")
-    parser.add_argument("--sitemap-only", action="store_true", help="Add/update a non-article page in sitemap only")
-    parser.add_argument("--sync-existing", action="store_true", help="Backfill all on-disk articles into blog and sitemap")
     args = parser.parse_args()
-
-    if args.sync_existing:
-        sync_existing_articles()
-        return
-    if not all((args.title, args.path, args.category, args.summary)):
-        parser.error("title, path, category and summary are required")
+    resolve_dates(args)
 
     link = clean_link(args.path)
-    target = ROOT / (link.lstrip("/") + ".html")
-    if not target.exists():
-        raise SystemExit(f"Article/page not found: {target.name}")
-    source = target.read_text(encoding="utf-8")
-    if "\ufffd" in source or re.search(r"\?{4,}", source):
-        raise SystemExit(f"Encoding check failed: {target.name}")
-    if args.sitemap_only:
-        sync_sitemap(link, args.lastmod)
-        print(f"SITEMAP_ONLY={link}")
-        return
+    article = ROOT / f"{link.lstrip('/')}.html"
+    if not article.is_file():
+        raise SystemExit(f"Article file does not exist: {article.name}")
+    if args.case_img and not (ROOT / args.case_img).is_file():
+        raise SystemExit(f"Case image does not exist: {args.case_img}")
     sync_blog(args, link)
     sync_cases(args, link)
     sync_sitemap(link, args.lastmod)
+    if args.normalize_sitemap_as_of:
+        clamp_sitemap_dates(args.normalize_sitemap_as_of)
     print(f"PUBLISHED_INDEX={link}")
 
 

@@ -93,8 +93,8 @@ def main() -> None:
     # invariants protect both the service-area preset and shared draft privacy.
     rescue = (ROOT / "rescue-request.html").read_text(encoding="utf-8")
     required_rescue = {
-        "requestForm", "makeDraft", "copyDraft", "clearDraft", "backEdit",
-        "continueLine", "draftLink", "shareNotes",
+        "request-form", "make-draft", "copy-draft", "clear-draft", "back-edit",
+        "continue-message", "draft-url", "include-note",
     }
     for element_id in required_rescue:
         if f'id="{element_id}"' not in rescue:
@@ -107,7 +107,7 @@ def main() -> None:
     ):
         if forbidden in rescue:
             errors.append(f"rescue-request.html: forbidden client-side mechanism {forbidden}")
-    if "location.origin+location.pathname+'#draft='" not in rescue:
+    if not re.search(r"location\.origin\}\$\{location\.pathname\}#draft=", rescue):
         errors.append("rescue-request.html: draft URL may not include query parameters")
     if "<loc>" + SITE + "/rescue-request#" in sitemap or "#draft=" in sitemap:
         errors.append("sitemap.xml: personalized rescue draft must not be indexed")
