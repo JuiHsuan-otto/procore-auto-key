@@ -89,6 +89,26 @@ def main() -> None:
         if not (ROOT / name).exists():
             errors.append(f"missing core page {name}")
 
+    # Rescue handoff must remain client-only and fragment-based.  These
+    # invariants protect both the service-area preset and shared draft privacy.
+    rescue = (ROOT / "rescue-request.html").read_text(encoding="utf-8")
+    required_rescue = {
+        "requestForm", "makeDraft", "copyDraft", "clearDraft", "backEdit",
+        "continueLine", "draftLink", "shareNotes",
+    }
+    for element_id in required_rescue:
+        if f'id="{element_id}"' not in rescue:
+            errors.append(f"rescue-request.html: missing #{element_id}")
+    if "location.hash" not in rescue or "#draft=" not in rescue:
+        errors.append("rescue-request.html: draft handoff must use a URL fragment")
+    for forbidden in ("localStorage", "sessionStorage", "document.cookie"):
+        if forbidden in rescue:
+            errors.append(f"rescue-request.html: forbidden browser persistence {forbidden}")
+    if "location.origin+location.pathname+'#draft='" not in rescue:
+        errors.append("rescue-request.html: draft URL may not include query parameters")
+    if "<loc>" + SITE + "/rescue-request#" in sitemap or "#draft=" in sitemap:
+        errors.append("sitemap.xml: personalized rescue draft must not be indexed")
+
     if errors:
         print("SITE_VALID=0")
         print("\n".join(sorted(set(errors))))
