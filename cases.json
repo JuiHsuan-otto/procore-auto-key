@@ -1,0 +1,62 @@
+[
+  {
+    "id": 6,
+    "date": "2026.04.30",
+    "location": "台北內湖",
+    "brand": "Audi R8",
+    "type": "鑰匙全丟",
+    "desc": "台北內湖 Audi R8 鑰匙全丟案例，協助車主確認車況並完成可正常使用的智慧鑰匙，不公開作業細節，以車輛安全與車主隱私為優先。",
+    "img": "img/audi-r8-neihu-all-keys-lost/case-1.jpg",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 5,
+    "date": "2026.04.28",
+    "location": "新竹竹北",
+    "brand": "Peugeot 508 SW",
+    "type": "智慧鑰匙新增",
+    "desc": "新竹竹北 2022 Peugeot 508 SW 智慧鑰匙新增案例。整理車主備份鑰匙前可準備的資料、現場確認項目與完成後測試重點。",
+    "img": "img/peugeot-508sw-zhubei-smartkey/case-1.jpg",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 1,
+    "date": "2026.02.23",
+    "location": "台中",
+    "brand": "BMW",
+    "type": "鑰匙全丟現場再生",
+    "desc": "OBD 數據解碼，免拖吊現場直接發動。到場完成晶片匹配，交車前確認遙控與啟動功能。",
+    "img": "img/1655.jpg",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 2,
+    "date": "2026.02.22",
+    "location": "彰化",
+    "brand": "Benz",
+    "type": "晶片鑰匙備份",
+    "desc": "車系專用設備匹配，智能感應鑰匙完成配製。極致核心 (ProCore) 替車主準備可正常啟動的備用鑰匙。",
+    "img": "img/1711.JPG",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 3,
+    "date": "2026.02.21",
+    "location": "南投",
+    "brand": "Toyota",
+    "type": "智能鑰匙全丟救援",
+    "desc": "中彰投可安排到場，不分車款晶片資料重建。到場確認車況後，協助車主恢復用車。",
+    "img": "img/1726.JPG",
+    "tag": "SUCCESS"
+  },
+  {
+    "id": 4,
+    "date": "2026.02.24",
+    "location": "台中",
+    "brand": "Lexus",
+    "type": "智能鑰匙全丟",
+    "desc": "現場資料寫入，不破壞門鎖開啟車門。交車前會確認每一把鑰匙的遙控、感應與啟動功能。",
+    "img": "img/20240224_Taichung_Lexus.jpg",
+    "tag": "SUCCESS"
+  }
+]
