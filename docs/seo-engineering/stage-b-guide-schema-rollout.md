@@ -54,3 +54,5 @@ The pre-write point-in-time reference was `2026-07-16T18:44:43+08:00`: live remo
 `fix(seo): remove unsupported priceRange from guide pages`
 
 Do not combine the remaining 100-page migration or the independent mobile CTA fix with this commit.
+
+Subsequent status: the pre-existing overflow was resolved in the independent `stage-b-mobile-cta-overflow.md` batch. Re-verification measured no horizontal overflow at either 390×844 or 1440×900; the original schema-only boundary and findings remain unchanged.

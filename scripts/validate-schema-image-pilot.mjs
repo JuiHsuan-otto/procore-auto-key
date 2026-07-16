@@ -61,6 +61,15 @@ const EXPECTED_REMOVAL_STAGES = [
   { stage_id: "brand-model-page-batch", status: "implemented", files: BRAND_MODEL_SCHEMA_FILES },
   { stage_id: "guide-page-batch", status: "implemented", files: GUIDE_SCHEMA_FILES },
 ];
+const APPROVED_NON_SCHEMA_HTML_CHANGES = new Map([
+  [
+    "article-us-car-market-tech.html",
+    [
+      'class="mt-12 flex justify-center"',
+      'class="mt-12 flex flex-col items-center justify-center"',
+    ],
+  ],
+]);
 
 function walkJson(value, visit, jsonPath = "$") {
   if (Array.isArray(value)) {
@@ -136,7 +145,18 @@ function compareWithHead(currentHtml, currentPayloads, relPath, errors) {
     errors.push(`${relPath}: JSON-LD changed beyond removal of priceRange from the HEAD baseline`);
   }
 
-  const expectedHtml = removeLegacyPriceRangeFromHtml(headHtml);
+  let expectedHtml = removeLegacyPriceRangeFromHtml(headHtml);
+  const approvedReplacement = APPROVED_NON_SCHEMA_HTML_CHANGES.get(relPath);
+  if (approvedReplacement) {
+    const [before, after] = approvedReplacement;
+    const beforeOccurrences = expectedHtml.split(before).length - 1;
+    const afterOccurrences = expectedHtml.split(after).length - 1;
+    if (beforeOccurrences === 1 && afterOccurrences === 0) {
+      expectedHtml = expectedHtml.replace(before, after);
+    } else if (!(beforeOccurrences === 0 && afterOccurrences === 1)) {
+      errors.push(`${relPath}: approved non-schema baseline state invalid (before ${beforeOccurrences}, after ${afterOccurrences})`);
+    }
+  }
   if (currentHtml !== expectedHtml) {
     errors.push(`${relPath}: HTML changed beyond removal of priceRange from the HEAD baseline`);
   }
@@ -270,6 +290,10 @@ function runSelfTests() {
   assert.equal(removeLegacyPriceRangeFromHtml('{"name":"x","priceRange":"$$"}'), '{"name":"x"}');
   assert.equal(removeLegacyPriceRangeFromHtml('{"name": "x", "priceRange": "$$"}'), '{"name": "x"}');
   assert.equal(removeLegacyPriceRangeFromHtml('  "priceRange": "$$",\n  "name": "x"'), '  "name": "x"');
+  assert.deepEqual(APPROVED_NON_SCHEMA_HTML_CHANGES.get("article-us-car-market-tech.html"), [
+    'class="mt-12 flex justify-center"',
+    'class="mt-12 flex flex-col items-center justify-center"',
+  ]);
   assert.equal(classifyImageSource("${escapeHtml(src)}"), "dynamic");
   assert.equal(classifyImageSource("https://example.com/image.svg"), "external");
   assert.equal(classifyImageSource("img/local.jpg"), "local");
