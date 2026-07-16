@@ -212,10 +212,28 @@
               "article-bmw-elv-red-lock-fix.html",
               "case-shetou-mazda-cx30-rescue.html"
             ]
+          },
+          {
+            "stage_id": "bmw-case-page-batch",
+            "status": "implemented",
+            "files": [
+              "article-bmw-118-2016-changhua-akl.html",
+              "article-bmw-118-beitun-akl.html",
+              "article-bmw-218d-2016-yunlin-akl.html",
+              "article-bmw-220i-2015-yunlin-akl.html",
+              "article-bmw-3series-huatan-rescue.html",
+              "article-bmw-528-2015-yunlin-akl.html",
+              "article-bmw-730d-kaohsiung-auction-akl.html",
+              "article-bmw-740-yuanli-akl.html",
+              "article-bmw-gseries-keyless-rescue.html",
+              "article-bmw-gt535i-renwu-akl.html",
+              "article-bmw-x3-linkou-auction-akl.html",
+              "article-bmw-x5-battery-fix.html"
+            ]
           }
         ],
-        "expected_remaining_after_current_stage": 97,
-        "rollout_status": "case_page_pilot"
+        "expected_remaining_after_current_stage": 85,
+        "rollout_status": "bmw_case_page_batch"
       }
     }
   }

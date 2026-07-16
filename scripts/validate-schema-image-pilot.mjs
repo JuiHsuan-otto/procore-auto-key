@@ -54,12 +54,27 @@ const CASE_SCHEMA_PILOT_FILES = [
   "article-bmw-elv-red-lock-fix.html",
   "case-shetou-mazda-cx30-rescue.html",
 ];
+const BMW_CASE_SCHEMA_FILES = [
+  "article-bmw-118-2016-changhua-akl.html",
+  "article-bmw-118-beitun-akl.html",
+  "article-bmw-218d-2016-yunlin-akl.html",
+  "article-bmw-220i-2015-yunlin-akl.html",
+  "article-bmw-3series-huatan-rescue.html",
+  "article-bmw-528-2015-yunlin-akl.html",
+  "article-bmw-730d-kaohsiung-auction-akl.html",
+  "article-bmw-740-yuanli-akl.html",
+  "article-bmw-gseries-keyless-rescue.html",
+  "article-bmw-gt535i-renwu-akl.html",
+  "article-bmw-x3-linkou-auction-akl.html",
+  "article-bmw-x5-battery-fix.html",
+];
 const SCHEMA_FILES = [
   ...IMAGE_PILOT_FILES,
   ...SERVICE_SCHEMA_FILES,
   ...BRAND_MODEL_SCHEMA_FILES,
   ...GUIDE_SCHEMA_FILES,
   ...CASE_SCHEMA_PILOT_FILES,
+  ...BMW_CASE_SCHEMA_FILES,
 ];
 const EXPECTED_REMOVAL_STAGES = [
   { stage_id: "three-page-pilot", status: "complete", files: IMAGE_PILOT_FILES },
@@ -67,6 +82,7 @@ const EXPECTED_REMOVAL_STAGES = [
   { stage_id: "brand-model-page-batch", status: "implemented", files: BRAND_MODEL_SCHEMA_FILES },
   { stage_id: "guide-page-batch", status: "implemented", files: GUIDE_SCHEMA_FILES },
   { stage_id: "case-page-pilot", status: "implemented", files: CASE_SCHEMA_PILOT_FILES },
+  { stage_id: "bmw-case-page-batch", status: "implemented", files: BMW_CASE_SCHEMA_FILES },
 ];
 const APPROVED_NON_SCHEMA_HTML_CHANGES = new Map([
   [
@@ -265,8 +281,8 @@ function validateBusinessGate(business, errors) {
   if (JSON.stringify(migration?.removal_stages) !== JSON.stringify(EXPECTED_REMOVAL_STAGES)) {
     errors.push("data/business-entity.json: priceRange removal stage order/scope drifted");
   }
-  if (migration?.expected_remaining_after_current_stage !== 97 || migration?.rollout_status !== "case_page_pilot") {
-    errors.push("data/business-entity.json: priceRange case pilot count/status drifted");
+  if (migration?.expected_remaining_after_current_stage !== 85 || migration?.rollout_status !== "bmw_case_page_batch") {
+    errors.push("data/business-entity.json: priceRange BMW case rollout count/status drifted");
   }
 }
 
@@ -281,8 +297,8 @@ function runSelfTests() {
         schema_output: "publish",
         legacy_observation: {
           removal_stages: EXPECTED_REMOVAL_STAGES,
-          expected_remaining_after_current_stage: 97,
-          rollout_status: "case_page_pilot",
+          expected_remaining_after_current_stage: 85,
+          rollout_status: "bmw_case_page_batch",
         },
       },
     },
