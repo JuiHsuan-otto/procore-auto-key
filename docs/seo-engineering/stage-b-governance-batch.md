@@ -31,6 +31,8 @@ These are warnings because this batch is governance-only. Counter HTML needs evi
 
 Subsequent status: the representative three-page schema/image pilot is documented in `stage-b-schema-image-pilot.md`. It reduced the legacy `priceRange` count from 134 to 131; it did not authorize a bulk rollout.
 
+Further subsequent status: the homepage counter fallback batch is documented in `stage-b-metrics-fallback.md`. It removed the four public zero placeholders, legacy `data-target` values, and homepage 24H wording; the current governance validator therefore reports two known warnings instead of three. All four numeric metrics remain unverified and unpublished.
+
 ## Verification
 
 - `npm run test:seo-foundation`: passed; 135-page deterministic inventory plus three negative-gate tests.

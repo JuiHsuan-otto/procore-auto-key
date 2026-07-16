@@ -99,8 +99,8 @@ function validateMetrics(data, indexHtml, errors, warnings) {
       errors.push(`${METRICS_FILE}: missing or duplicate metric_id ${metric.metric_id || "(empty)"}`);
     }
     ids.add(metric.metric_id);
-    if (!metric.label || !metric.unit || !metric.fallback_text) {
-      errors.push(`${METRICS_FILE}: ${metric.metric_id} requires label, unit, and fallback_text`);
+    if (!metric.label || !metric.unit || !metric.fallback_label || !metric.fallback_text) {
+      errors.push(`${METRICS_FILE}: ${metric.metric_id} requires label, unit, fallback_label, and fallback_text`);
     }
     if (!new Set(["hidden", "draft", "public"]).has(metric.display_status)) {
       errors.push(`${METRICS_FILE}: ${metric.metric_id} has invalid display_status`);
@@ -115,36 +115,65 @@ function validateMetrics(data, indexHtml, errors, warnings) {
     if (metric.display_status === "hidden" && metric.value !== null) {
       errors.push(`${METRICS_FILE}: hidden metric ${metric.metric_id} must not carry a publishable value`);
     }
-    if (/\d/.test(metric.fallback_text)) {
-      errors.push(`${METRICS_FILE}: ${metric.metric_id} fallback_text must be non-numeric`);
+    if (/\d/.test(metric.fallback_label) || /\d/.test(metric.fallback_text)) {
+      errors.push(`${METRICS_FILE}: ${metric.metric_id} fallback copy must be non-numeric`);
     }
   }
 
-  const counterPattern = /<div\b[^>]*class=["'][^"']*\bcounter\b[^"']*["'][^>]*data-target=["'](\d+)["'][^>]*>([^<]*)<\/div>\s*<div\b[^>]*>([^<]+)<\/div>/gi;
-  const counters = [...indexHtml.matchAll(counterPattern)].map((match) => ({
-    target: Number(match[1]),
-    sourceText: match[2].trim(),
-    label: match[3].trim(),
-  }));
-
-  if (counters.length !== metrics.length) {
-    errors.push(`${METRICS_FILE}: registered ${metrics.length} metrics but found ${counters.length} legacy counters`);
+  const startMarker = "<!-- BUSINESS_METRICS_START -->";
+  const endMarker = "<!-- BUSINESS_METRICS_END -->";
+  const start = indexHtml.indexOf(startMarker);
+  const end = indexHtml.indexOf(endMarker);
+  if (start === -1 || end === -1 || end <= start) {
+    errors.push("index.html: governed business metric block markers are missing or invalid");
+    return;
   }
+  const metricBlock = indexHtml.slice(start, end + endMarker.length);
+  const renderedIds = [...metricBlock.matchAll(/\bdata-metric-id=["']([^"']+)["']/gi)].map((match) => match[1]);
+  if (renderedIds.length !== metrics.length || new Set(renderedIds).size !== renderedIds.length) {
+    errors.push(`index.html: expected ${metrics.length} unique governed metric cards, found ${renderedIds.length}`);
+  }
+
   for (const metric of metrics) {
-    const counter = counters.find((item) => item.label === metric.label);
-    if (!counter) {
-      errors.push(`index.html: no counter matches registered metric label ${metric.label}`);
+    const escapedId = metric.metric_id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const cardPattern = new RegExp(
+      `<div\\b[^>]*data-metric-id=["']${escapedId}["'][^>]*data-metric-status=["'](public|fallback)["'][^>]*>\\s*` +
+      `<div\\b([^>]*)>([^<]*)<\\/div>\\s*<div\\b[^>]*>([^<]*)<\\/div>\\s*<\\/div>`,
+      "i",
+    );
+    const card = metricBlock.match(cardPattern);
+    if (!card) {
+      errors.push(`index.html: no governed metric card matches ${metric.metric_id}`);
       continue;
     }
-    if (counter.target !== metric.legacy_unverified_value) {
-      errors.push(`index.html: ${metric.label} data-target changed without metric evidence review`);
-    }
-    if (counter.sourceText !== "0") {
-      errors.push(`index.html: ${metric.label} legacy source placeholder changed outside the counter migration`);
+
+    const [, renderedStatus, valueAttributes, sourceTextRaw, labelTextRaw] = card;
+    const sourceText = sourceTextRaw.trim();
+    const labelText = labelTextRaw.trim();
+    if (metric.display_status === "public") {
+      const targetMatch = valueAttributes.match(/\bdata-target=["']([^"']+)["']/i);
+      const renderedTarget = targetMatch ? Number(targetMatch[1]) : Number.NaN;
+      const renderedValue = Number(sourceText.replaceAll(",", ""));
+      if (renderedStatus !== "public" || !/\bcounter\b/.test(valueAttributes) || renderedTarget !== metric.value || renderedValue !== metric.value) {
+        errors.push(`index.html: public metric ${metric.metric_id} must source-render its verified value and matching data-target`);
+      }
+      if (labelText !== metric.label) {
+        errors.push(`index.html: public metric ${metric.metric_id} label does not match its source record`);
+      }
+    } else {
+      if (renderedStatus !== "fallback" || /\bcounter\b/.test(valueAttributes) || /\bdata-target\s*=/.test(valueAttributes)) {
+        errors.push(`index.html: unverified metric ${metric.metric_id} must render as a non-animated fallback`);
+      }
+      if (sourceText !== metric.fallback_text || labelText !== metric.fallback_label) {
+        errors.push(`index.html: fallback copy for ${metric.metric_id} does not match ${METRICS_FILE}`);
+      }
+      if (metric.legacy_unverified_value != null && metricBlock.includes(String(metric.legacy_unverified_value))) {
+        errors.push(`index.html: unverified legacy value for ${metric.metric_id} leaked into public metric source`);
+      }
     }
   }
-  if (counters.length) {
-    warnings.push(`index.html: ${counters.length} legacy counters remain unresolved and must not be treated as verified metrics`);
+  if (/24H\s+(?:Hotline|全年無休)/i.test(indexHtml)) {
+    errors.push("index.html: unverified 24H claim remains in homepage source");
   }
 }
 
@@ -212,6 +241,10 @@ async function runSelfTests(business, metrics, thirdParty, indexHtml, vercelConf
   badMetrics.metrics[0].value = 9999;
   validateMetrics(badMetrics, indexHtml, gateErrors, gateWarnings);
 
+  const badFallback = structuredClone(metrics);
+  badFallback.metrics[1].fallback_text = "提供 24 小時跨區服務";
+  validateMetrics(badFallback, indexHtml, gateErrors, gateWarnings);
+
   const badThirdParty = structuredClone(thirdParty);
   badThirdParty.scripts[0].new_page_expansion_allowed = true;
   await validateThirdParty(badThirdParty, vercelConfig, gateErrors, gateWarnings);
@@ -219,6 +252,7 @@ async function runSelfTests(business, metrics, thirdParty, indexHtml, vercelConf
   const expectedFailures = [
     "legalName cannot publish without verified value and evidence",
     "public metric vehicles_served is missing source",
+    "cross_region_visits fallback copy must be non-numeric",
     "pending script washinmura-aeo-crawler-track must block new page expansion",
   ];
   for (const expected of expectedFailures) {

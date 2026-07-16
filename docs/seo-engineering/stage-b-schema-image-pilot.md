@@ -80,6 +80,8 @@ Browser verification opened loopback pages and the production homepage for visua
 3. Washinmura remains mutable/unversioned pending owner and privacy review.
 4. The external LINE SVG is outside repository image-metadata control.
 
+Subsequent status: item 2 was resolved for the homepage by `stage-b-metrics-fallback.md`; no numeric metric was published. The other warnings remain.
+
 ## Risks and rollback
 
 - Search engines may temporarily observe different business-node fields between the three pilot pages and the remaining pages. The pilot is deliberately limited so the result can be reviewed before rollout.

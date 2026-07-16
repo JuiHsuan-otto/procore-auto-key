@@ -7,9 +7,10 @@
     "report:ga-gsc": "node scripts/reconcile-ga-gsc.mjs",
     "seo:inventory": "node scripts/generate-seo-inventory.mjs",
     "seo:baseline": "node scripts/check-production-baseline.mjs",
+    "seo:metrics": "node scripts/render-business-metrics.mjs",
     "validate:governance": "node scripts/validate-seo-governance.mjs",
     "validate:seo-pilot": "node scripts/validate-schema-image-pilot.mjs",
-    "test:seo-foundation": "node scripts/test-seo-foundation.mjs && node scripts/generate-seo-inventory.mjs --check && node scripts/validate-seo-governance.mjs --self-test && node scripts/validate-schema-image-pilot.mjs --self-test",
+    "test:seo-foundation": "node scripts/test-seo-foundation.mjs && node scripts/generate-seo-inventory.mjs --check && node scripts/render-business-metrics.mjs --check && node scripts/validate-seo-governance.mjs --self-test && node scripts/validate-schema-image-pilot.mjs --self-test",
     "validate:site": "node scripts/validate-static-site.mjs"
   },
   "dependencies": {
