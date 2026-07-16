@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { getAttr, walkFiles } from "./seo-utils.mjs";
 
 const ROOT = process.cwd();
@@ -24,6 +25,172 @@ const BMW_AVAILABILITY_NEUTRALIZATION_FILES = [
   "article-bmw-gseries-keyless-rescue.html",
   "article-bmw-x5-battery-fix.html",
 ];
+const LUXURY_TEMPLATE_AVAILABILITY_NEUTRALIZATION_FILES = [
+  "article-benz-glc300-yuanlin-service.html",
+  "article-hyundai-tucson-hemei-akl.html",
+  "article-infiniti-fx35-shetou-rescue.html",
+  "article-kia-picanto-shengang-akl.html",
+];
+const CONTACT_LABEL_AVAILABILITY_NEUTRALIZATION_FILES = [
+  "article-skoda-kamiq-crushed-key.html",
+  "article-vw-arteon-smart-key-service.html",
+  "article-lexus-taichung-service.html",
+  "article-range-rover-huatan-service.html",
+];
+const RESCUE_HOTLINE_AVAILABILITY_NEUTRALIZATION_FILES = [
+  "article-camaro-2017-linkou-akl.html",
+  "article-honda-fit-2018-kaohsiung-akl.html",
+  "article-porsche-panamera-wugu-akl.html",
+  "article-toyota-altis-2020-yuanlin-akl.html",
+  "article-vw-golf7-2015-taichung-akl.html",
+];
+const RESCUE_PHONE_LABEL_AVAILABILITY_NEUTRALIZATION_FILES = [
+  "article-porsche-lost-key-rescue.html",
+  "article-taichung-lost-key.html",
+  "article-toyota-rav4-linkou-rescue.html",
+  "article-volvo-keyless-lost-rescue.html",
+];
+const REGIONAL_RESCUE_LABEL_AVAILABILITY_NEUTRALIZATION_FILES = [
+  "article-mazda-cx3-hemei-smartkey.html",
+  "article-toyota-rav4-nantou-rescue.html",
+  "article-nissan-kicks-zhongke-rescue.html",
+  "article-benz-w204-nanzi-akl.html",
+  "article-mazda-wufeng-rescue.html",
+];
+const GENERAL_RESCUE_COPY_AVAILABILITY_NEUTRALIZATION_FILES = [
+  "case-hyundai-venue-smartkey-lost.html",
+  "case-shetou-mazda-cx30-rescue.html",
+  "article-lost-key-comparison.html",
+  "article-car-key-lost-rescue-central-taiwan.html",
+  "cases.html",
+];
+const MULTILINGUAL_CTA_AVAILABILITY_NEUTRALIZATION_FILES = [
+  "article-mini-clubman-beidou-akl.html",
+  "article-ford-focus-puli-akl.html",
+  "article-taichung-lost-key-preparation.html",
+  "dich-vu-lam-khoa-xe-o-to-tai-dai-loan.html",
+];
+const AVAILABILITY_CLAIM_CLOSURE_FILES = [
+  "article-vw-t5-kaohsiung-rescue.html",
+  "article-porsche-cayenne-hemei.html",
+];
+const AVAILABILITY_NEUTRALIZATION_FILES = [
+  ...BMW_AVAILABILITY_NEUTRALIZATION_FILES,
+  ...LUXURY_TEMPLATE_AVAILABILITY_NEUTRALIZATION_FILES,
+  ...CONTACT_LABEL_AVAILABILITY_NEUTRALIZATION_FILES,
+  ...RESCUE_HOTLINE_AVAILABILITY_NEUTRALIZATION_FILES,
+  ...RESCUE_PHONE_LABEL_AVAILABILITY_NEUTRALIZATION_FILES,
+  ...REGIONAL_RESCUE_LABEL_AVAILABILITY_NEUTRALIZATION_FILES,
+  ...GENERAL_RESCUE_COPY_AVAILABILITY_NEUTRALIZATION_FILES,
+  ...MULTILINGUAL_CTA_AVAILABILITY_NEUTRALIZATION_FILES,
+  ...AVAILABILITY_CLAIM_CLOSURE_FILES,
+];
+const LUXURY_TEMPLATE_AVAILABILITY_REPLACEMENTS = [
+  ["<!-- 24H 浮動救援按鈕 -->", "<!-- 浮動救援按鈕 -->"],
+  [">24H CALL</a>", ">CALL</a>"],
+  [">24H Hotline</span>", ">Phone</span>"],
+];
+const AVAILABILITY_REPLACEMENTS_BY_FILE = new Map([
+  ...LUXURY_TEMPLATE_AVAILABILITY_NEUTRALIZATION_FILES.map((relPath) => [relPath, LUXURY_TEMPLATE_AVAILABILITY_REPLACEMENTS]),
+  ["article-skoda-kamiq-crushed-key.html", LUXURY_TEMPLATE_AVAILABILITY_REPLACEMENTS],
+  ["article-vw-arteon-smart-key-service.html", LUXURY_TEMPLATE_AVAILABILITY_REPLACEMENTS],
+  ["article-lexus-taichung-service.html", [
+    [">24H CALL</a>", ">CALL</a>"],
+    ["中彰投 24H 專業諮詢", "中彰投專業諮詢"],
+  ]],
+  ["article-range-rover-huatan-service.html", [
+    [">24H CALL</a>", ">CALL</a>"],
+    ["中彰投 24H 專業救援諮詢", "中彰投專業救援諮詢"],
+    [">24H Hotline</span>", ">Phone</span>"],
+  ]],
+  ...RESCUE_HOTLINE_AVAILABILITY_NEUTRALIZATION_FILES.map((relPath) => [relPath, [
+    ["</svg>\n 24H 救援專線\n </a>", "</svg>\n 救援專線\n </a>"],
+  ]]),
+  ...RESCUE_PHONE_LABEL_AVAILABILITY_NEUTRALIZATION_FILES.map((relPath) => [relPath, [
+    [">24H 救援專線：0909-277-670</a>", ">救援專線：0909-277-670</a>"],
+  ]]),
+  ["article-mazda-cx3-hemei-smartkey.html", [
+    [">和美 24H 救援：0909-277-670</a>", ">和美救援：0909-277-670</a>"],
+    ["class=\"mt-12 flex justify-center\"", "class=\"mt-12 flex flex-wrap justify-center\""],
+  ]],
+  ["article-toyota-rav4-nantou-rescue.html", [
+    [">草屯 24H 救援：0909-277-670</a>", ">草屯救援：0909-277-670</a>"],
+    ["class=\"mt-12 flex justify-center\"", "class=\"mt-12 flex flex-wrap justify-center\""],
+  ]],
+  ["article-nissan-kicks-zhongke-rescue.html", [
+    [">中科 24H 救援：0909-277-670</a>", ">中科救援：0909-277-670</a>"],
+    ["class=\"mt-12 flex justify-center\"", "class=\"mt-12 flex flex-wrap justify-center\""],
+  ]],
+  ["article-benz-w204-nanzi-akl.html", [
+    [">高雄 24H 救援：0909-277-670</a>", ">高雄救援：0909-277-670</a>"],
+    ["class=\"mt-12 flex justify-center\"", "class=\"mt-12 flex flex-wrap justify-center\""],
+  ]],
+  ["article-mazda-wufeng-rescue.html", [
+    [">霧峰 24H 救援：0909-277-670</a>", ">霧峰救援：0909-277-670</a>"],
+    ["class=\"mt-12 flex justify-center\"", "class=\"mt-12 flex flex-wrap justify-center\""],
+  ]],
+  ["case-hyundai-venue-smartkey-lost.html", [[">24H 現代汽車鑰匙緊急救援</h2>", ">現代汽車鑰匙緊急救援</h2>"]]],
+  ["case-shetou-mazda-cx30-rescue.html", [[">24H 汽車鑰匙緊急救援</h2>", ">汽車鑰匙緊急救援</h2>"]]],
+  ["article-lost-key-comparison.html", [["</svg>\n 24H 電話評估\n </a>", "</svg>\n 電話評估\n </a>"]]],
+  ["article-car-key-lost-rescue-central-taiwan.html", [["\n 撥打 24H 救援專線\n </a>", "\n 撥打救援專線\n </a>"]]],
+  ["cases.html", [["\"name\": \"到場案例 | 極致核心 ProCore | 全台 24H 汽車鑰匙救援紀錄\"", "\"name\": \"到場案例 | 極致核心 ProCore | 汽車鑰匙救援紀錄\""]]],
+  ["article-mini-clubman-beidou-akl.html", [
+    [">極致核心：24H 到場評估與交車確認</h3>", ">極致核心：到場評估與交車確認</h3>"],
+    [">彰化 24H 救援：0909-277-670</a>", ">彰化救援：0909-277-670</a>"],
+    ["class=\"mt-12 flex justify-center\"", "class=\"mt-12 flex flex-wrap justify-center\""],
+  ]],
+  ["article-ford-focus-puli-akl.html", [
+    [">極致核心：深入埔里山城，24H 到場評估處理</h3>", ">極致核心：深入埔里山城，到場評估處理</h3>"],
+    [">南投 24H 救援：0909-277-670</a>", ">南投救援：0909-277-670</a>"],
+    ["class=\"mt-12 flex justify-center\"", "class=\"mt-12 flex flex-wrap justify-center\""],
+  ]],
+  ["article-taichung-lost-key-preparation.html", [
+    [">24H CALL</a>", ">CALL</a>"],
+    [">24H Hotline</span>", ">Phone</span>"],
+  ]],
+  ["dich-vu-lam-khoa-xe-o-to-tai-dai-loan.html", [
+    [">Phục vụ tận nơi 24H:</strong>", ">Phục vụ tận nơi:</strong>"],
+  ]],
+  ["article-vw-t5-kaohsiung-rescue.html", [
+    ["極致核心在高雄提供 24H 現場支援。", "極致核心在高雄提供現場支援。"],
+    ["當場配製兩把全新摺疊晶片鑰匙，1 小時內讓您恢復工作。", "當場配製兩把全新摺疊晶片鑰匙，完成後讓車輛恢復使用。"],
+    ["class=\"flex justify-center\"", "class=\"flex flex-wrap justify-center\""],
+  ]],
+  ["article-porsche-cayenne-hemei.html", [
+    ["。24H 技師可依距離安排到場，", "。技師可依距離安排到場，"],
+    ["class=\"flex justify-center mt-12 mb-16\"", "class=\"flex flex-wrap justify-center mt-12 mb-16\""],
+  ]],
+]);
+
+function countExact(text, needle) {
+  return text.split(needle).length - 1;
+}
+
+function compareAvailabilityNeutralizationWithHead(relPath, currentHtml, errors) {
+  let expectedHtml;
+  try {
+    expectedHtml = execFileSync("git", ["show", `HEAD:${relPath}`], { cwd: ROOT, encoding: "utf8" });
+  } catch (error) {
+    errors.push(`${relPath}: unable to read HEAD for availability-claim comparison (${error.message})`);
+    return;
+  }
+
+  const replacements = AVAILABILITY_REPLACEMENTS_BY_FILE.get(relPath) || [];
+  for (const [before, after] of replacements) {
+    const beforeCount = countExact(expectedHtml, before);
+    const afterCount = countExact(expectedHtml, after);
+    if (beforeCount === 1 && afterCount === 0) {
+      expectedHtml = expectedHtml.replace(before, after);
+    } else if (beforeCount !== 0 || afterCount !== 1) {
+      errors.push(`${relPath}: HEAD must contain exactly one governed before or after state for ${JSON.stringify(before)}`);
+      return;
+    }
+  }
+
+  if (currentHtml !== expectedHtml) {
+    errors.push(`${relPath}: HTML changed beyond its ${replacements.length} registered availability-claim replacements`);
+  }
+}
 
 async function readJson(relPath, errors) {
   try {
@@ -91,14 +258,22 @@ function validateBusinessEntity(data, errors, warnings) {
     const stages = availabilityMigration.neutralization_stages || [];
     const neutralizedFiles = stages.flatMap((stage) => stage.files || []);
     if (availabilityMigration.baseline_file_count !== 39 || availabilityMigration.baseline_occurrence_count !== 60 ||
-        availabilityMigration.expected_remaining_file_count !== 33 || availabilityMigration.expected_remaining_occurrence_count !== 51) {
-      errors.push(`${BUSINESS_FILE}: 24H-claim migration must preserve the 39-file/60-occurrence baseline and 33-file/51-occurrence remainder`);
+        availabilityMigration.expected_remaining_file_count !== 0 || availabilityMigration.expected_remaining_occurrence_count !== 0) {
+      errors.push(`${BUSINESS_FILE}: 24H-claim migration must preserve the 39-file/60-occurrence baseline and reach a zero-file/zero-occurrence remainder`);
     }
-    if (stages.length !== 1 || stages[0]?.stage_id !== "bmw-24h-claim-batch" || stages[0]?.status !== "implemented" ||
-        JSON.stringify(neutralizedFiles) !== JSON.stringify(BMW_AVAILABILITY_NEUTRALIZATION_FILES)) {
-      errors.push(`${BUSINESS_FILE}: 24H-claim migration must remain limited to the registered six-page BMW batch`);
+    if (stages.length !== 9 || stages[0]?.stage_id !== "bmw-24h-claim-batch" || stages[0]?.status !== "implemented" ||
+        stages[1]?.stage_id !== "luxury-case-template-24h-claim-batch" || stages[1]?.status !== "implemented" ||
+        stages[2]?.stage_id !== "contact-label-24h-claim-batch" || stages[2]?.status !== "implemented" ||
+        stages[3]?.stage_id !== "rescue-hotline-24h-claim-batch" || stages[3]?.status !== "implemented" ||
+        stages[4]?.stage_id !== "rescue-phone-label-24h-claim-batch" || stages[4]?.status !== "implemented" ||
+        stages[5]?.stage_id !== "regional-rescue-label-24h-claim-batch" || stages[5]?.status !== "implemented" ||
+        stages[6]?.stage_id !== "general-rescue-copy-24h-claim-batch" || stages[6]?.status !== "implemented" ||
+        stages[7]?.stage_id !== "multilingual-cta-24h-claim-batch" || stages[7]?.status !== "implemented" ||
+        stages[8]?.stage_id !== "availability-claim-closure-batch" || stages[8]?.status !== "implemented" ||
+        JSON.stringify(neutralizedFiles) !== JSON.stringify(AVAILABILITY_NEUTRALIZATION_FILES)) {
+      errors.push(`${BUSINESS_FILE}: 24H-claim migration must record all nine controlled batches`);
     }
-    if (!availabilityMigration.baseline_evidence || availabilityMigration.rollout_status !== "bmw_case_claims_neutralized") {
+    if (!availabilityMigration.baseline_evidence || availabilityMigration.rollout_status !== "availability_claims_neutralized") {
       errors.push(`${BUSINESS_FILE}: 24H-claim migration evidence/status is incomplete`);
     }
   }
@@ -338,6 +513,9 @@ async function main() {
       availabilityClaimCount += availabilityClaims.length;
       availabilityClaimFiles.push(relPath);
     }
+    if (process.argv.includes("--compare-head") && AVAILABILITY_REPLACEMENTS_BY_FILE.has(relPath)) {
+      compareAvailabilityNeutralizationWithHead(relPath, html, errors);
+    }
     if (/\b(?:src|href)\s*=\s*["']\/(?:data|scripts)\//i.test(html)) {
       errors.push(`${relPath}: public HTML must not reference source-only /data or /scripts paths`);
     }
@@ -362,7 +540,7 @@ async function main() {
         availabilityClaimCount !== availabilityMigration.expected_remaining_occurrence_count) {
       errors.push(`${BUSINESS_FILE}: expected ${availabilityMigration.expected_remaining_file_count} files and ${availabilityMigration.expected_remaining_occurrence_count} occurrences with unverified availability claims after current stage, found ${availabilityClaimFiles.length} files and ${availabilityClaimCount} occurrences`);
     }
-    for (const neutralizedFile of BMW_AVAILABILITY_NEUTRALIZATION_FILES) {
+    for (const neutralizedFile of AVAILABILITY_NEUTRALIZATION_FILES) {
       if (availabilityClaimFiles.includes(neutralizedFile)) {
         errors.push(`${neutralizedFile}: governed 24H-claim neutralization regressed`);
       }

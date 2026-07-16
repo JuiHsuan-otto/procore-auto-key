@@ -147,11 +147,92 @@
               "article-bmw-gseries-keyless-rescue.html",
               "article-bmw-x5-battery-fix.html"
             ]
+          },
+          {
+            "stage_id": "luxury-case-template-24h-claim-batch",
+            "status": "implemented",
+            "files": [
+              "article-benz-glc300-yuanlin-service.html",
+              "article-hyundai-tucson-hemei-akl.html",
+              "article-infiniti-fx35-shetou-rescue.html",
+              "article-kia-picanto-shengang-akl.html"
+            ]
+          },
+          {
+            "stage_id": "contact-label-24h-claim-batch",
+            "status": "implemented",
+            "files": [
+              "article-skoda-kamiq-crushed-key.html",
+              "article-vw-arteon-smart-key-service.html",
+              "article-lexus-taichung-service.html",
+              "article-range-rover-huatan-service.html"
+            ]
+          },
+          {
+            "stage_id": "rescue-hotline-24h-claim-batch",
+            "status": "implemented",
+            "files": [
+              "article-camaro-2017-linkou-akl.html",
+              "article-honda-fit-2018-kaohsiung-akl.html",
+              "article-porsche-panamera-wugu-akl.html",
+              "article-toyota-altis-2020-yuanlin-akl.html",
+              "article-vw-golf7-2015-taichung-akl.html"
+            ]
+          },
+          {
+            "stage_id": "rescue-phone-label-24h-claim-batch",
+            "status": "implemented",
+            "files": [
+              "article-porsche-lost-key-rescue.html",
+              "article-taichung-lost-key.html",
+              "article-toyota-rav4-linkou-rescue.html",
+              "article-volvo-keyless-lost-rescue.html"
+            ]
+          },
+          {
+            "stage_id": "regional-rescue-label-24h-claim-batch",
+            "status": "implemented",
+            "files": [
+              "article-mazda-cx3-hemei-smartkey.html",
+              "article-toyota-rav4-nantou-rescue.html",
+              "article-nissan-kicks-zhongke-rescue.html",
+              "article-benz-w204-nanzi-akl.html",
+              "article-mazda-wufeng-rescue.html"
+            ]
+          },
+          {
+            "stage_id": "general-rescue-copy-24h-claim-batch",
+            "status": "implemented",
+            "files": [
+              "case-hyundai-venue-smartkey-lost.html",
+              "case-shetou-mazda-cx30-rescue.html",
+              "article-lost-key-comparison.html",
+              "article-car-key-lost-rescue-central-taiwan.html",
+              "cases.html"
+            ]
+          },
+          {
+            "stage_id": "multilingual-cta-24h-claim-batch",
+            "status": "implemented",
+            "files": [
+              "article-mini-clubman-beidou-akl.html",
+              "article-ford-focus-puli-akl.html",
+              "article-taichung-lost-key-preparation.html",
+              "dich-vu-lam-khoa-xe-o-to-tai-dai-loan.html"
+            ]
+          },
+          {
+            "stage_id": "availability-claim-closure-batch",
+            "status": "implemented",
+            "files": [
+              "article-vw-t5-kaohsiung-rescue.html",
+              "article-porsche-cayenne-hemei.html"
+            ]
           }
         ],
-        "expected_remaining_file_count": 33,
-        "expected_remaining_occurrence_count": 51,
-        "rollout_status": "bmw_case_claims_neutralized"
+        "expected_remaining_file_count": 0,
+        "expected_remaining_occurrence_count": 0,
+        "rollout_status": "availability_claims_neutralized"
       }
     },
     "priceRange": {
