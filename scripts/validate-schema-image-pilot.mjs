@@ -7,10 +7,25 @@ import { getAttr } from "./seo-utils.mjs";
 
 const ROOT = process.cwd();
 const BUSINESS_ID = "https://www.carkey.com.tw/#business";
-const PILOT_FILES = [
+const IMAGE_PILOT_FILES = [
   "index.html",
   "car-key-lost-service.html",
   "article-bmw-smart-key-owner-guide.html",
+];
+const SERVICE_SCHEMA_FILES = [
+  "all-keys-lost-service.html",
+  "car-key-duplication-service.html",
+  "car-key-shell-replacement-service.html",
+  "chip-key-copy-by-mail-service.html",
+  "key-not-detected-service.html",
+  "non-chip-car-key-duplication-service.html",
+  "smart-key-lost-service.html",
+  "spare-car-key-service.html",
+];
+const SCHEMA_FILES = [...IMAGE_PILOT_FILES, ...SERVICE_SCHEMA_FILES];
+const EXPECTED_REMOVAL_STAGES = [
+  { stage_id: "three-page-pilot", status: "complete", files: IMAGE_PILOT_FILES },
+  { stage_id: "service-page-batch", status: "implemented", files: SERVICE_SCHEMA_FILES },
 ];
 
 function walkJson(value, visit, jsonPath = "$") {
@@ -63,7 +78,7 @@ function withoutPriceRange(value) {
   return copy;
 }
 
-function compareJsonLdWithHead(currentPayloads, relPath, errors) {
+function compareWithHead(currentHtml, currentPayloads, relPath, errors) {
   let headHtml;
   try {
     headHtml = execFileSync("git", ["show", `HEAD:${relPath}`], { encoding: "utf8" });
@@ -78,6 +93,13 @@ function compareJsonLdWithHead(currentPayloads, relPath, errors) {
     assert.deepEqual(currentPayloads, withoutPriceRange(headPayloads));
   } catch {
     errors.push(`${relPath}: JSON-LD changed beyond removal of priceRange from the HEAD baseline`);
+  }
+
+  const expectedHtml = headHtml
+    .replaceAll(',"priceRange":"$$"', "")
+    .replace(/^\s*"priceRange": "\$\$",\r?\n/gm, "");
+  if (currentHtml !== expectedHtml) {
+    errors.push(`${relPath}: HTML changed beyond removal of priceRange from the HEAD baseline`);
   }
 }
 
@@ -172,9 +194,12 @@ function validateBusinessGate(business, errors) {
   if (!priceRange || priceRange.value !== null || priceRange.status !== "unverified" || priceRange.publish !== false) {
     errors.push("data/business-entity.json: priceRange must remain null, unverified, and unpublished");
   }
-  const pilotFiles = priceRange?.legacy_observation?.pilot_removed_files || [];
-  if (JSON.stringify(pilotFiles) !== JSON.stringify(PILOT_FILES)) {
-    errors.push("data/business-entity.json: priceRange pilot file order/scope drifted");
+  const migration = priceRange?.legacy_observation;
+  if (JSON.stringify(migration?.removal_stages) !== JSON.stringify(EXPECTED_REMOVAL_STAGES)) {
+    errors.push("data/business-entity.json: priceRange removal stage order/scope drifted");
+  }
+  if (migration?.expected_remaining_after_current_stage !== 123 || migration?.rollout_status !== "service_pages_only") {
+    errors.push("data/business-entity.json: priceRange service-page rollout count/status drifted");
   }
 }
 
@@ -185,7 +210,11 @@ function runSelfTests() {
         value: "$$",
         status: "verified",
         publish: true,
-        legacy_observation: { pilot_removed_files: PILOT_FILES },
+        legacy_observation: {
+          removal_stages: EXPECTED_REMOVAL_STAGES,
+          expected_remaining_after_current_stage: 123,
+          rollout_status: "service_pages_only",
+        },
       },
     },
   };
@@ -208,19 +237,22 @@ async function main() {
   const business = JSON.parse(await fsp.readFile(path.join(ROOT, "data/business-entity.json"), "utf8"));
   validateBusinessGate(business, errors);
 
-  for (const relPath of PILOT_FILES) {
+  for (const relPath of SCHEMA_FILES) {
     const html = await fsp.readFile(path.join(ROOT, relPath), "utf8");
     const payloads = extractJsonLd(html, relPath, errors);
     validateSchemaPayloads(payloads, relPath, errors);
-    if (process.argv.includes("--compare-head")) compareJsonLdWithHead(payloads, relPath, errors);
-    await validateImages(html, relPath, errors, stats);
-    if (relPath === "index.html") await validateHomepageCaseImages(html, errors, stats);
+    if (process.argv.includes("--compare-head")) compareWithHead(html, payloads, relPath, errors);
+    if (IMAGE_PILOT_FILES.includes(relPath)) {
+      await validateImages(html, relPath, errors, stats);
+      if (relPath === "index.html") await validateHomepageCaseImages(html, errors, stats);
+    }
   }
 
   if (process.argv.includes("--self-test")) runSelfTests();
 
-  console.log("CarKey schema/image pilot validation");
-  console.log(`Pilot pages: ${PILOT_FILES.length}`);
+  console.log("CarKey schema rollout/image pilot validation");
+  console.log(`Schema pages: ${SCHEMA_FILES.length}`);
+  console.log(`Image pilot pages: ${IMAGE_PILOT_FILES.length}`);
   console.log(`Local images verified against file metadata: ${stats.localVerified}`);
   console.log(`Runtime case images verified against file metadata: ${stats.runtimeLocalVerified}`);
   console.log(`External images skipped: ${stats.externalSkipped}`);

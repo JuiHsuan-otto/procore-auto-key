@@ -37,7 +37,7 @@ Out of scope: proving or publishing any metric, changing the other 39 HTML files
 
 ## Known warnings and deferred work
 
-1. 131 non-pilot HTML files still contain unsupported legacy `priceRange`.
+1. At the time of this batch, 131 non-pilot HTML files still contained unsupported legacy `priceRange`. The subsequent service-page schema batch reduced the current remainder to 123.
 2. Washinmura remains mutable/unversioned pending owner and privacy review.
 3. Thirty-nine non-homepage HTML files still contain one or more legacy 24H-related strings. They require a separate inventory and evidence/wording decision; this batch does not bulk rewrite them.
 4. All four metrics remain unverified and therefore publish no numeric values.

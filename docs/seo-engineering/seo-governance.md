@@ -45,7 +45,7 @@ Every Guide must have:
 - Business identity is one node: `https://www.carkey.com.tw/#business` with compatible Organization and LocalBusiness types. Pages reference that `@id` rather than inventing a second business.
 - Null, unverified, or unpublished business fields are omitted, never replaced with placeholders.
 - `priceRange`, opening hours, address, legal name, tax ID, reviews, ratings, warranty, technicians, and credentials require human evidence before use.
-- The first `priceRange` removal is limited to the three files registered in `data/business-entity.json`; the remaining 131 files require a separately approved rollout after pilot review.
+- `priceRange` removals are limited to the explicit stages registered in `data/business-entity.json`: the three-page pilot and the eight remaining service pages. The remaining 123 files require separately approved page-type batches.
 - Schema migration proceeds pilot → representative sample → explicit rollout. No task may silently rewrite 100+ HTML files.
 - AggregateRating is not used for self-serving reviews. Product/SearchAction/Speakable are added only when the visible page and feature qualify.
 

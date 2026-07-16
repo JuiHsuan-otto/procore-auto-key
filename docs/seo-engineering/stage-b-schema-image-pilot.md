@@ -80,7 +80,7 @@ Browser verification opened loopback pages and the production homepage for visua
 3. Washinmura remains mutable/unversioned pending owner and privacy review.
 4. The external LINE SVG is outside repository image-metadata control.
 
-Subsequent status: item 2 was resolved for the homepage by `stage-b-metrics-fallback.md`; no numeric metric was published. The other warnings remain.
+Subsequent status: item 2 was resolved for the homepage by `stage-b-metrics-fallback.md`; no numeric metric was published. The eight remaining service pages then completed a separately governed page-type batch in `stage-b-service-schema-rollout.md`, leaving 123 legacy `priceRange` files. The other warnings remain.
 
 ## Risks and rollback
 
@@ -97,4 +97,4 @@ The pilot originally proposed two reviewable boundaries:
 
 Do not combine a 131-page rollout with either boundary.
 
-For the authorized Stage B delivery, foundation, governance, and pilot changes may use one cohesive release commit because `package.json`, governance data, and validators are cross-dependent. The remaining 131-page rollout is still excluded.
+For the authorized Stage B delivery, foundation, governance, and pilot changes may use one cohesive release commit because `package.json`, governance data, and validators are cross-dependent. Subsequent removals remain limited to separately reviewed page-type batches; a 123-page bulk rollout is excluded.

@@ -33,6 +33,8 @@ Subsequent status: the representative three-page schema/image pilot is documente
 
 Further subsequent status: the homepage counter fallback batch is documented in `stage-b-metrics-fallback.md`. It removed the four public zero placeholders, legacy `data-target` values, and homepage 24H wording; the current governance validator therefore reports two known warnings instead of three. All four numeric metrics remain unverified and unpublished.
 
+The next staged schema batch is documented in `stage-b-service-schema-rollout.md`. It extends the reviewed `priceRange` deletion to the eight remaining service pages only, reducing the legacy remainder from 131 to 123 without changing visible content or other page types.
+
 ## Verification
 
 - `npm run test:seo-foundation`: passed; 135-page deterministic inventory plus three negative-gate tests.

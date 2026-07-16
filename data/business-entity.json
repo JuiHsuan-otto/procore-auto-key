@@ -142,13 +142,33 @@
       "legacy_observation": {
         "baseline_count": 134,
         "baseline_evidence": "Stage A deterministic repository inventory on remote main 15301685c7d8dcb709c253b0759c770361840a54",
-        "pilot_removed_files": [
-          "index.html",
-          "car-key-lost-service.html",
-          "article-bmw-smart-key-owner-guide.html"
+        "removal_stages": [
+          {
+            "stage_id": "three-page-pilot",
+            "status": "complete",
+            "files": [
+              "index.html",
+              "car-key-lost-service.html",
+              "article-bmw-smart-key-owner-guide.html"
+            ]
+          },
+          {
+            "stage_id": "service-page-batch",
+            "status": "implemented",
+            "files": [
+              "all-keys-lost-service.html",
+              "car-key-duplication-service.html",
+              "car-key-shell-replacement-service.html",
+              "chip-key-copy-by-mail-service.html",
+              "key-not-detected-service.html",
+              "non-chip-car-key-duplication-service.html",
+              "smart-key-lost-service.html",
+              "spare-car-key-service.html"
+            ]
+          }
         ],
-        "expected_remaining_after_pilot": 131,
-        "rollout_status": "pilot_only"
+        "expected_remaining_after_current_stage": 123,
+        "rollout_status": "service_pages_only"
       }
     }
   }

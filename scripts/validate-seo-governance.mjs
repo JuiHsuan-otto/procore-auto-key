@@ -73,15 +73,20 @@ function validateBusinessEntity(data, errors, warnings) {
   if (!migration || typeof migration !== "object") {
     errors.push(`${BUSINESS_FILE}: priceRange legacy_observation must record the controlled migration`);
   } else {
-    const pilotFiles = migration.pilot_removed_files || [];
-    if (migration.baseline_count !== 134 || migration.expected_remaining_after_pilot !== 131) {
-      errors.push(`${BUSINESS_FILE}: priceRange pilot must preserve the 134-file baseline and 131-file remainder`);
+    const stages = migration.removal_stages || [];
+    const removedFiles = stages.flatMap((stage) => stage.files || []);
+    if (migration.baseline_count !== 134 || migration.expected_remaining_after_current_stage !== 123) {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must preserve the 134-file baseline and 123-file current remainder`);
     }
-    if (pilotFiles.length !== 3 || new Set(pilotFiles).size !== 3) {
-      errors.push(`${BUSINESS_FILE}: priceRange pilot must identify exactly three unique files`);
+    if (stages.length !== 2 || stages[0]?.stage_id !== "three-page-pilot" || stages[0]?.files?.length !== 3 ||
+        stages[1]?.stage_id !== "service-page-batch" || stages[1]?.files?.length !== 8) {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must record the three-page pilot and eight-page service batch`);
     }
-    if (migration.rollout_status !== "pilot_only") {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must remain pilot_only until a separate rollout is approved`);
+    if (removedFiles.length !== 11 || new Set(removedFiles).size !== removedFiles.length) {
+      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 11 unique files`);
+    }
+    if (migration.rollout_status !== "service_pages_only") {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must remain limited to pilot and service pages`);
     }
   }
 }
@@ -294,12 +299,13 @@ async function main() {
   }
   const priceMigration = business?.fields?.priceRange?.legacy_observation;
   if (priceMigration && typeof priceMigration === "object") {
-    if (priceRangeCount !== priceMigration.expected_remaining_after_pilot) {
-      errors.push(`${BUSINESS_FILE}: expected ${priceMigration.expected_remaining_after_pilot} legacy priceRange files after pilot, found ${priceRangeCount}`);
+    if (priceRangeCount !== priceMigration.expected_remaining_after_current_stage) {
+      errors.push(`${BUSINESS_FILE}: expected ${priceMigration.expected_remaining_after_current_stage} legacy priceRange files after current stage, found ${priceRangeCount}`);
     }
-    for (const pilotFile of priceMigration.pilot_removed_files || []) {
-      if (priceRangeFiles.includes(pilotFile)) {
-        errors.push(`${pilotFile}: governed priceRange pilot removal regressed`);
+    const removedFiles = (priceMigration.removal_stages || []).flatMap((stage) => stage.files || []);
+    for (const removedFile of removedFiles) {
+      if (priceRangeFiles.includes(removedFile)) {
+        errors.push(`${removedFile}: governed priceRange removal regressed`);
       }
     }
   }
