@@ -177,10 +177,36 @@
               "toyota-altis-car-key.html",
               "vw-car-key-service.html"
             ]
+          },
+          {
+            "stage_id": "guide-page-batch",
+            "status": "implemented",
+            "files": [
+              "article-car-key-info-preparation-guide.html",
+              "article-car-key-not-detected-troubleshooting.html",
+              "article-car-wont-start-troubleshooting.html",
+              "article-emergency-akl-guide.html",
+              "article-hyundai-keyless-troubleshooting.html",
+              "article-keyless-troubleshooting.html",
+              "article-keyless-troubleshooting-guide.html",
+              "article-lost-key-comparison.html",
+              "article-lost-key-rescue-guide.html",
+              "article-porsche-smart-key-owner-guide.html",
+              "article-smart-key-troubleshooting.html",
+              "article-us-car-market-growth-security-tech.html",
+              "article-us-car-market-tech.html",
+              "article-us-car-zero-tariff-consumer-impact.html",
+              "article-used-car-buying-guide.html",
+              "article-used-car-key-checklist.html",
+              "article-used-car-security-guide.html",
+              "article-vag-dashboard-key-safety-guide.html",
+              "article-vag-key-owner-guide.html",
+              "article-why-you-need-spare-car-key.html"
+            ]
           }
         ],
-        "expected_remaining_after_current_stage": 120,
-        "rollout_status": "service_and_brand_model_pages"
+        "expected_remaining_after_current_stage": 100,
+        "rollout_status": "service_brand_model_and_guide_pages"
       }
     }
   }

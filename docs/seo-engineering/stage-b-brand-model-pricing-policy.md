@@ -70,3 +70,5 @@ BMW, Toyota Altis, and VW pages were each opened in headless Chrome at 1440×900
 `fix(seo): codify case-by-case pricing and clean brand schema`
 
 Do not combine the remaining 120-page migration or a new public pricing page with this boundary.
+
+Subsequent status: the separately bounded 20-page guide rollout is documented in `stage-b-guide-schema-rollout.md`; the current legacy remainder is 100. The pricing policy and this commit boundary remain unchanged.

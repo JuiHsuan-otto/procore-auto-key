@@ -27,11 +27,39 @@ const BRAND_MODEL_SCHEMA_FILES = [
   "toyota-altis-car-key.html",
   "vw-car-key-service.html",
 ];
-const SCHEMA_FILES = [...IMAGE_PILOT_FILES, ...SERVICE_SCHEMA_FILES, ...BRAND_MODEL_SCHEMA_FILES];
+const GUIDE_SCHEMA_FILES = [
+  "article-car-key-info-preparation-guide.html",
+  "article-car-key-not-detected-troubleshooting.html",
+  "article-car-wont-start-troubleshooting.html",
+  "article-emergency-akl-guide.html",
+  "article-hyundai-keyless-troubleshooting.html",
+  "article-keyless-troubleshooting.html",
+  "article-keyless-troubleshooting-guide.html",
+  "article-lost-key-comparison.html",
+  "article-lost-key-rescue-guide.html",
+  "article-porsche-smart-key-owner-guide.html",
+  "article-smart-key-troubleshooting.html",
+  "article-us-car-market-growth-security-tech.html",
+  "article-us-car-market-tech.html",
+  "article-us-car-zero-tariff-consumer-impact.html",
+  "article-used-car-buying-guide.html",
+  "article-used-car-key-checklist.html",
+  "article-used-car-security-guide.html",
+  "article-vag-dashboard-key-safety-guide.html",
+  "article-vag-key-owner-guide.html",
+  "article-why-you-need-spare-car-key.html",
+];
+const SCHEMA_FILES = [
+  ...IMAGE_PILOT_FILES,
+  ...SERVICE_SCHEMA_FILES,
+  ...BRAND_MODEL_SCHEMA_FILES,
+  ...GUIDE_SCHEMA_FILES,
+];
 const EXPECTED_REMOVAL_STAGES = [
   { stage_id: "three-page-pilot", status: "complete", files: IMAGE_PILOT_FILES },
   { stage_id: "service-page-batch", status: "implemented", files: SERVICE_SCHEMA_FILES },
   { stage_id: "brand-model-page-batch", status: "implemented", files: BRAND_MODEL_SCHEMA_FILES },
+  { stage_id: "guide-page-batch", status: "implemented", files: GUIDE_SCHEMA_FILES },
 ];
 
 function walkJson(value, visit, jsonPath = "$") {
@@ -210,8 +238,8 @@ function validateBusinessGate(business, errors) {
   if (JSON.stringify(migration?.removal_stages) !== JSON.stringify(EXPECTED_REMOVAL_STAGES)) {
     errors.push("data/business-entity.json: priceRange removal stage order/scope drifted");
   }
-  if (migration?.expected_remaining_after_current_stage !== 120 || migration?.rollout_status !== "service_and_brand_model_pages") {
-    errors.push("data/business-entity.json: priceRange brand/model rollout count/status drifted");
+  if (migration?.expected_remaining_after_current_stage !== 100 || migration?.rollout_status !== "service_brand_model_and_guide_pages") {
+    errors.push("data/business-entity.json: priceRange guide rollout count/status drifted");
   }
 }
 
@@ -226,8 +254,8 @@ function runSelfTests() {
         schema_output: "publish",
         legacy_observation: {
           removal_stages: EXPECTED_REMOVAL_STAGES,
-          expected_remaining_after_current_stage: 120,
-          rollout_status: "service_and_brand_model_pages",
+          expected_remaining_after_current_stage: 100,
+          rollout_status: "service_brand_model_and_guide_pages",
         },
       },
     },

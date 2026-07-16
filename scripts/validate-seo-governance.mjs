@@ -81,19 +81,20 @@ function validateBusinessEntity(data, errors, warnings) {
   } else {
     const stages = migration.removal_stages || [];
     const removedFiles = stages.flatMap((stage) => stage.files || []);
-    if (migration.baseline_count !== 134 || migration.expected_remaining_after_current_stage !== 120) {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must preserve the 134-file baseline and 120-file current remainder`);
+    if (migration.baseline_count !== 134 || migration.expected_remaining_after_current_stage !== 100) {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must preserve the 134-file baseline and 100-file current remainder`);
     }
-    if (stages.length !== 3 || stages[0]?.stage_id !== "three-page-pilot" || stages[0]?.files?.length !== 3 ||
+    if (stages.length !== 4 || stages[0]?.stage_id !== "three-page-pilot" || stages[0]?.files?.length !== 3 ||
         stages[1]?.stage_id !== "service-page-batch" || stages[1]?.files?.length !== 8 ||
-        stages[2]?.stage_id !== "brand-model-page-batch" || stages[2]?.files?.length !== 3) {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must record pilot, service, and brand/model batches`);
+        stages[2]?.stage_id !== "brand-model-page-batch" || stages[2]?.files?.length !== 3 ||
+        stages[3]?.stage_id !== "guide-page-batch" || stages[3]?.files?.length !== 20) {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must record pilot, service, brand/model, and guide batches`);
     }
-    if (removedFiles.length !== 14 || new Set(removedFiles).size !== removedFiles.length) {
-      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 14 unique files`);
+    if (removedFiles.length !== 34 || new Set(removedFiles).size !== removedFiles.length) {
+      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 34 unique files`);
     }
-    if (migration.rollout_status !== "service_and_brand_model_pages") {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must remain limited to pilot, service, and brand/model pages`);
+    if (migration.rollout_status !== "service_brand_model_and_guide_pages") {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must remain limited to pilot, service, brand/model, and guide pages`);
     }
   }
 }

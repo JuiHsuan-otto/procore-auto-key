@@ -46,7 +46,7 @@ Every Guide must have:
 - Null, unverified, or unpublished business fields are omitted, never replaced with placeholders.
 - CarKey uses case-by-case quotations. `priceRange` therefore defaults to schema output `omit`; neither `$$`, a guessed range, nor JSON `null` may be emitted. Reconsideration requires a future fixed, consistently applicable, documented, and owner-approved pricing policy.
 - Opening hours, address, legal name, tax ID, reviews, ratings, warranty, technicians, and credentials require human evidence before use.
-- `priceRange` removals are limited to the explicit stages registered in `data/business-entity.json`: the three-page pilot, eight remaining service pages, and three brand/model pages. The remaining 120 files require separately approved page-type batches.
+- `priceRange` removals are limited to the explicit stages registered in `data/business-entity.json`: the three-page pilot, eight remaining service pages, three brand/model pages, and twenty guide pages. The remaining 100 files require separately approved page-type batches.
 - Schema migration proceeds pilot → representative sample → explicit rollout. No task may silently rewrite 100+ HTML files.
 - AggregateRating is not used for self-serving reviews. Product/SearchAction/Speakable are added only when the visible page and feature qualify.
 
