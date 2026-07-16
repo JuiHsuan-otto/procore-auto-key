@@ -22,10 +22,16 @@ const SERVICE_SCHEMA_FILES = [
   "smart-key-lost-service.html",
   "spare-car-key-service.html",
 ];
-const SCHEMA_FILES = [...IMAGE_PILOT_FILES, ...SERVICE_SCHEMA_FILES];
+const BRAND_MODEL_SCHEMA_FILES = [
+  "bmw-smart-key-service.html",
+  "toyota-altis-car-key.html",
+  "vw-car-key-service.html",
+];
+const SCHEMA_FILES = [...IMAGE_PILOT_FILES, ...SERVICE_SCHEMA_FILES, ...BRAND_MODEL_SCHEMA_FILES];
 const EXPECTED_REMOVAL_STAGES = [
   { stage_id: "three-page-pilot", status: "complete", files: IMAGE_PILOT_FILES },
   { stage_id: "service-page-batch", status: "implemented", files: SERVICE_SCHEMA_FILES },
+  { stage_id: "brand-model-page-batch", status: "implemented", files: BRAND_MODEL_SCHEMA_FILES },
 ];
 
 function walkJson(value, visit, jsonPath = "$") {
@@ -78,6 +84,13 @@ function withoutPriceRange(value) {
   return copy;
 }
 
+function removeLegacyPriceRangeFromHtml(html) {
+  return html
+    .replaceAll(',"priceRange":"$$"', "")
+    .replaceAll(', "priceRange": "$$"', "")
+    .replace(/^\s*"priceRange": "\$\$",\r?\n/gm, "");
+}
+
 function compareWithHead(currentHtml, currentPayloads, relPath, errors) {
   let headHtml;
   try {
@@ -95,9 +108,7 @@ function compareWithHead(currentHtml, currentPayloads, relPath, errors) {
     errors.push(`${relPath}: JSON-LD changed beyond removal of priceRange from the HEAD baseline`);
   }
 
-  const expectedHtml = headHtml
-    .replaceAll(',"priceRange":"$$"', "")
-    .replace(/^\s*"priceRange": "\$\$",\r?\n/gm, "");
+  const expectedHtml = removeLegacyPriceRangeFromHtml(headHtml);
   if (currentHtml !== expectedHtml) {
     errors.push(`${relPath}: HTML changed beyond removal of priceRange from the HEAD baseline`);
   }
@@ -191,15 +202,16 @@ async function validateHomepageCaseImages(html, errors, stats) {
 
 function validateBusinessGate(business, errors) {
   const priceRange = business?.fields?.priceRange;
-  if (!priceRange || priceRange.value !== null || priceRange.status !== "unverified" || priceRange.publish !== false) {
-    errors.push("data/business-entity.json: priceRange must remain null, unverified, and unpublished");
+  if (!priceRange || priceRange.value !== null || priceRange.status !== "not_applicable" || priceRange.publish !== false ||
+      priceRange.pricing_model !== "case_by_case_quote" || priceRange.schema_output !== "omit") {
+    errors.push("data/business-entity.json: case-by-case pricing policy must keep priceRange omitted");
   }
   const migration = priceRange?.legacy_observation;
   if (JSON.stringify(migration?.removal_stages) !== JSON.stringify(EXPECTED_REMOVAL_STAGES)) {
     errors.push("data/business-entity.json: priceRange removal stage order/scope drifted");
   }
-  if (migration?.expected_remaining_after_current_stage !== 123 || migration?.rollout_status !== "service_pages_only") {
-    errors.push("data/business-entity.json: priceRange service-page rollout count/status drifted");
+  if (migration?.expected_remaining_after_current_stage !== 120 || migration?.rollout_status !== "service_and_brand_model_pages") {
+    errors.push("data/business-entity.json: priceRange brand/model rollout count/status drifted");
   }
 }
 
@@ -210,10 +222,12 @@ function runSelfTests() {
         value: "$$",
         status: "verified",
         publish: true,
+        pricing_model: "fixed_range",
+        schema_output: "publish",
         legacy_observation: {
           removal_stages: EXPECTED_REMOVAL_STAGES,
-          expected_remaining_after_current_stage: 123,
-          rollout_status: "service_pages_only",
+          expected_remaining_after_current_stage: 120,
+          rollout_status: "service_and_brand_model_pages",
         },
       },
     },
@@ -225,6 +239,9 @@ function runSelfTests() {
   const schemaErrors = [];
   validateSchemaPayloads([{ "@id": BUSINESS_ID, priceRange: "$$" }], "fixture.html", schemaErrors);
   assert(schemaErrors.some((error) => error.includes("unsupported priceRange")));
+  assert.equal(removeLegacyPriceRangeFromHtml('{"name":"x","priceRange":"$$"}'), '{"name":"x"}');
+  assert.equal(removeLegacyPriceRangeFromHtml('{"name": "x", "priceRange": "$$"}'), '{"name": "x"}');
+  assert.equal(removeLegacyPriceRangeFromHtml('  "priceRange": "$$",\n  "name": "x"'), '  "name": "x"');
   assert.equal(classifyImageSource("${escapeHtml(src)}"), "dynamic");
   assert.equal(classifyImageSource("https://example.com/image.svg"), "external");
   assert.equal(classifyImageSource("img/local.jpg"), "local");

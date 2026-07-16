@@ -35,6 +35,8 @@ Further subsequent status: the homepage counter fallback batch is documented in 
 
 The next staged schema batch is documented in `stage-b-service-schema-rollout.md`. It extends the reviewed `priceRange` deletion to the eight remaining service pages only, reducing the legacy remainder from 131 to 123 without changing visible content or other page types.
 
+The business owner subsequently confirmed case-by-case quotation as the operating model. `pricing-policy.md` therefore makes `priceRange` omission the default schema policy, and `stage-b-brand-model-pricing-policy.md` applies the next three-page brand/model batch, leaving 120 legacy files.
+
 ## Verification
 
 - `npm run test:seo-foundation`: passed; 135-page deterministic inventory plus three negative-gate tests.

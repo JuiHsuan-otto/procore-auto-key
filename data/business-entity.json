@@ -134,11 +134,14 @@
     },
     "priceRange": {
       "value": null,
-      "status": "unverified",
+      "status": "not_applicable",
       "publish": false,
-      "source": null,
-      "verified_by": null,
-      "verified_at": null,
+      "source": "Business owner confirmed that CarKey uses case-by-case quotations because vehicle, key system, work scope, distance, service time, and material costs vary.",
+      "verified_by": "Business owner",
+      "verified_at": "2026-07-16",
+      "pricing_model": "case_by_case_quote",
+      "schema_output": "omit",
+      "reconsider_only_if": "A future fixed, consistently applicable, documented, and owner-approved pricing policy exists.",
       "legacy_observation": {
         "baseline_count": 134,
         "baseline_evidence": "Stage A deterministic repository inventory on remote main 15301685c7d8dcb709c253b0759c770361840a54",
@@ -165,10 +168,19 @@
               "smart-key-lost-service.html",
               "spare-car-key-service.html"
             ]
+          },
+          {
+            "stage_id": "brand-model-page-batch",
+            "status": "implemented",
+            "files": [
+              "bmw-smart-key-service.html",
+              "toyota-altis-car-key.html",
+              "vw-car-key-service.html"
+            ]
           }
         ],
-        "expected_remaining_after_current_stage": 123,
-        "rollout_status": "service_pages_only"
+        "expected_remaining_after_current_stage": 120,
+        "rollout_status": "service_and_brand_model_pages"
       }
     }
   }

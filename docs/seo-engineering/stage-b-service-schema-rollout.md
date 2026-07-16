@@ -98,3 +98,5 @@ One cohesive commit:
 `fix(seo): remove unsupported priceRange from service pages`
 
 This boundary includes the eight HTML removals, staged source-of-truth data, validators, package alias, and documentation. Do not combine the remaining 123-page rollout with it.
+
+Subsequent status: the business owner confirmed a case-by-case quotation model, so `priceRange` is now governed as `omit`, not as a pending required price tier. The separately bounded three-page brand/model batch is documented in `stage-b-brand-model-pricing-policy.md`; the current legacy remainder is 120.

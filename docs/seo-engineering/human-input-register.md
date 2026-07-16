@@ -13,7 +13,7 @@ Status values are based on repository and public production evidence only. “No
 | H07 | 24H claim evidence | No | Operations owner | staffing/on-call records | sustained coverage review | homepage/CTA | openingHours | No | Yes | monthly | High |
 | H08 | Cumulative service metrics | No | Operations/data owner | case ledger | deduplicated source count | homepage | interactionStatistic/custom display | No | Yes | defined cadence | High |
 | H09 | Metric calculation definitions | No | Data owner | signed metric dictionary | reproducible calculation | homepage/reports | metric-dependent | No | Yes | on method change | High |
-| H10 | Price ranges | No | Business owner | approved price list/invoices | scope/currency/date review | future pricing/service | priceRange/Offer | No | Yes | monthly/on change | High |
+| H10 | Pricing model | Yes: case-by-case quotation; no fixed range | Business owner | confirmed operating policy | owner confirmation; future fixed pricing requires separate evidence | future pricing explainer/service | omit priceRange by default | No | No for factor-based explainer | on business-model change | Medium |
 | H11 | Warranty policy | No | Business owner | approved written terms | scope/exclusions/effective date | future warranty/service | warranty-related | No | Yes | on change | High |
 | H12 | Technician profiles | No | Each technician/owner | approved biography | identity and consent | future technician/about | Person | No | Yes | annually/on change | High |
 | H13 | Certificates/training | No | Technician/issuer | certificate copy | issuer/date/scope validation | future technician/about | credential | No | Yes | on renewal | High |

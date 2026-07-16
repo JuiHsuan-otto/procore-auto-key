@@ -38,7 +38,7 @@ Cases are the evidence-bearing center. Brand, model, service, and area pages may
 | Author/Technician | `author_id` | display decision and status | identity/role/credential permission; no invented Person data |
 | Metric | `metric_id` | label/unit/evidence fields/display status | complete calculation and human verification |
 | Warranty | `warranty_id` | scope/terms/effective date/status | approved written policy before page or schema use |
-| Price Range | `price_id` | service/scope/currency/range/effective date/status | verified pricing source and display context |
+| Pricing Policy | `pricing_policy_id` | quotation model/factors/required intake/schema output/status | owner-approved operating model; fixed ranges require separate evidence |
 
 ## Relationship rules
 
@@ -46,7 +46,7 @@ Cases are the evidence-bearing center. Brand, model, service, and area pages may
 - `Case.service_ids`, `problem_ids`, and `area_id` drive related links and future aggregations.
 - `Guide.service_ids` is required; Brand/Model links are optional and must be substantively discussed.
 - Brand/Model/Service/Area aggregations use only published Cases with matching IDs.
-- Business, Author, Metric, Warranty, and Price records use verification/publication states; null or unpublished fields do not enter schema.
+- Business, Author, Metric, Warranty, and Pricing Policy records use verification/publication states; null or unpublished fields do not enter schema. CarKey's current case-by-case policy always omits `priceRange`.
 - Dates are evidence-bearing content dates, not build dates.
 
 ## Lifecycle

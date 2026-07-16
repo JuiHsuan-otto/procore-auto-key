@@ -11,6 +11,7 @@ const REQUIRED_DOCS = [
   "docs/seo-engineering/content-entity-model.md",
   "docs/seo-engineering/human-input-register.md",
   "docs/seo-engineering/location-page-decision-framework.md",
+  "docs/seo-engineering/pricing-policy.md",
   "docs/seo-engineering/seo-governance.md",
   "docs/seo-engineering/third-party-script-decision.md",
 ];
@@ -50,8 +51,11 @@ function validateBusinessEntity(data, errors, warnings) {
       errors.push(`${BUSINESS_FILE}: missing field ${name}`);
       continue;
     }
-    if (!new Set(["verified", "unverified"]).has(field.status)) {
-      errors.push(`${BUSINESS_FILE}: ${name}.status must be verified or unverified`);
+    if (!new Set(["verified", "unverified", "not_applicable"]).has(field.status)) {
+      errors.push(`${BUSINESS_FILE}: ${name}.status must be verified, unverified, or not_applicable`);
+    }
+    if (field.status === "not_applicable" && name !== "priceRange") {
+      errors.push(`${BUSINESS_FILE}: not_applicable is currently reserved for the confirmed priceRange omission policy`);
     }
     if (typeof field.publish !== "boolean") errors.push(`${BUSINESS_FILE}: ${name}.publish must be boolean`);
     if (field.publish && (field.status !== "verified" || field.value == null || !hasEvidence(field))) {
@@ -62,8 +66,10 @@ function validateBusinessEntity(data, errors, warnings) {
     }
   }
 
-  if (fields.priceRange?.value !== null || fields.priceRange?.publish !== false) {
-    errors.push(`${BUSINESS_FILE}: priceRange must remain null and unpublished until human evidence exists`);
+  if (fields.priceRange?.value !== null || fields.priceRange?.status !== "not_applicable" ||
+      fields.priceRange?.publish !== false || fields.priceRange?.pricing_model !== "case_by_case_quote" ||
+      fields.priceRange?.schema_output !== "omit" || !hasEvidence(fields.priceRange)) {
+    errors.push(`${BUSINESS_FILE}: confirmed case-by-case pricing policy must omit priceRange`);
   }
   if (fields.legalName?.value !== null || fields.publicBrandName?.value !== null) {
     errors.push(`${BUSINESS_FILE}: legalName and publicBrandName require an explicit human decision`);
@@ -75,18 +81,19 @@ function validateBusinessEntity(data, errors, warnings) {
   } else {
     const stages = migration.removal_stages || [];
     const removedFiles = stages.flatMap((stage) => stage.files || []);
-    if (migration.baseline_count !== 134 || migration.expected_remaining_after_current_stage !== 123) {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must preserve the 134-file baseline and 123-file current remainder`);
+    if (migration.baseline_count !== 134 || migration.expected_remaining_after_current_stage !== 120) {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must preserve the 134-file baseline and 120-file current remainder`);
     }
-    if (stages.length !== 2 || stages[0]?.stage_id !== "three-page-pilot" || stages[0]?.files?.length !== 3 ||
-        stages[1]?.stage_id !== "service-page-batch" || stages[1]?.files?.length !== 8) {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must record the three-page pilot and eight-page service batch`);
+    if (stages.length !== 3 || stages[0]?.stage_id !== "three-page-pilot" || stages[0]?.files?.length !== 3 ||
+        stages[1]?.stage_id !== "service-page-batch" || stages[1]?.files?.length !== 8 ||
+        stages[2]?.stage_id !== "brand-model-page-batch" || stages[2]?.files?.length !== 3) {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must record pilot, service, and brand/model batches`);
     }
-    if (removedFiles.length !== 11 || new Set(removedFiles).size !== removedFiles.length) {
-      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 11 unique files`);
+    if (removedFiles.length !== 14 || new Set(removedFiles).size !== removedFiles.length) {
+      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 14 unique files`);
     }
-    if (migration.rollout_status !== "service_pages_only") {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must remain limited to pilot and service pages`);
+    if (migration.rollout_status !== "service_and_brand_model_pages") {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must remain limited to pilot, service, and brand/model pages`);
     }
   }
 }
