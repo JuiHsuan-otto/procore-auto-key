@@ -130,7 +130,29 @@
       "publish": false,
       "source": null,
       "verified_by": null,
-      "verified_at": null
+      "verified_at": null,
+      "legacy_claim_observation": {
+        "baseline_file_count": 39,
+        "baseline_occurrence_count": 60,
+        "baseline_evidence": "Static repository inventory on feature branch HEAD f9ef3d46e3d547f5dfcff7137c6a32615d024fda before the BMW claim-neutralization batch",
+        "neutralization_stages": [
+          {
+            "stage_id": "bmw-24h-claim-batch",
+            "status": "implemented",
+            "files": [
+              "article-bmw-118-beitun-akl.html",
+              "article-bmw-220i-2015-yunlin-akl.html",
+              "article-bmw-740-yuanli-akl.html",
+              "article-bmw-elv-red-lock-fix.html",
+              "article-bmw-gseries-keyless-rescue.html",
+              "article-bmw-x5-battery-fix.html"
+            ]
+          }
+        ],
+        "expected_remaining_file_count": 33,
+        "expected_remaining_occurrence_count": 51,
+        "rollout_status": "bmw_case_claims_neutralized"
+      }
     },
     "priceRange": {
       "value": null,

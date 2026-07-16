@@ -94,11 +94,30 @@ const APPROVED_NON_SCHEMA_HTML_CHANGES = new Map([
   ],
   [
     "article-bmw-118-beitun-akl.html",
-    [['class="mt-12 flex justify-center"', 'class="mt-12 flex flex-col items-center justify-center"']],
+    [
+      ['class="mt-12 flex justify-center"', 'class="mt-12 flex flex-col items-center justify-center"'],
+      ["台中北屯 24H 救援", "台中北屯救援諮詢"],
+      ["台中 24H 救援：0909-277-670", "台中救援諮詢：0909-277-670"],
+    ],
+  ],
+  [
+    "article-bmw-220i-2015-yunlin-akl.html",
+    [["24H 救援專線", "汽車鑰匙救援專線"]],
   ],
   [
     "article-bmw-740-yuanli-akl.html",
-    [['class="mt-12 flex justify-center"', 'class="mt-12 flex flex-col items-center justify-center"']],
+    [
+      ['class="mt-12 flex justify-center"', 'class="mt-12 flex flex-col items-center justify-center"'],
+      ["苗栗 24H 救援：0909-277-670", "苗栗救援諮詢：0909-277-670"],
+    ],
+  ],
+  [
+    "article-bmw-elv-red-lock-fix.html",
+    [["24H 救援專線", "汽車鑰匙救援專線"]],
+  ],
+  [
+    "article-bmw-gseries-keyless-rescue.html",
+    [["24H 救援專線：0909-277-670", "汽車鑰匙救援專線：0909-277-670"]],
   ],
   [
     "article-bmw-gt535i-renwu-akl.html",
@@ -107,6 +126,14 @@ const APPROVED_NON_SCHEMA_HTML_CHANGES = new Map([
   [
     "article-bmw-x3-linkou-auction-akl.html",
     [['class="mt-12 flex justify-center"', 'class="mt-12 flex flex-col items-center justify-center"']],
+  ],
+  [
+    "article-bmw-x5-battery-fix.html",
+    [
+      ["<!-- 24H 浮動救援按鈕 -->", "<!-- 浮動救援按鈕 -->"],
+      [">24H CALL</a>", ">CALL</a>"],
+      [">24H Hotline</span>", ">Phone</span>"],
+    ],
   ],
 ]);
 

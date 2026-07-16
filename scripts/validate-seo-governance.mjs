@@ -15,6 +15,15 @@ const REQUIRED_DOCS = [
   "docs/seo-engineering/seo-governance.md",
   "docs/seo-engineering/third-party-script-decision.md",
 ];
+const UNVERIFIED_AVAILABILITY_PATTERN = /24\s*(?:h|小時)|全年無休|全天候/gi;
+const BMW_AVAILABILITY_NEUTRALIZATION_FILES = [
+  "article-bmw-118-beitun-akl.html",
+  "article-bmw-220i-2015-yunlin-akl.html",
+  "article-bmw-740-yuanli-akl.html",
+  "article-bmw-elv-red-lock-fix.html",
+  "article-bmw-gseries-keyless-rescue.html",
+  "article-bmw-x5-battery-fix.html",
+];
 
 async function readJson(relPath, errors) {
   try {
@@ -73,6 +82,25 @@ function validateBusinessEntity(data, errors, warnings) {
   }
   if (fields.legalName?.value !== null || fields.publicBrandName?.value !== null) {
     errors.push(`${BUSINESS_FILE}: legalName and publicBrandName require an explicit human decision`);
+  }
+
+  const availabilityMigration = fields.openingHours?.legacy_claim_observation;
+  if (!availabilityMigration || typeof availabilityMigration !== "object") {
+    errors.push(`${BUSINESS_FILE}: openingHours legacy_claim_observation must record the controlled 24H-claim neutralization`);
+  } else {
+    const stages = availabilityMigration.neutralization_stages || [];
+    const neutralizedFiles = stages.flatMap((stage) => stage.files || []);
+    if (availabilityMigration.baseline_file_count !== 39 || availabilityMigration.baseline_occurrence_count !== 60 ||
+        availabilityMigration.expected_remaining_file_count !== 33 || availabilityMigration.expected_remaining_occurrence_count !== 51) {
+      errors.push(`${BUSINESS_FILE}: 24H-claim migration must preserve the 39-file/60-occurrence baseline and 33-file/51-occurrence remainder`);
+    }
+    if (stages.length !== 1 || stages[0]?.stage_id !== "bmw-24h-claim-batch" || stages[0]?.status !== "implemented" ||
+        JSON.stringify(neutralizedFiles) !== JSON.stringify(BMW_AVAILABILITY_NEUTRALIZATION_FILES)) {
+      errors.push(`${BUSINESS_FILE}: 24H-claim migration must remain limited to the registered six-page BMW batch`);
+    }
+    if (!availabilityMigration.baseline_evidence || availabilityMigration.rollout_status !== "bmw_case_claims_neutralized") {
+      errors.push(`${BUSINESS_FILE}: 24H-claim migration evidence/status is incomplete`);
+    }
   }
 
   const migration = fields.priceRange?.legacy_observation;
@@ -297,11 +325,18 @@ async function main() {
   const htmlFiles = await walkFiles(ROOT, (relPath) => relPath.toLowerCase().endsWith(".html"));
   let priceRangeCount = 0;
   const priceRangeFiles = [];
+  let availabilityClaimCount = 0;
+  const availabilityClaimFiles = [];
   for (const relPath of htmlFiles) {
     const html = await fsp.readFile(path.join(ROOT, relPath), "utf8");
     if (/"priceRange"\s*:/.test(html)) {
       priceRangeCount += 1;
       priceRangeFiles.push(relPath);
+    }
+    const availabilityClaims = html.match(UNVERIFIED_AVAILABILITY_PATTERN) || [];
+    if (availabilityClaims.length) {
+      availabilityClaimCount += availabilityClaims.length;
+      availabilityClaimFiles.push(relPath);
     }
     if (/\b(?:src|href)\s*=\s*["']\/(?:data|scripts)\//i.test(html)) {
       errors.push(`${relPath}: public HTML must not reference source-only /data or /scripts paths`);
@@ -321,6 +356,22 @@ async function main() {
   }
   if (priceRangeCount) warnings.push(`${priceRangeCount} HTML files still contain legacy priceRange; no bulk rewrite was performed`);
 
+  const availabilityMigration = business?.fields?.openingHours?.legacy_claim_observation;
+  if (availabilityMigration && typeof availabilityMigration === "object") {
+    if (availabilityClaimFiles.length !== availabilityMigration.expected_remaining_file_count ||
+        availabilityClaimCount !== availabilityMigration.expected_remaining_occurrence_count) {
+      errors.push(`${BUSINESS_FILE}: expected ${availabilityMigration.expected_remaining_file_count} files and ${availabilityMigration.expected_remaining_occurrence_count} occurrences with unverified availability claims after current stage, found ${availabilityClaimFiles.length} files and ${availabilityClaimCount} occurrences`);
+    }
+    for (const neutralizedFile of BMW_AVAILABILITY_NEUTRALIZATION_FILES) {
+      if (availabilityClaimFiles.includes(neutralizedFile)) {
+        errors.push(`${neutralizedFile}: governed 24H-claim neutralization regressed`);
+      }
+    }
+  }
+  if (availabilityClaimCount) {
+    warnings.push(`${availabilityClaimFiles.length} HTML files still contain ${availabilityClaimCount} unverified availability-claim occurrences; no bulk rewrite was performed`);
+  }
+
   for (const requiredPath of ["/data/", "/scripts/"]) {
     if (!vercelIgnore.split(/\r?\n/).includes(requiredPath)) {
       errors.push(`.vercelignore: missing source-only exclusion ${requiredPath}`);
@@ -339,6 +390,7 @@ async function main() {
   console.log(`Metrics registered: ${(metrics?.metrics || []).length}`);
   console.log(`Third-party scripts governed: ${(thirdParty?.scripts || []).length}`);
   console.log(`Legacy priceRange files: ${priceRangeCount}`);
+  console.log(`Unverified availability claims: ${availabilityClaimFiles.length} files / ${availabilityClaimCount} occurrences`);
   console.log(`Warnings: ${warnings.length}`);
   console.log(`Errors: ${errors.length}`);
   for (const warning of warnings) console.warn(`WARN ${warning}`);
