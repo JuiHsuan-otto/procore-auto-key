@@ -49,17 +49,24 @@ const GUIDE_SCHEMA_FILES = [
   "article-vag-key-owner-guide.html",
   "article-why-you-need-spare-car-key.html",
 ];
+const CASE_SCHEMA_PILOT_FILES = [
+  "article-audi-r8-neihu-all-keys-lost.html",
+  "article-bmw-elv-red-lock-fix.html",
+  "case-shetou-mazda-cx30-rescue.html",
+];
 const SCHEMA_FILES = [
   ...IMAGE_PILOT_FILES,
   ...SERVICE_SCHEMA_FILES,
   ...BRAND_MODEL_SCHEMA_FILES,
   ...GUIDE_SCHEMA_FILES,
+  ...CASE_SCHEMA_PILOT_FILES,
 ];
 const EXPECTED_REMOVAL_STAGES = [
   { stage_id: "three-page-pilot", status: "complete", files: IMAGE_PILOT_FILES },
   { stage_id: "service-page-batch", status: "implemented", files: SERVICE_SCHEMA_FILES },
   { stage_id: "brand-model-page-batch", status: "implemented", files: BRAND_MODEL_SCHEMA_FILES },
   { stage_id: "guide-page-batch", status: "implemented", files: GUIDE_SCHEMA_FILES },
+  { stage_id: "case-page-pilot", status: "implemented", files: CASE_SCHEMA_PILOT_FILES },
 ];
 const APPROVED_NON_SCHEMA_HTML_CHANGES = new Map([
   [
@@ -258,8 +265,8 @@ function validateBusinessGate(business, errors) {
   if (JSON.stringify(migration?.removal_stages) !== JSON.stringify(EXPECTED_REMOVAL_STAGES)) {
     errors.push("data/business-entity.json: priceRange removal stage order/scope drifted");
   }
-  if (migration?.expected_remaining_after_current_stage !== 100 || migration?.rollout_status !== "service_brand_model_and_guide_pages") {
-    errors.push("data/business-entity.json: priceRange guide rollout count/status drifted");
+  if (migration?.expected_remaining_after_current_stage !== 97 || migration?.rollout_status !== "case_page_pilot") {
+    errors.push("data/business-entity.json: priceRange case pilot count/status drifted");
   }
 }
 
@@ -274,8 +281,8 @@ function runSelfTests() {
         schema_output: "publish",
         legacy_observation: {
           removal_stages: EXPECTED_REMOVAL_STAGES,
-          expected_remaining_after_current_stage: 100,
-          rollout_status: "service_brand_model_and_guide_pages",
+          expected_remaining_after_current_stage: 97,
+          rollout_status: "case_page_pilot",
         },
       },
     },

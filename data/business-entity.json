@@ -203,10 +203,19 @@
               "article-vag-key-owner-guide.html",
               "article-why-you-need-spare-car-key.html"
             ]
+          },
+          {
+            "stage_id": "case-page-pilot",
+            "status": "implemented",
+            "files": [
+              "article-audi-r8-neihu-all-keys-lost.html",
+              "article-bmw-elv-red-lock-fix.html",
+              "case-shetou-mazda-cx30-rescue.html"
+            ]
           }
         ],
-        "expected_remaining_after_current_stage": 100,
-        "rollout_status": "service_brand_model_and_guide_pages"
+        "expected_remaining_after_current_stage": 97,
+        "rollout_status": "case_page_pilot"
       }
     }
   }
