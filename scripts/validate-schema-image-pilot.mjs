@@ -68,6 +68,105 @@ const BMW_CASE_SCHEMA_FILES = [
   "article-bmw-x3-linkou-auction-akl.html",
   "article-bmw-x5-battery-fix.html",
 ];
+const REMAINING_ARTICLE_CASE_SCHEMA_BATCH_1 = [
+  "article-benz-c300-wuqi.html",
+  "article-benz-glc300-yuanlin-service.html",
+  "article-benz-glk-miaoli-akl.html",
+  "article-benz-ml350-hemei-service.html",
+  "article-benz-w204-nanzi-akl.html",
+  "article-benz-xindian-lost-key-rescue.html",
+  "article-camaro-2017-linkou-akl.html",
+  "article-car-key-2018-new-taipei-akl.html",
+  "article-car-key-lost-rescue-central-taiwan.html",
+  "article-ford-focus-puli-akl.html",
+  "article-ford-kuga-huatan-akl.html",
+  "article-honda-cbr650-2022-kaohsiung-akl.html",
+  "article-honda-fit-2018-kaohsiung-akl.html",
+  "article-honda-fit-tanaka-rescue.html",
+  "article-honda-hrv-2020-all-lost-changhua.html",
+];
+const REMAINING_ARTICLE_CASE_SCHEMA_BATCH_2 = [
+  "article-honda-hrv-2022-akl-longjing.html",
+  "article-hyundai-tucson-hemei-akl.html",
+  "article-infiniti-fx35-shetou-rescue.html",
+  "article-kia-picanto-nantun.html",
+  "article-kia-picanto-shengang-akl.html",
+  "article-landrover-evoque-taichung-auction-akl.html",
+  "article-lexus-nx200-huatan-akl.html",
+  "article-lexus-taichung-service.html",
+  "article-lexus-ux250-2021-taichung-akl.html",
+  "article-mazda-cx3-hemei-smartkey.html",
+  "article-mazda-cx5-qingshui-akl.html",
+  "article-mazda-wufeng-rescue.html",
+  "article-mini-clubman-beidou-akl.html",
+  "article-nissan-kicks-zhongke-rescue.html",
+  "article-peugeot-508sw-zhubei-smartkey.html",
+];
+const REMAINING_ARTICLE_CASE_SCHEMA_BATCH_3 = [
+  "article-porsche-cayenne-hemei.html",
+  "article-porsche-lost-key-rescue.html",
+  "article-porsche-panamera-wugu-akl.html",
+  "article-range-rover-huatan-service.html",
+  "article-skoda-kamiq-crushed-key.html",
+  "article-skoda-kodiaq-yunlin-rescue.html",
+  "article-taichung-lost-key-preparation.html",
+  "article-taichung-lost-key.html",
+  "article-toyota-altis-2016-taichung-akl.html",
+  "article-toyota-altis-2020-yuanlin-akl.html",
+  "article-toyota-altis-qingshui-rescue.html",
+  "article-toyota-auris-linkou-auction-akl.html",
+  "article-toyota-rav4-fengyuan-akl.html",
+  "article-toyota-rav4-linkou-rescue.html",
+  "article-toyota-rav4-nantou-rescue.html",
+];
+const REMAINING_ARTICLE_CASE_SCHEMA_BATCH_4 = [
+  "article-toyota-sienta-hemei-service.html",
+  "article-toyota-vios-2019-changhua-akl.html",
+  "article-volvo-keyless-lost-rescue.html",
+  "article-vw-amarok-2019-changhua-akl.html",
+  "article-vw-arteon-smart-key-service.html",
+  "article-vw-golf-2016-toufen-akl.html",
+  "article-vw-golf-dadu-service.html",
+  "article-vw-golf7-2015-taichung-akl.html",
+  "article-vw-ignition-repair.html",
+  "article-vw-pointer-xianxi-rescue.html",
+  "article-vw-t5-kaohsiung-rescue.html",
+  "article-vw-t6-2022-taipei-smartkey.html",
+  "case-hyundai-venue-smartkey-lost.html",
+];
+const LOCATION_SCHEMA_BATCH_1 = [
+  "changhua-car-key.html",
+  "chiayi-city-car-key.html",
+  "chiayi-county-car-key.html",
+  "hsinchu-city-car-key.html",
+  "hsinchu-county-car-key.html",
+  "hualien-car-key.html",
+  "kaohsiung-car-key.html",
+  "keelung-car-key.html",
+  "kinmen-car-key.html",
+  "lienchiang-car-key.html",
+  "miaoli-car-key.html",
+];
+const LOCATION_SCHEMA_BATCH_2 = [
+  "nantou-car-key.html",
+  "new-taipei-car-key.html",
+  "penghu-car-key.html",
+  "pingtung-car-key.html",
+  "taichung-car-key.html",
+  "tainan-car-key.html",
+  "taipei-car-key.html",
+  "taitung-car-key.html",
+  "taoyuan-car-key.html",
+  "yilan-car-key.html",
+  "yunlin-car-key.html",
+];
+const UTILITY_SCHEMA_BATCH = [
+  "blog.html",
+  "cases.html",
+  "dich-vu-lam-khoa-xe-o-to-tai-dai-loan.html",
+  "service-areas.html",
+  "vcard.html",
+];
 const SCHEMA_FILES = [
   ...IMAGE_PILOT_FILES,
   ...SERVICE_SCHEMA_FILES,
@@ -75,6 +174,13 @@ const SCHEMA_FILES = [
   ...GUIDE_SCHEMA_FILES,
   ...CASE_SCHEMA_PILOT_FILES,
   ...BMW_CASE_SCHEMA_FILES,
+  ...REMAINING_ARTICLE_CASE_SCHEMA_BATCH_1,
+  ...REMAINING_ARTICLE_CASE_SCHEMA_BATCH_2,
+  ...REMAINING_ARTICLE_CASE_SCHEMA_BATCH_3,
+  ...REMAINING_ARTICLE_CASE_SCHEMA_BATCH_4,
+  ...LOCATION_SCHEMA_BATCH_1,
+  ...LOCATION_SCHEMA_BATCH_2,
+  ...UTILITY_SCHEMA_BATCH,
 ];
 const EXPECTED_REMOVAL_STAGES = [
   { stage_id: "three-page-pilot", status: "complete", files: IMAGE_PILOT_FILES },
@@ -83,6 +189,13 @@ const EXPECTED_REMOVAL_STAGES = [
   { stage_id: "guide-page-batch", status: "implemented", files: GUIDE_SCHEMA_FILES },
   { stage_id: "case-page-pilot", status: "implemented", files: CASE_SCHEMA_PILOT_FILES },
   { stage_id: "bmw-case-page-batch", status: "implemented", files: BMW_CASE_SCHEMA_FILES },
+  { stage_id: "remaining-article-case-batch-1", status: "implemented", files: REMAINING_ARTICLE_CASE_SCHEMA_BATCH_1 },
+  { stage_id: "remaining-article-case-batch-2", status: "implemented", files: REMAINING_ARTICLE_CASE_SCHEMA_BATCH_2 },
+  { stage_id: "remaining-article-case-batch-3", status: "implemented", files: REMAINING_ARTICLE_CASE_SCHEMA_BATCH_3 },
+  { stage_id: "remaining-article-case-batch-4", status: "implemented", files: REMAINING_ARTICLE_CASE_SCHEMA_BATCH_4 },
+  { stage_id: "location-page-batch-1", status: "implemented", files: LOCATION_SCHEMA_BATCH_1 },
+  { stage_id: "location-page-batch-2", status: "implemented", files: LOCATION_SCHEMA_BATCH_2 },
+  { stage_id: "utility-page-batch", status: "implemented", files: UTILITY_SCHEMA_BATCH },
 ];
 const APPROVED_NON_SCHEMA_HTML_CHANGES = new Map([
   [
@@ -325,8 +438,8 @@ function validateBusinessGate(business, errors) {
   if (JSON.stringify(migration?.removal_stages) !== JSON.stringify(EXPECTED_REMOVAL_STAGES)) {
     errors.push("data/business-entity.json: priceRange removal stage order/scope drifted");
   }
-  if (migration?.expected_remaining_after_current_stage !== 85 || migration?.rollout_status !== "bmw_case_page_batch") {
-    errors.push("data/business-entity.json: priceRange BMW case rollout count/status drifted");
+  if (migration?.expected_remaining_after_current_stage !== 0 || migration?.rollout_status !== "price_range_closed") {
+    errors.push("data/business-entity.json: priceRange closure count/status drifted");
   }
 }
 
@@ -341,8 +454,8 @@ function runSelfTests() {
         schema_output: "publish",
         legacy_observation: {
           removal_stages: EXPECTED_REMOVAL_STAGES,
-          expected_remaining_after_current_stage: 85,
-          rollout_status: "bmw_case_page_batch",
+          expected_remaining_after_current_stage: 0,
+          rollout_status: "price_range_closed",
         },
       },
     },

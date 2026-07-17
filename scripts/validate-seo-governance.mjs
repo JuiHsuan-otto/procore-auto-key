@@ -284,22 +284,29 @@ function validateBusinessEntity(data, errors, warnings) {
   } else {
     const stages = migration.removal_stages || [];
     const removedFiles = stages.flatMap((stage) => stage.files || []);
-    if (migration.baseline_count !== 134 || migration.expected_remaining_after_current_stage !== 85) {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must preserve the 134-file baseline and 85-file current remainder`);
+    if (migration.baseline_count !== 134 || migration.expected_remaining_after_current_stage !== 0) {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must preserve the 134-file baseline and reach a zero-file remainder`);
     }
-    if (stages.length !== 6 || stages[0]?.stage_id !== "three-page-pilot" || stages[0]?.files?.length !== 3 ||
+    if (stages.length !== 13 || stages[0]?.stage_id !== "three-page-pilot" || stages[0]?.files?.length !== 3 ||
         stages[1]?.stage_id !== "service-page-batch" || stages[1]?.files?.length !== 8 ||
         stages[2]?.stage_id !== "brand-model-page-batch" || stages[2]?.files?.length !== 3 ||
         stages[3]?.stage_id !== "guide-page-batch" || stages[3]?.files?.length !== 20 ||
         stages[4]?.stage_id !== "case-page-pilot" || stages[4]?.files?.length !== 3 ||
-        stages[5]?.stage_id !== "bmw-case-page-batch" || stages[5]?.files?.length !== 12) {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must record all stages through the BMW case batch`);
+        stages[5]?.stage_id !== "bmw-case-page-batch" || stages[5]?.files?.length !== 12 ||
+        stages[6]?.stage_id !== "remaining-article-case-batch-1" || stages[6]?.files?.length !== 15 ||
+        stages[7]?.stage_id !== "remaining-article-case-batch-2" || stages[7]?.files?.length !== 15 ||
+        stages[8]?.stage_id !== "remaining-article-case-batch-3" || stages[8]?.files?.length !== 15 ||
+        stages[9]?.stage_id !== "remaining-article-case-batch-4" || stages[9]?.files?.length !== 13 ||
+        stages[10]?.stage_id !== "location-page-batch-1" || stages[10]?.files?.length !== 11 ||
+        stages[11]?.stage_id !== "location-page-batch-2" || stages[11]?.files?.length !== 11 ||
+        stages[12]?.stage_id !== "utility-page-batch" || stages[12]?.files?.length !== 5) {
+      errors.push(`${BUSINESS_FILE}: priceRange migration must record all thirteen controlled stages`);
     }
-    if (removedFiles.length !== 49 || new Set(removedFiles).size !== removedFiles.length) {
-      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 49 unique files`);
+    if (removedFiles.length !== 134 || new Set(removedFiles).size !== removedFiles.length) {
+      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 134 unique files`);
     }
-    if (migration.rollout_status !== "bmw_case_page_batch") {
-      errors.push(`${BUSINESS_FILE}: priceRange migration must remain limited to the registered batches through the BMW case rollout`);
+    if (migration.rollout_status !== "price_range_closed") {
+      errors.push(`${BUSINESS_FILE}: priceRange migration status must be price_range_closed`);
     }
   }
 }

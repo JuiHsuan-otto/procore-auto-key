@@ -16,6 +16,8 @@ Decision: `pending_owner_privacy_review`. Current legacy use is frozen to the fi
 
 Current pages: `cases.html`, `article-emergency-akl-guide.html`, `article-honda-fit-2018-kaohsiung-akl.html`, `article-lost-key-comparison.html`, and `article-toyota-altis-2020-yuanlin-akl.html`.
 
+Follow-up read-only observation at `2026-07-17T01:57:46+08:00`: the URL still returned HTTP 200 and 3,506 bytes. Its SHA-256 remained `42b3ec8bc80662cf244244078b8fd17c17506e3f704543cd5502ce6f01cd3411`, matching the prior body observation, although the response still has only a one-hour cache policy and the URL remains unversioned. This confirms body stability at two points in time; it does not prove future immutability, owner authorization, retention terms, or privacy compliance.
+
 ## Required owner decision
 
 The business owner must identify authorization/contract, business purpose, controller/processor roles, retention/deletion terms, privacy disclosure, and accountable owner. Then choose one:
