@@ -64,3 +64,18 @@ vid/
 /file_list*.txt
 /subfolder_list.txt
 /sitemap_local.xml
+
+# Source-only files that must never be downloadable from the public website
+/masking_tool.js
+/masking_tool_fixed.js
+/requirements-content-ops.txt
+/*.example.json
+/content_platforms.json
+/seo_config.json
+/llms.txt
+/tailwind.config.js
+/assets/css/tailwind-source.css
+
+# Original camera/source formats are not public web assets
+/img/*.HEIC
+/img/*.heic

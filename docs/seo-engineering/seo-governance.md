@@ -47,7 +47,7 @@ Every Guide must have:
 - CarKey uses case-by-case quotations. `priceRange` therefore defaults to schema output `omit`; neither `$$`, a guessed range, nor JSON `null` may be emitted. Reconsideration requires a future fixed, consistently applicable, documented, and owner-approved pricing policy.
 - Opening hours, address, legal name, tax ID, reviews, ratings, warranty, technicians, and credentials require human evidence before use.
 - Public `24H`, `24小時`, `全年無休`, or `全天候` availability claims require H07 operational evidence before use. Until that evidence exists, affected copy must be neutralized in explicit page-type batches without replacing it with another unsupported response-time or coverage promise.
-- `priceRange` removals are limited to the explicit stages registered in `data/business-entity.json`: the three-page pilot, eight remaining service pages, three brand/model pages, twenty guide pages, the three-page case pilot, and twelve BMW case pages. The remaining 85 files require separately approved page-type batches.
+- The governed `priceRange` migration is closed: all 134 original legacy files are registered across 13 explicit stages, the expected remainder is 0, and `rollout_status=price_range_closed`. Historical pilot documents retain their point-in-time counts; they are not current backlog.
 - Schema migration proceeds pilot → representative sample → explicit rollout. No task may silently rewrite 100+ HTML files.
 - AggregateRating is not used for self-serving reviews. Product/SearchAction/Speakable are added only when the visible page and feature qualify.
 
@@ -63,6 +63,15 @@ Every Guide must have:
 - A new external script requires owner, purpose, data inventory, destination, retention, contract/terms, privacy disclosure, version/integrity strategy, CSP scope, and rollback.
 - A pending script cannot be copied to additional pages.
 - Removing an existing script or CSP host is a separate change after owner/privacy decision and representative-page verification.
+
+## Public deployment boundary
+
+- `noindex` is not a confidentiality or deployment control. Internal tools, operating documents, example queues, source-only data, local configuration, and original camera/source formats must be absent from the Vercel upload so direct requests return 404 after deployment.
+- `masking_tool.js`, `masking_tool_fixed.js`, content-operation requirements, example intake/queue JSON, platform/SEO configuration JSON, `llms.txt`, Tailwind configuration/source CSS, and `/img` HEIC originals are source-only and must remain in `.vercelignore`.
+- `llms.txt` is not treated as a Google ranking requirement. It remains non-public until brand identity, service area, and every business claim in it pass the same human evidence gate as HTML and schema.
+- Public HTML and assets may not reference source-only paths or contain local filesystem paths. `npm run validate:deployment-boundary` is a release gate.
+- `.vercelignore` protects only the Vercel deployment. It does not hide files already tracked by a public GitHub repository or erase Git history; repository visibility, file removal, and history remediation require a separate explicit decision.
+- Tailwind configuration and source CSS are excluded only after the Vercel project and successful Preview build logs confirmed `framework=null`, standard `vercel build`, no custom Tailwind/npm build command, and no prepared build cache. `package.json` remains available to Vercel project detection but is not served as a public route.
 
 ## Definition of Done
 
