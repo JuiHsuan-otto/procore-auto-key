@@ -1,6 +1,6 @@
 # Stage B priceRange closure
 
-Status: implemented locally; not committed, pushed, merged, or deployed.
+Status: committed and pushed to Draft PR #1; not merged or deployed to production.
 
 ## Objective and business value
 
@@ -63,3 +63,12 @@ Before commit, restore the 85 HTML files, `data/business-entity.json`, and the t
 - Live remote main remained `15301685c7d8dcb709c253b0759c770361840a54`.
 - All seven representative resources returned HTTP 200 and matched the files at that SHA: 7 match / 0 drift.
 - The original baseline was not rewritten, and production was not modified.
+
+## Publication boundary
+
+- Commit: `e0814e6122653eed3df2808c98f20fff6d555cc2`
+- Boundary: `fix(seo): close legacy priceRange schema debt`
+- Branch: `seo/stage-b-foundation-20260716`
+- Draft PR: #1, open / draft / mergeable at publication observation.
+- Vercel Preview: `dpl_Dp4TRvdBsbauFHbuiJwpVUsGHfmf`, READY, target=`null` (not production).
+- No merge to main and no production deployment were performed.
