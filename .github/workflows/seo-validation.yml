@@ -1,0 +1,57 @@
+name: SEO and public-boundary validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: seo-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Static site release gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Run SEO foundation and privacy gates
+        run: npm run test:seo-foundation
+
+      - name: Validate all static pages
+        run: npm run validate:site
+
+      - name: Audit measurement taxonomy
+        run: npm run audit:measurement
+
+      - name: Validate schema rollout
+        run: npm run validate:schema-rollout
+
+      - name: Check diff hygiene
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git diff --check "${{ github.event.pull_request.base.sha }}...HEAD"
+          else
+            git diff-tree --check --root -r HEAD
+          fi
