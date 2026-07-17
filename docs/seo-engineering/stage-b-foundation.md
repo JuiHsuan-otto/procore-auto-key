@@ -43,7 +43,7 @@ The site validator now rejects malformed sitemap wrappers/namespaces, duplicate 
 - Static verified: `npm run audit:measurement` passed for 135 HTML files. The click handler uses `pushClickEvents`; static inspection fails if its phone/LINE path references `generate_lead`, `LEAD_EVENT_NAME`, or the diagnostic lead sender.
 - Browser verified — phone: one real browser click produced one first-party `procore_phone_click` object and one GA request with `en=click_to_call`; payload included `conversion_type=phone`, `lead_source=phone`, `method=phone`, and the expected `link_url`. No `generate_lead` command or request appeared.
 - Browser verified — LINE: one real browser click produced one first-party `procore_line_click` object and one GA request with `en=line_click`; payload included `conversion_type=line`, `lead_source=line`, `method=line`, and the expected `link_url`. No `generate_lead` command or request appeared.
-- The explicit hard-to-guess GA diagnostic query remains the only path in this script that can send `generate_lead`; ordinary CTA clicks cannot call it.
+- The explicit GA diagnostic query is the only path in this script that can send `generate_lead`; ordinary CTA clicks cannot call it. A later P0 hardening batch restricted this diagnostic path to loopback hosts and removed query/fragment contents from Analytics `page_location`; see `stage-b-analytics-privacy-hardening.md`.
 
 The browser harness prevented navigation and was deleted after the test. The loopback server was stopped. No LINE message or phone call was initiated.
 

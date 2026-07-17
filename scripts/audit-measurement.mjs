@@ -14,6 +14,9 @@ const REQUIRED_TRACKING_TOKENS = [
   "line_click",
   "generate_lead",
   "transport_type",
+  "getSanitizedPageLocation",
+  "getSanitizedLinkUrl",
+  "isLoopbackHost",
 ];
 const EXCLUDED_DIRS = new Set([
   ".git",
@@ -96,6 +99,21 @@ async function auditTrackingSource(errors) {
   }
   if (/generate_lead|LEAD_EVENT_NAME|pushDiagnosticLeadEvent|pushLeadEvents/.test(trackClickSource)) {
     errors.push(`${TRACKING_SOURCE}: CTA click path must not emit generate_lead`);
+  }
+  if (source.includes("page_location: window.location.href")) {
+    errors.push(`${TRACKING_SOURCE}: Analytics page_location must omit URL query and fragment`);
+  }
+  if (!source.includes("var trackedHref = getSanitizedLinkUrl(href)")) {
+    errors.push(`${TRACKING_SOURCE}: tracked external link URLs must omit query and fragment`);
+  }
+  if (/gtag\("config", GA_MEASUREMENT_ID\);/.test(source)) {
+    errors.push(`${TRACKING_SOURCE}: GA4 config must override automatic page_location with a sanitized URL`);
+  }
+  if (!/gtag\("config", GA_MEASUREMENT_ID, \{[\s\S]*?page_location: getSanitizedPageLocation\(\)/.test(source)) {
+    errors.push(`${TRACKING_SOURCE}: GA4 page views must use sanitized page_location`);
+  }
+  if (!/if \(!isLoopbackHost\(\) \|\| requested !== TEST_EVENT_VALUE/.test(source)) {
+    errors.push(`${TRACKING_SOURCE}: generate_lead diagnostic must be restricted to loopback hosts`);
   }
 }
 

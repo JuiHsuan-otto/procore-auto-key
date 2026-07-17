@@ -43,7 +43,10 @@
     document.head.appendChild(script);
 
     window.gtag("js", new Date());
-    window.gtag("config", GA_MEASUREMENT_ID);
+    window.gtag("config", GA_MEASUREMENT_ID, {
+      page_path: window.location.pathname,
+      page_location: getSanitizedPageLocation()
+    });
   }
 
   function cleanText(value) {
@@ -66,16 +69,44 @@
     return /(^https?:)?\/\/(line\.me|lin\.ee)\//i.test(href || "");
   }
 
+  function getSanitizedPageLocation() {
+    try {
+      var url = new URL(window.location.href);
+      return url.origin + url.pathname;
+    } catch (error) {
+      return window.location.pathname || "/";
+    }
+  }
+
+  function getSanitizedLinkUrl(href) {
+    if (!/(^https?:)?\/\//i.test(href || "")) {
+      return href;
+    }
+
+    try {
+      var url = new URL(href, window.location.href);
+      return url.origin + url.pathname;
+    } catch (error) {
+      return (href || "").split(/[?#]/)[0];
+    }
+  }
+
+  function isLoopbackHost() {
+    var hostname = (window.location.hostname || "").toLowerCase();
+    return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1" || hostname === "[::1]";
+  }
+
   function getBasePayload(link, eventName, conversionType) {
     var href = link.getAttribute("href") || "";
+    var trackedHref = getSanitizedLinkUrl(href);
 
     return {
       event: eventName,
       conversion_type: conversionType,
-      link_url: href,
+      link_url: trackedHref,
       link_text: cleanText(link.textContent),
       page_path: window.location.pathname,
-      page_location: window.location.href,
+      page_location: getSanitizedPageLocation(),
       page_title: document.title
     };
   }
@@ -173,7 +204,7 @@
     var requested = getSearchParam(TEST_EVENT_PARAM);
     var payload;
 
-    if (requested !== TEST_EVENT_VALUE || hasSessionFlag(TEST_EVENT_STORAGE_KEY)) {
+    if (!isLoopbackHost() || requested !== TEST_EVENT_VALUE || hasSessionFlag(TEST_EVENT_STORAGE_KEY)) {
       return;
     }
 
@@ -184,7 +215,7 @@
       link_url: "ga4_test:" + requested,
       link_text: "GA4 generate_lead diagnostic",
       page_path: window.location.pathname,
-      page_location: window.location.href,
+      page_location: getSanitizedPageLocation(),
       page_title: document.title,
       debug_mode: true
     };
