@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "observed_at_asia_taipei": "2026-07-16T01:19:08+08:00",
+  "scripts": [
+    {
+      "script_id": "washinmura-aeo-crawler-track",
+      "src": "https://aeo.washinmura.jp/widget/crawler-track.js",
+      "data_site": "carkey.com.tw",
+      "version": null,
+      "integrity": null,
+      "mutable": true,
+      "observed_sha256": "42b3ec8bc80662cf244244078b8fd17c17506e3f704543cd5502ce6f01cd3411",
+      "response": {
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "content_length": 3506,
+        "cache_control": "public, max-age=3600",
+        "last_modified": "Wed, 15 Jul 2026 17:15:35 GMT"
+      },
+      "endpoint": "https://aeo.washinmura.jp/api/v1/track",
+      "transport": ["sendBeacon", "XMLHttpRequest fallback"],
+      "data_observed_in_source": [
+        "site slug",
+        "page origin and pathname without query or fragment",
+        "document title",
+        "document referrer",
+        "user-agent-derived bot category",
+        "JSON-LD presence flag",
+        "FAQPage presence flag",
+        "sitemap link presence flag",
+        "viewport width"
+      ],
+      "cookie_claim_in_source": "no cookies",
+      "owner": null,
+      "business_purpose_approved_by": null,
+      "contract_or_terms_evidence": null,
+      "retention_policy": null,
+      "privacy_disclosure": null,
+      "decision": "pending_owner_privacy_review",
+      "new_page_expansion_allowed": false,
+      "current_page_allowlist": [
+        "article-emergency-akl-guide.html",
+        "article-honda-fit-2018-kaohsiung-akl.html",
+        "article-lost-key-comparison.html",
+        "article-toyota-altis-2020-yuanlin-akl.html",
+        "cases.html"
+      ],
+      "required_decision_inputs": [
+        "business owner",
+        "contract or authorization evidence",
+        "documented business purpose",
+        "data controller/processor roles",
+        "retention and deletion policy",
+        "privacy disclosure decision",
+        "keep, self-host/pin, or remove decision"
+      ]
+    }
+  ]
+}

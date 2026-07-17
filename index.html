@@ -36,9 +36,11 @@
  .btn-line-float { width: 56px; height: 56px; background: #06C755; border-radius: 50%; display: flex; items-center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
  .btn-line-float:hover { transform: scale(1.1); }
 
- /* 數字滾動樣式 */
+ /* 已驗證數字與未驗證 fallback 的共用樣式 */
  .stat-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; text-align: center; border-radius: 4px; }
  .stat-number { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 0.5rem; }
+ .metric-fallback { min-height: 3rem; display: flex; align-items: center; justify-content: center; font-family: 'Noto Sans TC', sans-serif; font-size: 0.875rem; line-height: 1.5; }
+ .metric-section-title { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
  .text-gold-lux { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 6s linear infinite; }
  @keyframes shine { to { background-position: 200% center; } }
  nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -63,10 +65,10 @@
  .hero-intent-tag { flex: 0 1 calc(50% - 0.55rem); min-width: 7.1rem; padding: 0.72rem 0.6rem; font-size: 0.72rem; letter-spacing: 0.12em; }
  }
  </style>
- <script type="application/ld+json" data-seo="procore">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.carkey.com.tw/#website","url":"https://www.carkey.com.tw/","name":"極致核心 ProCore Auto Key","inLanguage":"zh-TW","publisher":{"@id":"https://www.carkey.com.tw/#business"}},{"@type":"LocalBusiness","@id":"https://www.carkey.com.tw/#business","name":"極致核心 ProCore Auto Key","alternateName":"ProCore Auto Key","url":"https://www.carkey.com.tw/","telephone":"+886909277670","image":"https://www.carkey.com.tw/img/procore_logo_main.jpg","priceRange":"$$","areaServed":["台北市","新北市","基隆市","桃園市","新竹市","新竹縣","苗栗縣","台中市","彰化縣","南投縣","雲林縣","嘉義市","嘉義縣","台南市","高雄市","屏東縣","宜蘭縣","花蓮縣","台東縣","澎湖縣","金門縣","連江縣"],"address":{"@type":"PostalAddress","addressCountry":"TW"},"contactPoint":{"@type":"ContactPoint","telephone":"+886909277670","contactType":"customer service","availableLanguage":["zh-TW","vi"]}},{"@type":"WebPage","@id":"https://www.carkey.com.tw/#webpage","url":"https://www.carkey.com.tw/","name":"汽車鑰匙不見、全丟與遙控器沒反應｜ProCore 汽車鑰匙服務","headline":"汽車鑰匙不見、全丟與遙控器沒反應｜ProCore 汽車鑰匙服務","description":"汽車鑰匙不見、鑰匙全丟、汽車遙控器沒反應、未偵測到鑰匙或只剩一支鑰匙時，先傳車款年份、所在地與照片，由 ProCore 判斷服務入口。","image":"https://www.carkey.com.tw/img/procore_logo_main.jpg","inLanguage":"zh-TW","isPartOf":{"@id":"https://www.carkey.com.tw/#website"},"publisher":{"@id":"https://www.carkey.com.tw/#business"}}]}</script><link rel="stylesheet" href="assets/css/procore-header.css">
+ <script type="application/ld+json" data-seo="procore">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.carkey.com.tw/#website","url":"https://www.carkey.com.tw/","name":"極致核心 ProCore Auto Key","inLanguage":"zh-TW","publisher":{"@id":"https://www.carkey.com.tw/#business"}},{"@type":"LocalBusiness","@id":"https://www.carkey.com.tw/#business","name":"極致核心 ProCore Auto Key","alternateName":"ProCore Auto Key","url":"https://www.carkey.com.tw/","telephone":"+886909277670","image":"https://www.carkey.com.tw/img/procore_logo_main.jpg","areaServed":["台北市","新北市","基隆市","桃園市","新竹市","新竹縣","苗栗縣","台中市","彰化縣","南投縣","雲林縣","嘉義市","嘉義縣","台南市","高雄市","屏東縣","宜蘭縣","花蓮縣","台東縣","澎湖縣","金門縣","連江縣"],"address":{"@type":"PostalAddress","addressCountry":"TW"},"contactPoint":{"@type":"ContactPoint","telephone":"+886909277670","contactType":"customer service","availableLanguage":["zh-TW","vi"]}},{"@type":"WebPage","@id":"https://www.carkey.com.tw/#webpage","url":"https://www.carkey.com.tw/","name":"汽車鑰匙不見、全丟與遙控器沒反應｜ProCore 汽車鑰匙服務","headline":"汽車鑰匙不見、全丟與遙控器沒反應｜ProCore 汽車鑰匙服務","description":"汽車鑰匙不見、鑰匙全丟、汽車遙控器沒反應、未偵測到鑰匙或只剩一支鑰匙時，先傳車款年份、所在地與照片，由 ProCore 判斷服務入口。","image":"https://www.carkey.com.tw/img/procore_logo_main.jpg","inLanguage":"zh-TW","isPartOf":{"@id":"https://www.carkey.com.tw/#website"},"publisher":{"@id":"https://www.carkey.com.tw/#business"}}]}</script><link rel="stylesheet" href="assets/css/procore-header.css">
 </head>
 <body class="antialiased">
- <!-- 24H 浮動救援按鈕 -->
+ <!-- 行動版浮動聯絡按鈕 -->
  <div class="float-btn md:hidden">
  <a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener noreferrer" class="btn-line-float">
  <img alt="中彰投為主・全台可預約 汽車晶片鑰匙現場救援" src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" class="w-8 h-8">
@@ -182,27 +184,30 @@
  </div>
  </section>
 
- <!-- 服務紀錄數據 -->
- <section class="py-12 bg-zinc-900/50">
+ <!-- 服務資訊（由 data/business-metrics.json 產生） -->
+<!-- BUSINESS_METRICS_START -->
+<section class="py-12 bg-zinc-900/50" aria-labelledby="service-information-title">
+ <h2 id="service-information-title" class="metric-section-title">服務資訊</h2>
  <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4">
- <div class="stat-card">
- <div class="stat-number counter" data-target="5221">0</div>
- <div class="text-[10px] text-gray-500 tracking-widest uppercase">累積處理車輛</div>
+  <div class="stat-card" data-metric-id="vehicles_served" data-metric-status="fallback">
+   <div class="stat-number metric-fallback">服務紀錄持續累積</div>
+   <div class="text-[10px] text-gray-500 tracking-widest uppercase">服務紀錄</div>
+  </div>
+  <div class="stat-card" data-metric-id="cross_region_visits" data-metric-status="fallback">
+   <div class="stat-number metric-fallback">跨區服務依案件條件評估</div>
+   <div class="text-[10px] text-gray-500 tracking-widest uppercase">跨區服務</div>
+  </div>
+  <div class="stat-card" data-metric-id="brands_covered" data-metric-status="fallback">
+   <div class="stat-number metric-fallback">多品牌車款依年份與鑰匙型式評估</div>
+   <div class="text-[10px] text-gray-500 tracking-widest uppercase">品牌與車款</div>
+  </div>
+  <div class="stat-card" data-metric-id="service_hours_claim" data-metric-status="fallback">
+   <div class="stat-number metric-fallback">服務時間請先確認</div>
+   <div class="text-[10px] text-gray-500 tracking-widest uppercase">服務時間</div>
+  </div>
  </div>
- <div class="stat-card">
- <div class="stat-number counter" data-target="1514">0</div>
- <div class="text-[10px] text-gray-500 tracking-widest uppercase">跨區到場紀錄</div>
- </div>
- <div class="stat-card">
- <div class="stat-number counter" data-target="100">0</div>
- <div class="text-[10px] text-gray-500 tracking-widest uppercase">覆蓋汽車品牌</div>
- </div>
- <div class="stat-card">
- <div class="stat-number counter" data-target="24">0</div>
- <div class="text-[10px] text-gray-500 tracking-widest uppercase">24H 全年無休</div>
- </div>
- </div>
- </section>
+</section>
+<!-- BUSINESS_METRICS_END -->
 
  <!-- 救援對比區塊 (New: SEO & Conversion Optimization) -->
  <section class="py-24 bg-black relative overflow-hidden">
@@ -445,7 +450,7 @@
  <span class="text-base font-bold text-white group-hover:text-gold-primary transition">@420gknem</span>
  </a>
  <a href="tel:0909277670" class="p-6 border border-white/5 hover:border-gold-primary/30 transition group">
- <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">24H Hotline</span>
+ <span class="text-[8px] text-gray-500 uppercase tracking-widest block mb-2">Service Hotline</span>
  <span class="text-base font-bold text-white group-hover:text-gold-primary transition">0909277670</span>
  </a>
  </div>
@@ -488,64 +493,66 @@
  </footer>
 
  <script>
- // 數字滾動動畫
- const counters = document.querySelectorAll('.counter');
- const speed = 200;
+ // 只有 source 已包含相同已驗證數值的 metric 才能啟動動畫。
+ const counters = document.querySelectorAll('.counter[data-target]');
+ const animateCounter = counter => {
+ const target = Number(counter.dataset.target);
+ const sourceValue = Number(counter.textContent.replaceAll(',', '').trim());
+ if (!Number.isFinite(target) || target < 0 || sourceValue !== target) return;
 
- const startCounters = () => {
- counters.forEach(counter => {
- const updateCount = () => {
- const target = +counter.getAttribute('data-target');
- const count = +counter.innerText;
- const inc = target / speed;
-
- if (count < target) {
- counter.innerText = Math.ceil(count + inc);
- setTimeout(updateCount, 1);
- } else {
- counter.innerText = target + '+';
- }
+ const duration = 700;
+ const start = performance.now();
+ const update = now => {
+ const progress = Math.min((now - start) / duration, 1);
+ counter.textContent = Math.round(target * progress).toLocaleString('zh-TW');
+ if (progress < 1) requestAnimationFrame(update);
  };
- updateCount();
- });
+ requestAnimationFrame(update);
  };
 
- // 偵測滾動啟動動畫
- let animated = false;
- window.addEventListener('scroll', () => {
- const section = document.querySelector('.stat-card');
- if (section) {
- const rect = section.getBoundingClientRect();
- if (rect.top < window.innerHeight && !animated) {
- startCounters();
- animated = true;
+ if (counters.length) {
+ const metricSection = document.querySelector('[aria-labelledby="service-information-title"]');
+ if (metricSection) {
+ const observer = new IntersectionObserver((entries, currentObserver) => {
+ if (!entries.some(entry => entry.isIntersecting)) return;
+ counters.forEach(animateCounter);
+ currentObserver.disconnect();
+ }, { threshold: 0.25 });
+ observer.observe(metricSection);
  }
  }
- });
 
  const latestCases = [
   {
     "car": "Audi R8",
     "label": "台北內湖 鑰匙全丟",
     "img": "img/audi-r8-neihu-all-keys-lost/case-1.jpg",
+    "width": 3000,
+    "height": 4000,
     "link": "/article-audi-r8-neihu-all-keys-lost"
   },
   {
     "car": "Lexus UX250",
     "label": "台中西屯 2021 Lexus UX250 智慧感應鑰匙全丟｜極致核心 ProCore",
     "img": "img/cases/article-lexus-ux250-2021-taichung-akl.jpeg",
+    "width": 3000,
+    "height": 4000,
     "link": "/article-lexus-ux250-2021-taichung-akl"
   },
   {
     "car": "BMW 118",
     "label": "彰化花壇 2016 BMW 118 智慧感應鑰匙全丟｜極致核心 ProCore",
     "img": "img/cases/article-bmw-118-2016-changhua-akl.jpeg",
+    "width": 2934,
+    "height": 3635,
     "link": "/article-bmw-118-2016-changhua-akl"
   },
   {
     "car": "Honda CBR650",
     "label": "高雄楠梓 2022 Honda CBR650 鑰匙全丟｜極致核心 ProCore",
     "img": "img/cases/article-honda-cbr650-2022-kaohsiung-akl.jpeg",
+    "width": 3000,
+    "height": 4000,
     "link": "/article-honda-cbr650-2022-kaohsiung-akl"
   }
 ];
@@ -557,14 +564,14 @@
   "'": '&#39;'
  }[char]));
  const webpOf = (src) => String(src || '').replace(/\.(jpe?g|png)$/i, '.webp');
- const renderCaseImage = (src, alt) => `
+ const renderCaseImage = (src, alt, width, height) => `
  <picture>
  <source srcset="${escapeHtml(webpOf(src))}" type="image/webp">
- <img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async">
+ <img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" width="${escapeHtml(width)}" height="${escapeHtml(height)}" loading="lazy" decoding="async">
  </picture>`;
  document.getElementById('home-case-list').innerHTML = latestCases.map(c => `
  <div class="work-card group" onclick="location.href='${c.link}'">
- ${renderCaseImage(c.img, c.car)}
+ ${renderCaseImage(c.img, c.car, c.width, c.height)}
  <div class="work-overlay"></div>
  <div class="absolute bottom-6 left-6">
  <p class="text-[9px] text-gold-primary font-bold tracking-widest mb-1">${escapeHtml(c.car)}</p>

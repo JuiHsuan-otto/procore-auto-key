@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
+import { auditSitemapXml } from "./seo-utils.mjs";
 
 const ROOT = process.cwd();
 const ROBOTS_FILE = "robots.txt";
@@ -281,6 +282,18 @@ function decodeHtmlEntities(value) {
     .trim();
 }
 
+function getTaipeiDate(date = new Date()) {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Taipei",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(date).filter((part) => part.type !== "literal").map((part) => [part.type, part.value]),
+  );
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
 function getAttr(tag, attrName) {
   const re = new RegExp(`\\b${attrName}\\s*=\\s*(["'])(.*?)\\1`, "i");
   const match = tag.match(re);
@@ -554,6 +567,9 @@ async function main() {
   await validateRobotsRedirects(errors);
 
   const sitemapUrls = new Set();
+  const knownCanonicals = new Set(
+    seoEntries.filter((entry) => !entry.noindex && entry.canonical).map((entry) => entry.canonical),
+  );
   for (const xmlFile of ["sitemap.xml", "sitemap_local.xml"]) {
     if (!fs.existsSync(path.join(ROOT, xmlFile))) continue;
     const xml = await fsp.readFile(path.join(ROOT, xmlFile), "utf8");
@@ -561,8 +577,12 @@ async function main() {
       errors.push(`${xmlFile}: missing urlset wrapper`);
     }
     if (xmlFile === "sitemap.xml") {
-      for (const match of xml.matchAll(/<loc>([\s\S]*?)<\/loc>/g)) {
-        sitemapUrls.add(decodeHtmlEntities(match[1]));
+      const sitemapAudit = auditSitemapXml(xml, { knownCanonicals, today: getTaipeiDate() });
+      for (const entry of sitemapAudit.entries) {
+        if (entry.loc) sitemapUrls.add(entry.loc);
+      }
+      for (const error of sitemapAudit.errors) {
+        errors.push(`${xmlFile}: ${error}`);
       }
     }
   }

@@ -1,0 +1,81 @@
+{
+  "schema_version": 2,
+  "publication_policy": {
+    "public_requires_evidence": true,
+    "unverified_display_status": "hidden",
+    "crawler_rule": "View-source must contain either a verified value or the non-numeric fallback_text, never 0 as a semantic placeholder.",
+    "animation_rule": "Animation may enhance a verified server-authored value but must never invent or replace its source value.",
+    "generated_block": {
+      "source_file": "index.html",
+      "start_marker": "BUSINESS_METRICS_START",
+      "end_marker": "BUSINESS_METRICS_END",
+      "renderer": "scripts/render-business-metrics.mjs"
+    }
+  },
+  "metrics": [
+    {
+      "metric_id": "vehicles_served",
+      "label": "累積處理車輛",
+      "value": null,
+      "unit": "vehicles",
+      "source": null,
+      "calculation_method": null,
+      "evidence_location": null,
+      "verified_by": null,
+      "verified_at": null,
+      "display_status": "hidden",
+      "last_updated": null,
+      "fallback_label": "服務紀錄",
+      "fallback_text": "服務紀錄持續累積",
+      "legacy_unverified_value": 5221
+    },
+    {
+      "metric_id": "cross_region_visits",
+      "label": "跨區到場紀錄",
+      "value": null,
+      "unit": "visits",
+      "source": null,
+      "calculation_method": null,
+      "evidence_location": null,
+      "verified_by": null,
+      "verified_at": null,
+      "display_status": "hidden",
+      "last_updated": null,
+      "fallback_label": "跨區服務",
+      "fallback_text": "跨區服務依案件條件評估",
+      "legacy_unverified_value": 1514
+    },
+    {
+      "metric_id": "brands_covered",
+      "label": "覆蓋汽車品牌",
+      "value": null,
+      "unit": "brands",
+      "source": null,
+      "calculation_method": null,
+      "evidence_location": null,
+      "verified_by": null,
+      "verified_at": null,
+      "display_status": "hidden",
+      "last_updated": null,
+      "fallback_label": "品牌與車款",
+      "fallback_text": "多品牌車款依年份與鑰匙型式評估",
+      "legacy_unverified_value": 100
+    },
+    {
+      "metric_id": "service_hours_claim",
+      "label": "24H 全年無休",
+      "value": null,
+      "unit": "hours_per_day",
+      "source": null,
+      "calculation_method": null,
+      "evidence_location": null,
+      "verified_by": null,
+      "verified_at": null,
+      "display_status": "hidden",
+      "last_updated": null,
+      "fallback_label": "服務時間",
+      "fallback_text": "服務時間請先確認",
+      "legacy_unverified_value": 24
+    }
+  ]
+}
