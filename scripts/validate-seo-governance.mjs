@@ -8,11 +8,79 @@ const ROOT = process.cwd();
 const BUSINESS_FILE = "data/business-entity.json";
 const METRICS_FILE = "data/business-metrics.json";
 const THIRD_PARTY_FILE = "data/third-party-scripts.json";
+const BUSINESS_ID = "https://www.carkey.com.tw/#business";
+const AREA_SERVED_PILOT_FILES = [
+  "index.html",
+  "car-key-lost-service.html",
+  "article-bmw-smart-key-owner-guide.html",
+];
+const AREA_SERVED_SERVICE_FILES = [
+  "all-keys-lost-service.html",
+  "car-key-duplication-service.html",
+  "car-key-shell-replacement-service.html",
+  "chip-key-copy-by-mail-service.html",
+  "key-not-detected-service.html",
+  "non-chip-car-key-duplication-service.html",
+  "smart-key-lost-service.html",
+  "spare-car-key-service.html",
+];
+const AREA_SERVED_BRAND_MODEL_FILES = [
+  "bmw-smart-key-service.html",
+  "toyota-altis-car-key.html",
+  "vw-car-key-service.html",
+];
+const AREA_SERVED_GUIDE_BATCH_1_FILES = [
+  "article-car-key-info-preparation-guide.html",
+  "article-car-key-not-detected-troubleshooting.html",
+  "article-car-wont-start-troubleshooting.html",
+  "article-emergency-akl-guide.html",
+  "article-hyundai-keyless-troubleshooting.html",
+];
+const AREA_SERVED_GUIDE_BATCH_2_FILES = [
+  "article-keyless-troubleshooting.html",
+  "article-keyless-troubleshooting-guide.html",
+  "article-lost-key-comparison.html",
+  "article-lost-key-rescue-guide.html",
+  "article-porsche-smart-key-owner-guide.html",
+];
+const AREA_SERVED_GUIDE_BATCH_3_FILES = [
+  "article-smart-key-troubleshooting.html",
+  "article-used-car-buying-guide.html",
+  "article-used-car-key-checklist.html",
+  "article-used-car-security-guide.html",
+  "article-why-you-need-spare-car-key.html",
+];
+const AREA_SERVED_GUIDE_BATCH_4_FILES = [
+  "article-us-car-market-growth-security-tech.html",
+  "article-us-car-market-tech.html",
+  "article-us-car-zero-tariff-consumer-impact.html",
+  "article-vag-key-owner-guide.html",
+];
+const AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES = [
+  "article-vag-dashboard-key-safety-guide.html",
+];
+const AREA_SERVED_ROLLOUT_FILES = [
+  ...AREA_SERVED_PILOT_FILES,
+  ...AREA_SERVED_SERVICE_FILES,
+  ...AREA_SERVED_BRAND_MODEL_FILES,
+  ...AREA_SERVED_GUIDE_BATCH_1_FILES,
+  ...AREA_SERVED_GUIDE_BATCH_2_FILES,
+  ...AREA_SERVED_GUIDE_BATCH_3_FILES,
+  ...AREA_SERVED_GUIDE_BATCH_4_FILES,
+  ...AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES,
+];
 const REQUIRED_DOCS = [
   "docs/seo-engineering/content-entity-model.md",
   "docs/seo-engineering/human-input-register.md",
   "docs/seo-engineering/location-page-decision-framework.md",
   "docs/seo-engineering/pricing-policy.md",
+  "docs/seo-engineering/service-area-schema-evidence-pilot.md",
+  "docs/seo-engineering/service-area-schema-brand-model-rollout.md",
+  "docs/seo-engineering/service-area-schema-guide-rollout-1.md",
+  "docs/seo-engineering/service-area-schema-guide-rollout-2.md",
+  "docs/seo-engineering/service-area-schema-guide-rollout-3.md",
+  "docs/seo-engineering/service-area-schema-guide-rollout-4.md",
+  "docs/seo-engineering/service-area-schema-service-rollout.md",
   "docs/seo-engineering/seo-governance.md",
   "docs/seo-engineering/third-party-script-decision.md",
 ];
@@ -205,6 +273,37 @@ function hasEvidence(field) {
   return Boolean(field.source && field.verified_by && field.verified_at);
 }
 
+function walkJson(value, visit) {
+  if (Array.isArray(value)) {
+    for (const item of value) walkJson(item, visit);
+    return;
+  }
+  if (!value || typeof value !== "object") return;
+  visit(value);
+  for (const item of Object.values(value)) walkJson(item, visit);
+}
+
+function countBusinessAreaServedNodes(html, relPath, errors) {
+  let count = 0;
+  for (const match of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)) {
+    const openTag = match[0].slice(0, match[0].indexOf(">") + 1);
+    if (getAttr(openTag, "type")?.toLowerCase() !== "application/ld+json") continue;
+    let payload;
+    try {
+      payload = JSON.parse(match[1]);
+    } catch (error) {
+      errors.push(`${relPath}: invalid JSON-LD while checking business areaServed (${error.message})`);
+      continue;
+    }
+    walkJson(payload, (node) => {
+      if (node["@id"] === BUSINESS_ID && Object.hasOwn(node, "@type") && Object.hasOwn(node, "areaServed")) {
+        count += 1;
+      }
+    });
+  }
+  return count;
+}
+
 function validateBusinessEntity(data, errors, warnings) {
   if (!data) return;
   const fields = data.fields || {};
@@ -249,6 +348,27 @@ function validateBusinessEntity(data, errors, warnings) {
   }
   if (fields.legalName?.value !== null || fields.publicBrandName?.value !== null) {
     errors.push(`${BUSINESS_FILE}: legalName and publicBrandName require an explicit human decision`);
+  }
+
+  const serviceAreaMigration = fields.serviceArea?.legacy_schema_observation;
+  const expectedServiceAreaStage = [
+    { stage_id: "three-page-pilot", status: "implemented", files: AREA_SERVED_PILOT_FILES },
+    { stage_id: "service-page-batch", status: "implemented", files: AREA_SERVED_SERVICE_FILES },
+    { stage_id: "brand-model-page-batch", status: "implemented", files: AREA_SERVED_BRAND_MODEL_FILES },
+    { stage_id: "guide-page-batch-1", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_1_FILES },
+    { stage_id: "guide-page-batch-2", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_2_FILES },
+    { stage_id: "guide-page-batch-3", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_3_FILES },
+    { stage_id: "guide-page-batch-4", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_4_FILES },
+  ];
+  if (!serviceAreaMigration || typeof serviceAreaMigration !== "object") {
+    errors.push(`${BUSINESS_FILE}: serviceArea legacy_schema_observation must record the controlled pilot`);
+  } else if (serviceAreaMigration.baseline_file_count !== 133 || serviceAreaMigration.baseline_node_count !== 133 ||
+      JSON.stringify(serviceAreaMigration.already_compliant_files) !== JSON.stringify(AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES) ||
+      serviceAreaMigration.guide_scope_status !== "closed_no_shared_business_area_served" ||
+      serviceAreaMigration.expected_remaining_file_count !== 100 || serviceAreaMigration.expected_remaining_node_count !== 100 ||
+      serviceAreaMigration.rollout_status !== "controlled_rollout" ||
+      JSON.stringify(serviceAreaMigration.removal_stages) !== JSON.stringify(expectedServiceAreaStage)) {
+    errors.push(`${BUSINESS_FILE}: serviceArea rollout scope/count/status drifted`);
   }
 
   const availabilityMigration = fields.openingHours?.legacy_claim_observation;
@@ -474,11 +594,16 @@ async function runSelfTests(business, metrics, thirdParty, indexHtml, vercelConf
   badThirdParty.scripts[0].new_page_expansion_allowed = true;
   await validateThirdParty(badThirdParty, vercelConfig, gateErrors, gateWarnings);
 
+  const badServiceArea = structuredClone(business);
+  delete badServiceArea.fields.serviceArea.legacy_schema_observation;
+  validateBusinessEntity(badServiceArea, gateErrors, gateWarnings);
+
   const expectedFailures = [
     "legalName cannot publish without verified value and evidence",
     "public metric vehicles_served is missing source",
     "cross_region_visits fallback copy must be non-numeric",
     "pending script washinmura-aeo-crawler-track must block new page expansion",
+    "serviceArea legacy_schema_observation must record the controlled pilot",
   ];
   for (const expected of expectedFailures) {
     if (!gateErrors.some((error) => error.includes(expected))) {
@@ -509,8 +634,15 @@ async function main() {
   const priceRangeFiles = [];
   let availabilityClaimCount = 0;
   const availabilityClaimFiles = [];
+  let businessAreaServedNodeCount = 0;
+  const businessAreaServedFiles = [];
   for (const relPath of htmlFiles) {
     const html = await fsp.readFile(path.join(ROOT, relPath), "utf8");
+    const areaServedNodeCount = countBusinessAreaServedNodes(html, relPath, errors);
+    if (areaServedNodeCount) {
+      businessAreaServedNodeCount += areaServedNodeCount;
+      businessAreaServedFiles.push(relPath);
+    }
     if (/"priceRange"\s*:/.test(html)) {
       priceRangeCount += 1;
       priceRangeFiles.push(relPath);
@@ -540,6 +672,20 @@ async function main() {
     }
   }
   if (priceRangeCount) warnings.push(`${priceRangeCount} HTML files still contain legacy priceRange; no bulk rewrite was performed`);
+
+  const serviceAreaMigration = business?.fields?.serviceArea?.legacy_schema_observation;
+  if (serviceAreaMigration && typeof serviceAreaMigration === "object") {
+    if (businessAreaServedFiles.length !== serviceAreaMigration.expected_remaining_file_count ||
+        businessAreaServedNodeCount !== serviceAreaMigration.expected_remaining_node_count) {
+      errors.push(`${BUSINESS_FILE}: expected ${serviceAreaMigration.expected_remaining_file_count} files / ${serviceAreaMigration.expected_remaining_node_count} shared business nodes with unverified areaServed after current stage, found ${businessAreaServedFiles.length} files / ${businessAreaServedNodeCount} nodes`);
+    }
+    for (const rolloutFile of AREA_SERVED_ROLLOUT_FILES) {
+      if (businessAreaServedFiles.includes(rolloutFile)) errors.push(`${rolloutFile}: governed business areaServed removal regressed`);
+    }
+  }
+  if (businessAreaServedNodeCount) {
+    warnings.push(`${businessAreaServedFiles.length} HTML files still publish ${businessAreaServedNodeCount} unverified shared-business areaServed nodes; no bulk rewrite was performed`);
+  }
 
   const availabilityMigration = business?.fields?.openingHours?.legacy_claim_observation;
   if (availabilityMigration && typeof availabilityMigration === "object") {
@@ -575,6 +721,7 @@ async function main() {
   console.log(`Metrics registered: ${(metrics?.metrics || []).length}`);
   console.log(`Third-party scripts governed: ${(thirdParty?.scripts || []).length}`);
   console.log(`Legacy priceRange files: ${priceRangeCount}`);
+  console.log(`Unverified business areaServed: ${businessAreaServedFiles.length} files / ${businessAreaServedNodeCount} nodes`);
   console.log(`Unverified availability claims: ${availabilityClaimFiles.length} files / ${availabilityClaimCount} occurrences`);
   console.log(`Warnings: ${warnings.length}`);
   console.log(`Errors: ${errors.length}`);
