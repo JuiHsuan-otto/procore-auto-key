@@ -98,7 +98,96 @@
       "publish": false,
       "source": null,
       "verified_by": null,
-      "verified_at": null
+      "verified_at": null,
+      "legacy_schema_observation": {
+        "baseline_file_count": 133,
+        "baseline_node_count": 133,
+        "baseline_evidence": "Static JSON-LD inventory on main 42b99ac1a16908edbe744ff003b7c9607290b8d3 before the serviceArea evidence pilot",
+        "removal_stages": [
+          {
+            "stage_id": "three-page-pilot",
+            "status": "implemented",
+            "files": [
+              "index.html",
+              "car-key-lost-service.html",
+              "article-bmw-smart-key-owner-guide.html"
+            ]
+          },
+          {
+            "stage_id": "service-page-batch",
+            "status": "implemented",
+            "files": [
+              "all-keys-lost-service.html",
+              "car-key-duplication-service.html",
+              "car-key-shell-replacement-service.html",
+              "chip-key-copy-by-mail-service.html",
+              "key-not-detected-service.html",
+              "non-chip-car-key-duplication-service.html",
+              "smart-key-lost-service.html",
+              "spare-car-key-service.html"
+            ]
+          },
+          {
+            "stage_id": "brand-model-page-batch",
+            "status": "implemented",
+            "files": [
+              "bmw-smart-key-service.html",
+              "toyota-altis-car-key.html",
+              "vw-car-key-service.html"
+            ]
+          },
+          {
+            "stage_id": "guide-page-batch-1",
+            "status": "implemented",
+            "files": [
+              "article-car-key-info-preparation-guide.html",
+              "article-car-key-not-detected-troubleshooting.html",
+              "article-car-wont-start-troubleshooting.html",
+              "article-emergency-akl-guide.html",
+              "article-hyundai-keyless-troubleshooting.html"
+            ]
+          },
+          {
+            "stage_id": "guide-page-batch-2",
+            "status": "implemented",
+            "files": [
+              "article-keyless-troubleshooting.html",
+              "article-keyless-troubleshooting-guide.html",
+              "article-lost-key-comparison.html",
+              "article-lost-key-rescue-guide.html",
+              "article-porsche-smart-key-owner-guide.html"
+            ]
+          },
+          {
+            "stage_id": "guide-page-batch-3",
+            "status": "implemented",
+            "files": [
+              "article-smart-key-troubleshooting.html",
+              "article-used-car-buying-guide.html",
+              "article-used-car-key-checklist.html",
+              "article-used-car-security-guide.html",
+              "article-why-you-need-spare-car-key.html"
+            ]
+          },
+          {
+            "stage_id": "guide-page-batch-4",
+            "status": "implemented",
+            "files": [
+              "article-us-car-market-growth-security-tech.html",
+              "article-us-car-market-tech.html",
+              "article-us-car-zero-tariff-consumer-impact.html",
+              "article-vag-key-owner-guide.html"
+            ]
+          }
+        ],
+        "already_compliant_files": [
+          "article-vag-dashboard-key-safety-guide.html"
+        ],
+        "guide_scope_status": "closed_no_shared_business_area_served",
+        "expected_remaining_file_count": 100,
+        "expected_remaining_node_count": 100,
+        "rollout_status": "controlled_rollout"
+      }
     },
     "sameAs": {
       "value": [],

@@ -5,7 +5,7 @@ Status: source-only engineering standard. This document does not authorize publi
 ## Source of truth
 
 - Public HTML remains the runtime output of the current static architecture.
-- `data/business-entity.json` is the only future source for business identity fields. A field is schema-eligible only when `status=verified`, `publish=true`, and source/reviewer/date evidence exist.
+- `data/business-entity.json` is the only future source for business identity fields. A field is schema-eligible only when `status=verified`, `publish=true`, and source/reviewer/date evidence exist. An unpublished field must not appear on the typed shared business node except as an explicitly counted legacy migration; the `serviceArea` pilot, service-page rollout, brand／model rollout, and four guide rollouts keep the current 100-node remainder visible. The registered guide scope is closed: nineteen files were corrected and `article-vag-dashboard-key-safety-guide.html` was already compliant.
 - `data/business-metrics.json` is the only future source for public counters. A numeric metric is ineligible until its value, calculation, evidence, reviewer, verification date, and update date are complete.
 - `data/third-party-scripts.json` is the allowlist and decision register for governed third-party scripts. Pending scripts may not expand to new pages.
 - Sitemap and inventory remain generated/validated repository artifacts; production observations are timestamped evidence, not mutable golden files.

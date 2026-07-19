@@ -12,6 +12,21 @@ const IMAGE_PILOT_FILES = [
   "car-key-lost-service.html",
   "article-bmw-smart-key-owner-guide.html",
 ];
+const AREA_SERVED_PILOT_FILES = [...IMAGE_PILOT_FILES];
+const AREA_SERVED_HTML_REMOVALS = new Map([
+  [
+    "index.html",
+    ',"areaServed":["台北市","新北市","基隆市","桃園市","新竹市","新竹縣","苗栗縣","台中市","彰化縣","南投縣","雲林縣","嘉義市","嘉義縣","台南市","高雄市","屏東縣","宜蘭縣","花蓮縣","台東縣","澎湖縣","金門縣","連江縣"]',
+  ],
+  [
+    "car-key-lost-service.html",
+    ',"areaServed":["台中市","彰化縣","南投縣","苗栗縣","雲林縣","嘉義縣市","新北市","高雄市"]',
+  ],
+  [
+    "article-bmw-smart-key-owner-guide.html",
+    ',\n      "areaServed": [\n        "台中",\n        "彰化",\n        "南投",\n        "雲林",\n        "苗栗",\n        "新竹",\n        "嘉義",\n        "台南",\n        "高雄"\n      ]',
+  ],
+]);
 const SERVICE_SCHEMA_FILES = [
   "all-keys-lost-service.html",
   "car-key-duplication-service.html",
@@ -22,11 +37,104 @@ const SERVICE_SCHEMA_FILES = [
   "smart-key-lost-service.html",
   "spare-car-key-service.html",
 ];
+const COMPACT_SERVICE_AREA_SERVED_REMOVAL = ',"areaServed":["台中市","彰化縣","南投縣","苗栗縣","雲林縣","嘉義縣市","新北市","高雄市"]';
+const MULTILINE_SERVICE_AREA_SERVED_REMOVAL = ',\n      "areaServed": [\n        "台北市",\n        "新北市",\n        "桃園市",\n        "新竹縣市",\n        "苗栗縣",\n        "台中市",\n        "彰化縣",\n        "南投縣",\n        "雲林縣",\n        "高雄市"\n      ]';
+for (const relPath of SERVICE_SCHEMA_FILES) {
+  AREA_SERVED_HTML_REMOVALS.set(
+    relPath,
+    [
+      "car-key-shell-replacement-service.html",
+      "chip-key-copy-by-mail-service.html",
+      "non-chip-car-key-duplication-service.html",
+    ].includes(relPath) ? MULTILINE_SERVICE_AREA_SERVED_REMOVAL : COMPACT_SERVICE_AREA_SERVED_REMOVAL,
+  );
+}
 const BRAND_MODEL_SCHEMA_FILES = [
   "bmw-smart-key-service.html",
   "toyota-altis-car-key.html",
   "vw-car-key-service.html",
 ];
+const AREA_SERVED_GUIDE_BATCH_1_FILES = [
+  "article-car-key-info-preparation-guide.html",
+  "article-car-key-not-detected-troubleshooting.html",
+  "article-car-wont-start-troubleshooting.html",
+  "article-emergency-akl-guide.html",
+  "article-hyundai-keyless-troubleshooting.html",
+];
+const AREA_SERVED_GUIDE_BATCH_2_FILES = [
+  "article-keyless-troubleshooting.html",
+  "article-keyless-troubleshooting-guide.html",
+  "article-lost-key-comparison.html",
+  "article-lost-key-rescue-guide.html",
+  "article-porsche-smart-key-owner-guide.html",
+];
+const AREA_SERVED_GUIDE_BATCH_3_FILES = [
+  "article-smart-key-troubleshooting.html",
+  "article-used-car-buying-guide.html",
+  "article-used-car-key-checklist.html",
+  "article-used-car-security-guide.html",
+  "article-why-you-need-spare-car-key.html",
+];
+const AREA_SERVED_GUIDE_BATCH_4_FILES = [
+  "article-us-car-market-growth-security-tech.html",
+  "article-us-car-market-tech.html",
+  "article-us-car-zero-tariff-consumer-impact.html",
+  "article-vag-key-owner-guide.html",
+];
+const AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES = [
+  "article-vag-dashboard-key-safety-guide.html",
+];
+const AREA_SERVED_ROLLOUT_FILES = [
+  ...AREA_SERVED_PILOT_FILES,
+  ...SERVICE_SCHEMA_FILES,
+  ...BRAND_MODEL_SCHEMA_FILES,
+  ...AREA_SERVED_GUIDE_BATCH_1_FILES,
+  ...AREA_SERVED_GUIDE_BATCH_2_FILES,
+  ...AREA_SERVED_GUIDE_BATCH_3_FILES,
+  ...AREA_SERVED_GUIDE_BATCH_4_FILES,
+  ...AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES,
+];
+AREA_SERVED_HTML_REMOVALS.set("bmw-smart-key-service.html", COMPACT_SERVICE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set(
+  "toyota-altis-car-key.html",
+  ',\n      "areaServed": ["台中市", "彰化縣", "苗栗縣", "南投縣", "雲林縣"]',
+);
+AREA_SERVED_HTML_REMOVALS.set(
+  "vw-car-key-service.html",
+  ', "areaServed": ["台中市", "彰化縣", "南投縣", "苗栗縣", "雲林縣", "嘉義縣市", "新北市", "高雄市"]',
+);
+AREA_SERVED_HTML_REMOVALS.set(
+  "article-car-key-info-preparation-guide.html",
+  ',"areaServed":["台中","彰化","南投","雲林","苗栗","新竹","嘉義","台南","高雄"]',
+);
+AREA_SERVED_HTML_REMOVALS.set("article-car-key-not-detected-troubleshooting.html", COMPACT_SERVICE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-hyundai-keyless-troubleshooting.html", COMPACT_SERVICE_AREA_SERVED_REMOVAL);
+const FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL = ' "areaServed": [\n "台中市",\n "彰化縣",\n "南投縣",\n "苗栗縣",\n "雲林縣",\n "嘉義市",\n "新竹市",\n "新北市",\n "高雄市"\n ],\n';
+AREA_SERVED_HTML_REMOVALS.set("article-car-wont-start-troubleshooting.html", FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-emergency-akl-guide.html", FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-keyless-troubleshooting.html", COMPACT_SERVICE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-keyless-troubleshooting-guide.html", COMPACT_SERVICE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-lost-key-comparison.html", FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-lost-key-rescue-guide.html", COMPACT_SERVICE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set(
+  "article-porsche-smart-key-owner-guide.html",
+  ',\n      "areaServed": [\n        "台中",\n        "彰化",\n        "南投",\n        "雲林",\n        "苗栗",\n        "新竹",\n        "嘉義",\n        "台南",\n        "高雄"\n      ]',
+);
+AREA_SERVED_HTML_REMOVALS.set("article-smart-key-troubleshooting.html", COMPACT_SERVICE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-used-car-buying-guide.html", FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-used-car-key-checklist.html", MULTILINE_SERVICE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set(
+  "article-used-car-security-guide.html",
+  ',\n      "areaServed": [\n        "台北市",\n        "新北市",\n        "桃園市",\n        "新竹縣市",\n        "台中市",\n        "彰化縣",\n        "南投縣",\n        "雲林縣"\n      ]',
+);
+AREA_SERVED_HTML_REMOVALS.set("article-why-you-need-spare-car-key.html", FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-us-car-market-growth-security-tech.html", FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-us-car-market-tech.html", FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set("article-us-car-zero-tariff-consumer-impact.html", FLUSH_MULTILINE_GUIDE_AREA_SERVED_REMOVAL);
+AREA_SERVED_HTML_REMOVALS.set(
+  "article-vag-key-owner-guide.html",
+  ',\n      "areaServed": [\n        "台中",\n        "彰化",\n        "南投",\n        "雲林",\n        "苗栗",\n        "新竹",\n        "嘉義",\n        "台南",\n        "高雄"\n      ]',
+);
 const GUIDE_SCHEMA_FILES = [
   "article-car-key-info-preparation-guide.html",
   "article-car-key-not-detected-troubleshooting.html",
@@ -284,7 +392,12 @@ function validateSchemaPayloads(payloads, relPath, errors) {
       if (Object.hasOwn(node, "priceRange")) {
         errors.push(`${relPath}: unsupported priceRange remains at ${jsonPath}`);
       }
-      if (node["@id"] === BUSINESS_ID && Object.hasOwn(node, "@type")) businessNodes += 1;
+      if (node["@id"] === BUSINESS_ID && Object.hasOwn(node, "@type")) {
+        businessNodes += 1;
+        if (AREA_SERVED_ROLLOUT_FILES.includes(relPath) && Object.hasOwn(node, "areaServed")) {
+          errors.push(`${relPath}: unverified business areaServed regressed at ${jsonPath}`);
+        }
+      }
     });
   }
   if (businessNodes !== 1) {
@@ -300,11 +413,39 @@ function withoutPriceRange(value) {
   return copy;
 }
 
+function withoutBusinessAreaServed(value) {
+  const copy = structuredClone(value);
+  walkJson(copy, (node) => {
+    if (node["@id"] === BUSINESS_ID && Object.hasOwn(node, "@type")) delete node.areaServed;
+  });
+  return copy;
+}
+
 function removeLegacyPriceRangeFromHtml(html) {
   return html
     .replaceAll(',"priceRange":"$$"', "")
     .replaceAll(', "priceRange": "$$"', "")
     .replace(/^\s*"priceRange": "\$\$",\r?\n/gm, "");
+}
+
+function removeGovernedBusinessAreaServedFromHtml(html, relPath, errors) {
+  const removal = AREA_SERVED_HTML_REMOVALS.get(relPath);
+  if (!removal) return html;
+  const occurrences = html.split(removal).length - 1;
+  const expectedOccurrences = [
+    "index.html",
+    "article-bmw-smart-key-owner-guide.html",
+    "toyota-altis-car-key.html",
+    ...AREA_SERVED_GUIDE_BATCH_1_FILES,
+    ...AREA_SERVED_GUIDE_BATCH_2_FILES,
+    ...AREA_SERVED_GUIDE_BATCH_3_FILES,
+    ...AREA_SERVED_GUIDE_BATCH_4_FILES,
+  ].includes(relPath) ? 1 : 2;
+  if (occurrences !== expectedOccurrences) {
+    errors.push(`${relPath}: HEAD business areaServed baseline count drifted (expected ${expectedOccurrences}, found ${occurrences})`);
+    return html;
+  }
+  return html.replace(removal, "");
 }
 
 function compareWithHead(currentHtml, currentPayloads, relPath, errors) {
@@ -318,13 +459,20 @@ function compareWithHead(currentHtml, currentPayloads, relPath, errors) {
   const headErrors = [];
   const headPayloads = extractJsonLd(headHtml, `HEAD:${relPath}`, headErrors);
   errors.push(...headErrors);
+  let expectedPayloads = withoutPriceRange(headPayloads);
+  if (AREA_SERVED_ROLLOUT_FILES.includes(relPath)) {
+    expectedPayloads = withoutBusinessAreaServed(expectedPayloads);
+  }
   try {
-    assert.deepEqual(currentPayloads, withoutPriceRange(headPayloads));
+    assert.deepEqual(currentPayloads, expectedPayloads);
   } catch {
-    errors.push(`${relPath}: JSON-LD changed beyond removal of priceRange from the HEAD baseline`);
+    errors.push(`${relPath}: JSON-LD changed beyond registered evidence-gated removals from the HEAD baseline`);
   }
 
   let expectedHtml = removeLegacyPriceRangeFromHtml(headHtml);
+  if (AREA_SERVED_ROLLOUT_FILES.includes(relPath)) {
+    expectedHtml = removeGovernedBusinessAreaServedFromHtml(expectedHtml, relPath, errors);
+  }
   const approvedReplacements = APPROVED_NON_SCHEMA_HTML_CHANGES.get(relPath);
   if (approvedReplacements) {
     for (const [before, after] of approvedReplacements) {
@@ -338,7 +486,7 @@ function compareWithHead(currentHtml, currentPayloads, relPath, errors) {
     }
   }
   if (currentHtml !== expectedHtml) {
-    errors.push(`${relPath}: HTML changed beyond removal of priceRange from the HEAD baseline`);
+    errors.push(`${relPath}: HTML changed beyond registered evidence-gated removals from the HEAD baseline`);
   }
 }
 
@@ -441,6 +589,26 @@ function validateBusinessGate(business, errors) {
   if (migration?.expected_remaining_after_current_stage !== 0 || migration?.rollout_status !== "price_range_closed") {
     errors.push("data/business-entity.json: priceRange closure count/status drifted");
   }
+  const serviceArea = business?.fields?.serviceArea;
+  const serviceAreaMigration = serviceArea?.legacy_schema_observation;
+  if (serviceArea?.status !== "unverified" || serviceArea?.publish !== false || serviceArea?.value?.length !== 0) {
+    errors.push("data/business-entity.json: unverified serviceArea must remain unpublished and empty");
+  }
+  if (JSON.stringify(serviceAreaMigration?.removal_stages) !== JSON.stringify([
+    { stage_id: "three-page-pilot", status: "implemented", files: AREA_SERVED_PILOT_FILES },
+    { stage_id: "service-page-batch", status: "implemented", files: SERVICE_SCHEMA_FILES },
+    { stage_id: "brand-model-page-batch", status: "implemented", files: BRAND_MODEL_SCHEMA_FILES },
+    { stage_id: "guide-page-batch-1", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_1_FILES },
+    { stage_id: "guide-page-batch-2", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_2_FILES },
+    { stage_id: "guide-page-batch-3", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_3_FILES },
+    { stage_id: "guide-page-batch-4", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_4_FILES },
+  ]) || serviceAreaMigration?.baseline_file_count !== 133 || serviceAreaMigration?.baseline_node_count !== 133 ||
+      JSON.stringify(serviceAreaMigration?.already_compliant_files) !== JSON.stringify(AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES) ||
+      serviceAreaMigration?.guide_scope_status !== "closed_no_shared_business_area_served" ||
+      serviceAreaMigration?.expected_remaining_file_count !== 100 || serviceAreaMigration?.expected_remaining_node_count !== 100 ||
+      serviceAreaMigration?.rollout_status !== "controlled_rollout") {
+    errors.push("data/business-entity.json: serviceArea rollout scope/count/status drifted");
+  }
 }
 
 function runSelfTests() {
@@ -458,6 +626,29 @@ function runSelfTests() {
           rollout_status: "price_range_closed",
         },
       },
+      serviceArea: {
+        value: [],
+        status: "unverified",
+        publish: false,
+        legacy_schema_observation: {
+          baseline_file_count: 133,
+          baseline_node_count: 133,
+          removal_stages: [
+            { stage_id: "three-page-pilot", status: "implemented", files: AREA_SERVED_PILOT_FILES },
+            { stage_id: "service-page-batch", status: "implemented", files: SERVICE_SCHEMA_FILES },
+            { stage_id: "brand-model-page-batch", status: "implemented", files: BRAND_MODEL_SCHEMA_FILES },
+            { stage_id: "guide-page-batch-1", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_1_FILES },
+            { stage_id: "guide-page-batch-2", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_2_FILES },
+            { stage_id: "guide-page-batch-3", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_3_FILES },
+            { stage_id: "guide-page-batch-4", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_4_FILES },
+          ],
+          already_compliant_files: AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES,
+          guide_scope_status: "closed_no_shared_business_area_served",
+          expected_remaining_file_count: 100,
+          expected_remaining_node_count: 100,
+          rollout_status: "controlled_rollout",
+        },
+      },
     },
   };
   const gateErrors = [];
@@ -470,6 +661,17 @@ function runSelfTests() {
   assert.equal(removeLegacyPriceRangeFromHtml('{"name":"x","priceRange":"$$"}'), '{"name":"x"}');
   assert.equal(removeLegacyPriceRangeFromHtml('{"name": "x", "priceRange": "$$"}'), '{"name": "x"}');
   assert.equal(removeLegacyPriceRangeFromHtml('  "priceRange": "$$",\n  "name": "x"'), '  "name": "x"');
+  assert.deepEqual(withoutBusinessAreaServed({
+    "@graph": [
+      { "@id": BUSINESS_ID, "@type": "LocalBusiness", areaServed: ["x"] },
+      { "@id": "#service", "@type": "Service", areaServed: ["x"] },
+    ],
+  }), {
+    "@graph": [
+      { "@id": BUSINESS_ID, "@type": "LocalBusiness" },
+      { "@id": "#service", "@type": "Service", areaServed: ["x"] },
+    ],
+  });
   assert.deepEqual(APPROVED_NON_SCHEMA_HTML_CHANGES.get("article-us-car-market-tech.html"), [[
     'class="mt-12 flex justify-center"',
     'class="mt-12 flex flex-col items-center justify-center"',
@@ -478,7 +680,7 @@ function runSelfTests() {
   assert.equal(classifyImageSource("${escapeHtml(src)}"), "dynamic");
   assert.equal(classifyImageSource("https://example.com/image.svg"), "external");
   assert.equal(classifyImageSource("img/local.jpg"), "local");
-  console.log("Schema/image pilot negative-gate checks passed: 3");
+  console.log("Schema/image pilot negative-gate checks passed: 4");
 }
 
 async function main() {
