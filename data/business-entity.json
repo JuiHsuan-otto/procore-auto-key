@@ -103,6 +103,8 @@
         "baseline_file_count": 133,
         "baseline_node_count": 133,
         "baseline_evidence": "Static JSON-LD inventory on main 42b99ac1a16908edbe744ff003b7c9607290b8d3 before the serviceArea evidence pilot",
+        "comparison_base_sha": "2d60534b779d29562462130d953e619b2e82005f",
+        "comparison_base_policy": "immutable_pre_current_rollout_commit",
         "removal_stages": [
           {
             "stage_id": "three-page-pilot",
@@ -178,15 +180,269 @@
               "article-us-car-zero-tariff-consumer-impact.html",
               "article-vag-key-owner-guide.html"
             ]
+          },
+          {
+            "stage_id": "case-page-pilot",
+            "status": "implemented",
+            "files": [
+              "article-audi-r8-neihu-all-keys-lost.html",
+              "article-bmw-elv-red-lock-fix.html",
+              "case-shetou-mazda-cx30-rescue.html"
+            ]
+          },
+          {
+            "stage_id": "bmw-case-page-batch-1",
+            "status": "implemented",
+            "files": [
+              "article-bmw-118-2016-changhua-akl.html",
+              "article-bmw-118-beitun-akl.html",
+              "article-bmw-218d-2016-yunlin-akl.html",
+              "article-bmw-220i-2015-yunlin-akl.html",
+              "article-bmw-3series-huatan-rescue.html"
+            ]
+          },
+          {
+            "stage_id": "bmw-case-page-batch-2",
+            "status": "implemented",
+            "files": [
+              "article-bmw-528-2015-yunlin-akl.html",
+              "article-bmw-730d-kaohsiung-auction-akl.html",
+              "article-bmw-740-yuanli-akl.html",
+              "article-bmw-gseries-keyless-rescue.html",
+              "article-bmw-gt535i-renwu-akl.html"
+            ]
+          },
+          {
+            "stage_id": "bmw-case-page-closure",
+            "status": "implemented",
+            "files": [
+              "article-bmw-x3-linkou-auction-akl.html",
+              "article-bmw-x5-battery-fix.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-1",
+            "status": "implemented",
+            "files": [
+              "article-benz-c300-wuqi.html",
+              "article-benz-glc300-yuanlin-service.html",
+              "article-benz-glk-miaoli-akl.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-2",
+            "status": "implemented",
+            "files": [
+              "article-benz-ml350-hemei-service.html",
+              "article-benz-w204-nanzi-akl.html",
+              "article-benz-xindian-lost-key-rescue.html",
+              "article-camaro-2017-linkou-akl.html",
+              "article-car-key-2018-new-taipei-akl.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-3",
+            "status": "implemented",
+            "files": [
+              "article-ford-focus-puli-akl.html",
+              "article-ford-kuga-huatan-akl.html",
+              "article-honda-cbr650-2022-kaohsiung-akl.html",
+              "article-honda-fit-2018-kaohsiung-akl.html",
+              "article-honda-fit-tanaka-rescue.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-4",
+            "status": "implemented",
+            "files": [
+              "article-car-key-lost-rescue-central-taiwan.html",
+              "article-honda-hrv-2020-all-lost-changhua.html",
+              "article-honda-hrv-2022-akl-longjing.html",
+              "article-hyundai-tucson-hemei-akl.html",
+              "article-infiniti-fx35-shetou-rescue.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-5",
+            "status": "implemented",
+            "files": [
+              "article-kia-picanto-shengang-akl.html",
+              "article-lexus-taichung-service.html",
+              "article-mazda-cx3-hemei-smartkey.html",
+              "article-mazda-wufeng-rescue.html",
+              "article-mini-clubman-beidou-akl.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-6",
+            "status": "implemented",
+            "files": [
+              "article-nissan-kicks-zhongke-rescue.html",
+              "article-porsche-cayenne-hemei.html",
+              "article-porsche-lost-key-rescue.html",
+              "article-porsche-panamera-wugu-akl.html",
+              "article-range-rover-huatan-service.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-7",
+            "status": "implemented",
+            "files": [
+              "article-skoda-kamiq-crushed-key.html",
+              "article-taichung-lost-key.html",
+              "article-taichung-lost-key-preparation.html",
+              "article-toyota-altis-2020-yuanlin-akl.html",
+              "article-toyota-rav4-linkou-rescue.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-8",
+            "status": "implemented",
+            "files": [
+              "article-kia-picanto-nantun.html",
+              "article-landrover-evoque-taichung-auction-akl.html",
+              "article-lexus-nx200-huatan-akl.html",
+              "article-lexus-ux250-2021-taichung-akl.html",
+              "article-mazda-cx5-qingshui-akl.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-9",
+            "status": "implemented",
+            "files": [
+              "article-peugeot-508sw-zhubei-smartkey.html",
+              "article-skoda-kodiaq-yunlin-rescue.html",
+              "article-toyota-altis-2016-taichung-akl.html",
+              "article-toyota-altis-qingshui-rescue.html",
+              "article-toyota-auris-linkou-auction-akl.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-10",
+            "status": "implemented",
+            "files": [
+              "article-toyota-rav4-fengyuan-akl.html",
+              "article-toyota-rav4-nantou-rescue.html",
+              "article-toyota-sienta-hemei-service.html",
+              "article-toyota-vios-2019-changhua-akl.html",
+              "article-volvo-keyless-lost-rescue.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-11",
+            "status": "implemented",
+            "files": [
+              "article-vw-amarok-2019-changhua-akl.html",
+              "article-vw-arteon-smart-key-service.html",
+              "article-vw-golf-2016-toufen-akl.html",
+              "article-vw-golf-dadu-service.html",
+              "article-vw-golf7-2015-taichung-akl.html"
+            ]
+          },
+          {
+            "stage_id": "article-case-page-batch-12",
+            "status": "implemented",
+            "files": [
+              "article-vw-ignition-repair.html",
+              "article-vw-pointer-xianxi-rescue.html",
+              "article-vw-t5-kaohsiung-rescue.html",
+              "article-vw-t6-2022-taipei-smartkey.html"
+            ]
+          },
+          {
+            "stage_id": "hub-utility-page-batch-1",
+            "status": "implemented",
+            "files": [
+              "blog.html",
+              "cases.html",
+              "vcard.html"
+            ]
+          },
+          {
+            "stage_id": "non-location-page-closure",
+            "status": "implemented",
+            "files": [
+              "case-hyundai-venue-smartkey-lost.html",
+              "dich-vu-lam-khoa-xe-o-to-tai-dai-loan.html",
+              "service-areas.html"
+            ]
+          },
+          {
+            "stage_id": "location-page-shared-business-batch-1",
+            "status": "implemented",
+            "files": [
+              "changhua-car-key.html",
+              "chiayi-city-car-key.html",
+              "chiayi-county-car-key.html"
+            ]
+          },
+          {
+            "stage_id": "location-page-shared-business-batch-2",
+            "status": "implemented",
+            "files": [
+              "hsinchu-city-car-key.html",
+              "hsinchu-county-car-key.html",
+              "hualien-car-key.html"
+            ]
+          },
+          {
+            "stage_id": "location-page-shared-business-batch-3",
+            "status": "implemented",
+            "files": [
+              "kaohsiung-car-key.html",
+              "keelung-car-key.html",
+              "kinmen-car-key.html"
+            ]
+          },
+          {
+            "stage_id": "location-page-shared-business-batch-4",
+            "status": "implemented",
+            "files": [
+              "lienchiang-car-key.html",
+              "miaoli-car-key.html",
+              "nantou-car-key.html"
+            ]
+          },
+          {
+            "stage_id": "location-page-shared-business-batch-5",
+            "status": "implemented",
+            "files": [
+              "new-taipei-car-key.html",
+              "penghu-car-key.html",
+              "pingtung-car-key.html"
+            ]
+          },
+          {
+            "stage_id": "location-page-shared-business-batch-6",
+            "status": "implemented",
+            "files": [
+              "taichung-car-key.html",
+              "tainan-car-key.html",
+              "taipei-car-key.html"
+            ]
+          },
+          {
+            "stage_id": "location-page-shared-business-closure",
+            "status": "implemented",
+            "files": [
+              "taitung-car-key.html",
+              "taoyuan-car-key.html",
+              "yilan-car-key.html",
+              "yunlin-car-key.html"
+            ]
           }
         ],
         "already_compliant_files": [
           "article-vag-dashboard-key-safety-guide.html"
         ],
         "guide_scope_status": "closed_no_shared_business_area_served",
-        "expected_remaining_file_count": 100,
-        "expected_remaining_node_count": 100,
-        "rollout_status": "controlled_rollout"
+        "bmw_case_scope_status": "closed_no_shared_business_area_served",
+        "case_scope_status": "bmw_scope_closed_vw_article_scope_closed_batches_1_2_3_4_5_6_7_8_9_10_11_12",
+        "non_location_scope_status": "closed_no_shared_business_area_served",
+        "location_page_scope_status": "closed_no_shared_business_area_served",
+        "expected_remaining_file_count": 0,
+        "expected_remaining_node_count": 0,
+        "rollout_status": "shared_business_area_served_closed"
       }
     },
     "sameAs": {

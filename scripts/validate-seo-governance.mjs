@@ -9,6 +9,8 @@ const BUSINESS_FILE = "data/business-entity.json";
 const METRICS_FILE = "data/business-metrics.json";
 const THIRD_PARTY_FILE = "data/third-party-scripts.json";
 const BUSINESS_ID = "https://www.carkey.com.tw/#business";
+const AREA_SERVED_COMPARISON_BASE_SHA = "2d60534b779d29562462130d953e619b2e82005f";
+const AREA_SERVED_COMPARISON_BASE_POLICY = "immutable_pre_current_rollout_commit";
 const AREA_SERVED_PILOT_FILES = [
   "index.html",
   "car-key-lost-service.html",
@@ -59,6 +61,156 @@ const AREA_SERVED_GUIDE_BATCH_4_FILES = [
 const AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES = [
   "article-vag-dashboard-key-safety-guide.html",
 ];
+const AREA_SERVED_CASE_PILOT_FILES = [
+  "article-audi-r8-neihu-all-keys-lost.html",
+  "article-bmw-elv-red-lock-fix.html",
+  "case-shetou-mazda-cx30-rescue.html",
+];
+const AREA_SERVED_BMW_CASE_BATCH_1_FILES = [
+  "article-bmw-118-2016-changhua-akl.html",
+  "article-bmw-118-beitun-akl.html",
+  "article-bmw-218d-2016-yunlin-akl.html",
+  "article-bmw-220i-2015-yunlin-akl.html",
+  "article-bmw-3series-huatan-rescue.html",
+];
+const AREA_SERVED_BMW_CASE_BATCH_2_FILES = [
+  "article-bmw-528-2015-yunlin-akl.html",
+  "article-bmw-730d-kaohsiung-auction-akl.html",
+  "article-bmw-740-yuanli-akl.html",
+  "article-bmw-gseries-keyless-rescue.html",
+  "article-bmw-gt535i-renwu-akl.html",
+];
+const AREA_SERVED_BMW_CASE_CLOSURE_FILES = [
+  "article-bmw-x3-linkou-auction-akl.html",
+  "article-bmw-x5-battery-fix.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_1_FILES = [
+  "article-benz-c300-wuqi.html",
+  "article-benz-glc300-yuanlin-service.html",
+  "article-benz-glk-miaoli-akl.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_2_FILES = [
+  "article-benz-ml350-hemei-service.html",
+  "article-benz-w204-nanzi-akl.html",
+  "article-benz-xindian-lost-key-rescue.html",
+  "article-camaro-2017-linkou-akl.html",
+  "article-car-key-2018-new-taipei-akl.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_3_FILES = [
+  "article-ford-focus-puli-akl.html",
+  "article-ford-kuga-huatan-akl.html",
+  "article-honda-cbr650-2022-kaohsiung-akl.html",
+  "article-honda-fit-2018-kaohsiung-akl.html",
+  "article-honda-fit-tanaka-rescue.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_4_FILES = [
+  "article-car-key-lost-rescue-central-taiwan.html",
+  "article-honda-hrv-2020-all-lost-changhua.html",
+  "article-honda-hrv-2022-akl-longjing.html",
+  "article-hyundai-tucson-hemei-akl.html",
+  "article-infiniti-fx35-shetou-rescue.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_5_FILES = [
+  "article-kia-picanto-shengang-akl.html",
+  "article-lexus-taichung-service.html",
+  "article-mazda-cx3-hemei-smartkey.html",
+  "article-mazda-wufeng-rescue.html",
+  "article-mini-clubman-beidou-akl.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_6_FILES = [
+  "article-nissan-kicks-zhongke-rescue.html",
+  "article-porsche-cayenne-hemei.html",
+  "article-porsche-lost-key-rescue.html",
+  "article-porsche-panamera-wugu-akl.html",
+  "article-range-rover-huatan-service.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_7_FILES = [
+  "article-skoda-kamiq-crushed-key.html",
+  "article-taichung-lost-key.html",
+  "article-taichung-lost-key-preparation.html",
+  "article-toyota-altis-2020-yuanlin-akl.html",
+  "article-toyota-rav4-linkou-rescue.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_8_FILES = [
+  "article-kia-picanto-nantun.html",
+  "article-landrover-evoque-taichung-auction-akl.html",
+  "article-lexus-nx200-huatan-akl.html",
+  "article-lexus-ux250-2021-taichung-akl.html",
+  "article-mazda-cx5-qingshui-akl.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_9_FILES = [
+  "article-peugeot-508sw-zhubei-smartkey.html",
+  "article-skoda-kodiaq-yunlin-rescue.html",
+  "article-toyota-altis-2016-taichung-akl.html",
+  "article-toyota-altis-qingshui-rescue.html",
+  "article-toyota-auris-linkou-auction-akl.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_10_FILES = [
+  "article-toyota-rav4-fengyuan-akl.html",
+  "article-toyota-rav4-nantou-rescue.html",
+  "article-toyota-sienta-hemei-service.html",
+  "article-toyota-vios-2019-changhua-akl.html",
+  "article-volvo-keyless-lost-rescue.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_11_FILES = [
+  "article-vw-amarok-2019-changhua-akl.html",
+  "article-vw-arteon-smart-key-service.html",
+  "article-vw-golf-2016-toufen-akl.html",
+  "article-vw-golf-dadu-service.html",
+  "article-vw-golf7-2015-taichung-akl.html",
+];
+const AREA_SERVED_ARTICLE_CASE_BATCH_12_FILES = [
+  "article-vw-ignition-repair.html",
+  "article-vw-pointer-xianxi-rescue.html",
+  "article-vw-t5-kaohsiung-rescue.html",
+  "article-vw-t6-2022-taipei-smartkey.html",
+];
+const AREA_SERVED_HUB_UTILITY_BATCH_1_FILES = [
+  "blog.html",
+  "cases.html",
+  "vcard.html",
+];
+const AREA_SERVED_NON_LOCATION_CLOSURE_FILES = [
+  "case-hyundai-venue-smartkey-lost.html",
+  "dich-vu-lam-khoa-xe-o-to-tai-dai-loan.html",
+  "service-areas.html",
+];
+const AREA_SERVED_LOCATION_BATCH_1_FILES = [
+  "changhua-car-key.html",
+  "chiayi-city-car-key.html",
+  "chiayi-county-car-key.html",
+];
+const AREA_SERVED_LOCATION_BATCH_2_FILES = [
+  "hsinchu-city-car-key.html",
+  "hsinchu-county-car-key.html",
+  "hualien-car-key.html",
+];
+const AREA_SERVED_LOCATION_BATCH_3_FILES = [
+  "kaohsiung-car-key.html",
+  "keelung-car-key.html",
+  "kinmen-car-key.html",
+];
+const AREA_SERVED_LOCATION_BATCH_4_FILES = [
+  "lienchiang-car-key.html",
+  "miaoli-car-key.html",
+  "nantou-car-key.html",
+];
+const AREA_SERVED_LOCATION_BATCH_5_FILES = [
+  "new-taipei-car-key.html",
+  "penghu-car-key.html",
+  "pingtung-car-key.html",
+];
+const AREA_SERVED_LOCATION_BATCH_6_FILES = [
+  "taichung-car-key.html",
+  "tainan-car-key.html",
+  "taipei-car-key.html",
+];
+const AREA_SERVED_LOCATION_BATCH_7_FILES = [
+  "taitung-car-key.html",
+  "taoyuan-car-key.html",
+  "yilan-car-key.html",
+  "yunlin-car-key.html",
+];
 const AREA_SERVED_ROLLOUT_FILES = [
   ...AREA_SERVED_PILOT_FILES,
   ...AREA_SERVED_SERVICE_FILES,
@@ -68,6 +220,31 @@ const AREA_SERVED_ROLLOUT_FILES = [
   ...AREA_SERVED_GUIDE_BATCH_3_FILES,
   ...AREA_SERVED_GUIDE_BATCH_4_FILES,
   ...AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES,
+  ...AREA_SERVED_CASE_PILOT_FILES,
+  ...AREA_SERVED_BMW_CASE_BATCH_1_FILES,
+  ...AREA_SERVED_BMW_CASE_BATCH_2_FILES,
+  ...AREA_SERVED_BMW_CASE_CLOSURE_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_1_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_2_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_3_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_4_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_5_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_6_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_7_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_8_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_9_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_10_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_11_FILES,
+  ...AREA_SERVED_ARTICLE_CASE_BATCH_12_FILES,
+  ...AREA_SERVED_HUB_UTILITY_BATCH_1_FILES,
+  ...AREA_SERVED_NON_LOCATION_CLOSURE_FILES,
+  ...AREA_SERVED_LOCATION_BATCH_1_FILES,
+  ...AREA_SERVED_LOCATION_BATCH_2_FILES,
+  ...AREA_SERVED_LOCATION_BATCH_3_FILES,
+  ...AREA_SERVED_LOCATION_BATCH_4_FILES,
+  ...AREA_SERVED_LOCATION_BATCH_5_FILES,
+  ...AREA_SERVED_LOCATION_BATCH_6_FILES,
+  ...AREA_SERVED_LOCATION_BATCH_7_FILES,
 ];
 const REQUIRED_DOCS = [
   "docs/seo-engineering/content-entity-model.md",
@@ -76,6 +253,30 @@ const REQUIRED_DOCS = [
   "docs/seo-engineering/pricing-policy.md",
   "docs/seo-engineering/service-area-schema-evidence-pilot.md",
   "docs/seo-engineering/service-area-schema-brand-model-rollout.md",
+  "docs/seo-engineering/service-area-schema-case-pilot.md",
+  "docs/seo-engineering/service-area-schema-bmw-case-rollout-1.md",
+  "docs/seo-engineering/service-area-schema-bmw-case-rollout-2.md",
+  "docs/seo-engineering/service-area-schema-bmw-closure-article-case-rollout-1.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-2.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-3.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-4.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-5.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-6.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-7.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-8.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-9.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-10.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-11.md",
+  "docs/seo-engineering/service-area-schema-article-case-rollout-12.md",
+  "docs/seo-engineering/service-area-schema-hub-utility-rollout-1.md",
+  "docs/seo-engineering/service-area-schema-non-location-closure.md",
+  "docs/seo-engineering/service-area-schema-location-rollout-1.md",
+  "docs/seo-engineering/service-area-schema-location-rollout-2.md",
+  "docs/seo-engineering/service-area-schema-location-rollout-3.md",
+  "docs/seo-engineering/service-area-schema-location-rollout-4.md",
+  "docs/seo-engineering/service-area-schema-location-rollout-5.md",
+  "docs/seo-engineering/service-area-schema-location-rollout-6.md",
+  "docs/seo-engineering/service-area-schema-location-closure.md",
   "docs/seo-engineering/service-area-schema-guide-rollout-1.md",
   "docs/seo-engineering/service-area-schema-guide-rollout-2.md",
   "docs/seo-engineering/service-area-schema-guide-rollout-3.md",
@@ -359,14 +560,45 @@ function validateBusinessEntity(data, errors, warnings) {
     { stage_id: "guide-page-batch-2", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_2_FILES },
     { stage_id: "guide-page-batch-3", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_3_FILES },
     { stage_id: "guide-page-batch-4", status: "implemented", files: AREA_SERVED_GUIDE_BATCH_4_FILES },
+    { stage_id: "case-page-pilot", status: "implemented", files: AREA_SERVED_CASE_PILOT_FILES },
+    { stage_id: "bmw-case-page-batch-1", status: "implemented", files: AREA_SERVED_BMW_CASE_BATCH_1_FILES },
+    { stage_id: "bmw-case-page-batch-2", status: "implemented", files: AREA_SERVED_BMW_CASE_BATCH_2_FILES },
+    { stage_id: "bmw-case-page-closure", status: "implemented", files: AREA_SERVED_BMW_CASE_CLOSURE_FILES },
+    { stage_id: "article-case-page-batch-1", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_1_FILES },
+    { stage_id: "article-case-page-batch-2", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_2_FILES },
+    { stage_id: "article-case-page-batch-3", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_3_FILES },
+    { stage_id: "article-case-page-batch-4", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_4_FILES },
+    { stage_id: "article-case-page-batch-5", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_5_FILES },
+    { stage_id: "article-case-page-batch-6", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_6_FILES },
+    { stage_id: "article-case-page-batch-7", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_7_FILES },
+    { stage_id: "article-case-page-batch-8", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_8_FILES },
+    { stage_id: "article-case-page-batch-9", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_9_FILES },
+    { stage_id: "article-case-page-batch-10", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_10_FILES },
+    { stage_id: "article-case-page-batch-11", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_11_FILES },
+    { stage_id: "article-case-page-batch-12", status: "implemented", files: AREA_SERVED_ARTICLE_CASE_BATCH_12_FILES },
+    { stage_id: "hub-utility-page-batch-1", status: "implemented", files: AREA_SERVED_HUB_UTILITY_BATCH_1_FILES },
+    { stage_id: "non-location-page-closure", status: "implemented", files: AREA_SERVED_NON_LOCATION_CLOSURE_FILES },
+    { stage_id: "location-page-shared-business-batch-1", status: "implemented", files: AREA_SERVED_LOCATION_BATCH_1_FILES },
+    { stage_id: "location-page-shared-business-batch-2", status: "implemented", files: AREA_SERVED_LOCATION_BATCH_2_FILES },
+    { stage_id: "location-page-shared-business-batch-3", status: "implemented", files: AREA_SERVED_LOCATION_BATCH_3_FILES },
+    { stage_id: "location-page-shared-business-batch-4", status: "implemented", files: AREA_SERVED_LOCATION_BATCH_4_FILES },
+    { stage_id: "location-page-shared-business-batch-5", status: "implemented", files: AREA_SERVED_LOCATION_BATCH_5_FILES },
+    { stage_id: "location-page-shared-business-batch-6", status: "implemented", files: AREA_SERVED_LOCATION_BATCH_6_FILES },
+    { stage_id: "location-page-shared-business-closure", status: "implemented", files: AREA_SERVED_LOCATION_BATCH_7_FILES },
   ];
   if (!serviceAreaMigration || typeof serviceAreaMigration !== "object") {
     errors.push(`${BUSINESS_FILE}: serviceArea legacy_schema_observation must record the controlled pilot`);
   } else if (serviceAreaMigration.baseline_file_count !== 133 || serviceAreaMigration.baseline_node_count !== 133 ||
+      serviceAreaMigration.comparison_base_sha !== AREA_SERVED_COMPARISON_BASE_SHA ||
+      serviceAreaMigration.comparison_base_policy !== AREA_SERVED_COMPARISON_BASE_POLICY ||
       JSON.stringify(serviceAreaMigration.already_compliant_files) !== JSON.stringify(AREA_SERVED_ALREADY_COMPLIANT_GUIDE_FILES) ||
       serviceAreaMigration.guide_scope_status !== "closed_no_shared_business_area_served" ||
-      serviceAreaMigration.expected_remaining_file_count !== 100 || serviceAreaMigration.expected_remaining_node_count !== 100 ||
-      serviceAreaMigration.rollout_status !== "controlled_rollout" ||
+      serviceAreaMigration.bmw_case_scope_status !== "closed_no_shared_business_area_served" ||
+      serviceAreaMigration.case_scope_status !== "bmw_scope_closed_vw_article_scope_closed_batches_1_2_3_4_5_6_7_8_9_10_11_12" ||
+      serviceAreaMigration.non_location_scope_status !== "closed_no_shared_business_area_served" ||
+      serviceAreaMigration.location_page_scope_status !== "closed_no_shared_business_area_served" ||
+      serviceAreaMigration.expected_remaining_file_count !== 0 || serviceAreaMigration.expected_remaining_node_count !== 0 ||
+      serviceAreaMigration.rollout_status !== "shared_business_area_served_closed" ||
       JSON.stringify(serviceAreaMigration.removal_stages) !== JSON.stringify(expectedServiceAreaStage)) {
     errors.push(`${BUSINESS_FILE}: serviceArea rollout scope/count/status drifted`);
   }
@@ -598,12 +830,17 @@ async function runSelfTests(business, metrics, thirdParty, indexHtml, vercelConf
   delete badServiceArea.fields.serviceArea.legacy_schema_observation;
   validateBusinessEntity(badServiceArea, gateErrors, gateWarnings);
 
+  const mutableComparisonBase = structuredClone(business);
+  mutableComparisonBase.fields.serviceArea.legacy_schema_observation.comparison_base_sha = "HEAD";
+  validateBusinessEntity(mutableComparisonBase, gateErrors, gateWarnings);
+
   const expectedFailures = [
     "legalName cannot publish without verified value and evidence",
     "public metric vehicles_served is missing source",
     "cross_region_visits fallback copy must be non-numeric",
     "pending script washinmura-aeo-crawler-track must block new page expansion",
     "serviceArea legacy_schema_observation must record the controlled pilot",
+    "serviceArea rollout scope/count/status drifted",
   ];
   for (const expected of expectedFailures) {
     if (!gateErrors.some((error) => error.includes(expected))) {
