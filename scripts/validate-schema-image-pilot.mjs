@@ -14,6 +14,34 @@ const IMAGE_PILOT_FILES = [
   "car-key-lost-service.html",
   "article-bmw-smart-key-owner-guide.html",
 ];
+const IMAGE_DIMENSION_PILOT_EXPECTATIONS = new Map([
+  [
+    "article-emergency-akl-guide.html",
+    {
+      fallback: "img/procore_logo_main.jpg",
+      sources: [{ candidates: ["img/procore_logo_main.webp"], type: "image/webp", media: null }],
+    },
+  ],
+  [
+    "article-honda-fit-2018-kaohsiung-akl.html",
+    {
+      fallback: "img/cases/honda-fit-20260410.jpg",
+      sources: [{ candidates: ["img/cases/honda-fit-20260410.webp"], type: "image/webp", media: null }],
+    },
+  ],
+  [
+    "article-bmw-elv-red-lock-fix.html",
+    {
+      fallback: "img/cases/bmw-elv-red-lock-fix.jpg",
+      sources: [{ candidates: ["img/cases/bmw-elv-red-lock-fix.webp"], type: "image/webp", media: null }],
+    },
+  ],
+]);
+const IMAGE_DIMENSION_PILOT_FILES = [...IMAGE_DIMENSION_PILOT_EXPECTATIONS.keys()];
+const IMAGE_VALIDATION_FILES = [
+  ...IMAGE_PILOT_FILES,
+  ...IMAGE_DIMENSION_PILOT_FILES,
+];
 const AREA_SERVED_PILOT_FILES = [...IMAGE_PILOT_FILES];
 const AREA_SERVED_HTML_REMOVALS = new Map([
   [
@@ -738,7 +766,17 @@ const APPROVED_NON_SCHEMA_HTML_CHANGES = new Map([
   ],
   [
     "article-bmw-elv-red-lock-fix.html",
-    [["24H 救援專線", "汽車鑰匙救援專線"]],
+    [
+      ["24H 救援專線", "汽車鑰匙救援專線"],
+      [
+        '<img src="img/cases/bmw-elv-red-lock-fix.jpg" alt="BMW 儀表紅色鎖圖示" class="w-full" decoding="async">',
+        '<img src="img/cases/bmw-elv-red-lock-fix.jpg" width="1108" height="1477" alt="BMW 儀表紅色鎖圖示" class="w-full" decoding="async">',
+      ],
+      [
+        '<source srcset="img/cases/bmw-elv-red-lock-fix.webp" type="image/webp">',
+        '<source srcset="img/cases/bmw-elv-red-lock-fix.webp" type="image/webp" width="1108" height="1477">',
+      ],
+    ],
   ],
   [
     "article-bmw-gseries-keyless-rescue.html",
@@ -758,6 +796,32 @@ const APPROVED_NON_SCHEMA_HTML_CHANGES = new Map([
       ["<!-- 24H 浮動救援按鈕 -->", "<!-- 浮動救援按鈕 -->"],
       [">24H CALL</a>", ">CALL</a>"],
       [">24H Hotline</span>", ">Phone</span>"],
+    ],
+  ],
+  [
+    "article-emergency-akl-guide.html",
+    [
+      [
+        '<img src="img/procore_logo_main.jpg" class="w-full object-cover" style="max-height: 500px;" alt="汽車鑰匙全丟夜間評估" decoding="async">',
+        '<img src="img/procore_logo_main.jpg" width="960" height="960" class="w-full object-cover" style="max-height: 500px;" alt="汽車鑰匙全丟夜間評估" decoding="async">',
+      ],
+      [
+        '<source srcset="img/procore_logo_main.webp" type="image/webp">',
+        '<source srcset="img/procore_logo_main.webp" type="image/webp" width="960" height="960">',
+      ],
+    ],
+  ],
+  [
+    "article-honda-fit-2018-kaohsiung-akl.html",
+    [
+      [
+        '<img src="img/cases/honda-fit-20260410.jpg" class="w-full object-cover" style="max-height: 500px;" alt="Honda Fit 救援現場" decoding="async">',
+        '<img src="img/cases/honda-fit-20260410.jpg" width="3000" height="4000" class="w-full object-cover" style="max-height: 500px;" alt="Honda Fit 救援現場" decoding="async">',
+      ],
+      [
+        '<source srcset="img/cases/honda-fit-20260410.webp" type="image/webp">',
+        '<source srcset="img/cases/honda-fit-20260410.webp" type="image/webp" width="1600" height="2133">',
+      ],
     ],
   ],
 ]);
@@ -930,7 +994,7 @@ function classifyImageSource(src) {
   return "local";
 }
 
-async function validateImages(html, relPath, errors, stats) {
+async function validateLegacyImages(html, relPath, errors, stats) {
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
     const tag = match[0];
     const src = getAttr(tag, "src");
@@ -968,6 +1032,715 @@ async function validateImages(html, relPath, errors, stats) {
     }
     stats.localVerified += 1;
   }
+}
+
+const IMAGE_FORMAT_BY_EXTENSION = new Map([
+  [".avif", "avif"],
+  [".gif", "gif"],
+  [".jpeg", "jpeg"],
+  [".jpg", "jpeg"],
+  [".png", "png"],
+  [".webp", "webp"],
+]);
+const IMAGE_MIME_BY_FORMAT = new Map([
+  ["avif", "image/avif"],
+  ["gif", "image/gif"],
+  ["jpeg", "image/jpeg"],
+  ["png", "image/png"],
+  ["webp", "image/webp"],
+]);
+
+function decodeHtmlAttribute(value) {
+  return value
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
+}
+
+function parseTagAttributes(rawTag, tagName, relPath, errors) {
+  const startMatch = rawTag.match(/^<\s*[A-Za-z][\w:-]*/);
+  let cursor = startMatch ? startMatch[0].length : 1;
+  const attributes = [];
+
+  while (cursor < rawTag.length) {
+    while (/\s/.test(rawTag[cursor] || "")) cursor += 1;
+    if (cursor >= rawTag.length || rawTag[cursor] === ">" || rawTag[cursor] === "/") break;
+
+    const nameStart = cursor;
+    while (cursor < rawTag.length && !/[\s=/>]/.test(rawTag[cursor])) cursor += 1;
+    const name = rawTag.slice(nameStart, cursor).toLowerCase();
+    if (!name) {
+      errors.push(`${relPath}: unable to parse <${tagName}> attribute near ${rawTag.slice(cursor, cursor + 20)}`);
+      break;
+    }
+
+    while (/\s/.test(rawTag[cursor] || "")) cursor += 1;
+    let value = "";
+    if (rawTag[cursor] === "=") {
+      cursor += 1;
+      while (/\s/.test(rawTag[cursor] || "")) cursor += 1;
+      const quote = rawTag[cursor];
+      if (quote === '"' || quote === "'") {
+        cursor += 1;
+        const valueStart = cursor;
+        while (cursor < rawTag.length && rawTag[cursor] !== quote) cursor += 1;
+        if (cursor >= rawTag.length) {
+          errors.push(`${relPath}: unterminated ${name} attribute on <${tagName}>`);
+          value = rawTag.slice(valueStart);
+        } else {
+          value = rawTag.slice(valueStart, cursor);
+          cursor += 1;
+        }
+      } else {
+        const valueStart = cursor;
+        while (cursor < rawTag.length && !/[\s>]/.test(rawTag[cursor])) cursor += 1;
+        value = rawTag.slice(valueStart, cursor).replace(/\/$/, "");
+      }
+    }
+    attributes.push({ name, value: decodeHtmlAttribute(value) });
+  }
+
+  return attributes;
+}
+
+function tokenizeResponsiveImageTags(html, relPath, errors) {
+  const tags = [];
+  let cursor = 0;
+
+  while (cursor < html.length) {
+    const start = html.indexOf("<", cursor);
+    if (start === -1) break;
+    if (html.startsWith("<!--", start)) {
+      const commentEnd = html.indexOf("-->", start + 4);
+      cursor = commentEnd === -1 ? html.length : commentEnd + 3;
+      continue;
+    }
+
+    let quote = null;
+    let end = start + 1;
+    for (; end < html.length; end += 1) {
+      const char = html[end];
+      if (quote) {
+        if (char === quote) quote = null;
+      } else if (char === '"' || char === "'") {
+        quote = char;
+      } else if (char === ">") {
+        break;
+      }
+    }
+    if (end >= html.length) {
+      errors.push(`${relPath}: unterminated HTML tag`);
+      break;
+    }
+
+    const raw = html.slice(start, end + 1);
+    const match = raw.match(/^<\s*(\/?)\s*([A-Za-z][\w:-]*)/);
+    cursor = end + 1;
+    if (!match) continue;
+    const name = match[2].toLowerCase();
+    if (!new Set(["picture", "source", "img"]).has(name)) continue;
+    const closing = match[1] === "/";
+    tags.push({
+      name,
+      closing,
+      raw,
+      offset: start,
+      attributes: closing ? [] : parseTagAttributes(raw, name, relPath, errors),
+    });
+  }
+
+  return tags;
+}
+
+function getAttributeValues(tag, name) {
+  return tag.attributes.filter((attribute) => attribute.name === name).map((attribute) => attribute.value);
+}
+
+function getSingleAttribute(tag, name, context, errors, { required = false } = {}) {
+  const values = getAttributeValues(tag, name);
+  if (values.length > 1) {
+    errors.push(`${context}: duplicate ${name} attribute`);
+    return null;
+  }
+  if (required && values.length === 0) {
+    errors.push(`${context}: missing ${name} attribute`);
+    return null;
+  }
+  return values.length === 1 ? values[0] : null;
+}
+
+function getDeclaredDimensions(tag, context, errors) {
+  const dimensions = {};
+  for (const name of ["width", "height"]) {
+    const value = getSingleAttribute(tag, name, context, errors, { required: true });
+    if (value === null) return null;
+    if (!/^[1-9]\d*$/.test(value)) {
+      errors.push(`${context}: ${name} must be a positive integer, found ${JSON.stringify(value)}`);
+      return null;
+    }
+    dimensions[name] = Number(value);
+  }
+  return dimensions;
+}
+
+function parseSrcset(srcset, context, errors) {
+  if (!srcset || !srcset.trim()) {
+    errors.push(`${context}: srcset must contain at least one candidate`);
+    return { candidates: [], descriptorKind: null };
+  }
+  if (/^\s*data:/i.test(srcset)) {
+    errors.push(`${context}: data URL srcset is outside the local image pilot`);
+    return { candidates: [], descriptorKind: null };
+  }
+
+  const candidates = [];
+  const descriptorKinds = new Set();
+  const descriptorKeys = new Set();
+  for (const part of srcset.split(",")) {
+    const tokens = part.trim().split(/\s+/).filter(Boolean);
+    if (tokens.length < 1 || tokens.length > 2) {
+      errors.push(`${context}: malformed srcset candidate ${JSON.stringify(part.trim())}`);
+      continue;
+    }
+    const [url, rawDescriptor] = tokens;
+    let kind = "density";
+    let value = 1;
+    let descriptor = "1x";
+    if (rawDescriptor) {
+      const widthMatch = rawDescriptor.match(/^([1-9]\d*)w$/);
+      const densityMatch = rawDescriptor.match(/^((?:\d+(?:\.\d+)?|\.\d+))x$/);
+      if (widthMatch) {
+        kind = "width";
+        value = Number(widthMatch[1]);
+        descriptor = rawDescriptor;
+      } else if (densityMatch && Number(densityMatch[1]) > 0) {
+        value = Number(densityMatch[1]);
+        descriptor = rawDescriptor;
+      } else {
+        errors.push(`${context}: invalid srcset descriptor ${JSON.stringify(rawDescriptor)}`);
+        continue;
+      }
+    }
+    descriptorKinds.add(kind);
+    const descriptorKey = `${kind}:${value}`;
+    if (descriptorKeys.has(descriptorKey)) {
+      errors.push(`${context}: duplicate srcset descriptor ${descriptor}`);
+    }
+    descriptorKeys.add(descriptorKey);
+    candidates.push({ url, kind, value, descriptor });
+  }
+
+  if (descriptorKinds.size > 1) {
+    errors.push(`${context}: srcset must not mix width and density descriptors`);
+  }
+  return {
+    candidates,
+    descriptorKind: descriptorKinds.size === 1 ? [...descriptorKinds][0] : null,
+  };
+}
+
+function collectResponsiveImageGroups(html, relPath, errors) {
+  const groups = [];
+  let picture = null;
+  for (const tag of tokenizeResponsiveImageTags(html, relPath, errors)) {
+    if (tag.name === "picture") {
+      if (!tag.closing) {
+        if (picture) errors.push(`${relPath}: nested <picture> is not supported by the pilot`);
+        picture = { kind: "picture", sources: [], img: null };
+      } else if (!picture) {
+        errors.push(`${relPath}: closing </picture> without an open <picture>`);
+      } else {
+        if (!picture.img) errors.push(`${relPath}: <picture> is missing its fallback <img>`);
+        groups.push(picture);
+        picture = null;
+      }
+      continue;
+    }
+
+    if (tag.closing) continue;
+    if (tag.name === "source") {
+      if (!picture) {
+        errors.push(`${relPath}: image <source> must be a child of <picture>`);
+      } else if (picture.img) {
+        errors.push(`${relPath}: <source> must precede the fallback <img>`);
+      } else {
+        picture.sources.push(tag);
+      }
+    } else if (tag.name === "img") {
+      if (!picture) {
+        groups.push({ kind: "standalone", sources: [], img: tag });
+      } else if (picture.img) {
+        errors.push(`${relPath}: <picture> must contain exactly one fallback <img>`);
+      } else {
+        picture.img = tag;
+      }
+    }
+  }
+  if (picture) errors.push(`${relPath}: unclosed <picture>`);
+  return groups;
+}
+
+function resolveLocalImagePath(src, relPath, context, errors) {
+  if (classifyImageSource(src) !== "local") {
+    errors.push(`${context}: image candidate must be a local file, found ${JSON.stringify(src)}`);
+    return null;
+  }
+  let cleanSrc;
+  try {
+    cleanSrc = decodeURIComponent(src.split(/[?#]/, 1)[0]);
+  } catch (error) {
+    errors.push(`${context}: image URL cannot be decoded (${error.message})`);
+    return null;
+  }
+  const assetPath = cleanSrc.startsWith("/")
+    ? path.join(ROOT, cleanSrc.slice(1))
+    : path.resolve(ROOT, path.dirname(relPath), cleanSrc);
+  if (!assetPath.startsWith(`${ROOT}${path.sep}`)) {
+    errors.push(`${context}: local image escapes repository root (${src})`);
+    return null;
+  }
+  return assetPath;
+}
+
+async function readCandidateMetadata(src, relPath, context, errors, metadataResolver) {
+  const assetPath = resolveLocalImagePath(src, relPath, context, errors);
+  if (!assetPath) return null;
+  let metadata;
+  try {
+    metadata = await metadataResolver({ src, assetPath, relPath });
+  } catch (error) {
+    errors.push(`${context}: cannot resolve local image ${src} (${error.message})`);
+    return null;
+  }
+  if (!Number.isInteger(metadata?.width) || metadata.width <= 0 ||
+      !Number.isInteger(metadata?.height) || metadata.height <= 0 || !metadata?.format) {
+    errors.push(`${context}: invalid image metadata for ${src}`);
+    return null;
+  }
+  return metadata;
+}
+
+function validateCandidateFormat(src, metadata, declaredType, context, errors) {
+  const extension = path.extname(src.split(/[?#]/, 1)[0]).toLowerCase();
+  const expectedFormat = IMAGE_FORMAT_BY_EXTENSION.get(extension);
+  const actualFormat = String(metadata.format).toLowerCase();
+  if (!expectedFormat) {
+    errors.push(`${context}: unsupported image extension ${extension || "(none)"} for ${src}`);
+  } else if (expectedFormat !== actualFormat) {
+    errors.push(`${context}: extension ${extension} expects ${expectedFormat}, actual format is ${actualFormat}`);
+  }
+  if (declaredType) {
+    const actualMime = IMAGE_MIME_BY_FORMAT.get(actualFormat);
+    if (!actualMime || declaredType.toLowerCase() !== actualMime) {
+      errors.push(`${context}: declared type ${declaredType} does not match actual MIME ${actualMime || "unknown"}`);
+    }
+  }
+}
+
+function hasRoundingCompatibleAspectRatio(left, right) {
+  const expectedRightWidth = right.height * left.width / left.height;
+  const expectedRightHeight = right.width * left.height / left.width;
+  return Math.abs(right.width - expectedRightWidth) <= 0.5 ||
+    Math.abs(right.height - expectedRightHeight) <= 0.5;
+}
+
+async function validateCandidateSet({
+  tag,
+  context,
+  relPath,
+  declaredDimensions,
+  expectedCandidates,
+  declaredType,
+  errors,
+  stats,
+  metadataResolver,
+}) {
+  const srcset = getSingleAttribute(tag, "srcset", context, errors, { required: true });
+  if (srcset === null) return [];
+  const parsed = parseSrcset(srcset, context, errors);
+  const candidatePaths = parsed.candidates.map((candidate) => candidate.url);
+  if (JSON.stringify(candidatePaths) !== JSON.stringify(expectedCandidates)) {
+    errors.push(`${context}: candidate paths ${JSON.stringify(candidatePaths)} do not match expected ${JSON.stringify(expectedCandidates)}`);
+  }
+
+  const sizes = getSingleAttribute(tag, "sizes", context, errors);
+  if (parsed.descriptorKind === "width" && !sizes) {
+    errors.push(`${context}: width-descriptor srcset requires a non-empty sizes attribute`);
+  }
+  if (parsed.descriptorKind === "density" && sizes !== null) {
+    errors.push(`${context}: sizes is not allowed with density descriptors`);
+  }
+
+  const verified = [];
+  for (const candidate of parsed.candidates) {
+    const candidateContext = `${context} candidate ${candidate.url} ${candidate.descriptor}`;
+    const metadata = await readCandidateMetadata(candidate.url, relPath, candidateContext, errors, metadataResolver);
+    if (!metadata) continue;
+    validateCandidateFormat(candidate.url, metadata, declaredType, candidateContext, errors);
+    if (declaredDimensions) {
+      if (candidate.kind === "width") {
+        if (metadata.width !== candidate.value) {
+          errors.push(`${candidateContext}: width descriptor ${candidate.value}w does not match actual width ${metadata.width}`);
+        }
+        if (!hasRoundingCompatibleAspectRatio(declaredDimensions, metadata)) {
+          errors.push(`${candidateContext}: actual ${metadata.width}x${metadata.height} conflicts with declared aspect ratio ${declaredDimensions.width}x${declaredDimensions.height}`);
+        }
+      } else {
+        const expectedWidth = declaredDimensions.width * candidate.value;
+        const expectedHeight = declaredDimensions.height * candidate.value;
+        if (metadata.width !== expectedWidth || metadata.height !== expectedHeight) {
+          errors.push(`${candidateContext}: density ${candidate.value}x requires ${expectedWidth}x${expectedHeight}, actual ${metadata.width}x${metadata.height}`);
+        }
+      }
+    }
+    stats.responsiveCandidatesVerified += 1;
+    verified.push({ ...candidate, metadata });
+  }
+  return verified;
+}
+
+async function validateResponsiveImagePilotPage(
+  html,
+  relPath,
+  errors,
+  stats,
+  {
+    expectations = IMAGE_DIMENSION_PILOT_EXPECTATIONS,
+    metadataResolver = async ({ assetPath }) => sharp(assetPath).metadata(),
+  } = {},
+) {
+  const expected = expectations.get(relPath);
+  if (!expected) {
+    errors.push(`${relPath}: page is outside the image-dimensions pilot allowlist`);
+    return;
+  }
+
+  const groups = collectResponsiveImageGroups(html, relPath, errors);
+  if (groups.length !== 1 || groups[0]?.kind !== "picture") {
+    errors.push(`${relPath}: expected exactly one governed <picture>, found ${groups.length}`);
+    return;
+  }
+  const group = groups[0];
+  const imgContext = `${relPath}: fallback <img>`;
+  const fallbackSrc = getSingleAttribute(group.img, "src", imgContext, errors, { required: true });
+  const fallbackDimensions = getDeclaredDimensions(group.img, imgContext, errors);
+  if (fallbackSrc !== null && fallbackSrc !== expected.fallback) {
+    errors.push(`${imgContext}: src ${JSON.stringify(fallbackSrc)} does not match expected ${JSON.stringify(expected.fallback)}`);
+  }
+  if (fallbackSrc !== null) {
+    const fallbackMetadata = await readCandidateMetadata(fallbackSrc, relPath, imgContext, errors, metadataResolver);
+    if (fallbackMetadata) {
+      validateCandidateFormat(fallbackSrc, fallbackMetadata, null, imgContext, errors);
+      if (fallbackDimensions &&
+          (fallbackDimensions.width !== fallbackMetadata.width || fallbackDimensions.height !== fallbackMetadata.height)) {
+        errors.push(`${imgContext}: declares ${fallbackDimensions.width}x${fallbackDimensions.height}, actual ${fallbackMetadata.width}x${fallbackMetadata.height}`);
+      }
+      stats.localVerified += 1;
+    }
+  }
+
+  const imgSrcset = getSingleAttribute(group.img, "srcset", imgContext, errors);
+  if (imgSrcset !== null) {
+    const imgExpectedCandidates = expected.imgCandidates || [];
+    await validateCandidateSet({
+      tag: group.img,
+      context: `${relPath}: <img srcset>`,
+      relPath,
+      declaredDimensions: fallbackDimensions,
+      expectedCandidates: imgExpectedCandidates,
+      declaredType: null,
+      errors,
+      stats,
+      metadataResolver,
+    });
+  }
+
+  if (group.sources.length !== expected.sources.length) {
+    errors.push(`${relPath}: expected ${expected.sources.length} governed <source> element(s), found ${group.sources.length}`);
+  }
+  for (let index = 0; index < group.sources.length; index += 1) {
+    const source = group.sources[index];
+    const sourceExpected = expected.sources[index];
+    const context = `${relPath}: <source>[${index}]`;
+    if (!sourceExpected) {
+      errors.push(`${context}: unexpected source outside the governed structure`);
+      continue;
+    }
+    const sourceDimensions = getDeclaredDimensions(source, context, errors);
+    const type = getSingleAttribute(source, "type", context, errors, { required: true });
+    const media = getSingleAttribute(source, "media", context, errors);
+    if (type !== null && type !== sourceExpected.type) {
+      errors.push(`${context}: type ${JSON.stringify(type)} does not match expected ${JSON.stringify(sourceExpected.type)}`);
+    }
+    if (media !== sourceExpected.media) {
+      errors.push(`${context}: media ${JSON.stringify(media)} does not match expected ${JSON.stringify(sourceExpected.media)}`);
+    }
+    if (fallbackDimensions && sourceDimensions && !hasRoundingCompatibleAspectRatio(fallbackDimensions, sourceDimensions)) {
+      errors.push(`${context}: declared ${sourceDimensions.width}x${sourceDimensions.height} conflicts with fallback aspect ratio ${fallbackDimensions.width}x${fallbackDimensions.height}`);
+    }
+    await validateCandidateSet({
+      tag: source,
+      context,
+      relPath,
+      declaredDimensions: sourceDimensions,
+      expectedCandidates: sourceExpected.candidates,
+      declaredType: type,
+      errors,
+      stats,
+      metadataResolver,
+    });
+  }
+}
+
+function createImageStats() {
+  return {
+    localVerified: 0,
+    responsiveCandidatesVerified: 0,
+    runtimeLocalVerified: 0,
+    externalSkipped: 0,
+    dynamicSkipped: 0,
+  };
+}
+
+function buildResponsiveFixture(sourceAttributes, imgAttributes) {
+  return `<picture><source ${sourceAttributes}><img ${imgAttributes}></picture>`;
+}
+
+function fixtureExpectations(
+  sourceCandidates = ["img/preferred.webp"],
+  { fallback = "img/fallback.jpg", type = "image/webp", media = null, imgCandidates } = {},
+) {
+  return new Map([["fixture.html", {
+    fallback,
+    sources: [{ candidates: sourceCandidates, type, media }],
+    ...(imgCandidates ? { imgCandidates } : {}),
+  }]]);
+}
+
+async function validateResponsiveFixture(
+  html,
+  {
+    relPath = "fixture.html",
+    expectations = fixtureExpectations(),
+    metadata = new Map([
+      ["img/fallback.jpg", { width: 800, height: 600, format: "jpeg" }],
+      ["img/preferred.webp", { width: 800, height: 600, format: "webp" }],
+    ]),
+  } = {},
+) {
+  const errors = [];
+  const stats = createImageStats();
+  const metadataResolver = async ({ src }) => {
+    if (!metadata.has(src)) throw new Error("fixture metadata missing");
+    return metadata.get(src);
+  };
+  await validateResponsiveImagePilotPage(html, relPath, errors, stats, {
+    expectations,
+    metadataResolver,
+  });
+  return { errors, stats };
+}
+
+async function runResponsiveImageSelfTests() {
+  const baseSource = 'srcset="img/preferred.webp" type="image/webp" width="800" height="600"';
+  const baseImg = 'src="img/fallback.jpg" width="800" height="600" alt="fixture"';
+  const baseMarkup = buildResponsiveFixture(baseSource, baseImg);
+  const positiveCases = [];
+
+  const baseResult = await validateResponsiveFixture(baseMarkup);
+  assert.deepEqual(baseResult.errors, []);
+  positiveCases.push("single candidate without descriptor");
+
+  const widthMetadata = new Map([
+    ["img/fallback.jpg", { width: 400, height: 300, format: "jpeg" }],
+    ["img/small.webp", { width: 400, height: 300, format: "webp" }],
+    ["img/large.webp", { width: 800, height: 600, format: "webp" }],
+  ]);
+  const widthMarkup = buildResponsiveFixture(
+    'srcset="img/small.webp 400w, img/large.webp 800w" sizes="100vw" type="image/webp" width="400" height="300"',
+    'src="img/fallback.jpg" width="400" height="300" alt="fixture"',
+  );
+  const widthResult = await validateResponsiveFixture(widthMarkup, {
+    expectations: fixtureExpectations(["img/small.webp", "img/large.webp"]),
+    metadata: widthMetadata,
+  });
+  assert.deepEqual(widthResult.errors, []);
+  positiveCases.push("multiple width-descriptor candidates");
+
+  const densityMetadata = new Map([
+    ["img/fallback.jpg", { width: 400, height: 300, format: "jpeg" }],
+    ["img/one.webp", { width: 400, height: 300, format: "webp" }],
+    ["img/two.webp", { width: 800, height: 600, format: "webp" }],
+  ]);
+  const densityMarkup = buildResponsiveFixture(
+    'srcset="img/one.webp 1x, img/two.webp 2x" type="image/webp" width="400" height="300"',
+    'src="img/fallback.jpg" width="400" height="300" alt="fixture"',
+  );
+  const densityResult = await validateResponsiveFixture(densityMarkup, {
+    expectations: fixtureExpectations(["img/one.webp", "img/two.webp"]),
+    metadata: densityMetadata,
+  });
+  assert.deepEqual(densityResult.errors, []);
+  positiveCases.push("multiple density-descriptor candidates");
+
+  const hondaMetadata = new Map([
+    ["img/fallback.jpg", { width: 3000, height: 4000, format: "jpeg" }],
+    ["img/preferred.webp", { width: 1600, height: 2133, format: "webp" }],
+  ]);
+  const hondaMarkup = buildResponsiveFixture(
+    'srcset="img/preferred.webp" type="image/webp" width="1600" height="2133"',
+    'src="img/fallback.jpg" width="3000" height="4000" alt="fixture"',
+  );
+  const hondaResult = await validateResponsiveFixture(hondaMarkup, { metadata: hondaMetadata });
+  assert.deepEqual(hondaResult.errors, []);
+  positiveCases.push("source-specific exact dimensions with integer-resize rounding");
+
+  const negativeCases = [];
+  const expectFailure = async (name, html, pattern, options = {}) => {
+    const result = await validateResponsiveFixture(html, options);
+    const message = result.errors.join("\n");
+    assert.match(message, pattern, `${name} did not produce the expected validation error; got: ${message}`);
+    negativeCases.push(name);
+  };
+
+  await expectFailure(
+    "01 img missing width",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" height="600" alt="fixture"'),
+    /fallback <img>: missing width attribute/,
+  );
+  await expectFailure(
+    "02 img missing height",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="800" alt="fixture"'),
+    /fallback <img>: missing height attribute/,
+  );
+  await expectFailure(
+    "03 img wrong width",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="801" height="600" alt="fixture"'),
+    /fallback <img>: declares 801x600, actual 800x600/,
+  );
+  await expectFailure(
+    "04 img wrong height",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="800" height="601" alt="fixture"'),
+    /fallback <img>: declares 800x601, actual 800x600/,
+  );
+  await expectFailure(
+    "05 non-numeric dimensions",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="wide" height="600" alt="fixture"'),
+    /width must be a positive integer/,
+  );
+  await expectFailure(
+    "06 zero dimension",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="0" height="600" alt="fixture"'),
+    /width must be a positive integer/,
+  );
+  await expectFailure(
+    "07 negative dimension",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="-1" height="600" alt="fixture"'),
+    /width must be a positive integer/,
+  );
+  await expectFailure(
+    "08 duplicate width",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="800" width="800" height="600" alt="fixture"'),
+    /duplicate width attribute/,
+  );
+  await expectFailure(
+    "09 duplicate height",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="800" height="600" height="600" alt="fixture"'),
+    /duplicate height attribute/,
+  );
+  await expectFailure(
+    "10 source cannot be skipped",
+    buildResponsiveFixture('srcset="img/preferred.webp" type="image/webp" height="600"', baseImg),
+    /<source>\[0\]: missing width attribute/,
+  );
+  await expectFailure(
+    "11 source wrong dimensions",
+    buildResponsiveFixture('srcset="img/preferred.webp" type="image/webp" width="801" height="600"', baseImg),
+    /density 1x requires 801x600, actual 800x600/,
+  );
+  await expectFailure(
+    "12 source file missing",
+    buildResponsiveFixture('srcset="img/missing.webp" type="image/webp" width="800" height="600"', baseImg),
+    /cannot resolve local image img\/missing\.webp/,
+    { expectations: fixtureExpectations(["img/missing.webp"]) },
+  );
+  await expectFailure(
+    "13 malformed multi-candidate srcset",
+    buildResponsiveFixture(
+      'srcset="img/small.webp 1x img/large.webp 2x" type="image/webp" width="400" height="300"',
+      'src="img/fallback.jpg" width="400" height="300" alt="fixture"',
+    ),
+    /malformed srcset candidate/,
+    {
+      expectations: fixtureExpectations(["img/small.webp", "img/large.webp"]),
+      metadata: widthMetadata,
+    },
+  );
+  await expectFailure(
+    "14 width descriptor mismatch",
+    buildResponsiveFixture(
+      'srcset="img/small.webp 800w" sizes="100vw" type="image/webp" width="400" height="300"',
+      'src="img/fallback.jpg" width="400" height="300" alt="fixture"',
+    ),
+    /width descriptor 800w does not match actual width 400/,
+    {
+      expectations: fixtureExpectations(["img/small.webp"]),
+      metadata: widthMetadata,
+    },
+  );
+  await expectFailure(
+    "15 density descriptor mismatch",
+    buildResponsiveFixture('srcset="img/preferred.webp 2x" type="image/webp" width="800" height="600"', baseImg),
+    /density 2x requires 1600x1200, actual 800x600/,
+  );
+  await expectFailure(
+    "16 fallback correct but preferred source wrong",
+    buildResponsiveFixture('srcset="img/preferred.webp" type="image/webp" width="800" height="601"', baseImg),
+    /density 1x requires 800x601, actual 800x600/,
+  );
+  await expectFailure(
+    "17 preferred source correct but fallback wrong",
+    buildResponsiveFixture(baseSource, 'src="img/fallback.jpg" width="801" height="600" alt="fixture"'),
+    /fallback <img>: declares 801x600, actual 800x600/,
+  );
+  const aspectMetadata = new Map([
+    ["img/fallback.jpg", { width: 800, height: 600, format: "jpeg" }],
+    ["img/wide.webp", { width: 800, height: 400, format: "webp" }],
+  ]);
+  await expectFailure(
+    "18 source and fallback aspect ratios conflict",
+    buildResponsiveFixture('srcset="img/wide.webp" type="image/webp" width="800" height="400"', baseImg),
+    /conflicts with fallback aspect ratio 800x600/,
+    {
+      expectations: fixtureExpectations(["img/wide.webp"]),
+      metadata: aspectMetadata,
+    },
+  );
+  await expectFailure(
+    "19 page outside allowlist",
+    baseMarkup,
+    /outside the image-dimensions pilot allowlist/,
+    { relPath: "outside.html" },
+  );
+  const wrongMimeMetadata = new Map([
+    ["img/fallback.jpg", { width: 800, height: 600, format: "jpeg" }],
+    ["img/preferred.jpg", { width: 800, height: 600, format: "webp" }],
+  ]);
+  await expectFailure(
+    "20 MIME and extension mapping mismatch",
+    buildResponsiveFixture('srcset="img/preferred.jpg" type="image/jpeg" width="800" height="600"', baseImg),
+    /extension \.jpg expects jpeg, actual format is webp/,
+    {
+      expectations: fixtureExpectations(["img/preferred.jpg"], { type: "image/jpeg" }),
+      metadata: wrongMimeMetadata,
+    },
+  );
+
+  console.log(`Responsive image positive parser checks passed: ${positiveCases.length}`);
+  console.log(`Responsive image negative gates passed: ${negativeCases.length}`);
+  for (const name of negativeCases) console.log(`PASS ${name}`);
 }
 
 async function validateHomepageCaseImages(html, errors, stats) {
@@ -1076,7 +1849,7 @@ function validateBusinessGate(business, errors) {
   }
 }
 
-function runSelfTests() {
+async function runSelfTests() {
   const badBusiness = {
     fields: {
       priceRange: {
@@ -1177,17 +1950,26 @@ function runSelfTests() {
     'class="mt-12 flex flex-col items-center justify-center"',
   ],
   ]);
+  assert.deepEqual(IMAGE_DIMENSION_PILOT_FILES, [
+    "article-emergency-akl-guide.html",
+    "article-honda-fit-2018-kaohsiung-akl.html",
+    "article-bmw-elv-red-lock-fix.html",
+  ]);
+  assert.equal(IMAGE_VALIDATION_FILES.length, new Set(IMAGE_VALIDATION_FILES).size);
+  assert.equal(IMAGE_DIMENSION_PILOT_FILES.some((file) => AREA_SERVED_PILOT_FILES.includes(file)), false);
   assert.equal(classifyImageSource("${escapeHtml(src)}"), "dynamic");
   assert.equal(classifyImageSource("https://example.com/image.svg"), "external");
   assert.equal(classifyImageSource("img/local.jpg"), "local");
   assert.match(AREA_SERVED_COMPARISON_BASE_SHA, /^[0-9a-f]{40}$/);
   assert.notEqual(AREA_SERVED_COMPARISON_BASE_SHA, "HEAD");
-  console.log("Schema/image pilot negative-gate checks passed: 7");
+  assert.deepEqual([...IMAGE_DIMENSION_PILOT_EXPECTATIONS.keys()], IMAGE_DIMENSION_PILOT_FILES);
+  console.log("Schema governance self-tests passed: 11");
+  await runResponsiveImageSelfTests();
 }
 
 async function main() {
   const errors = [];
-  const stats = { localVerified: 0, runtimeLocalVerified: 0, externalSkipped: 0, dynamicSkipped: 0 };
+  const stats = createImageStats();
   const business = JSON.parse(await fsp.readFile(path.join(ROOT, "data/business-entity.json"), "utf8"));
   validateBusinessGate(business, errors);
   const compareBaseline = process.argv.includes("--compare-baseline") || process.argv.includes("--compare-head");
@@ -1198,17 +1980,21 @@ async function main() {
     validateSchemaPayloads(payloads, relPath, errors);
     if (compareBaseline) compareWithBaseline(html, payloads, relPath, errors);
     if (IMAGE_PILOT_FILES.includes(relPath)) {
-      await validateImages(html, relPath, errors, stats);
+      await validateLegacyImages(html, relPath, errors, stats);
       if (relPath === "index.html") await validateHomepageCaseImages(html, errors, stats);
+    }
+    if (IMAGE_DIMENSION_PILOT_FILES.includes(relPath)) {
+      await validateResponsiveImagePilotPage(html, relPath, errors, stats);
     }
   }
 
-  if (process.argv.includes("--self-test")) runSelfTests();
+  if (process.argv.includes("--self-test")) await runSelfTests();
 
   console.log("CarKey schema rollout/image pilot validation");
   console.log(`Schema pages: ${SCHEMA_FILES.length}`);
-  console.log(`Image pilot pages: ${IMAGE_PILOT_FILES.length}`);
+  console.log(`Image pilot pages: ${IMAGE_VALIDATION_FILES.length}`);
   console.log(`Local images verified against file metadata: ${stats.localVerified}`);
+  console.log(`Responsive source candidates verified against file metadata: ${stats.responsiveCandidatesVerified}`);
   console.log(`Runtime case images verified against file metadata: ${stats.runtimeLocalVerified}`);
   console.log(`External images skipped: ${stats.externalSkipped}`);
   console.log(`Dynamic image templates skipped: ${stats.dynamicSkipped}`);
