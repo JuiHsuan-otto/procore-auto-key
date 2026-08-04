@@ -292,6 +292,16 @@ test("reuses the same package without rewriting bytes", async (t) => {
   assert.deepEqual(after, before);
 });
 
+test("rejects a tampered existing receipt during reuse", async (t) => {
+  const { packageDirectory, draftRoot } = await workspace(t, "receipt-tamper");
+  const first = await importPublicationPackage({ packageDirectory, repositoryRoot: REPOSITORY_ROOT, draftRoot });
+  const receiptPath = path.join(first.candidateDirectory, "import-receipt.json");
+  const receipt = await readJson(receiptPath);
+  receipt.unexpected_private_state = true;
+  await writeCanonical(receiptPath, receipt);
+  await expectCode(() => importPublicationPackage({ packageDirectory, repositoryRoot: REPOSITORY_ROOT, draftRoot }), "IMPORT_RECEIPT_INVALID");
+});
+
 test("raises a typed conflict for the same candidate ID with a different package hash", async (t) => {
   const { root, packageDirectory, draftRoot } = await workspace(t, "conflict");
   const first = await importPublicationPackage({ packageDirectory, repositoryRoot: REPOSITORY_ROOT, draftRoot });

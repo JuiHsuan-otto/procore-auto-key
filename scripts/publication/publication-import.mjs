@@ -25,6 +25,7 @@ const ASSET_FIELDS = ["asset_id", "relative_package_path", "mime", "width", "hei
 const APPROVAL_FIELDS = ["authorization_evidence_opaque_reference", "authorization_verified", "sanitization_reviewed", "approved_for_export", "reviewer_role", "source_hashes", "candidate_hash", "created_at", "updated_at"];
 const SOURCE_HASH_FIELDS = ["kind", "sha256"];
 const CARKEY_RESULT_FIELDS = ["final_slug", "canonical_url", "published_commit", "deployment_id", "published_url", "sitemap_entry", "final_schema", "publication_date"];
+const RECEIPT_FIELDS = ["contract_version", "receipt_version", "candidate_id", "candidate_hash", "package_hash", "source_system", "target_system", "content_type", "synthetic", "result", "draft_path", "validation_report_path", "proposed_slug", "final_slug", "canonical_url", "sitemap_modified", "public_root_modified", "network_used", "imported_at"];
 
 const SHA256 = /^[0-9a-f]{64}$/;
 const CANDIDATE_ID = /^cpc_[0-9a-f]{16}$/;
@@ -192,6 +193,12 @@ function assertSafeText(value, label) {
   }
 }
 
+function assertIsoTimestamp(value, code, label) {
+  if (typeof value !== "string" || Number.isNaN(Date.parse(value)) || new Date(value).toISOString() !== value) {
+    throw new PublicationImportError(code, `${label} must be an ISO-8601 UTC timestamp`);
+  }
+}
+
 function assertManifest(manifest) {
   assertExactKeys(manifest, MANIFEST_FIELDS, "MANIFEST_SCHEMA_INVALID", "manifest");
   if (manifest.contract_version !== CONTRACT_VERSION) throw new PublicationImportError("CONTRACT_VERSION_MISMATCH", "Unsupported manifest contract version");
@@ -201,6 +208,7 @@ function assertManifest(manifest) {
   if (manifest.synthetic !== true) throw new PublicationImportError("SYNTHETIC_REQUIRED", "Wave 1 requires synthetic packages");
   if (manifest.network_required !== false) throw new PublicationImportError("NETWORK_BOUNDARY_REJECTED", "Package must declare no network requirement");
   if (!CANDIDATE_ID.test(manifest.candidate_id) || !SHA256.test(manifest.candidate_hash) || !SHA256.test(manifest.package_hash)) throw new PublicationImportError("MANIFEST_SCHEMA_INVALID", "Manifest identity hashes are malformed");
+  assertIsoTimestamp(manifest.created_at, "MANIFEST_SCHEMA_INVALID", "manifest.created_at");
   if (!Array.isArray(manifest.files) || manifest.files.length < 2) throw new PublicationImportError("MANIFEST_SCHEMA_INVALID", "Manifest must list candidate and asset files");
   const paths = [];
   for (const file of manifest.files) {
@@ -238,6 +246,8 @@ function assertCandidate(candidate) {
   if (candidate.approval_audit.sanitization_reviewed !== true) throw new PublicationImportError("SANITIZATION_REQUIRED", "Sanitization review attestation is false");
   if (candidate.approval_audit.approved_for_export !== true || candidate.approval_audit.reviewer_role !== "owner") throw new PublicationImportError("OWNER_APPROVAL_REQUIRED", "Owner export approval is missing");
   if (!/^auth_[a-z0-9_-]{8,64}$/.test(candidate.approval_audit.authorization_evidence_opaque_reference)) throw new PublicationImportError("CANDIDATE_SCHEMA_INVALID", "Authorization opaque reference is malformed");
+  assertIsoTimestamp(candidate.approval_audit.created_at, "CANDIDATE_SCHEMA_INVALID", "approval_audit.created_at");
+  assertIsoTimestamp(candidate.approval_audit.updated_at, "CANDIDATE_SCHEMA_INVALID", "approval_audit.updated_at");
   if (candidate.approval_audit.candidate_hash !== candidate.candidate_hash) throw new PublicationImportError("APPROVAL_HASH_MISMATCH", "Approval does not bind the candidate hash");
 
   const calculatedHash = computeCandidateHash(candidate);
@@ -246,12 +256,28 @@ function assertCandidate(candidate) {
   const result = candidate.carkey_owned_result;
   if (result.final_slug !== null || result.canonical_url !== null || result.published_commit !== null || result.deployment_id !== null || result.published_url !== null || result.sitemap_entry !== "pending" || result.final_schema !== "pending" || result.publication_date !== null) throw new PublicationImportError("CARKEY_AUTHORITY_VIOLATION", "Candidate attempts to set a CarKey-owned publication result");
 
-  for (const key of ["proposed_title", "proposed_description", "sanitized_summary", "sanitized_narrative", "safety_note"]) assertSafeText(candidate.proposed_public_copy[key], `proposed_public_copy.${key}`);
+  const copy = candidate.proposed_public_copy;
+  for (const key of ["proposed_title", "proposed_description", "sanitized_summary", "sanitized_narrative", "safety_note"]) assertSafeText(copy[key], `proposed_public_copy.${key}`);
+  const lengthRules = {
+    proposed_title: [20, 90],
+    proposed_description: [35, 180],
+    sanitized_summary: [20, 240],
+    sanitized_narrative: [80, 1200],
+    safety_note: [15, 240]
+  };
+  for (const [key, [minimum, maximum]] of Object.entries(lengthRules)) {
+    if (copy[key].length < minimum || copy[key].length > maximum) throw new PublicationImportError("PUBLIC_COPY_INVALID", `${key} violates contract length bounds`);
+  }
   if (!Array.isArray(candidate.proposed_public_copy.public_safe_facts) || candidate.proposed_public_copy.public_safe_facts.length < 2) throw new PublicationImportError("PUBLIC_COPY_INVALID", "At least two public-safe facts are required");
-  candidate.proposed_public_copy.public_safe_facts.forEach((fact, index) => assertSafeText(fact, `public_safe_facts[${index}]`));
-  if (!CLEAN_SLUG.test(candidate.proposed_public_copy.proposed_slug)) throw new PublicationImportError("SLUG_INVALID", "Proposed slug is invalid");
-  if (!candidate.proposed_public_copy.proposed_title.includes("極致核心 ProCore")) throw new PublicationImportError("PUBLIC_BRAND_BOUNDARY", "Title must use the CarKey public brand");
-  if (!/(?:依車款|依實車|現場條件|確認|評估)/.test(`${candidate.proposed_public_copy.proposed_description} ${candidate.proposed_public_copy.sanitized_narrative}`)) throw new PublicationImportError("CONDITIONAL_LANGUAGE_REQUIRED", "Public copy must remain conditional");
+  if (candidate.proposed_public_copy.public_safe_facts.length > 6) throw new PublicationImportError("PUBLIC_COPY_INVALID", "Public-safe facts exceed contract bounds");
+  candidate.proposed_public_copy.public_safe_facts.forEach((fact, index) => {
+    assertSafeText(fact, `public_safe_facts[${index}]`);
+    if (fact.length < 8 || fact.length > 180) throw new PublicationImportError("PUBLIC_COPY_INVALID", "Public-safe fact violates contract length bounds");
+  });
+  if (!CLEAN_SLUG.test(copy.proposed_slug) || copy.proposed_slug.length > 100) throw new PublicationImportError("SLUG_INVALID", "Proposed slug is invalid");
+  if (!["provide_vehicle_details_for_assessment", "contact_for_conditional_assessment"].includes(copy.cta_intent)) throw new PublicationImportError("PUBLIC_COPY_INVALID", "CTA intent is unsupported");
+  if (!copy.proposed_title.includes("極致核心 ProCore")) throw new PublicationImportError("PUBLIC_BRAND_BOUNDARY", "Title must use the CarKey public brand");
+  if (!/(?:依車款|依實車|現場條件|確認|評估)/.test(`${copy.proposed_description} ${copy.sanitized_narrative}`)) throw new PublicationImportError("CONDITIONAL_LANGUAGE_REQUIRED", "Public copy must remain conditional");
 }
 
 function assertTaxonomy(candidate, repositoryRoot) {
@@ -263,6 +289,11 @@ function assertTaxonomy(candidate, repositoryRoot) {
   if (typeof taxonomy.vehicle_model !== "string" || taxonomy.vehicle_model.length < 1 || !Number.isInteger(taxonomy.model_year) || taxonomy.model_year < 1980 || taxonomy.model_year > 2100) throw new PublicationImportError("INVALID_TAXONOMY", "Vehicle taxonomy is invalid");
   if (!scenario.keySituations.has(taxonomy.key_situation) || !scenario.remainingKeys.has(taxonomy.remaining_key_state) || taxonomy.related_existing_service_route !== scenario.route) throw new PublicationImportError("INVALID_TAXONOMY", "Scenario, key situation, remaining keys, and service route are inconsistent");
   if (!GENERAL_LOCATIONS.has(taxonomy.generalized_city_county) || !GENERAL_SCENES.has(taxonomy.generalized_scene)) throw new PublicationImportError("INVALID_TAXONOMY", "Location or scene is not an approved generalized value");
+  const title = candidate.proposed_public_copy.proposed_title;
+  const locationLabel = taxonomy.generalized_city_county.replace(/[市縣]$/, "");
+  for (const required of [locationLabel, String(taxonomy.model_year), taxonomy.vehicle_brand, taxonomy.vehicle_model, scenario.label]) {
+    if (!title.includes(required)) throw new PublicationImportError("CARKEY_TITLE_PATTERN_REJECTED", "Title is missing a required CarKey case component");
+  }
   const links = taxonomy.suggested_existing_internal_links;
   if (!Array.isArray(links) || links.length < 2 || links.length > 4 || new Set(links).size !== links.length) throw new PublicationImportError("BROKEN_INTERNAL_LINK", "Suggested internal links must be a unique bounded list");
   for (const route of new Set([taxonomy.related_existing_service_route, ...links])) {
@@ -347,6 +378,35 @@ export async function verifyPublicationPackage(packageDirectory, repositoryRoot)
   }
   assertTaxonomy(candidate, repositoryRoot);
   return { packageRoot, manifest, candidate };
+}
+
+function assertImportReceipt(receipt, manifest, candidate) {
+  assertExactKeys(receipt, RECEIPT_FIELDS, "IMPORT_RECEIPT_INVALID", "import receipt");
+  assertIsoTimestamp(receipt.imported_at, "IMPORT_RECEIPT_INVALID", "imported_at");
+  const expectedDraftPath = `drafts/casepilot/${candidate.candidate_id}/draft.html`;
+  const expectedReportPath = `drafts/casepilot/${candidate.candidate_id}/validation-report.json`;
+  if (
+    receipt.contract_version !== CONTRACT_VERSION ||
+    receipt.receipt_version !== "import-receipt/v1" ||
+    receipt.candidate_id !== candidate.candidate_id ||
+    receipt.candidate_hash !== candidate.candidate_hash ||
+    receipt.package_hash !== manifest.package_hash ||
+    receipt.source_system !== SOURCE_SYSTEM ||
+    receipt.target_system !== TARGET_SYSTEM ||
+    receipt.content_type !== "public_case" ||
+    receipt.synthetic !== true ||
+    receipt.result !== "created" ||
+    receipt.draft_path !== expectedDraftPath ||
+    receipt.validation_report_path !== expectedReportPath ||
+    receipt.proposed_slug !== candidate.proposed_public_copy.proposed_slug ||
+    receipt.final_slug !== null ||
+    receipt.canonical_url !== null ||
+    receipt.sitemap_modified !== false ||
+    receipt.public_root_modified !== false ||
+    receipt.network_used !== false
+  ) {
+    throw new PublicationImportError("IMPORT_RECEIPT_INVALID", "Existing import receipt violates contract or package bindings");
+  }
 }
 
 async function assertSlugAvailable(slug, repositoryRoot, draftRoot, candidateId) {
@@ -544,9 +604,11 @@ export async function importPublicationPackage({ packageDirectory, repositoryRoo
   const receiptPath = path.join(candidateDirectory, "import-receipt.json");
   if (existsSync(receiptPath)) {
     const receipt = await readRequiredJson(receiptPath, "IMPORT_RECEIPT_MISSING");
+    assertExactKeys(receipt, RECEIPT_FIELDS, "IMPORT_RECEIPT_INVALID", "import receipt");
     if (receipt.package_hash !== preliminaryManifest.package_hash) throw new PublicationImportError("CANDIDATE_PACKAGE_CONFLICT", "Existing candidate ID is bound to a different package hash");
     const verified = await verifyPublicationPackage(packageDirectory, repositoryRoot);
-    if (receipt.candidate_hash !== verified.candidate.candidate_hash || !existsSync(path.join(candidateDirectory, "draft.html")) || !existsSync(path.join(candidateDirectory, "candidate-public.json")) || !existsSync(path.join(candidateDirectory, "validation-report.json"))) throw new PublicationImportError("EXISTING_DRAFT_INVALID", "Existing draft receipt or files are incomplete");
+    assertImportReceipt(receipt, verified.manifest, verified.candidate);
+    if (!existsSync(path.join(candidateDirectory, "draft.html")) || !existsSync(path.join(candidateDirectory, "candidate-public.json")) || !existsSync(path.join(candidateDirectory, "validation-report.json"))) throw new PublicationImportError("EXISTING_DRAFT_INVALID", "Existing draft files are incomplete");
     return { operation: "reused", receipt, candidateDirectory };
   }
 
