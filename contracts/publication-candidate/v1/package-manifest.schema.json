@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.carkey.com.tw/contracts/publication-candidate/v1/package-manifest.schema.json",
+  "title": "Publication Candidate Package Manifest v1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "package_format", "candidate_id", "candidate_hash", "source_system", "target_system", "created_at", "content_type", "files", "package_hash", "synthetic", "network_required"],
+  "properties": {
+    "contract_version": { "const": "1.0.0" },
+    "package_format": { "const": "hashed-directory/v1" },
+    "candidate_id": { "type": "string", "pattern": "^cpc_[0-9a-f]{16}$" },
+    "candidate_hash": { "$ref": "#/$defs/sha256" },
+    "source_system": { "const": "casepilot-automotive" },
+    "target_system": { "const": "carkey.com.tw" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "content_type": { "const": "public_case" },
+    "files": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "byte_length", "mime"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^(?:candidate\\.json|assets/[a-z0-9][a-z0-9._-]*)$" },
+          "sha256": { "$ref": "#/$defs/sha256" },
+          "byte_length": { "type": "integer", "minimum": 1 },
+          "mime": { "enum": ["application/json", "image/svg+xml"] }
+        }
+      }
+    },
+    "package_hash": { "$ref": "#/$defs/sha256" },
+    "synthetic": { "const": true },
+    "network_required": { "const": false }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}
