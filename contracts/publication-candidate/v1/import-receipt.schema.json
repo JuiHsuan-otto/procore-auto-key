@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.carkey.com.tw/contracts/publication-candidate/v1/import-receipt.schema.json",
+  "title": "CarKey Publication Draft Import Receipt v1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "receipt_version", "candidate_id", "candidate_hash", "package_hash", "source_system", "target_system", "content_type", "synthetic", "result", "draft_path", "validation_report_path", "proposed_slug", "final_slug", "canonical_url", "sitemap_modified", "public_root_modified", "network_used", "imported_at"],
+  "properties": {
+    "contract_version": { "const": "1.0.0" },
+    "receipt_version": { "const": "import-receipt/v1" },
+    "candidate_id": { "type": "string", "pattern": "^cpc_[0-9a-f]{16}$" },
+    "candidate_hash": { "$ref": "#/$defs/sha256" },
+    "package_hash": { "$ref": "#/$defs/sha256" },
+    "source_system": { "const": "casepilot-automotive" },
+    "target_system": { "const": "carkey.com.tw" },
+    "content_type": { "const": "public_case" },
+    "synthetic": { "const": true },
+    "result": { "const": "created" },
+    "draft_path": { "type": "string", "pattern": "^drafts/casepilot/cpc_[0-9a-f]{16}/draft\\.html$" },
+    "validation_report_path": { "type": "string", "pattern": "^drafts/casepilot/cpc_[0-9a-f]{16}/validation-report\\.json$" },
+    "proposed_slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "final_slug": { "type": "null" },
+    "canonical_url": { "type": "null" },
+    "sitemap_modified": { "const": false },
+    "public_root_modified": { "const": false },
+    "network_used": { "const": false },
+    "imported_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

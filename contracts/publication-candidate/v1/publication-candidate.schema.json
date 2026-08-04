@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.carkey.com.tw/contracts/publication-candidate/v1/publication-candidate.schema.json",
+  "title": "Publication Candidate Contract v1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "candidate_id",
+    "source_case_opaque_reference",
+    "candidate_revision",
+    "candidate_status",
+    "candidate_hash",
+    "synthetic",
+    "locale",
+    "source_system",
+    "target_system",
+    "taxonomy",
+    "proposed_public_copy",
+    "assets",
+    "approval_audit",
+    "carkey_owned_result"
+  ],
+  "properties": {
+    "contract_version": { "const": "1.0.0" },
+    "candidate_id": { "type": "string", "pattern": "^cpc_[0-9a-f]{16}$" },
+    "source_case_opaque_reference": { "type": "string", "pattern": "^scp_[a-z0-9_-]{8,64}$" },
+    "candidate_revision": { "type": "integer", "minimum": 1 },
+    "candidate_status": { "const": "approved_for_export" },
+    "candidate_hash": { "$ref": "#/$defs/sha256" },
+    "synthetic": { "const": true },
+    "locale": { "const": "zh-TW" },
+    "source_system": { "const": "casepilot-automotive" },
+    "target_system": { "const": "carkey.com.tw" },
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_type",
+        "service_scenario",
+        "vehicle_brand",
+        "vehicle_model",
+        "model_year",
+        "key_situation",
+        "remaining_key_state",
+        "generalized_city_county",
+        "generalized_scene",
+        "related_existing_service_route",
+        "suggested_existing_internal_links"
+      ],
+      "properties": {
+        "content_type": { "const": "public_case" },
+        "service_scenario": { "enum": ["all_keys_lost", "spare_key", "key_not_detected"] },
+        "vehicle_brand": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "vehicle_model": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "model_year": { "type": "integer", "minimum": 1980, "maximum": 2100 },
+        "key_situation": { "enum": ["key_lost", "smart_key_lost", "key_not_detected", "spare_key_requested"] },
+        "remaining_key_state": { "enum": ["none", "one_or_more", "unknown"] },
+        "generalized_city_county": { "type": "string", "minLength": 2, "maxLength": 20 },
+        "generalized_scene": { "enum": ["roadside", "residential_parking", "underground_parking", "repair_shop", "auction_site", "general_area"] },
+        "related_existing_service_route": { "$ref": "#/$defs/cleanRoute" },
+        "suggested_existing_internal_links": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/cleanRoute" }
+        }
+      }
+    },
+    "proposed_public_copy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proposed_slug", "proposed_title", "proposed_description", "sanitized_summary", "sanitized_narrative", "public_safe_facts", "safety_note", "cta_intent"],
+      "properties": {
+        "proposed_slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 100 },
+        "proposed_title": { "type": "string", "minLength": 20, "maxLength": 90 },
+        "proposed_description": { "type": "string", "minLength": 35, "maxLength": 180 },
+        "sanitized_summary": { "type": "string", "minLength": 20, "maxLength": 240 },
+        "sanitized_narrative": { "type": "string", "minLength": 80, "maxLength": 1200 },
+        "public_safe_facts": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": { "type": "string", "minLength": 8, "maxLength": 180 }
+        },
+        "safety_note": { "type": "string", "minLength": 15, "maxLength": 240 },
+        "cta_intent": { "enum": ["provide_vehicle_details_for_assessment", "contact_for_conditional_assessment"] }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["asset_id", "relative_package_path", "mime", "width", "height", "sha256", "sanitization_status", "metadata_inspection", "alt_text", "public_use_approval_status"],
+        "properties": {
+          "asset_id": { "type": "string", "pattern": "^asset_[a-z0-9_-]{4,64}$" },
+          "relative_package_path": { "type": "string", "pattern": "^assets/[a-z0-9][a-z0-9._-]*$" },
+          "mime": { "enum": ["image/svg+xml"] },
+          "width": { "const": 1200 },
+          "height": { "const": 630 },
+          "sha256": { "$ref": "#/$defs/sha256" },
+          "sanitization_status": { "const": "sanitized" },
+          "metadata_inspection": { "const": "passed_no_exif_gps" },
+          "alt_text": { "type": "string", "minLength": 10, "maxLength": 160 },
+          "public_use_approval_status": { "const": "approved_synthetic" }
+        }
+      }
+    },
+    "approval_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorization_evidence_opaque_reference", "authorization_verified", "sanitization_reviewed", "approved_for_export", "reviewer_role", "source_hashes", "candidate_hash", "created_at", "updated_at"],
+      "properties": {
+        "authorization_evidence_opaque_reference": { "type": "string", "pattern": "^auth_[a-z0-9_-]{8,64}$" },
+        "authorization_verified": { "const": true },
+        "sanitization_reviewed": { "const": true },
+        "approved_for_export": { "const": true },
+        "reviewer_role": { "const": "owner" },
+        "source_hashes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "sha256"],
+            "properties": {
+              "kind": { "enum": ["sanitized_projection", "approved_asset"] },
+              "sha256": { "$ref": "#/$defs/sha256" }
+            }
+          }
+        },
+        "candidate_hash": { "$ref": "#/$defs/sha256" },
+        "created_at": { "$ref": "#/$defs/timestamp" },
+        "updated_at": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "carkey_owned_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["final_slug", "canonical_url", "published_commit", "deployment_id", "published_url", "sitemap_entry", "final_schema", "publication_date"],
+      "properties": {
+        "final_slug": { "type": "null" },
+        "canonical_url": { "type": "null" },
+        "published_commit": { "type": "null" },
+        "deployment_id": { "type": "null" },
+        "published_url": { "type": "null" },
+        "sitemap_entry": { "const": "pending" },
+        "final_schema": { "const": "pending" },
+        "publication_date": { "type": "null" }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "cleanRoute": { "type": "string", "pattern": "^/(?:[a-z0-9]+(?:-[a-z0-9]+)*)?$" }
+  }
+}

@@ -13,6 +13,9 @@
     "validate:deployment-boundary": "node scripts/validate-public-deployment.mjs",
     "validate:schema-rollout": "node scripts/validate-schema-image-pilot.mjs --compare-baseline",
     "validate:seo-pilot": "node scripts/validate-schema-image-pilot.mjs",
+    "publication:verify-contract": "node scripts/publication/verify-contract-mirror.mjs",
+    "publication:import": "node scripts/publication/import-casepilot-package.mjs",
+    "test:publication": "node --test scripts/publication/publication-import.test.mjs",
     "test:seo-foundation": "node scripts/test-seo-foundation.mjs && node scripts/test-conversion-tracking.mjs && node scripts/generate-seo-inventory.mjs --check && node scripts/render-business-metrics.mjs --check && node scripts/validate-seo-governance.mjs --self-test && node scripts/validate-public-deployment.mjs --self-test && node scripts/validate-schema-image-pilot.mjs --self-test",
     "validate:site": "node scripts/validate-static-site.mjs"
   },

@@ -23,6 +23,8 @@ memory/
 ops/
 posts/
 drafts/
+contracts/
+tests/
 
 # Internal tooling and platform integrations
 *.py

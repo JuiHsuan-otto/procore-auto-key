@@ -7,6 +7,8 @@ const ROOT = process.cwd();
 const REQUIRED_IGNORE_RULES = [
   "/data/",
   "/scripts/",
+  "contracts/",
+  "tests/",
   "/masking_tool.js",
   "/masking_tool_fixed.js",
   "/requirements-content-ops.txt",
