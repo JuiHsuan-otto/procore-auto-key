@@ -149,7 +149,7 @@ test("verifies the hashed action package and prepares a deterministic CarKey-own
   assert.equal(first.registry_sync.tool, "publish_tool.py");
   assert.deepEqual(first.registry_sync.mutated_paths, ["blog.json", "cases.json", "sitemap.xml"]);
   assert.equal(first.registry_sync.arguments.includes("--preserve-schema-governed-html"), true);
-  assert.deepEqual(first.operations.internal_link_targets, []);
+  assert.deepEqual(first.operations.internal_link_targets, ["rescue-request.html"]);
   assert.equal(first.operations.files_to_modify.includes("blog.html"), false);
   assert.equal(first.operations.files_to_modify.includes("cases.html"), false);
   assert.equal(first.operations.files_to_modify.includes("all-keys-lost-service.html"), false);
@@ -243,6 +243,10 @@ test("runs publish, correct, and withdraw in fresh disposable worktrees with ide
     assert.equal(replay.operation, "reused");
     assert.equal(await readFile(path.join(publishWorktree, "blog.html"), "utf8"), governedBlogHtml);
     assert.equal(await readFile(path.join(publishWorktree, "cases.html"), "utf8"), governedCasesHtml);
+    const publishedHtml = await readFile(path.join(publishWorktree, publishPlan.public_page.path), "utf8");
+    assert.doesNotMatch(publishedHtml, /synthetic|fixture|合成/i);
+    assert.doesNotMatch(publishPlan.asset_copies[0].destination, /synthetic|fixture/i);
+    assert.equal((await readFile(path.join(publishWorktree, "rescue-request.html"), "utf8")).split(`href="/${publishPlan.public_page.path.replace(/\.html$/, "")}#`).length - 1, 3);
     assert.equal((await verifyAppliedPublication({ action: publishAction, plan: publishPlan, draftDirectory: publishDraft.draftDirectory, worktreeRoot: publishWorktree })).resultingPublicContentHash, published.receipt.resulting_public_content_hash);
     const publishCommit = commitWorktree(publishWorktree, "test: synthetic publication");
     const publishReceipt = await finalizeApplyReceiptCommit(published.receiptPath, publishCommit);

@@ -36,6 +36,16 @@ function safeJson(value) {
   return canonicalPromotionJson(value).replaceAll("<", "\\u003c");
 }
 
+function publicFacingText(value) {
+  return String(value)
+    .replace(/synthetic|fixture/gi, "")
+    .replaceAll("純合成案例模擬", "本案例說明")
+    .replaceAll("合成案例", "處理案例")
+    .replaceAll("純合成", "案例")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 async function readBounded(filePath, code, max = 5 * 1024 * 1024) {
   const info = await lstat(filePath).catch(() => null);
   if (!info?.isFile() || info.isSymbolicLink() || info.size > max) fail(code, "Expected a bounded regular file");
@@ -100,7 +110,7 @@ function renderPublicPage({ action, plan, model, contact, existingHtml = null })
       { "@type": "ListItem", position: 3, name: page.title, item: canonical }
     ]
   };
-  const facts = model.public_safe_facts.map((fact) => `        <li>${escapeHtml(fact)}</li>`).join("\n");
+  const facts = model.public_safe_facts.map((fact) => `        <li>${escapeHtml(publicFacingText(fact))}</li>`).join("\n");
   const related = [...new Set(["/cases", model.related_service_route, ...model.internal_links])].slice(0, 4).map((route) => `        <a href="${escapeHtml(route)}">相關服務與案例</a>`).join("\n");
   return `<!doctype html>
 <html lang="zh-TW">
@@ -132,18 +142,18 @@ function renderPublicPage({ action, plan, model, contact, existingHtml = null })
     <header class="panel">
       <p>${escapeHtml(model.generalized_location)}｜${escapeHtml(model.vehicle.brand)} ${escapeHtml(model.vehicle.model)}</p>
       <h1>${escapeHtml(page.title)}</h1>
-      <p>${escapeHtml(model.sanitized_summary)}</p>
+      <p>${escapeHtml(publicFacingText(model.sanitized_summary))}</p>
       <img src="/${asset.destination}" width="${asset.width}" height="${asset.height}" alt="${escapeHtml(asset.alt)}">
     </header>
     <article class="panel">
-      <h2>案例概況</h2>
-      <p>${escapeHtml(model.sanitized_narrative)}</p>
-      <h2>公開安全資訊</h2>
+      <h2 id="case-overview">案例概況</h2>
+      <p>${escapeHtml(publicFacingText(model.sanitized_narrative))}</p>
+      <h2 id="public-safety">公開安全資訊</h2>
       <ul>
 ${facts}
       </ul>
-      <h2>安全提醒</h2>
-      <p>${escapeHtml(model.safety_note)}</p>
+      <h2 id="service-reminder">安全提醒</h2>
+      <p>${escapeHtml(publicFacingText(model.safety_note))}</p>
       <p><a class="cta" href="${escapeHtml(contact.telephone)}">電話聯絡</a><a class="cta" href="${escapeHtml(contact.line)}">LINE 諮詢</a></p>
       <nav aria-label="相關連結">
 ${related}
@@ -186,7 +196,8 @@ function backlinkMarker(publicRecordId) {
 async function upsertBacklink(filePath, action, plan) {
   const html = (await readBounded(filePath, "APPLY_INTERNAL_LINK_INVALID")).toString("utf8");
   const marker = backlinkMarker(action.public_record_id);
-  const block = `${marker.start}<a href="${routeForFile(plan.public_page.path)}">${escapeHtml(plan.public_page.title)}</a>${marker.end}`;
+  const route = routeForFile(plan.public_page.path);
+  const block = `${marker.start}<aside aria-label="相關到場案例"><strong>${escapeHtml(plan.public_page.title)}</strong><a href="${route}#case-overview">案例概況</a><a href="${route}#public-safety">公開安全資訊</a><a href="${route}#service-reminder">服務前提醒</a></aside>${marker.end}`;
   const pattern = new RegExp(`${marker.start.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${marker.end.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`);
   const next = pattern.test(html) ? html.replace(pattern, block) : html.replace(/<\/body>/i, `${block}\n</body>`);
   if (next === html && !pattern.test(html)) fail("APPLY_INTERNAL_LINK_INVALID", "Internal-link target has no body element");
