@@ -87,9 +87,9 @@ export function changedPathDigest(paths) {
 
 export function resolveVercelPreviewUrl(commentUrls, inspection) {
   const candidates = [
-    ...[...(commentUrls ?? [])].reverse(),
     ...(inspection?.aliases ?? []),
     inspection?.url,
+    ...[...(commentUrls ?? [])].reverse(),
   ];
   for (const candidate of candidates) {
     if (typeof candidate !== "string" || !candidate.trim()) continue;

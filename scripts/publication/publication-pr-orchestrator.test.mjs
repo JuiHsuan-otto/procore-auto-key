@@ -127,7 +127,7 @@ test("changed-path digest is sorted and rejects unsafe paths", () => {
 });
 
 test("resolves a Preview URL from a Vercel comment or deployment metadata", () => {
-  assert.equal(resolveVercelPreviewUrl(["https://comment-preview.vercel.app"], { url: "fallback.vercel.app" }), "https://comment-preview.vercel.app");
+  assert.equal(resolveVercelPreviewUrl(["https://comment-preview.vercel.app"], {}), "https://comment-preview.vercel.app");
   assert.equal(resolveVercelPreviewUrl([], { aliases: ["alias-preview.vercel.app"], url: "fallback.vercel.app" }), "https://alias-preview.vercel.app");
   assert.equal(resolveVercelPreviewUrl([], { url: "fallback.vercel.app" }), "https://fallback.vercel.app");
   expectCode(() => resolveVercelPreviewUrl([], { url: "https://example.com" }), "PR_PREVIEW_BINDING_INVALID");
