@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">ProCore 合成案例預覽</title>
+  <desc id="description">Toyota VIOS 智慧鑰匙全丟案例的非實車示意圖</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050505"/>
+      <stop offset="1" stop-color="#262626"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <rect x="42" y="42" width="1116" height="546" rx="28" fill="none" stroke="#d4af37" stroke-width="3"/>
+  <text x="90" y="160" fill="#d4af37" font-family="sans-serif" font-size="34" letter-spacing="8">PROCORE AUTO KEY</text>
+  <text x="90" y="280" fill="#ffffff" font-family="sans-serif" font-size="58" font-weight="700">2019 TOYOTA VIOS</text>
+  <text x="90" y="370" fill="#e5e5e5" font-family="sans-serif" font-size="42">智慧鑰匙全丟｜合成案例草稿</text>
+  <text x="90" y="485" fill="#a3a3a3" font-family="sans-serif" font-size="28">依實車狀態與現場條件確認</text>
+  <circle cx="1030" cy="474" r="58" fill="#d4af37"/>
+  <circle cx="1030" cy="474" r="22" fill="#050505"/>
+</svg>
