@@ -3,7 +3,9 @@
 
 This tool updates blog.json, the embedded blogData array in blog.html,
 the embedded caseData array in cases.html when case metadata is provided,
-and sitemap.xml. It does not create the article HTML itself.
+and sitemap.xml. Governed publication flows may preserve the immutable HTML
+embeds while updating the JSON registries. It does not create the article HTML
+itself.
 """
 
 from __future__ import annotations
@@ -75,7 +77,8 @@ def sync_blog(args: argparse.Namespace, link: str) -> None:
     blog_json = ROOT / "blog.json"
     items = dedupe_prepend(read_json(blog_json), item)
     write_json(blog_json, items)
-    replace_js_array(ROOT / "blog.html", "blogData", items)
+    if not args.preserve_schema_governed_html:
+        replace_js_array(ROOT / "blog.html", "blogData", items)
 
 
 def sync_cases(args: argparse.Namespace, link: str) -> None:
@@ -88,9 +91,10 @@ def sync_cases(args: argparse.Namespace, link: str) -> None:
         "img": args.case_img,
         "link": link,
     }
-    cases_path = ROOT / "cases.html"
-    cases = dedupe_prepend(extract_js_array(cases_path, "caseData"), case_item)
-    replace_js_array(cases_path, "caseData", cases)
+    if not args.preserve_schema_governed_html:
+        cases_path = ROOT / "cases.html"
+        cases = dedupe_prepend(extract_js_array(cases_path, "caseData"), case_item)
+        replace_js_array(cases_path, "caseData", cases)
     sync_cases_json(args)
 
 
@@ -126,16 +130,17 @@ def sync_sitemap(link: str, lastmod: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def withdraw_publication(link: str) -> None:
+def withdraw_publication(args: argparse.Namespace, link: str) -> None:
     blog_json = ROOT / "blog.json"
     blog_items = [entry for entry in read_json(blog_json) if entry.get("link") != link]
     write_json(blog_json, blog_items)
-    replace_js_array(ROOT / "blog.html", "blogData", blog_items)
-
     cases_path = ROOT / "cases.html"
     cases = extract_js_array(cases_path, "caseData")
     removed_images = {entry.get("img") for entry in cases if entry.get("link") == link}
-    replace_js_array(cases_path, "caseData", [entry for entry in cases if entry.get("link") != link])
+    if args.case_img:
+        removed_images.add(args.case_img)
+    if not args.preserve_schema_governed_html:
+        replace_js_array(cases_path, "caseData", [entry for entry in cases if entry.get("link") != link])
     cases_json = ROOT / "cases.json"
     write_json(cases_json, [entry for entry in read_json(cases_json) if entry.get("img") not in removed_images])
 
@@ -166,13 +171,18 @@ def main() -> None:
     parser.add_argument("--case-img", default="")
     parser.add_argument("--case-type", default="")
     parser.add_argument("--page-only", action="store_true", help="Update sitemap only for a non-article page")
+    parser.add_argument(
+        "--preserve-schema-governed-html",
+        action="store_true",
+        help="Update JSON registries and sitemap without rewriting immutable blog.html/cases.html embeds",
+    )
     args = parser.parse_args()
 
     ROOT = args.root.resolve()
 
     if args.withdraw:
         link = clean_link(args.withdraw)
-        withdraw_publication(link)
+        withdraw_publication(args, link)
         print(f"WITHDRAWN_INDEX={link}")
         return
     if not all([args.title, args.path, args.category, args.summary]):

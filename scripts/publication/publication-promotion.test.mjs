@@ -147,6 +147,12 @@ test("verifies the hashed action package and prepares a deterministic CarKey-own
   assert.equal(first.plan_hash.length, 64);
   assert.equal(first.operations.canonical_operation, "create");
   assert.equal(first.registry_sync.tool, "publish_tool.py");
+  assert.deepEqual(first.registry_sync.mutated_paths, ["blog.json", "cases.json", "sitemap.xml"]);
+  assert.equal(first.registry_sync.arguments.includes("--preserve-schema-governed-html"), true);
+  assert.deepEqual(first.operations.internal_link_targets, []);
+  assert.equal(first.operations.files_to_modify.includes("blog.html"), false);
+  assert.equal(first.operations.files_to_modify.includes("cases.html"), false);
+  assert.equal(first.operations.files_to_modify.includes("all-keys-lost-service.html"), false);
   assert.equal(first.publication_authority.apply_automated, false);
   assert.equal(first.network_used, false);
 });
@@ -224,6 +230,8 @@ test("runs publish, correct, and withdraw in fresh disposable worktrees with ide
     const publishAction = await loadPublishAction();
     const publishDraft = await importedDraft(candidatePackage, publishWorktree);
     const publishPlan = await preparePromotionPlan({ action: publishAction, draftDirectory: publishDraft.draftDirectory, repositoryRoot: publishWorktree, currentBaseSha: baseSha });
+    const governedBlogHtml = await readFile(path.join(publishWorktree, "blog.html"), "utf8");
+    const governedCasesHtml = await readFile(path.join(publishWorktree, "cases.html"), "utf8");
     const originalFetch = globalThis.fetch;
     let networkCalled = false;
     globalThis.fetch = async () => { networkCalled = true; throw new Error("network forbidden"); };
@@ -233,6 +241,8 @@ test("runs publish, correct, and withdraw in fresh disposable worktrees with ide
     assert.equal(networkCalled, false);
     assert.equal(published.operation, "created");
     assert.equal(replay.operation, "reused");
+    assert.equal(await readFile(path.join(publishWorktree, "blog.html"), "utf8"), governedBlogHtml);
+    assert.equal(await readFile(path.join(publishWorktree, "cases.html"), "utf8"), governedCasesHtml);
     assert.equal((await verifyAppliedPublication({ action: publishAction, plan: publishPlan, draftDirectory: publishDraft.draftDirectory, worktreeRoot: publishWorktree })).resultingPublicContentHash, published.receipt.resulting_public_content_hash);
     const publishCommit = commitWorktree(publishWorktree, "test: synthetic publication");
     const publishReceipt = await finalizeApplyReceiptCommit(published.receiptPath, publishCommit);
