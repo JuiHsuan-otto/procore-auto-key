@@ -17,6 +17,7 @@ import {
   preparePublicationOrchestration,
   pushPublicationBranch,
   resolveVercelPreviewUrl,
+  selectVercelDeploymentCheck,
   stagePublicationChangesSync,
   validateCommitEvidence,
   validatePrEvidence,
@@ -115,8 +116,7 @@ async function verifyDraftPr({ plan, commitEvidence, prEvidence, prOutput, previ
     required_status: "success"
   };
   validatePrEvidence(updated, plan, commitEvidence);
-  const vercelCheck = checks.find((check) => check.name === "Vercel");
-  if (!vercelCheck?.url) throw new PublicationPrError("PR_PREVIEW_BINDING_INVALID", "Vercel check is missing");
+  const vercelCheck = selectVercelDeploymentCheck(checks);
   const rawId = new URL(vercelCheck.url).pathname.split("/").filter(Boolean).at(-1);
   const deploymentId = rawId.startsWith("dpl_") ? rawId : `dpl_${rawId}`;
   const comments = JSON.parse(run("gh", ["api", `repos/${CARKEY_REPOSITORY}/issues/${view.number}/comments`], process.cwd(), "PR_PREVIEW_BINDING_INVALID"));

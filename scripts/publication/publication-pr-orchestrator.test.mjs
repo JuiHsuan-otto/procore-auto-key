@@ -21,6 +21,7 @@ import {
   expectedPromotionPaths,
   preparePublicationOrchestration,
   resolveVercelPreviewUrl,
+  selectVercelDeploymentCheck,
   stagePublicationChangesSync,
   validateCommitEvidence,
   validatePrEvidence,
@@ -130,6 +131,15 @@ test("resolves a Preview URL from a Vercel comment or deployment metadata", () =
   assert.equal(resolveVercelPreviewUrl([], { aliases: ["alias-preview.vercel.app"], url: "fallback.vercel.app" }), "https://alias-preview.vercel.app");
   assert.equal(resolveVercelPreviewUrl([], { url: "fallback.vercel.app" }), "https://fallback.vercel.app");
   expectCode(() => resolveVercelPreviewUrl([], { url: "https://example.com" }), "PR_PREVIEW_BINDING_INVALID");
+});
+
+test("selects the CarKey deployment when Vercel reports named project contexts", () => {
+  const selected = selectVercelDeploymentCheck([
+    { name: "Vercel – repo", url: "https://vercel.com/team/repo/dpl_other" },
+    { name: "Vercel – procore-auto-key", url: "https://vercel.com/team/procore-auto-key/dpl_carkey" }
+  ]);
+  assert.equal(selected.name, "Vercel – procore-auto-key");
+  assert.equal(selectVercelDeploymentCheck([{ name: "Vercel", url: "https://vercel.com/team/project/dpl_legacy" }]).name, "Vercel");
 });
 
 test("emits and verifies a deterministic hashed PR receipt package", async () => {

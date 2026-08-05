@@ -104,6 +104,14 @@ export function resolveVercelPreviewUrl(commentUrls, inspection) {
   fail("PR_PREVIEW_BINDING_INVALID", "Preview URL is missing from Vercel evidence");
 }
 
+export function selectVercelDeploymentCheck(checks) {
+  const candidates = (checks ?? []).filter((check) => typeof check?.name === "string" && check.name.startsWith("Vercel") && typeof check.url === "string");
+  const projectCheck = candidates.find((check) => check.url.includes("/procore-auto-key/"));
+  const selected = projectCheck ?? candidates.find((check) => check.name === "Vercel") ?? null;
+  if (!selected) fail("PR_PREVIEW_BINDING_INVALID", "CarKey Vercel deployment check is missing");
+  return selected;
+}
+
 export function computePublicationPrReceiptHash(receipt) {
   const input = structuredClone(receipt);
   input.receipt_hash = "";
