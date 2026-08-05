@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.casepilot.local/publication-pr-receipt/v1/publication-pr-receipt.schema.json",
+  "title": "Publication PR Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version", "receipt_version", "receipt_type", "source_system", "target_system", "synthetic",
+    "candidate_id", "publication_action_id", "action_hash", "promotion_plan_hash", "apply_receipt_hash",
+    "public_record_id", "publication_revision", "repository", "pull_request", "checks", "preview",
+    "publication_status", "merged_sha", "production_deployment_id", "published_url", "published_at",
+    "files", "receipt_hash", "package_hash", "created_at", "no_network_generation", "human_review_required"
+  ],
+  "properties": {
+    "contract_version": { "const": "1.0.0" },
+    "receipt_version": { "const": "publication-pr-receipt/v1" },
+    "receipt_type": { "const": "publication_pr" },
+    "source_system": { "const": "carkey" },
+    "target_system": { "const": "casepilot" },
+    "synthetic": { "const": true },
+    "candidate_id": { "type": "string", "pattern": "^cpc_[a-f0-9]{16}$" },
+    "publication_action_id": { "type": "string", "pattern": "^pca_[a-f0-9]{16}$" },
+    "action_hash": { "$ref": "#/$defs/sha256" },
+    "promotion_plan_hash": { "$ref": "#/$defs/sha256" },
+    "apply_receipt_hash": { "$ref": "#/$defs/sha256" },
+    "public_record_id": { "type": "string", "pattern": "^pcr_[a-f0-9]{16}$" },
+    "publication_revision": { "type": "integer", "minimum": 1 },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["full_name", "base_branch", "base_sha", "feature_branch", "commit_sha", "commit_tree_sha", "commit_parent_sha", "changed_paths", "changed_path_digest"],
+      "properties": {
+        "full_name": { "const": "JuiHsuan-otto/procore-auto-key" },
+        "base_branch": { "const": "main" },
+        "base_sha": { "$ref": "#/$defs/gitSha" },
+        "feature_branch": { "type": "string", "pattern": "^publication/synthetic-[a-z0-9-]+(?:-r[0-9]+)?$" },
+        "commit_sha": { "$ref": "#/$defs/gitSha" },
+        "commit_tree_sha": { "$ref": "#/$defs/gitSha" },
+        "commit_parent_sha": { "$ref": "#/$defs/gitSha" },
+        "changed_paths": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/repoPath" } },
+        "changed_path_digest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "pull_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["number", "url", "state", "draft", "head_sha", "base_sha", "created_at", "title_digest", "body_digest"],
+      "properties": {
+        "number": { "type": "integer", "minimum": 1 },
+        "url": { "type": "string", "pattern": "^https://github\\.com/JuiHsuan-otto/procore-auto-key/pull/[1-9][0-9]*$" },
+        "state": { "const": "OPEN" },
+        "draft": { "const": true },
+        "head_sha": { "$ref": "#/$defs/gitSha" },
+        "base_sha": { "$ref": "#/$defs/gitSha" },
+        "created_at": { "$ref": "#/$defs/timestamp" },
+        "title_digest": { "$ref": "#/$defs/sha256" },
+        "body_digest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "required_status"],
+      "properties": {
+        "summary": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "status", "required", "url"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "status": { "enum": ["success", "neutral", "skipped"] },
+              "required": { "type": "boolean" },
+              "url": { "type": ["string", "null"], "format": "uri" }
+            }
+          }
+        },
+        "required_status": { "const": "success" }
+      }
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deployment_id", "url", "source_sha", "state"],
+      "properties": {
+        "deployment_id": { "type": ["string", "null"], "pattern": "^dpl_[A-Za-z0-9]+$" },
+        "url": { "type": ["string", "null"], "format": "uri" },
+        "source_sha": { "$ref": "#/$defs/gitSha" },
+        "state": { "const": "READY" }
+      }
+    },
+    "publication_status": { "const": "pr_created" },
+    "merged_sha": { "type": "null" },
+    "production_deployment_id": { "type": "null" },
+    "published_url": { "type": "null" },
+    "published_at": { "type": "null" },
+    "files": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "byte_length", "mime"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^evidence/[A-Za-z0-9._/-]+$" },
+          "sha256": { "$ref": "#/$defs/sha256" },
+          "byte_length": { "type": "integer", "minimum": 1, "maximum": 2097152 },
+          "mime": { "const": "application/json" }
+        }
+      }
+    },
+    "receipt_hash": { "$ref": "#/$defs/sha256" },
+    "package_hash": { "$ref": "#/$defs/sha256" },
+    "created_at": { "$ref": "#/$defs/timestamp" },
+    "no_network_generation": { "const": true },
+    "human_review_required": { "const": true }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "gitSha": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "repoPath": { "type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$" },
+    "timestamp": { "type": "string", "format": "date-time" }
+  }
+}
