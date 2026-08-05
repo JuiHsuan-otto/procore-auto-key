@@ -123,7 +123,9 @@ async function verifyDraftPr({ plan, commitEvidence, prEvidence, prOutput, previ
   const previewUrls = comments.flatMap((comment) => [...String(comment.body ?? "").matchAll(/\[Preview\]\((https:\/\/[^)]+)\)/g)].map((match) => match[1]));
   const inspection = JSON.parse(run("vercel", ["inspect", deploymentId, "--json"], process.cwd(), "PR_PREVIEW_BINDING_INVALID"));
   const previewUrl = resolveVercelPreviewUrl(previewUrls, inspection);
-  const httpStatus = Number(run("curl", ["-L", "--max-time", "30", "--silent", "--show-error", "--output", "/dev/null", "--write-out", "%{http_code}", previewUrl], process.cwd(), "PR_PREVIEW_HTTP_FAILED"));
+  const [httpCode, effectiveUrl] = run("curl", ["-L", "--max-time", "30", "--silent", "--show-error", "--output", "/dev/null", "--write-out", "%{http_code}\\n%{url_effective}", previewUrl], process.cwd(), "PR_PREVIEW_HTTP_FAILED").split("\n");
+  const httpStatus = Number(httpCode);
+  const effectiveHost = new URL(effectiveUrl).hostname;
   const preview = {
     evidence_version: "publication-preview-evidence/v1",
     deployment_id: inspection.id,
@@ -132,10 +134,12 @@ async function verifyDraftPr({ plan, commitEvidence, prEvidence, prOutput, previ
     state: inspection.readyState,
     target: inspection.target,
     http_status: httpStatus,
+    access_mode: effectiveHost === new URL(previewUrl).hostname ? "anonymous" : "vercel_sso_protected",
+    content_verification: { status: "pending", method: "authenticated_browser", checks: [] },
     production_promoted: false,
     verified_at: verifiedAt
   };
-  validatePreviewEvidence(preview, commitEvidence);
+  validatePreviewEvidence(preview, commitEvidence, { requireContentVerification: false });
   await writeCanonicalJson(prOutput, updated);
   await writeCanonicalJson(previewOutput, preview);
   return { pr: updated, preview };

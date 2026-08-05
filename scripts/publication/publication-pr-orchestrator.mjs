@@ -218,9 +218,13 @@ export function validatePrEvidence(evidence, plan, commitEvidence) {
   return evidence;
 }
 
-export function validatePreviewEvidence(evidence, commitEvidence) {
+export function validatePreviewEvidence(evidence, commitEvidence, { requireContentVerification = true } = {}) {
   assertPublicSafe(evidence, "preview_evidence");
   if (!isPlainObject(evidence) || evidence.evidence_version !== "publication-preview-evidence/v1" || !/^dpl_[A-Za-z0-9]+$/.test(evidence.deployment_id) || typeof evidence.url !== "string" || !evidence.url.startsWith("https://") || evidence.source_sha !== commitEvidence.commit_sha || evidence.state !== "READY" || evidence.target !== "preview" || evidence.http_status !== 200 || evidence.production_promoted !== false) fail("PR_PREVIEW_BINDING_INVALID", "Preview evidence is not READY on the publication commit");
+  if (requireContentVerification) {
+    const content = evidence.content_verification;
+    if (!isPlainObject(content) || content.status !== "pass" || content.method !== "authenticated_browser" || !Array.isArray(content.checks) || !content.checks.length || content.checks.some((check) => !isPlainObject(check) || typeof check.id !== "string" || !check.id || check.status !== "pass")) fail("PR_PREVIEW_CONTENT_UNVERIFIED", "Preview content requires authenticated browser evidence");
+  }
   assertIso(evidence.verified_at, "preview_evidence.verified_at");
   return evidence;
 }

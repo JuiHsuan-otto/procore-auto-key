@@ -92,6 +92,17 @@ async function fixture() {
     state: "READY",
     target: "preview",
     http_status: 200,
+    access_mode: "vercel_sso_protected",
+    content_verification: {
+      status: "pass",
+      method: "authenticated_browser",
+      checks: [
+        { id: "metadata_and_schema", status: "pass" },
+        { id: "public_copy_and_assets", status: "pass" },
+        { id: "registries_and_links", status: "pass" },
+        { id: "security_headers", status: "pass" }
+      ]
+    },
     production_promoted: false,
     verified_at: "2026-08-05T01:33:00.000Z"
   };

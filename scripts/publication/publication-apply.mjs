@@ -39,6 +39,7 @@ function safeJson(value) {
 function publicFacingText(value) {
   return String(value)
     .replace(/synthetic|fixture/gi, "")
+    .replaceAll("這筆純合成案例模擬", "本案例說明")
     .replaceAll("純合成案例模擬", "本案例說明")
     .replaceAll("合成案例", "處理案例")
     .replaceAll("純合成", "案例")
