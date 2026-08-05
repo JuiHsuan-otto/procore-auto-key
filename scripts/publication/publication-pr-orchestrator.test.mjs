@@ -19,6 +19,7 @@ import {
   computePublicationPrReceiptHash,
   emitPublicationPrReceiptPackage,
   expectedPromotionPaths,
+  preparePublicationOrchestration,
   stagePublicationChangesSync,
   validateCommitEvidence,
   validatePrEvidence,
@@ -162,6 +163,8 @@ test("stages and commits exactly the promotion-plan paths in an owned worktree",
       await import("node:fs/promises").then(({ mkdir }) => mkdir(path.dirname(path.join(worktree, file)), { recursive: true }));
       await writeFile(path.join(worktree, file), "synthetic orchestrator test\n");
     }
+    const prepared = await preparePublicationOrchestration({ action: data.action, plan: data.plan, applyReceipt: data.applyReceipt, worktreeRoot: worktree, canonicalRepositoryRoot: repositoryRoot, featureBranch: branch });
+    assert.deepEqual(prepared.changed_paths, expectedPromotionPaths(data.plan));
     const staged = stagePublicationChangesSync({ plan: data.plan, worktreeRoot: worktree, canonicalRepositoryRoot: repositoryRoot, featureBranch: branch });
     assert.deepEqual(staged.changed_paths, expectedPromotionPaths(data.plan));
     const evidence = commitPublicationChanges({ plan: data.plan, worktreeRoot: worktree, featureBranch: branch, committedAt: "2026-08-05T01:35:00.000Z" });

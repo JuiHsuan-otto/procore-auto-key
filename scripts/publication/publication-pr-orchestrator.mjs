@@ -150,7 +150,12 @@ function worktreeChangedPaths(worktreeRoot, cached = false) {
   const args = cached
     ? ["diff", "--cached", "--name-only", "--diff-filter=ACDMRTUXB"]
     : ["status", "--porcelain=v1", "--untracked-files=all"];
-  const output = git(worktreeRoot, args, "PR_WORKTREE_STATE_INVALID");
+  let output;
+  try {
+    output = execFileSync("git", args, { cwd: worktreeRoot, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+  } catch {
+    fail("PR_WORKTREE_STATE_INVALID", "Unable to inspect publication worktree paths");
+  }
   return output ? output.split("\n").filter(Boolean).map((line) => cached ? line : line.slice(3)).sort() : [];
 }
 
