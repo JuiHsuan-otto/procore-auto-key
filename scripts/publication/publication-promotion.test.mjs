@@ -244,9 +244,9 @@ test("runs publish, correct, and withdraw in fresh disposable worktrees with ide
     assert.equal(await readFile(path.join(publishWorktree, "blog.html"), "utf8"), governedBlogHtml);
     assert.equal(await readFile(path.join(publishWorktree, "cases.html"), "utf8"), governedCasesHtml);
     const publishedHtml = await readFile(path.join(publishWorktree, publishPlan.public_page.path), "utf8");
-    assert.doesNotMatch(publishedHtml, /synthetic|fixture|合成/i);
+    assert.doesNotMatch(publishedHtml, /casepilot|synthetic|fixture|合成|公開草稿/i);
     assert.doesNotMatch(publishedHtml, /這筆本案例/);
-    assert.doesNotMatch(publishPlan.asset_copies[0].destination, /synthetic|fixture/i);
+    assert.doesNotMatch(publishPlan.asset_copies[0].destination, /casepilot|synthetic|fixture/i);
     assert.equal((await readFile(path.join(publishWorktree, "rescue-request.html"), "utf8")).split(`href="/${publishPlan.public_page.path.replace(/\.html$/, "")}#`).length - 1, 3);
     assert.equal((await verifyAppliedPublication({ action: publishAction, plan: publishPlan, draftDirectory: publishDraft.draftDirectory, worktreeRoot: publishWorktree })).resultingPublicContentHash, published.receipt.resulting_public_content_hash);
     const publishCommit = commitWorktree(publishWorktree, "test: synthetic publication");

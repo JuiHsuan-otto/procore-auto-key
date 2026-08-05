@@ -98,6 +98,7 @@ function publicFacingText(value) {
     .replaceAll("純合成案例模擬", "本案例說明")
     .replaceAll("合成案例", "處理案例")
     .replaceAll("純合成", "案例")
+    .replaceAll("公開草稿", "公開內容")
     .replace(/\s{2,}/g, " ")
     .trim();
 }
@@ -394,17 +395,17 @@ export async function preparePromotionPlan({ action, draftDirectory, repositoryR
   const branch = `content/casepilot-${action.action}-${action.action_id.slice(4)}`;
   const publicTitle = publicFacingText(candidate.title);
   const publicDescription = publicFacingText(candidate.description);
-  const assetCopies = action.action === "withdraw" ? [] : candidate.asset_plan.map((asset) => ({ source: asset.source, draft_path: asset.draft_path, destination: `img/casepilot/${action.public_record_id}/${publicAssetBasename(asset.source)}`, sha256: asset.sha256, width: asset.width, height: asset.height, alt: publicFacingText(asset.alt) }));
+  const assetCopies = action.action === "withdraw" ? [] : candidate.asset_plan.map((asset) => ({ source: asset.source, draft_path: asset.draft_path, destination: `img/cases/${action.public_record_id}/${publicAssetBasename(asset.source)}`, sha256: asset.sha256, width: asset.width, height: asset.height, alt: publicFacingText(asset.alt) }));
   const governedRegistryFlag = "--preserve-schema-governed-html";
   const withdrawAsset = action.asset_reviews[0]?.path
-    ? `/img/casepilot/${action.public_record_id}/${publicAssetBasename(action.asset_reviews[0].path)}`
+    ? `/img/cases/${action.public_record_id}/${publicAssetBasename(action.asset_reviews[0].path)}`
     : null;
   const registryArguments = action.action === "withdraw"
     ? ["--withdraw", `/${pagePath}`, governedRegistryFlag, ...(withdrawAsset ? ["--case-img", withdrawAsset] : [])]
     : [publicTitle, `/${pagePath}`, "到場處理案例", publicDescription, "--date", action.requested_publication.publication_date.replaceAll("-", "."), "--lastmod", action.requested_publication.publication_date, "--case-region", candidate.generalized_location, "--case-car", `${candidate.vehicle.brand} ${candidate.vehicle.model}`, "--case-img", `/${assetCopies[0].destination}`, "--case-type", "汽車鑰匙案例", governedRegistryFlag];
   const registryPaths = ["blog.json", "cases.json", "sitemap.xml"];
   const historyPath = `data/publication-actions/${action.public_record_id}.json`;
-  const assetPaths = action.action === "withdraw" ? action.asset_reviews.map((asset) => `img/casepilot/${action.public_record_id}/${publicAssetBasename(asset.path)}`) : assetCopies.map((asset) => asset.destination);
+  const assetPaths = action.action === "withdraw" ? action.asset_reviews.map((asset) => `img/cases/${action.public_record_id}/${publicAssetBasename(asset.path)}`) : assetCopies.map((asset) => asset.destination);
   const recoveryPaths = action.action === "withdraw" ? assetPaths.map((assetPath) => `data/publication-recovery/${action.public_record_id}/${path.posix.basename(assetPath)}`) : [];
   // The new page carries reviewed outbound internal links. Existing schema-governed
   // HTML remains byte-identical so the immutable rollout gate can keep enforcing

@@ -43,6 +43,7 @@ function publicFacingText(value) {
     .replaceAll("純合成案例模擬", "本案例說明")
     .replaceAll("合成案例", "處理案例")
     .replaceAll("純合成", "案例")
+    .replaceAll("公開草稿", "公開內容")
     .replace(/\s{2,}/g, " ")
     .trim();
 }
