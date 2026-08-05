@@ -16,6 +16,7 @@ import {
   prSha256,
   preparePublicationOrchestration,
   pushPublicationBranch,
+  resolveVercelPreviewUrl,
   stagePublicationChangesSync,
   validateCommitEvidence,
   validatePrEvidence,
@@ -120,9 +121,8 @@ async function verifyDraftPr({ plan, commitEvidence, prEvidence, prOutput, previ
   const deploymentId = rawId.startsWith("dpl_") ? rawId : `dpl_${rawId}`;
   const comments = JSON.parse(run("gh", ["api", `repos/${CARKEY_REPOSITORY}/issues/${view.number}/comments`], process.cwd(), "PR_PREVIEW_BINDING_INVALID"));
   const previewUrls = comments.flatMap((comment) => [...String(comment.body ?? "").matchAll(/\[Preview\]\((https:\/\/[^)]+)\)/g)].map((match) => match[1]));
-  const previewUrl = previewUrls.at(-1);
-  if (!previewUrl) throw new PublicationPrError("PR_PREVIEW_BINDING_INVALID", "Preview URL is missing");
   const inspection = JSON.parse(run("vercel", ["inspect", deploymentId, "--json"], process.cwd(), "PR_PREVIEW_BINDING_INVALID"));
+  const previewUrl = resolveVercelPreviewUrl(previewUrls, inspection);
   const httpStatus = Number(run("curl", ["-L", "--max-time", "30", "--silent", "--show-error", "--output", "/dev/null", "--write-out", "%{http_code}", previewUrl], process.cwd(), "PR_PREVIEW_HTTP_FAILED"));
   const preview = {
     evidence_version: "publication-preview-evidence/v1",

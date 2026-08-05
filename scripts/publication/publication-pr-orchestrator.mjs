@@ -85,6 +85,25 @@ export function changedPathDigest(paths) {
   return prSha256(canonicalPrJson(normalized));
 }
 
+export function resolveVercelPreviewUrl(commentUrls, inspection) {
+  const candidates = [
+    ...[...(commentUrls ?? [])].reverse(),
+    ...(inspection?.aliases ?? []),
+    inspection?.url,
+  ];
+  for (const candidate of candidates) {
+    if (typeof candidate !== "string" || !candidate.trim()) continue;
+    const raw = candidate.startsWith("https://") ? candidate : `https://${candidate}`;
+    try {
+      const url = new URL(raw);
+      if (url.protocol === "https:" && url.hostname.endsWith(".vercel.app") && url.pathname === "/") return url.toString().replace(/\/$/, "");
+    } catch {
+      // Try the next deployment-owned candidate.
+    }
+  }
+  fail("PR_PREVIEW_BINDING_INVALID", "Preview URL is missing from Vercel evidence");
+}
+
 export function computePublicationPrReceiptHash(receipt) {
   const input = structuredClone(receipt);
   input.receipt_hash = "";
