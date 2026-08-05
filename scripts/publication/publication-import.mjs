@@ -409,13 +409,13 @@ function assertImportReceipt(receipt, manifest, candidate) {
   }
 }
 
-async function assertSlugAvailable(slug, repositoryRoot, draftRoot, candidateId) {
+async function assertSlugAvailable(slug, repositoryRoot, draftRoot, candidateId, allowExistingSlug = false) {
   if (!CLEAN_SLUG.test(slug)) throw new PublicationImportError("SLUG_INVALID", "Proposed slug is invalid");
-  if (existsSync(path.join(repositoryRoot, `${slug}.html`))) throw new PublicationImportError("SLUG_COLLISION", "Proposed slug collides with a public HTML page");
+  if (!allowExistingSlug && existsSync(path.join(repositoryRoot, `${slug}.html`))) throw new PublicationImportError("SLUG_COLLISION", "Proposed slug collides with a public HTML page");
   const sitemap = await readFile(path.join(repositoryRoot, "sitemap.xml"), "utf8");
-  if (sitemap.includes(`https://www.carkey.com.tw/${slug}<`)) throw new PublicationImportError("SLUG_COLLISION", "Proposed slug collides with sitemap");
+  if (!allowExistingSlug && sitemap.includes(`https://www.carkey.com.tw/${slug}<`)) throw new PublicationImportError("SLUG_COLLISION", "Proposed slug collides with sitemap");
   const redirects = JSON.parse(await readFile(path.join(repositoryRoot, "vercel.json"), "utf8")).redirects ?? [];
-  if (redirects.some((redirect) => [redirect.source, redirect.destination].includes(`/${slug}`) || [redirect.source, redirect.destination].includes(`/${slug}.html`))) throw new PublicationImportError("SLUG_COLLISION", "Proposed slug collides with redirect policy");
+  if (!allowExistingSlug && redirects.some((redirect) => [redirect.source, redirect.destination].includes(`/${slug}`) || [redirect.source, redirect.destination].includes(`/${slug}.html`))) throw new PublicationImportError("SLUG_COLLISION", "Proposed slug collides with redirect policy");
   if (!existsSync(draftRoot)) return;
   for (const entry of await readdir(draftRoot, { withFileTypes: true })) {
     if (!entry.isDirectory() || entry.name === candidateId || !CANDIDATE_ID.test(entry.name)) continue;
@@ -441,6 +441,7 @@ function buildPublicModel(candidate, manifest) {
     public_brand: "極致核心 ProCore",
     publisher: "極致核心 ProCore Auto Key",
     candidate_id: candidate.candidate_id,
+    candidate_revision: candidate.candidate_revision,
     candidate_hash: candidate.candidate_hash,
     package_hash: manifest.package_hash,
     proposed_slug: copy.proposed_slug,
@@ -597,7 +598,7 @@ async function assertDeploymentExclusion(repositoryRoot) {
   if (!draftHeader || !draftHeader.headers?.some((header) => header.key.toLowerCase() === "x-robots-tag" && /noindex/i.test(header.value))) throw new PublicationImportError("DEPLOY_EXCLUSION_MISSING", "Vercel draft noindex defense is missing");
 }
 
-export async function importPublicationPackage({ packageDirectory, repositoryRoot, draftRoot = path.join(repositoryRoot, "drafts/casepilot") }) {
+export async function importPublicationPackage({ packageDirectory, repositoryRoot, draftRoot = path.join(repositoryRoot, "drafts/casepilot"), allowExistingSlug = false }) {
   await assertDeploymentExclusion(repositoryRoot);
   const preliminaryManifest = await loadManifest(packageDirectory);
   const candidateDirectory = path.join(draftRoot, preliminaryManifest.candidate_id);
@@ -613,7 +614,7 @@ export async function importPublicationPackage({ packageDirectory, repositoryRoo
   }
 
   const { packageRoot, manifest, candidate } = await verifyPublicationPackage(packageDirectory, repositoryRoot);
-  await assertSlugAvailable(candidate.proposed_public_copy.proposed_slug, repositoryRoot, draftRoot, candidate.candidate_id);
+  await assertSlugAvailable(candidate.proposed_public_copy.proposed_slug, repositoryRoot, draftRoot, candidate.candidate_id, allowExistingSlug);
   const model = buildPublicModel(candidate, manifest);
   const html = renderDraftHtml(model);
   validateDraftHtml(html, model);

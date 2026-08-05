@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.carkey-casepilot.local/publication-action/v1/publication-action-receipt.schema.json",
+  "title": "Publication Action Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "receipt_version", "receipt_hash", "previous_receipt_hash", "action_id", "action_hash", "action", "action_revision", "plan_hash", "state", "public_record_id", "candidate_id", "candidate_revision", "candidate_hash", "package_hash", "carkey_base_sha", "worktree_path", "resulting_changed_paths", "resulting_public_content_hash", "validation_results", "result", "rollback", "branch", "resulting_commit", "pull_request_url", "canonical_url", "deployment_id", "sitemap_modified", "redirects_modified", "public_page_modified", "applied_at", "verified_at", "synthetic", "network_used"],
+  "properties": {
+    "contract_version": { "const": "1.0.0" },
+    "receipt_version": { "const": "publication-action-receipt/v1" },
+    "receipt_hash": { "$ref": "#/$defs/sha256" },
+    "previous_receipt_hash": { "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+    "action_id": { "type": "string", "pattern": "^pca_[a-f0-9]{16}$" },
+    "action_hash": { "$ref": "#/$defs/sha256" },
+    "action": { "enum": ["publish", "correct", "withdraw"] },
+    "action_revision": { "type": "integer", "minimum": 1 },
+    "plan_hash": { "$ref": "#/$defs/sha256" },
+    "state": { "enum": ["planned", "applied_local", "corrected_local", "withdrawn_local", "pr_open", "merged", "production_verified", "rolled_back", "rejected"] },
+    "public_record_id": { "type": "string", "pattern": "^pcr_[a-f0-9]{16}$" },
+    "candidate_id": { "type": "string", "pattern": "^cpc_[a-f0-9]{16}$" },
+    "candidate_revision": { "type": "integer", "minimum": 1 },
+    "candidate_hash": { "$ref": "#/$defs/sha256" },
+    "package_hash": { "$ref": "#/$defs/sha256" },
+    "carkey_base_sha": { "$ref": "#/$defs/gitSha" },
+    "worktree_path": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+    "resulting_changed_paths": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+    "resulting_public_content_hash": { "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+    "validation_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status"],
+        "properties": { "id": { "type": "string" }, "status": { "enum": ["pass", "fail"] } }
+      }
+    },
+    "result": { "enum": ["planned", "created", "reused", "rejected"] },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "verified"],
+      "properties": { "command": { "oneOf": [{ "type": "string" }, { "type": "null" }] }, "verified": { "type": "boolean" } }
+    },
+    "branch": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+    "resulting_commit": { "oneOf": [{ "$ref": "#/$defs/gitSha" }, { "type": "null" }] },
+    "pull_request_url": { "oneOf": [{ "type": "string", "format": "uri", "pattern": "^https://github\\.com/" }, { "type": "null" }] },
+    "canonical_url": { "oneOf": [{ "type": "string", "format": "uri", "pattern": "^https://www\\.carkey\\.com\\.tw/" }, { "type": "null" }] },
+    "deployment_id": { "oneOf": [{ "type": "string", "pattern": "^dpl_[A-Za-z0-9]+$" }, { "type": "null" }] },
+    "sitemap_modified": { "type": "boolean" },
+    "redirects_modified": { "type": "boolean" },
+    "public_page_modified": { "type": "boolean" },
+    "applied_at": { "oneOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }] },
+    "verified_at": { "oneOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }] },
+    "synthetic": { "const": true },
+    "network_used": { "const": false }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "gitSha": { "type": "string", "pattern": "^[a-f0-9]{40}$" }
+  }
+}
