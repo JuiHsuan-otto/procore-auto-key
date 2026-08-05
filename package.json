@@ -5,6 +5,7 @@
     "optimize:images": "node scripts/optimize-referenced-images.mjs",
     "audit:measurement": "node scripts/audit-measurement.mjs",
     "test:tracking-runtime": "node scripts/test-conversion-tracking.mjs",
+    "test:intake": "node scripts/test-rescue-request-intake.mjs",
     "report:ga-gsc": "node scripts/reconcile-ga-gsc.mjs",
     "seo:inventory": "node scripts/generate-seo-inventory.mjs",
     "seo:baseline": "node scripts/check-production-baseline.mjs",
