@@ -97,8 +97,9 @@ def sync_cases(args: argparse.Namespace, link: str) -> None:
 def sync_cases_json(args: argparse.Namespace) -> None:
     path = ROOT / "cases.json"
     cases = read_json(path)
+    existing = next((entry for entry in cases if entry.get("img") == args.case_img), None)
     kept = [entry for entry in cases if entry.get("img") != args.case_img]
-    next_id = max([int(entry.get("id", 0)) for entry in kept] or [0]) + 1
+    next_id = int(existing.get("id")) if existing else max([int(entry.get("id", 0)) for entry in kept] or [0]) + 1
     item = {
         "id": next_id,
         "date": args.date,
@@ -125,12 +126,38 @@ def sync_sitemap(link: str, lastmod: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+def withdraw_publication(link: str) -> None:
+    blog_json = ROOT / "blog.json"
+    blog_items = [entry for entry in read_json(blog_json) if entry.get("link") != link]
+    write_json(blog_json, blog_items)
+    replace_js_array(ROOT / "blog.html", "blogData", blog_items)
+
+    cases_path = ROOT / "cases.html"
+    cases = extract_js_array(cases_path, "caseData")
+    removed_images = {entry.get("img") for entry in cases if entry.get("link") == link}
+    replace_js_array(cases_path, "caseData", [entry for entry in cases if entry.get("link") != link])
+    cases_json = ROOT / "cases.json"
+    write_json(cases_json, [entry for entry in read_json(cases_json) if entry.get("img") not in removed_images])
+
+    sitemap_path = ROOT / "sitemap.xml"
+    content = sitemap_path.read_text(encoding="utf-8")
+    loc = f"{SITE}{link}"
+    pattern = rf"\s*<url><loc>{re.escape(loc)}</loc>.*?</url>"
+    content, count = re.subn(pattern, "", content, flags=re.S)
+    if count != 1:
+        raise SystemExit(f"Could not remove one sitemap entry for {link}; matches={count}")
+    sitemap_path.write_text(content, encoding="utf-8")
+
+
 def main() -> None:
+    global ROOT
     parser = argparse.ArgumentParser(description="Sync a ProCore article into indexes.")
-    parser.add_argument("title")
-    parser.add_argument("path", help="Article path, with or without .html")
-    parser.add_argument("category")
-    parser.add_argument("summary")
+    parser.add_argument("title", nargs="?")
+    parser.add_argument("path", nargs="?", help="Article path, with or without .html")
+    parser.add_argument("category", nargs="?")
+    parser.add_argument("summary", nargs="?")
+    parser.add_argument("--root", type=Path, default=ROOT, help="Explicit site worktree root")
+    parser.add_argument("--withdraw", metavar="PATH", help="Remove one existing article from registries and sitemap")
     parser.add_argument("--date", default=date.today().strftime("%Y.%m.%d"))
     parser.add_argument("--lastmod", default=date.today().isoformat())
     parser.add_argument("--keywords", default="")
@@ -140,6 +167,16 @@ def main() -> None:
     parser.add_argument("--case-type", default="")
     parser.add_argument("--page-only", action="store_true", help="Update sitemap only for a non-article page")
     args = parser.parse_args()
+
+    ROOT = args.root.resolve()
+
+    if args.withdraw:
+        link = clean_link(args.withdraw)
+        withdraw_publication(link)
+        print(f"WITHDRAWN_INDEX={link}")
+        return
+    if not all([args.title, args.path, args.category, args.summary]):
+        parser.error("title, path, category and summary are required unless --withdraw is used")
 
     link = clean_link(args.path)
     if not args.page_only:

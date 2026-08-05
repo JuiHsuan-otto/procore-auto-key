@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.carkey-casepilot.local/publication-action/v1/publication-action.schema.json",
+  "title": "Publication Action v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "action_version", "action_id", "action_hash", "action", "action_revision", "action_status", "candidate_id", "candidate_revision", "candidate_hash", "package_hash", "draft_sha256", "public_record_id", "previous_action_id", "expected_state", "expected_current_public_content_hash", "proposed_public_content_hash", "source_repository_sha", "expected_carkey_base_sha", "locale", "source_system", "target_system", "synthetic", "requested_publication", "authorization", "consent", "approval", "asset_reviews", "prior_publication"],
+  "properties": {
+    "contract_version": { "const": "1.0.0" },
+    "action_version": { "const": "publication-action/v1" },
+    "action_id": { "$ref": "#/$defs/actionId" },
+    "action_hash": { "$ref": "#/$defs/sha256" },
+    "action": { "enum": ["publish", "correct", "withdraw"] },
+    "action_revision": { "type": "integer", "minimum": 1 },
+    "action_status": { "const": "approved_for_handoff" },
+    "candidate_id": { "$ref": "#/$defs/candidateId" },
+    "candidate_revision": { "type": "integer", "minimum": 1 },
+    "candidate_hash": { "$ref": "#/$defs/sha256" },
+    "package_hash": { "$ref": "#/$defs/sha256" },
+    "draft_sha256": { "$ref": "#/$defs/sha256" },
+    "public_record_id": { "$ref": "#/$defs/publicRecordId" },
+    "previous_action_id": { "oneOf": [{ "$ref": "#/$defs/actionId" }, { "type": "null" }] },
+    "expected_state": { "enum": ["unpublished", "published", "withdrawn"] },
+    "expected_current_public_content_hash": { "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+    "proposed_public_content_hash": { "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+    "source_repository_sha": { "$ref": "#/$defs/gitSha" },
+    "expected_carkey_base_sha": { "$ref": "#/$defs/gitSha" },
+    "locale": { "const": "zh-TW" },
+    "source_system": { "const": "casepilot-automotive" },
+    "target_system": { "const": "carkey.com.tw" },
+    "synthetic": { "const": true },
+    "requested_publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proposed_slug", "publication_date", "reason_code", "requested_resolution", "replacement_url", "canonical_continuity_required", "preserve_publication_history", "sitemap_intent", "redirect_intent"],
+      "properties": {
+        "proposed_slug": { "oneOf": [{ "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 120 }, { "type": "null" }] },
+        "publication_date": { "oneOf": [{ "type": "string", "format": "date" }, { "type": "null" }] },
+        "reason_code": { "enum": ["initial_publication", "factual_correction", "safety_correction", "image_metadata_correction", "consent_withdrawal", "owner_withdrawal"] },
+        "requested_resolution": { "enum": ["publish", "correct_in_place", "noindex", "redirect"] },
+        "replacement_url": { "oneOf": [{ "$ref": "#/$defs/canonicalUrl" }, { "type": "null" }] },
+        "canonical_continuity_required": { "type": "boolean" },
+        "preserve_publication_history": { "const": true },
+        "sitemap_intent": { "enum": ["ensure_present", "remove"] },
+        "redirect_intent": { "enum": ["none", "replacement"] }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorization_verified", "publication_consent_verified", "owner_approved", "reviewer_role", "approval_timestamp", "evidence_reference", "revoked"],
+      "properties": {
+        "authorization_verified": { "const": true },
+        "publication_consent_verified": { "const": true },
+        "owner_approved": { "const": true },
+        "reviewer_role": { "const": "owner" },
+        "approval_timestamp": { "type": "string", "format": "date-time" },
+        "evidence_reference": { "type": "string", "pattern": "^evidence_[A-Za-z0-9_-]{8,80}$" },
+        "revoked": { "const": false }
+      }
+    },
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["consent_reference", "consent_record_sha256", "purpose", "status", "scope", "public_content_consent", "granted_at", "expires_at", "withdrawal_requested"],
+      "properties": {
+        "consent_reference": { "type": "string", "pattern": "^consent_[A-Za-z0-9_-]{8,80}$" },
+        "consent_record_sha256": { "$ref": "#/$defs/sha256" },
+        "purpose": { "const": "public_website_case" },
+        "status": { "enum": ["active", "withdrawn"] },
+        "scope": { "const": "carkey.com.tw" },
+        "public_content_consent": { "type": "boolean" },
+        "granted_at": { "type": "string", "format": "date-time" },
+        "expires_at": { "oneOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }] },
+        "withdrawal_requested": { "type": "boolean" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approval_reference", "role", "approved", "reviewed_draft_sha256", "reviewed_action_sha256", "action_hash", "approved_at"],
+      "properties": {
+        "approval_reference": { "type": "string", "pattern": "^approval_[A-Za-z0-9_-]{8,80}$" },
+        "role": { "const": "owner" },
+        "approved": { "const": true },
+        "reviewed_draft_sha256": { "$ref": "#/$defs/sha256" },
+        "reviewed_action_sha256": { "$ref": "#/$defs/sha256" },
+        "action_hash": { "$ref": "#/$defs/sha256" },
+        "approved_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "asset_reviews": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "status", "metadata_inspection"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^assets/[A-Za-z0-9._/-]+$", "maxLength": 240 },
+          "sha256": { "$ref": "#/$defs/sha256" },
+          "status": { "const": "approved" },
+          "metadata_inspection": { "enum": ["passed_no_exif_gps", "not_applicable_synthetic"] }
+        }
+      }
+    },
+    "prior_publication": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["receipt_hash", "action_id", "action_revision", "candidate_revision", "public_record_id", "state", "public_content_hash", "canonical_url", "published_commit", "deployment_id", "verified_at"],
+          "properties": {
+            "receipt_hash": { "$ref": "#/$defs/sha256" },
+            "action_id": { "$ref": "#/$defs/actionId" },
+            "action_revision": { "type": "integer", "minimum": 1 },
+            "candidate_revision": { "type": "integer", "minimum": 1 },
+            "public_record_id": { "$ref": "#/$defs/publicRecordId" },
+            "state": { "enum": ["published", "withdrawn"] },
+            "public_content_hash": { "$ref": "#/$defs/sha256" },
+            "canonical_url": { "$ref": "#/$defs/canonicalUrl" },
+            "published_commit": { "$ref": "#/$defs/gitSha" },
+            "deployment_id": { "oneOf": [{ "type": "string", "pattern": "^dpl_[A-Za-z0-9]+$" }, { "type": "null" }] },
+            "verified_at": { "type": "string", "format": "date-time" }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "gitSha": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "actionId": { "type": "string", "pattern": "^pca_[a-f0-9]{16}$" },
+    "candidateId": { "type": "string", "pattern": "^cpc_[a-f0-9]{16}$" },
+    "publicRecordId": { "type": "string", "pattern": "^pcr_[a-f0-9]{16}$" },
+    "canonicalUrl": { "type": "string", "format": "uri", "pattern": "^https://www\\.carkey\\.com\\.tw/" }
+  }
+}

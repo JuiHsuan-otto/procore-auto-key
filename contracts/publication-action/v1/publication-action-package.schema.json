@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.carkey-casepilot.local/publication-action/v1/publication-action-package.schema.json",
+  "title": "Publication Action Package v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "package_format", "action_id", "action_hash", "candidate_id", "candidate_hash", "candidate_package_hash", "created_at", "files", "package_hash", "synthetic", "network_required"],
+  "properties": {
+    "contract_version": { "const": "1.0.0" },
+    "package_format": { "const": "publication-action-package/v1" },
+    "action_id": { "type": "string", "pattern": "^pca_[a-f0-9]{16}$" },
+    "action_hash": { "$ref": "#/$defs/sha256" },
+    "candidate_id": { "type": "string", "pattern": "^cpc_[a-f0-9]{16}$" },
+    "candidate_hash": { "$ref": "#/$defs/sha256" },
+    "candidate_package_hash": { "$ref": "#/$defs/sha256" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "files": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "byte_length", "mime"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^(action\\.json|candidate/(manifest\\.json|candidate\\.json|assets/[A-Za-z0-9._-]+))$" },
+          "sha256": { "$ref": "#/$defs/sha256" },
+          "byte_length": { "type": "integer", "minimum": 1, "maximum": 20971520 },
+          "mime": { "enum": ["application/json", "image/svg+xml", "application/octet-stream"] }
+        }
+      }
+    },
+    "package_hash": { "$ref": "#/$defs/sha256" },
+    "synthetic": { "const": true },
+    "network_required": { "const": false }
+  },
+  "$defs": { "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}
