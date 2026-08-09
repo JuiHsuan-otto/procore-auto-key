@@ -246,6 +246,9 @@ test("runs publish, correct, and withdraw in fresh disposable worktrees with ide
     const publishedHtml = await readFile(path.join(publishWorktree, publishPlan.public_page.path), "utf8");
     assert.doesNotMatch(publishedHtml, /casepilot|synthetic|fixture|合成|公開草稿/i);
     assert.doesNotMatch(publishedHtml, /這筆本案例/);
+    assert.match(publishedHtml, /"@type":"FAQPage"/);
+    assert.match(publishedHtml, /需要準備什麼資料/);
+    assert.match(publishedHtml, /完成後可以確認哪些功能/);
     assert.doesNotMatch(publishPlan.asset_copies[0].destination, /casepilot|synthetic|fixture/i);
     assert.equal((await readFile(path.join(publishWorktree, "rescue-request.html"), "utf8")).split(`href="/${publishPlan.public_page.path.replace(/\.html$/, "")}#`).length - 1, 3);
     assert.equal((await verifyAppliedPublication({ action: publishAction, plan: publishPlan, draftDirectory: publishDraft.draftDirectory, worktreeRoot: publishWorktree })).resultingPublicContentHash, published.receipt.resulting_public_content_hash);
@@ -278,6 +281,7 @@ test("runs publish, correct, and withdraw in fresh disposable worktrees with ide
     const tombstone = await readFile(path.join(withdrawWorktree, withdrawPlan.public_page.path), "utf8");
     assert.match(tombstone, /noindex, nofollow, noarchive/);
     assert.doesNotMatch(tombstone, /"@type":"Article"/);
+    assert.doesNotMatch(tombstone, /"@type":"FAQPage"/);
     assert.doesNotMatch(await readFile(path.join(withdrawWorktree, "sitemap.xml"), "utf8"), new RegExp(withdrawPlan.public_page.canonical_url));
     assert.equal(existsSync(path.join(withdrawWorktree, withdrawPlan.operations.files_to_remove[0])), false);
     assert.equal(existsSync(path.join(withdrawWorktree, withdrawPlan.operations.files_to_add[0])), true);

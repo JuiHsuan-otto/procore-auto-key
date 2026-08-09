@@ -112,6 +112,32 @@ function renderPublicPage({ action, plan, model, contact, existingHtml = null })
       { "@type": "ListItem", position: 3, name: page.title, item: canonical }
     ]
   };
+  const serviceLabel = page.title.includes("智慧鑰匙新增")
+    ? "智慧鑰匙新增"
+    : publicFacingText(model.key_scenario.label);
+  const faqItems = [
+    {
+      question: `${serviceLabel}需要準備什麼資料？`,
+      answer: "先提供車款、年份、所在縣市與目前鑰匙狀況；實際安排仍須依實車狀態與現場條件確認。"
+    },
+    {
+      question: "完成後可以確認哪些功能？",
+      answer: "會依實車配備逐項確認可用功能；不同車款配備不同，以現場確認結果為準。"
+    }
+  ];
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${canonical}#faq`,
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
+  };
+  const faqHtml = faqItems.map((item) =>
+    `      <details><summary>${escapeHtml(item.question)}</summary><p>${escapeHtml(item.answer)}</p></details>`
+  ).join("\n");
   const facts = model.public_safe_facts.map((fact) => `        <li>${escapeHtml(publicFacingText(fact))}</li>`).join("\n");
   const related = [...new Set(["/cases", model.related_service_route, ...model.internal_links])].slice(0, 4).map((route) => `        <a href="${escapeHtml(route)}">相關服務與案例</a>`).join("\n");
   return `<!doctype html>
@@ -137,6 +163,7 @@ function renderPublicPage({ action, plan, model, contact, existingHtml = null })
   <style>body{margin:0;background:#050505;color:#e5e5e5;font-family:system-ui,sans-serif;line-height:1.8}main{width:min(960px,calc(100% - 32px));margin:auto;padding:40px 0 72px}.panel{margin-top:24px;padding:clamp(20px,5vw,44px);background:#171717;border:1px solid #333;border-radius:22px}img{width:100%;height:auto;border-radius:16px}a{color:#f5d66f;margin-right:18px}.cta{display:inline-block;padding:12px 18px;border:1px solid #d4af37;border-radius:999px}</style>
   <script type="application/ld+json" data-seo="procore">${safeJson(articleSchema)}</script>
   <script type="application/ld+json" data-seo="breadcrumb">${safeJson(breadcrumb)}</script>
+  <script type="application/ld+json" data-seo="faq">${safeJson(faqSchema)}</script>
 </head>
 <body>
   <main>
@@ -156,6 +183,8 @@ ${facts}
       </ul>
       <h2 id="service-reminder">安全提醒</h2>
       <p>${escapeHtml(publicFacingText(model.safety_note))}</p>
+      <h2 id="faq">車主常見問題</h2>
+${faqHtml}
       <p><a class="cta" href="${escapeHtml(contact.telephone)}">電話聯絡</a><a class="cta" href="${escapeHtml(contact.line)}">LINE 諮詢</a></p>
       <nav aria-label="相關連結">
 ${related}
@@ -277,7 +306,7 @@ async function verifyPageAndRegistries({ action, plan, model, worktreeRoot }) {
   if (action.action === "withdraw") {
     if (!/noindex, nofollow, noarchive/i.test(html) || /"@type":"Article"/.test(html) || sitemap.includes(plan.public_page.canonical_url)) fail("APPLY_VERIFY_FAILED", "Withdrawal tombstone or sitemap behavior is invalid");
   } else {
-    if (!/index, follow/i.test(html) || !html.includes(`<link rel="canonical" href="${plan.public_page.canonical_url}">`) || !html.includes('"@type":"Article"') || !html.includes('"@type":"BreadcrumbList"') || !sitemap.includes(plan.public_page.canonical_url) || !html.includes("極致核心 ProCore") || !/(?:依車款|依實車|現場條件|確認|評估)/.test(`${model.description} ${model.sanitized_narrative}`)) fail("APPLY_VERIFY_FAILED", "Published page is incompatible with CarKey rules");
+    if (!/index, follow/i.test(html) || !html.includes(`<link rel="canonical" href="${plan.public_page.canonical_url}">`) || !html.includes('"@type":"Article"') || !html.includes('"@type":"BreadcrumbList"') || !html.includes('"@type":"FAQPage"') || !sitemap.includes(plan.public_page.canonical_url) || !html.includes("極致核心 ProCore") || !/(?:依車款|依實車|現場條件|確認|評估)/.test(`${model.description} ${model.sanitized_narrative}`)) fail("APPLY_VERIFY_FAILED", "Published page is incompatible with CarKey rules");
     const asset = plan.asset_copies[0];
     const bytes = await readBounded(path.join(worktreeRoot, asset.destination), "APPLY_VERIFY_FAILED", 20 * 1024 * 1024);
     if (promotionSha256(bytes) !== asset.sha256 || !html.includes(`width="${asset.width}" height="${asset.height}"`)) fail("APPLY_VERIFY_FAILED", "Public asset hash or dimensions differ");
