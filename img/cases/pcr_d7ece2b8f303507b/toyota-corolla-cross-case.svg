@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Toyota Corolla Cross 智慧鑰匙新增合成驗證示意圖</title>
+  <desc id="desc">不對應任何真實客戶、車輛或地點的受控發布驗證圖。</desc>
+  <rect width="1200" height="630" fill="#f4f3ee"/>
+  <rect x="54" y="54" width="1092" height="522" rx="36" fill="#ffffff" stroke="#0f766e" stroke-width="4"/>
+  <circle cx="158" cy="158" r="54" fill="#0f766e"/>
+  <path d="M135 158l16 17 32-39" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+  <text x="244" y="143" fill="#0f172a" font-family="Arial, sans-serif" font-size="30" font-weight="700">CONTROLLED SYNTHETIC VALIDATION</text>
+  <text x="244" y="190" fill="#475569" font-family="Arial, sans-serif" font-size="24">No real customer, vehicle, address, plate, or VIN</text>
+  <line x1="108" y1="248" x2="1092" y2="248" stroke="#d6d3d1" stroke-width="2"/>
+  <text x="108" y="326" fill="#0f172a" font-family="Arial, sans-serif" font-size="48" font-weight="700">2024 Toyota Corolla Cross</text>
+  <text x="108" y="390" fill="#0f766e" font-family="Arial, sans-serif" font-size="38" font-weight="700">桃園・智慧鑰匙新增</text>
+  <text x="108" y="468" fill="#334155" font-family="Arial, sans-serif" font-size="25">CasePilot → Owner review → CarKey protected publication gate</text>
+  <text x="108" y="516" fill="#64748b" font-family="Arial, sans-serif" font-size="22">Temporary production smoke test asset</text>
+</svg>
