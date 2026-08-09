@@ -224,6 +224,26 @@ test("rejects an unsupported scenario", async (t) => {
   await expectCode(() => verifyPublicationPackage(packageDirectory, REPOSITORY_ROOT), "UNSUPPORTED_SCENARIO");
 });
 
+test("accepts the Owner-facing smart-key-add title for the spare-key taxonomy", async (t) => {
+  const { packageDirectory } = await workspace(t, "smart-key-add-title");
+  const candidatePath = path.join(packageDirectory, "candidate.json");
+  const candidate = await readJson(candidatePath);
+  candidate.taxonomy.service_scenario = "spare_key";
+  candidate.taxonomy.key_situation = "spare_key_requested";
+  candidate.taxonomy.remaining_key_state = "one_or_more";
+  candidate.taxonomy.related_existing_service_route = "/spare-car-key-service";
+  candidate.taxonomy.suggested_existing_internal_links = [
+    "/cases",
+    "/spare-car-key-service",
+    "/rescue-request"
+  ];
+  candidate.proposed_public_copy.proposed_title =
+    "彰化 2019 Toyota VIOS 智慧鑰匙新增處理案例｜極致核心 ProCore";
+  await writeCanonical(candidatePath, candidate);
+  await refreshIntegrity(packageDirectory);
+  await verifyPublicationPackage(packageDirectory, REPOSITORY_ROOT);
+});
+
 test("rejects a slug collision", async (t) => {
   const { packageDirectory, draftRoot } = await workspace(t, "slug-collision");
   const candidatePath = path.join(packageDirectory, "candidate.json");

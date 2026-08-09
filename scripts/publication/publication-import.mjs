@@ -94,7 +94,8 @@ const SERVICE_SCENARIOS = {
     route: "/spare-car-key-service",
     keySituations: new Set(["spare_key_requested"]),
     remainingKeys: new Set(["one_or_more"]),
-    label: "備用鑰匙"
+    label: "備用鑰匙",
+    titleLabels: new Set(["備用鑰匙", "智慧鑰匙新增"])
   },
   key_not_detected: {
     route: "/key-not-detected-service",
@@ -291,8 +292,12 @@ function assertTaxonomy(candidate, repositoryRoot) {
   if (!GENERAL_LOCATIONS.has(taxonomy.generalized_city_county) || !GENERAL_SCENES.has(taxonomy.generalized_scene)) throw new PublicationImportError("INVALID_TAXONOMY", "Location or scene is not an approved generalized value");
   const title = candidate.proposed_public_copy.proposed_title;
   const locationLabel = taxonomy.generalized_city_county.replace(/[市縣]$/, "");
-  for (const required of [locationLabel, String(taxonomy.model_year), taxonomy.vehicle_brand, taxonomy.vehicle_model, scenario.label]) {
+  for (const required of [locationLabel, String(taxonomy.model_year), taxonomy.vehicle_brand, taxonomy.vehicle_model]) {
     if (!title.includes(required)) throw new PublicationImportError("CARKEY_TITLE_PATTERN_REJECTED", "Title is missing a required CarKey case component");
+  }
+  const titleLabels = scenario.titleLabels ?? new Set([scenario.label]);
+  if (![...titleLabels].some((label) => title.includes(label))) {
+    throw new PublicationImportError("CARKEY_TITLE_PATTERN_REJECTED", "Title is missing a required CarKey case component");
   }
   const links = taxonomy.suggested_existing_internal_links;
   if (!Array.isArray(links) || links.length < 2 || links.length > 4 || new Set(links).size !== links.length) throw new PublicationImportError("BROKEN_INTERNAL_LINK", "Suggested internal links must be a unique bounded list");
