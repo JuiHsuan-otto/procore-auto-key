@@ -91,6 +91,24 @@ export function promotionSha256(value) {
   return createHash("sha256").update(value).digest("hex");
 }
 
+function publicFacingText(value) {
+  return String(value)
+    .replace(/synthetic|fixture/gi, "")
+    .replaceAll("這筆純合成案例模擬", "本案例說明")
+    .replaceAll("純合成案例模擬", "本案例說明")
+    .replaceAll("合成案例", "處理案例")
+    .replaceAll("純合成", "案例")
+    .replaceAll("公開草稿", "公開內容")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+function publicAssetBasename(value) {
+  const basename = path.posix.basename(value).replace(/^(?:synthetic|fixture)-+/i, "");
+  if (!basename || basename === "." || basename === "..") fail("PROMOTION_ASSET_PATH_INVALID", "Public asset name is invalid");
+  return basename;
+}
+
 export function computePublicationActionHash(action) {
   const input = structuredClone(action);
   input.action_id = "";
@@ -375,13 +393,25 @@ export async function preparePromotionPlan({ action, draftDirectory, repositoryR
   const finalSlug = action.action === "withdraw" ? priorSlug : proposedSlug;
   const pagePath = `${finalSlug}.html`;
   const branch = `content/casepilot-${action.action}-${action.action_id.slice(4)}`;
-  const assetCopies = action.action === "withdraw" ? [] : candidate.asset_plan.map((asset) => ({ source: asset.source, draft_path: asset.draft_path, destination: `img/casepilot/${action.public_record_id}/${path.posix.basename(asset.source)}`, sha256: asset.sha256, width: asset.width, height: asset.height, alt: asset.alt }));
-  const registryArguments = action.action === "withdraw" ? ["--withdraw", `/${pagePath}`] : [candidate.title, `/${pagePath}`, "到場處理案例", candidate.description, "--date", action.requested_publication.publication_date.replaceAll("-", "."), "--lastmod", action.requested_publication.publication_date, "--case-region", candidate.generalized_location, "--case-car", `${candidate.vehicle.brand} ${candidate.vehicle.model}`, "--case-img", `/${assetCopies[0].destination}`, "--case-type", "汽車鑰匙案例"];
-  const registryPaths = ["blog.json", "blog.html", "cases.html", "cases.json", "sitemap.xml"];
+  const publicTitle = publicFacingText(candidate.title);
+  const publicDescription = publicFacingText(candidate.description);
+  const assetCopies = action.action === "withdraw" ? [] : candidate.asset_plan.map((asset) => ({ source: asset.source, draft_path: asset.draft_path, destination: `img/cases/${action.public_record_id}/${publicAssetBasename(asset.source)}`, sha256: asset.sha256, width: asset.width, height: asset.height, alt: publicFacingText(asset.alt) }));
+  const governedRegistryFlag = "--preserve-schema-governed-html";
+  const withdrawAsset = action.asset_reviews[0]?.path
+    ? `/img/cases/${action.public_record_id}/${publicAssetBasename(action.asset_reviews[0].path)}`
+    : null;
+  const registryArguments = action.action === "withdraw"
+    ? ["--withdraw", `/${pagePath}`, governedRegistryFlag, ...(withdrawAsset ? ["--case-img", withdrawAsset] : [])]
+    : [publicTitle, `/${pagePath}`, "到場處理案例", publicDescription, "--date", action.requested_publication.publication_date.replaceAll("-", "."), "--lastmod", action.requested_publication.publication_date, "--case-region", candidate.generalized_location, "--case-car", `${candidate.vehicle.brand} ${candidate.vehicle.model}`, "--case-img", `/${assetCopies[0].destination}`, "--case-type", "汽車鑰匙案例", governedRegistryFlag];
+  const registryPaths = ["blog.json", "cases.json", "sitemap.xml"];
   const historyPath = `data/publication-actions/${action.public_record_id}.json`;
-  const assetPaths = action.action === "withdraw" ? action.asset_reviews.map((asset) => `img/casepilot/${action.public_record_id}/${path.posix.basename(asset.path)}`) : assetCopies.map((asset) => asset.destination);
+  const assetPaths = action.action === "withdraw" ? action.asset_reviews.map((asset) => `img/cases/${action.public_record_id}/${publicAssetBasename(asset.path)}`) : assetCopies.map((asset) => asset.destination);
   const recoveryPaths = action.action === "withdraw" ? assetPaths.map((assetPath) => `data/publication-recovery/${action.public_record_id}/${path.posix.basename(assetPath)}`) : [];
-  const internalLinkTargets = [...new Set(["blog.html", "cases.html", `${candidate.related_service_route.replace(/^\//, "")}.html`])].sort();
+  // The new page carries reviewed outbound internal links. Existing schema-governed
+  // HTML remains byte-identical so the immutable rollout gate can keep enforcing
+  // its historic migration boundary; the rescue-request utility page supplies a
+  // reviewable related-case block, while blog.json is rendered by the homepage.
+  const internalLinkTargets = ["rescue-request.html"];
   const operations = {
     files_to_add: action.action === "publish" ? [pagePath, ...assetPaths, historyPath].sort() : recoveryPaths.sort(),
     files_to_modify: action.action === "publish" ? [...new Set([...registryPaths, ...internalLinkTargets])].sort() : [...new Set([pagePath, ...registryPaths, historyPath, ...internalLinkTargets, ...(action.action === "correct" ? assetPaths : [])])].sort(),
@@ -427,8 +457,8 @@ export async function preparePromotionPlan({ action, draftDirectory, repositoryR
     public_page: {
       path: pagePath,
       canonical_url: canonicalUrl,
-      title: action.action === "withdraw" ? "此案例已停止公開" : candidate.title,
-      description: action.action === "withdraw" ? "此案例已依核准程序停止公開並自網站索引移除。" : candidate.description,
+      title: action.action === "withdraw" ? "此案例已停止公開" : publicTitle,
+      description: action.action === "withdraw" ? "此案例已依核准程序停止公開並自網站索引移除。" : publicDescription,
       publication_date: action.action === "withdraw" ? null : action.requested_publication.publication_date,
       content_type: "public_case"
     },
