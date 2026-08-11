@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.carkey-casepilot.local/publication-closed-loop/v2/publication-handoff.schema.json",
+  "title": "CasePilot Publication Handoff v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "phase",
+    "jobId",
+    "claimId",
+    "claimExpiresAt",
+    "handoffHash",
+    "repository",
+    "sourceKind",
+    "candidateId",
+    "candidateHash",
+    "sourceHash",
+    "bindingHash",
+    "previewApprovalHash",
+    "taxonomy",
+    "website",
+    "assets",
+    "previewReceipt",
+    "productionAuthorization"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "casepilot-publication-handoff/v2" },
+    "phase": { "enum": ["preview", "production"] },
+    "jobId": { "$ref": "#/$defs/operationsId" },
+    "claimId": { "type": "string", "format": "uuid" },
+    "claimExpiresAt": { "$ref": "#/$defs/timestamp" },
+    "handoffHash": { "$ref": "#/$defs/sha256" },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fullName", "baseBranch"],
+      "properties": {
+        "fullName": { "const": "JuiHsuan-otto/procore-auto-key" },
+        "baseBranch": { "const": "main" }
+      }
+    },
+    "sourceKind": { "const": "owner_attested_real" },
+    "candidateId": {
+      "type": "string",
+      "pattern": "^cdt_[0-9a-f]{12}$"
+    },
+    "candidateHash": { "$ref": "#/$defs/sha256" },
+    "sourceHash": { "$ref": "#/$defs/sha256" },
+    "bindingHash": { "$ref": "#/$defs/sha256" },
+    "previewApprovalHash": { "$ref": "#/$defs/sha256" },
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vehicle", "serviceLabel", "region", "relatedRoutes"],
+      "properties": {
+        "vehicle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["year", "brand", "model"],
+          "properties": {
+            "year": { "type": "integer", "minimum": 1980, "maximum": 2100 },
+            "brand": { "type": "string", "minLength": 1, "maxLength": 40 },
+            "model": { "type": "string", "minLength": 1, "maxLength": 60 }
+          }
+        },
+        "serviceLabel": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "region": { "type": "string", "minLength": 2, "maxLength": 20 },
+        "relatedRoutes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/localRoute" }
+        }
+      }
+    },
+    "website": { "$ref": "#/$defs/websiteCandidate" },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/asset" }
+    },
+    "previewReceipt": {
+      "oneOf": [
+        { "$ref": "publication-preview-receipt.schema.json" },
+        { "type": "null" }
+      ]
+    },
+    "productionAuthorization": {
+      "oneOf": [
+        { "$ref": "publication-production-authorization.schema.json" },
+        { "type": "null" }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "phase": { "const": "preview" } },
+        "required": ["phase"]
+      },
+      "then": {
+        "properties": {
+          "previewReceipt": { "type": "null" },
+          "productionAuthorization": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "phase": { "const": "production" } },
+        "required": ["phase"]
+      },
+      "then": {
+        "properties": {
+          "previewReceipt": { "$ref": "publication-preview-receipt.schema.json" },
+          "productionAuthorization": { "$ref": "publication-production-authorization.schema.json" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "operationsId": {
+      "type": "string",
+      "pattern": "^[a-z]{3}_[0-9a-f]{12}$"
+    },
+    "publicRoute": {
+      "type": "string",
+      "pattern": "^/[a-z0-9]+(?:[/-][a-z0-9]+(?:-[a-z0-9]+)*)*$",
+      "maxLength": 200
+    },
+    "localRoute": {
+      "type": "string",
+      "pattern": "^/(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*//)[A-Za-z0-9._/-]*$",
+      "maxLength": 200
+    },
+    "publicUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://www\\.carkey\\.com\\.tw/"
+    },
+    "websiteCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seoTitle",
+        "metaDescription",
+        "proposedSlug",
+        "canonicalUrl",
+        "heroMediaIds",
+        "datePublished",
+        "sanitizedNarrative",
+        "publicSafeFacts",
+        "faq",
+        "imageAlt",
+        "suggestedInternalLinks",
+        "breadcrumb",
+        "schemaHeadline",
+        "compatibilityNotes"
+      ],
+      "properties": {
+        "seoTitle": { "type": "string", "minLength": 5, "maxLength": 70 },
+        "metaDescription": { "type": "string", "minLength": 30, "maxLength": 160 },
+        "proposedSlug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 120
+        },
+        "canonicalUrl": { "$ref": "#/$defs/publicUrl" },
+        "heroMediaIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^med_[0-9a-f]{12}$"
+          }
+        },
+        "datePublished": { "type": "string", "format": "date" },
+        "sanitizedNarrative": { "type": "string", "minLength": 40, "maxLength": 1200 },
+        "publicSafeFacts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": { "type": "string", "minLength": 4, "maxLength": 160 }
+        },
+        "faq": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["question", "answer"],
+            "properties": {
+              "question": { "type": "string", "minLength": 4, "maxLength": 120 },
+              "answer": { "type": "string", "minLength": 8, "maxLength": 400 }
+            }
+          }
+        },
+        "imageAlt": { "type": "string", "minLength": 5, "maxLength": 160 },
+        "suggestedInternalLinks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["route", "anchor"],
+            "properties": {
+              "route": { "$ref": "#/$defs/localRoute" },
+              "anchor": { "type": "string", "minLength": 2, "maxLength": 60 }
+            }
+          }
+        },
+        "breadcrumb": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "item"],
+            "properties": {
+              "name": { "type": "string", "maxLength": 80 },
+              "item": {
+                "oneOf": [
+                  { "$ref": "#/$defs/localRoute" },
+                  { "$ref": "#/$defs/publicUrl" }
+                ]
+              }
+            }
+          }
+        },
+        "schemaHeadline": { "type": "string", "minLength": 15, "maxLength": 110 },
+        "compatibilityNotes": {
+          "type": "array",
+          "maxItems": 10,
+          "items": { "type": "string", "minLength": 4, "maxLength": 200 }
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mediaId",
+        "sha256",
+        "mime",
+        "byteLength",
+        "width",
+        "height",
+        "altText",
+        "downloadPath"
+      ],
+      "properties": {
+        "mediaId": { "type": "string", "pattern": "^med_[0-9a-f]{12}$" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "mime": { "enum": ["image/jpeg", "image/png", "image/webp"] },
+        "byteLength": { "type": "integer", "minimum": 32, "maximum": 4000000 },
+        "width": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1, "maximum": 20000 },
+            { "type": "null" }
+          ]
+        },
+        "height": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1, "maximum": 20000 },
+            { "type": "null" }
+          ]
+        },
+        "altText": { "type": "string", "minLength": 5, "maxLength": 160 },
+        "downloadPath": {
+          "type": "string",
+          "pattern": "^/api/publication/worker/media/[^?/#]+\\?jobId=[^&#]+&claimId=[^&#]+&phase=(preview|production)$",
+          "maxLength": 500
+        }
+      }
+    }
+  }
+}

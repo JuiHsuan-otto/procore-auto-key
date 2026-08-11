@@ -16,10 +16,13 @@
     "publication:verify-contract": "node scripts/publication/verify-contract-mirror.mjs",
     "publication:verify-action-contract": "node scripts/publication/verify-action-contract-mirror.mjs",
     "publication:verify-pr-receipt-contract": "node scripts/publication/verify-pr-receipt-contract-mirror.mjs",
+    "publication:verify-v2-contract": "node scripts/publication/verify-v2-contract-mirror.mjs",
     "publication:import": "node scripts/publication/import-casepilot-package.mjs",
     "test:publication": "node --test scripts/publication/publication-import.test.mjs",
     "test:publication-action": "node --test scripts/publication/publication-promotion.test.mjs",
     "test:publication-pr": "node --test scripts/publication/publication-pr-orchestrator.test.mjs",
+    "test:publication-v2": "node --test scripts/publication/publication-v2.test.mjs",
+    "publication:worker": "node scripts/publication/casepilot-publication-worker.mjs",
     "publication:prepare-branch": "node scripts/publication/prepare-publication-branch.mjs",
     "publication:lifecycle": "node scripts/publication/publication-lifecycle.mjs",
     "publication:create-worktree": "node scripts/publication/create-disposable-worktree.mjs",
@@ -29,7 +32,7 @@
   },
   "dependencies": {
     "canvas": "^3.2.1",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"

@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.carkey-casepilot.local/publication-closed-loop/v2/publication-preview-receipt.schema.json",
+  "title": "CasePilot Publication Preview Receipt v2",
+  "oneOf": [
+    { "$ref": "#/$defs/success" },
+    { "$ref": "#/$defs/failure" }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "gitSha": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "operationsId": { "type": "string", "pattern": "^[a-z]{3}_[0-9a-f]{12}$" },
+    "repoPath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$",
+      "maxLength": 500
+    },
+    "publicRoute": {
+      "type": "string",
+      "pattern": "^/[a-z0-9][a-z0-9/_-]*$",
+      "maxLength": 300
+    },
+    "publicUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://www\\.carkey\\.com\\.tw/"
+    },
+    "success": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "status",
+        "receiptHash",
+        "jobId",
+        "claimId",
+        "handoffHash",
+        "candidateHash",
+        "sourceHash",
+        "bindingHash",
+        "previewApprovalHash",
+        "repository",
+        "pullRequest",
+        "checks",
+        "previewDeployment",
+        "publicResult",
+        "previewVerificationHash",
+        "createdAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "casepilot-publication-preview-receipt/v2" },
+        "status": { "const": "preview_ready" },
+        "receiptHash": { "$ref": "#/$defs/sha256" },
+        "jobId": { "$ref": "#/$defs/operationsId" },
+        "claimId": { "type": "string", "format": "uuid" },
+        "handoffHash": { "$ref": "#/$defs/sha256" },
+        "candidateHash": { "$ref": "#/$defs/sha256" },
+        "sourceHash": { "$ref": "#/$defs/sha256" },
+        "bindingHash": { "$ref": "#/$defs/sha256" },
+        "previewApprovalHash": { "$ref": "#/$defs/sha256" },
+        "repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fullName", "baseBranch", "baseSha", "featureBranch", "headSha", "treeSha", "changedPaths", "changedPathsHash"],
+          "properties": {
+            "fullName": { "const": "JuiHsuan-otto/procore-auto-key" },
+            "baseBranch": { "const": "main" },
+            "baseSha": { "$ref": "#/$defs/gitSha" },
+            "featureBranch": {
+              "type": "string",
+              "pattern": "^publication/case-[a-f0-9]{12}-job-[a-f0-9]{12}$",
+              "maxLength": 255
+            },
+            "headSha": { "$ref": "#/$defs/gitSha" },
+            "treeSha": { "$ref": "#/$defs/gitSha" },
+            "changedPaths": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 200,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/repoPath" }
+            },
+            "changedPathsHash": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        "pullRequest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["number", "url", "state", "draft", "baseRef", "baseSha", "headSha"],
+          "properties": {
+            "number": { "type": "integer", "minimum": 1 },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://github\\.com/JuiHsuan-otto/procore-auto-key/pull/[1-9][0-9]*$",
+              "maxLength": 500
+            },
+            "state": { "const": "OPEN" },
+            "draft": { "const": true },
+            "baseRef": { "const": "main" },
+            "baseSha": { "$ref": "#/$defs/gitSha" },
+            "headSha": { "$ref": "#/$defs/gitSha" }
+          }
+        },
+        "checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requiredStatus", "checksDigest", "items"],
+          "properties": {
+            "requiredStatus": { "const": "success" },
+            "checksDigest": { "$ref": "#/$defs/sha256" },
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 100,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name", "conclusion", "required", "detailsUrl"],
+                "properties": {
+                  "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+                  "conclusion": { "enum": ["success", "neutral", "skipped"] },
+                  "required": { "type": "boolean" },
+                  "detailsUrl": {
+                    "oneOf": [
+                      { "type": "string", "format": "uri", "pattern": "^https://", "maxLength": 500 },
+                      { "type": "null" }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "previewDeployment": { "$ref": "#/$defs/previewDeployment" },
+        "publicResult": { "$ref": "#/$defs/previewPublicResult" },
+        "previewVerificationHash": { "$ref": "#/$defs/sha256" },
+        "createdAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "previewDeployment": {
+                "properties": { "accessMode": { "const": "anonymous_verified" } },
+                "required": ["accessMode"]
+              }
+            },
+            "required": ["previewDeployment"]
+          },
+          "then": {
+            "properties": {
+              "publicResult": {
+                "properties": {
+                  "httpStatus": { "const": 200 },
+                  "noindexVerified": { "const": true }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "previewDeployment": {
+                "properties": { "accessMode": { "const": "vercel_sso_protected" } },
+                "required": ["accessMode"]
+              }
+            },
+            "required": ["previewDeployment"]
+          },
+          "then": {
+            "properties": {
+              "publicResult": {
+                "properties": {
+                  "httpStatus": { "enum": [302, 401, 403] },
+                  "noindexVerified": { "const": false }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "previewDeployment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["githubDeploymentId", "githubDeploymentStatusId", "environment", "environmentUrl", "sourceSha", "state", "providerDeploymentId", "providerDeploymentIdStatus", "accessMode"],
+      "properties": {
+        "githubDeploymentId": { "type": "integer", "minimum": 1 },
+        "githubDeploymentStatusId": { "type": "integer", "minimum": 1 },
+        "environment": { "const": "Preview – procore-auto-key" },
+        "environmentUrl": { "type": "string", "format": "uri", "pattern": "^https://", "maxLength": 500 },
+        "sourceSha": { "$ref": "#/$defs/gitSha" },
+        "state": { "const": "success" },
+        "providerDeploymentId": {
+          "oneOf": [
+            { "type": "string", "pattern": "^dpl_[A-Za-z0-9]+$", "maxLength": 200 },
+            { "type": "null" }
+          ]
+        },
+        "providerDeploymentIdStatus": { "enum": ["verified", "unavailable"] },
+        "accessMode": { "enum": ["anonymous_verified", "vercel_sso_protected"] }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "providerDeploymentIdStatus": { "const": "verified" } },
+            "required": ["providerDeploymentIdStatus"]
+          },
+          "then": { "properties": { "providerDeploymentId": { "type": "string", "pattern": "^dpl_[A-Za-z0-9]+$", "maxLength": 200 } } }
+        },
+        {
+          "if": {
+            "properties": { "providerDeploymentIdStatus": { "const": "unavailable" } },
+            "required": ["providerDeploymentIdStatus"]
+          },
+          "then": { "properties": { "providerDeploymentId": { "type": "null" } } }
+        }
+      ]
+    },
+    "previewPublicResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["publicationPath", "canonicalUrl", "contentSha256", "assetManifestHash", "schemaTypes", "sitemapIncluded", "httpStatus", "noindexVerified"],
+      "properties": {
+        "publicationPath": { "$ref": "#/$defs/publicRoute" },
+        "canonicalUrl": { "$ref": "#/$defs/publicUrl" },
+        "contentSha256": { "$ref": "#/$defs/sha256" },
+        "assetManifestHash": { "$ref": "#/$defs/sha256" },
+        "schemaTypes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            { "const": "Article" },
+            { "const": "BreadcrumbList" },
+            { "const": "FAQPage" }
+          ],
+          "items": false
+        },
+        "sitemapIncluded": { "const": true },
+        "httpStatus": { "enum": [200, 302, 401, 403] },
+        "noindexVerified": { "type": "boolean" }
+      }
+    },
+    "failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "status", "receiptHash", "jobId", "claimId", "handoffHash", "candidateHash", "bindingHash", "failure", "createdAt"],
+      "properties": {
+        "schemaVersion": { "const": "casepilot-publication-preview-receipt/v2" },
+        "status": { "const": "failed" },
+        "receiptHash": { "$ref": "#/$defs/sha256" },
+        "jobId": { "$ref": "#/$defs/operationsId" },
+        "claimId": { "type": "string", "format": "uuid" },
+        "handoffHash": { "$ref": "#/$defs/sha256" },
+        "candidateHash": { "$ref": "#/$defs/sha256" },
+        "bindingHash": { "$ref": "#/$defs/sha256" },
+        "failure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "retryable", "detailDigest"],
+          "properties": {
+            "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,119}$" },
+            "retryable": { "type": "boolean" },
+            "detailDigest": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        "createdAt": { "$ref": "#/$defs/timestamp" }
+      }
+    }
+  }
+}

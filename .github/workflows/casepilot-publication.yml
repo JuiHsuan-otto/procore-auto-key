@@ -1,0 +1,66 @@
+name: CasePilot publication closed loop
+
+on:
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: Claim one authorized publication phase
+        required: true
+        default: both
+        type: choice
+        options:
+          - both
+          - preview
+          - production
+  schedule:
+    - cron: "*/15 * * * *"
+
+permissions:
+  actions: write
+  checks: read
+  contents: write
+  deployments: read
+  id-token: write
+  pull-requests: write
+  statuses: read
+
+concurrency:
+  group: casepilot-publication-closed-loop
+  cancel-in-progress: false
+
+jobs:
+  publication:
+    name: Owner-authorized publication worker
+    if: github.ref == 'refs/heads/main' && github.repository == 'JuiHsuan-otto/procore-auto-key'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CASEPILOT_PUBLICATION_ORIGIN: ${{ vars.CASEPILOT_PUBLICATION_ORIGIN }}
+      PUBLICATION_POLL_ATTEMPTS: "50"
+      PUBLICATION_POLL_MS: "15000"
+      PUBLICATION_WORKER_DEADLINE_MS: "4500000"
+
+    steps:
+      - name: Check out exact main workflow source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Validate worker source before network effects
+        run: npm run test:publication-v2
+
+      - name: Run one bounded publication poll
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED_PHASE: ${{ github.event_name == 'workflow_dispatch' && inputs.phase || 'both' }}
+        run: node scripts/publication/casepilot-publication-worker.mjs --phase "$REQUESTED_PHASE"

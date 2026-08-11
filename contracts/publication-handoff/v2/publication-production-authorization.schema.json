@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.carkey-casepilot.local/publication-closed-loop/v2/publication-production-authorization.schema.json",
+  "title": "CasePilot Publication Production Authorization v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "authorizationHash",
+    "idempotencyKey",
+    "authorizedAt",
+    "expiresAt",
+    "candidateHash",
+    "bindingHash",
+    "previewReceiptHash",
+    "prNumber",
+    "headSha",
+    "baseSha",
+    "previewGithubDeploymentId",
+    "previewUrl",
+    "revoked"
+  ],
+  "properties": {
+    "authorizationHash": { "$ref": "#/$defs/sha256" },
+    "idempotencyKey": { "type": "string", "minLength": 8, "maxLength": 160 },
+    "authorizedAt": { "$ref": "#/$defs/timestamp" },
+    "expiresAt": { "$ref": "#/$defs/timestamp" },
+    "candidateHash": { "$ref": "#/$defs/sha256" },
+    "bindingHash": { "$ref": "#/$defs/sha256" },
+    "previewReceiptHash": { "$ref": "#/$defs/sha256" },
+    "prNumber": { "type": "integer", "minimum": 1 },
+    "headSha": { "$ref": "#/$defs/gitSha" },
+    "baseSha": { "$ref": "#/$defs/gitSha" },
+    "previewGithubDeploymentId": { "type": "integer", "minimum": 1 },
+    "previewUrl": { "type": "string", "format": "uri", "pattern": "^https://", "maxLength": 500 },
+    "revoked": { "const": false }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "gitSha": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "timestamp": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,0 +1,453 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.carkey-casepilot.local/publication-closed-loop/v2/publication-production-receipt.schema.json",
+  "title": "CasePilot Publication Production Receipt v2",
+  "oneOf": [
+    { "$ref": "#/$defs/success" },
+    { "$ref": "#/$defs/failure" }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "gitSha": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "operationsId": { "type": "string", "pattern": "^[a-z]{3}_[0-9a-f]{12}$" },
+    "publicRoute": {
+      "type": "string",
+      "pattern": "^/[a-z0-9][a-z0-9/_-]*$",
+      "maxLength": 300
+    },
+    "publicUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://www\\.carkey\\.com\\.tw/"
+    },
+    "success": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "status",
+        "receiptHash",
+        "jobId",
+        "claimId",
+        "handoffHash",
+        "candidateHash",
+        "sourceHash",
+        "bindingHash",
+        "previewReceiptHash",
+        "authorizationHash",
+        "repository",
+        "pullRequest",
+        "productionDeployment",
+        "publicResult",
+        "productionVerificationHash",
+        "rollback",
+        "createdAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "casepilot-publication-production-receipt/v2" },
+        "status": { "const": "published" },
+        "receiptHash": { "$ref": "#/$defs/sha256" },
+        "jobId": { "$ref": "#/$defs/operationsId" },
+        "claimId": { "type": "string", "format": "uuid" },
+        "handoffHash": { "$ref": "#/$defs/sha256" },
+        "candidateHash": { "$ref": "#/$defs/sha256" },
+        "sourceHash": { "$ref": "#/$defs/sha256" },
+        "bindingHash": { "$ref": "#/$defs/sha256" },
+        "previewReceiptHash": { "$ref": "#/$defs/sha256" },
+        "authorizationHash": { "$ref": "#/$defs/sha256" },
+        "repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fullName", "baseBranch", "mainBeforeSha", "authorizedHeadSha", "mergeSha", "mainAfterSha"],
+          "properties": {
+            "fullName": { "const": "JuiHsuan-otto/procore-auto-key" },
+            "baseBranch": { "const": "main" },
+            "mainBeforeSha": { "$ref": "#/$defs/gitSha" },
+            "authorizedHeadSha": { "$ref": "#/$defs/gitSha" },
+            "mergeSha": { "$ref": "#/$defs/gitSha" },
+            "mainAfterSha": { "$ref": "#/$defs/gitSha" }
+          }
+        },
+        "pullRequest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["number", "url", "mergedAt", "mergeMethod"],
+          "properties": {
+            "number": { "type": "integer", "minimum": 1 },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://github\\.com/JuiHsuan-otto/procore-auto-key/pull/[1-9][0-9]*$",
+              "maxLength": 500
+            },
+            "mergedAt": { "$ref": "#/$defs/timestamp" },
+            "mergeMethod": { "const": "merge" }
+          }
+        },
+        "productionDeployment": { "$ref": "#/$defs/productionDeployment" },
+        "publicResult": { "$ref": "#/$defs/productionPublicResult" },
+        "productionVerificationHash": { "$ref": "#/$defs/sha256" },
+        "rollback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "automaticRollbackPerformed", "previousGithubDeploymentId"],
+          "properties": {
+            "mode": { "const": "revert_pr" },
+            "automaticRollbackPerformed": { "const": false },
+            "previousGithubDeploymentId": {
+              "oneOf": [
+                { "type": "integer", "minimum": 1 },
+                { "type": "null" }
+              ]
+            }
+          }
+        },
+        "createdAt": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "productionDeployment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["githubDeploymentId", "githubDeploymentStatusId", "environment", "environmentUrl", "sourceSha", "state", "providerDeploymentId", "providerDeploymentIdStatus", "accessMode"],
+      "properties": {
+        "githubDeploymentId": { "type": "integer", "minimum": 1 },
+        "githubDeploymentStatusId": { "type": "integer", "minimum": 1 },
+        "environment": { "const": "Production – procore-auto-key" },
+        "environmentUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "maxLength": 500
+        },
+        "sourceSha": { "$ref": "#/$defs/gitSha" },
+        "state": { "const": "success" },
+        "providerDeploymentId": {
+          "oneOf": [
+            { "type": "string", "pattern": "^dpl_[A-Za-z0-9]+$", "maxLength": 200 },
+            { "type": "null" }
+          ]
+        },
+        "providerDeploymentIdStatus": { "enum": ["verified", "unavailable"] },
+        "accessMode": { "enum": ["anonymous_verified", "vercel_sso_protected"] }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "providerDeploymentIdStatus": { "const": "verified" } },
+            "required": ["providerDeploymentIdStatus"]
+          },
+          "then": { "properties": { "providerDeploymentId": { "type": "string", "pattern": "^dpl_[A-Za-z0-9]+$", "maxLength": 200 } } }
+        },
+        {
+          "if": {
+            "properties": { "providerDeploymentIdStatus": { "const": "unavailable" } },
+            "required": ["providerDeploymentIdStatus"]
+          },
+          "then": { "properties": { "providerDeploymentId": { "type": "null" } } }
+        }
+      ]
+    },
+    "productionPublicResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["publicationPath", "canonicalUrl", "contentSha256", "assetManifestHash", "schemaTypes", "sitemapIncluded", "httpStatus"],
+      "properties": {
+        "publicationPath": { "$ref": "#/$defs/publicRoute" },
+        "canonicalUrl": { "$ref": "#/$defs/publicUrl" },
+        "contentSha256": { "$ref": "#/$defs/sha256" },
+        "assetManifestHash": { "$ref": "#/$defs/sha256" },
+        "schemaTypes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            { "const": "Article" },
+            { "const": "BreadcrumbList" },
+            { "const": "FAQPage" }
+          ],
+          "items": false
+        },
+        "sitemapIncluded": { "const": true },
+        "httpStatus": { "const": 200 }
+      }
+    },
+    "failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "status", "receiptHash", "jobId", "claimId", "handoffHash", "candidateHash", "bindingHash", "failure", "rollback", "createdAt"],
+      "properties": {
+        "schemaVersion": { "const": "casepilot-publication-production-receipt/v2" },
+        "status": { "const": "failed" },
+        "receiptHash": { "$ref": "#/$defs/sha256" },
+        "jobId": { "$ref": "#/$defs/operationsId" },
+        "claimId": { "type": "string", "format": "uuid" },
+        "handoffHash": { "$ref": "#/$defs/sha256" },
+        "candidateHash": { "$ref": "#/$defs/sha256" },
+        "bindingHash": { "$ref": "#/$defs/sha256" },
+        "failure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stage", "code", "retryable", "detailDigest"],
+          "properties": {
+            "stage": { "enum": ["pre_merge", "post_merge"] },
+            "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,119}$" },
+            "retryable": { "type": "boolean" },
+            "detailDigest": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        "rollback": { "$ref": "#/$defs/failureRollback" },
+        "createdAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "failure": {
+                "properties": { "stage": { "const": "pre_merge" } },
+                "required": ["stage"]
+              }
+            },
+            "required": ["failure"]
+          },
+          "then": {
+            "properties": {
+              "rollback": {
+                "properties": {
+                  "required": { "const": false },
+                  "attempted": { "const": false },
+                  "status": { "const": "not_required" },
+                  "triggerMergeSha": { "type": "null" },
+                  "revertPrNumber": { "type": "null" },
+                  "revertPrUrl": { "type": "null" },
+                  "revertHeadSha": { "type": "null" },
+                  "rollbackMergeSha": { "type": "null" },
+                  "productionGithubDeploymentId": { "type": "null" },
+                  "verifiedAt": { "type": "null" },
+                  "routeHttpStatus": { "type": "null" },
+                  "sitemapOccurrenceCount": { "type": "null" },
+                  "rollbackVerificationHash": { "type": "null" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure": {
+                "properties": { "stage": { "const": "post_merge" } },
+                "required": ["stage"]
+              }
+            },
+            "required": ["failure"]
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "properties": { "retryable": { "const": false } }
+              },
+              "rollback": {
+                "properties": {
+                  "required": { "const": true },
+                  "status": { "enum": ["restored", "manual_required"] },
+                  "triggerMergeSha": { "$ref": "#/$defs/gitSha" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rollback": {
+                "properties": { "status": { "const": "restored" } },
+                "required": ["status"]
+              }
+            },
+            "required": ["rollback"]
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "properties": {
+                  "stage": { "const": "post_merge" },
+                  "retryable": { "const": false }
+                }
+              },
+              "rollback": {
+                "properties": {
+                  "required": { "const": true },
+                  "attempted": { "const": true },
+                  "triggerMergeSha": { "$ref": "#/$defs/gitSha" },
+                  "revertPrNumber": { "type": "integer", "minimum": 1 },
+                  "revertPrUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^https://github\\.com/JuiHsuan-otto/procore-auto-key/pull/[1-9][0-9]*$",
+                    "maxLength": 500
+                  },
+                  "revertHeadSha": { "$ref": "#/$defs/gitSha" },
+                  "rollbackMergeSha": { "$ref": "#/$defs/gitSha" },
+                  "productionGithubDeploymentId": { "type": "integer", "minimum": 1 },
+                  "verifiedAt": { "$ref": "#/$defs/timestamp" },
+                  "routeHttpStatus": { "const": 404 },
+                  "sitemapOccurrenceCount": { "const": 0 },
+                  "rollbackVerificationHash": { "$ref": "#/$defs/sha256" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rollback": {
+                "properties": { "status": { "const": "manual_required" } },
+                "required": ["status"]
+              }
+            },
+            "required": ["rollback"]
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "properties": {
+                  "stage": { "const": "post_merge" },
+                  "code": { "const": "ROLLBACK_REQUIRED" },
+                  "retryable": { "const": false }
+                }
+              },
+              "rollback": {
+                "properties": {
+                  "required": { "const": true },
+                  "triggerMergeSha": { "$ref": "#/$defs/gitSha" },
+                  "routeHttpStatus": { "type": "null" },
+                  "sitemapOccurrenceCount": { "type": "null" },
+                  "rollbackVerificationHash": { "type": "null" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "failure": {
+                "properties": { "code": { "const": "PUBLICATION_BASE_DRIFT" } },
+                "required": ["code"]
+              }
+            },
+            "required": ["failure"]
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "properties": {
+                  "stage": { "const": "pre_merge" },
+                  "retryable": { "const": false }
+                }
+              },
+              "rollback": {
+                "properties": {
+                  "required": { "const": false },
+                  "attempted": { "const": false },
+                  "status": { "const": "not_required" }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "failureRollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "attempted",
+        "status",
+        "triggerMergeSha",
+        "revertPrNumber",
+        "revertPrUrl",
+        "revertHeadSha",
+        "rollbackMergeSha",
+        "productionGithubDeploymentId",
+        "verifiedAt",
+        "routeHttpStatus",
+        "sitemapOccurrenceCount",
+        "rollbackVerificationHash"
+      ],
+      "properties": {
+        "required": { "type": "boolean" },
+        "attempted": { "type": "boolean" },
+        "status": { "enum": ["not_required", "restored", "manual_required"] },
+        "triggerMergeSha": {
+          "oneOf": [
+            { "$ref": "#/$defs/gitSha" },
+            { "type": "null" }
+          ]
+        },
+        "revertPrNumber": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "null" }
+          ]
+        },
+        "revertPrUrl": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://github\\.com/JuiHsuan-otto/procore-auto-key/pull/[1-9][0-9]*$",
+              "maxLength": 500
+            },
+            { "type": "null" }
+          ]
+        },
+        "revertHeadSha": {
+          "oneOf": [
+            { "$ref": "#/$defs/gitSha" },
+            { "type": "null" }
+          ]
+        },
+        "rollbackMergeSha": {
+          "oneOf": [
+            { "$ref": "#/$defs/gitSha" },
+            { "type": "null" }
+          ]
+        },
+        "productionGithubDeploymentId": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "null" }
+          ]
+        },
+        "verifiedAt": {
+          "oneOf": [
+            { "$ref": "#/$defs/timestamp" },
+            { "type": "null" }
+          ]
+        },
+        "routeHttpStatus": {
+          "oneOf": [
+            { "const": 404 },
+            { "type": "null" }
+          ]
+        },
+        "sitemapOccurrenceCount": {
+          "oneOf": [
+            { "const": 0 },
+            { "type": "null" }
+          ]
+        },
+        "rollbackVerificationHash": {
+          "oneOf": [
+            { "$ref": "#/$defs/sha256" },
+            { "type": "null" }
+          ]
+        }
+      }
+    }
+  }
+}
