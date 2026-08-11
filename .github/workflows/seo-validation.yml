@@ -48,6 +48,11 @@ jobs:
         run: npm run validate:schema-rollout
 
       - name: Validate publication contracts and closed-loop worker
+        env:
+          GIT_AUTHOR_NAME: CasePilot CI Fixture
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: CasePilot CI Fixture
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
         run: |
           npm run publication:verify-contract
           npm run publication:verify-action-contract
