@@ -124,4 +124,14 @@ assert.equal(productionLine.gtagCommands.find((item) => item[0] === "event" && i
 assertSanitizedConfig(productionLine, "https://www.carkey.com.tw/article");
 assertNoSensitiveUrlParts(productionLine);
 
-console.log("Conversion tracking runtime tests passed: sanitized page views/events, click-only production events, loopback-only diagnostic lead");
+const structuredInquiry = runTrackingScenario(
+  "https://www.carkey.com.tw/article-smart-key-troubleshooting?private=ignored",
+  "/rescue-request?source=article-smart-key-troubleshooting",
+);
+assert.equal(structuredInquiry.objects.filter((item) => item.event === "procore_rescue_request_start").length, 1);
+assert.equal(structuredInquiry.gtagCommands.filter((item) => item[0] === "event" && item[1] === "rescue_request_start").length, 1);
+assert.equal(structuredInquiry.gtagCommands.some((item) => item[1] === "generate_lead"), false);
+assert.equal(structuredInquiry.objects[0].link_url, "/rescue-request");
+assertNoSensitiveUrlParts(structuredInquiry);
+
+console.log("Conversion tracking runtime tests passed: sanitized page views/events, click-only phone/LINE/structured-intake events, loopback-only diagnostic lead");

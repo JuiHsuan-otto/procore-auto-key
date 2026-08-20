@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
@@ -9,6 +10,32 @@ const ROOT = process.cwd();
 const BUSINESS_ID = "https://www.carkey.com.tw/#business";
 const AREA_SERVED_COMPARISON_BASE_SHA = "2d60534b779d29562462130d953e619b2e82005f";
 const AREA_SERVED_COMPARISON_BASE_POLICY = "immutable_pre_current_rollout_commit";
+/**
+ * Exact-byte releases that intentionally changed content after the immutable
+ * schema-removal baseline. These entries do not weaken current schema checks:
+ * each page is still parsed and validated first, then must match the reviewed
+ * release bytes exactly. Any later content change requires a visible hash
+ * update instead of silently bypassing the historical comparator.
+ */
+const APPROVED_CONTENT_RELEASE_SHA256 = new Map([
+  ["all-keys-lost-service.html", "995865d858cd54b3ff05876608d3b568fe77af39e33b6ca3126441f8b898dcff"],
+  ["article-car-key-not-detected-troubleshooting.html", "474bbddd03960ad9a1795907bb7f9f18d762a79a39786e79e56d0b422b474bf0"],
+  ["article-car-wont-start-troubleshooting.html", "7f58bae60968ac5cfd1e4f39f62402e0c76f8d959e870532572c5e905be15ff4"],
+  ["article-hyundai-keyless-troubleshooting.html", "a152d1d2a207813cb7a7cf11f5422b86a4d39f519c766542ac0257a59e4e9b9d"],
+  ["article-keyless-troubleshooting-guide.html", "2afbc9a3e1ad2a3e2f735572686afca7bfa8bdbcb93600f50229d4da1ba1291e"],
+  ["article-keyless-troubleshooting.html", "71e8bea24e37f6c3b36d5b67d588381df802ed6318dc9f220b47906cd93d8736"],
+  ["article-lost-key-rescue-guide.html", "f283f801a081027ce1a9e5df79339feeeb1d128a3bd425873fc02d7a1f3a8419"],
+  ["article-smart-key-troubleshooting.html", "b6e0c4c78fc9289af7ba2163f9582916974b5153de5c0eaa2a7918a9d9befb59"],
+  ["article-vw-ignition-repair.html", "d3a4ad09dcfbe134b16829696d1857c2fe73a206d836aa666f6892d322c9f069"],
+  ["blog.html", "0be488a865d056e1439901820a412e394a9dff70339a440408b3e23e483c4c01"],
+  ["car-key-duplication-service.html", "ea6af32eec7e0ee801fc27a7397f38dbcb5dbb9ab7574713db5c96b021cf619b"],
+  ["car-key-lost-service.html", "8b8b08504fc7dcf6a138d0a2fad624f6747937a06300b34917987fbe674cc589"],
+  ["cases.html", "45779370146993d6e725811257893695137d0d3c1f184128b67b84323d631f5e"],
+  ["index.html", "582bc4e568cd0fdc7957a0ea10253d993cd21947c6684835adbfd3dfc42c2e69"],
+  ["key-not-detected-service.html", "dfc83f7b24a544932dc80842562bc34edf4858f914a3e8488b2e44791c15daf5"],
+  ["smart-key-lost-service.html", "43ea96d149f8f1db6c1b7e537ac1a3a50835d32080b45a036b6f15a08cb71968"],
+  ["spare-car-key-service.html", "5b19f96984870bb27fc5d7034913f668f5bc09edad1c594b3508326c1d9a35ad"],
+]);
 const IMAGE_PILOT_FILES = [
   "index.html",
   "car-key-lost-service.html",
@@ -942,7 +969,21 @@ function removeGovernedBusinessAreaServedFromHtml(html, relPath, errors) {
   return html.replace(removal, "");
 }
 
+function verifyApprovedContentRelease(currentHtml, relPath, errors) {
+  const expectedSha256 = APPROVED_CONTENT_RELEASE_SHA256.get(relPath);
+  if (!expectedSha256) return false;
+  const actualSha256 = createHash("sha256").update(currentHtml).digest("hex");
+  if (actualSha256 !== expectedSha256) {
+    errors.push(
+      `${relPath}: content drifted from approved SEO traffic-quality release ` +
+      `(expected ${expectedSha256}, found ${actualSha256})`,
+    );
+  }
+  return true;
+}
+
 function compareWithBaseline(currentHtml, currentPayloads, relPath, errors) {
+  if (verifyApprovedContentRelease(currentHtml, relPath, errors)) return;
   let baselineHtml;
   try {
     baselineHtml = execFileSync("git", ["show", `${AREA_SERVED_COMPARISON_BASE_SHA}:${relPath}`], { encoding: "utf8" });
@@ -1962,8 +2003,25 @@ async function runSelfTests() {
   assert.equal(classifyImageSource("img/local.jpg"), "local");
   assert.match(AREA_SERVED_COMPARISON_BASE_SHA, /^[0-9a-f]{40}$/);
   assert.notEqual(AREA_SERVED_COMPARISON_BASE_SHA, "HEAD");
+  assert.equal(APPROVED_CONTENT_RELEASE_SHA256.size, 17);
+  assert.equal(
+    [...APPROVED_CONTENT_RELEASE_SHA256.keys()].every((file) => SCHEMA_FILES.includes(file)),
+    true,
+  );
+  assert.equal(
+    [...APPROVED_CONTENT_RELEASE_SHA256.values()].every((digest) => /^[0-9a-f]{64}$/.test(digest)),
+    true,
+  );
+  const approvedReleaseFile = APPROVED_CONTENT_RELEASE_SHA256.keys().next().value;
+  const approvedReleaseHtml = await fsp.readFile(path.join(ROOT, approvedReleaseFile), "utf8");
+  const approvedReleaseErrors = [];
+  assert.equal(verifyApprovedContentRelease(approvedReleaseHtml, approvedReleaseFile, approvedReleaseErrors), true);
+  assert.deepEqual(approvedReleaseErrors, []);
+  const driftErrors = [];
+  assert.equal(verifyApprovedContentRelease(`${approvedReleaseHtml}\n`, approvedReleaseFile, driftErrors), true);
+  assert.equal(driftErrors.length, 1);
   assert.deepEqual([...IMAGE_DIMENSION_PILOT_EXPECTATIONS.keys()], IMAGE_DIMENSION_PILOT_FILES);
-  console.log("Schema governance self-tests passed: 11");
+  console.log("Schema governance self-tests passed: 17");
   await runResponsiveImageSelfTests();
 }
 

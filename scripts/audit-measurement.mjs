@@ -10,8 +10,10 @@ const REQUIRED_TRACKING_TOKENS = [
   "G-KW1LHLVQHL",
   "procore_phone_click",
   "procore_line_click",
+  "procore_rescue_request_start",
   "click_to_call",
   "line_click",
+  "rescue_request_start",
   "generate_lead",
   "transport_type",
   "getSanitizedPageLocation",
@@ -130,6 +132,7 @@ async function main() {
     const trackingCount = countMatches(html, new RegExp(TRACKING_SCRIPT.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"));
     const telCount = countMatches(html, /href=["']tel:/gi);
     const lineCount = countMatches(html, /href=["']https?:\/\/(?:line\.me|lin\.ee)\//gi);
+    const structuredInquiryCount = countMatches(html, /href=["']\/rescue-request(?:[?#["'])/gi);
     const route = getRoute(relPath);
 
     const expectedTrackingCount = PRIVACY_ONLY_PAGES.has(relPath) ? 0 : 1;
@@ -141,8 +144,8 @@ async function main() {
       warnings.push(`${relPath}: no phone CTA`);
     }
 
-    if (lineCount === 0) {
-      warnings.push(`${relPath}: no LINE CTA`);
+    if (lineCount === 0 && structuredInquiryCount === 0) {
+      warnings.push(`${relPath}: no LINE or structured inquiry CTA`);
     }
 
     rows.push({
@@ -152,14 +155,17 @@ async function main() {
       trackingCount,
       telCount,
       lineCount,
+      structuredInquiryCount,
     });
   }
 
   const totalTelLinks = rows.reduce((sum, row) => sum + row.telCount, 0);
   const totalLineLinks = rows.reduce((sum, row) => sum + row.lineCount, 0);
+  const totalStructuredInquiryLinks = rows.reduce((sum, row) => sum + row.structuredInquiryCount, 0);
   const pagesWithPhone = rows.filter((row) => row.telCount > 0).length;
   const pagesWithLine = rows.filter((row) => row.lineCount > 0).length;
-  const noLineRows = rows.filter((row) => row.lineCount === 0).slice(0, 20);
+  const pagesWithAssistedInquiry = rows.filter((row) => row.lineCount > 0 || row.structuredInquiryCount > 0).length;
+  const noLineRows = rows.filter((row) => row.lineCount === 0 && row.structuredInquiryCount === 0).slice(0, 20);
   const noPhoneRows = rows.filter((row) => row.telCount === 0).slice(0, 20);
 
   console.log("ProCore measurement audit");
@@ -167,8 +173,10 @@ async function main() {
   console.log(`Pages with tracking: ${rows.filter((row) => row.trackingCount === 1).length}`);
   console.log(`Pages with phone CTA: ${pagesWithPhone}`);
   console.log(`Pages with LINE CTA: ${pagesWithLine}`);
+  console.log(`Pages with LINE or structured inquiry CTA: ${pagesWithAssistedInquiry}`);
   console.log(`Phone CTA links: ${totalTelLinks}`);
   console.log(`LINE CTA links: ${totalLineLinks}`);
+  console.log(`Structured inquiry CTA links: ${totalStructuredInquiryLinks}`);
   console.log(`Warnings: ${warnings.length}`);
   console.log(`Errors: ${errors.length}`);
   console.log(`Static CTA taxonomy: ${errors.length ? "FAILED" : "verified (click paths do not emit generate_lead)"}`);

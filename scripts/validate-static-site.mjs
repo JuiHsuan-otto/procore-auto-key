@@ -200,8 +200,27 @@ async function validateRobotsRedirects(errors) {
     .map((line) => line.replace(/^disallow\s*:/i, "").trim())
     .filter(Boolean);
   const vercelConfig = JSON.parse(await fsp.readFile(vercelPath, "utf8"));
+  const redirectSources = new Set();
 
   for (const redirect of vercelConfig.redirects || []) {
+    if (redirectSources.has(redirect.source)) {
+      errors.push(`${VERCEL_CONFIG_FILE}: duplicate redirect source ${redirect.source}`);
+    }
+    redirectSources.add(redirect.source);
+    if (redirect.source === redirect.destination) {
+      errors.push(`${VERCEL_CONFIG_FILE}: redirect source equals destination ${redirect.source}`);
+    }
+    if (
+      typeof redirect.destination === "string" &&
+      redirect.destination.startsWith("/") &&
+      !redirect.destination.includes(":") &&
+      !redirect.destination.includes("*")
+    ) {
+      const destinationRef = redirect.destination.replace(/^\/+/, "");
+      if (!fileExistsForRoute(destinationRef)) {
+        errors.push(`${VERCEL_CONFIG_FILE}: missing redirect destination ${redirect.destination}`);
+      }
+    }
     const sourcePrefix = getRoutePrefix(redirect.source);
     const blockedBy = disallowRules.find((rule) => robotsRuleBlocksPath(rule, sourcePrefix));
     if (blockedBy) {
@@ -442,16 +461,38 @@ function validateHtml(relPath, html, errors, warnings) {
 
   parseJsonLdBlocks(html, relPath, errors);
 
+  const structuredInquiryRe = /href=["']\/rescue-request\?source=([a-z0-9-]+)["']/gi;
+  const expectedInquirySource = relPath === "index.html" ? "home" : relPath.replace(/\.html$/i, "");
+  let structuredMatch;
+  while ((structuredMatch = structuredInquiryRe.exec(html)) !== null) {
+    if (structuredMatch[1] !== expectedInquirySource) {
+      errors.push(
+        `${relPath}: structured inquiry source ${structuredMatch[1]} does not match ${expectedInquirySource}`,
+      );
+    }
+  }
+
   const attrRe = /\b(src|href|content)\s*=\s*(["'])([^"']+)\2/gi;
   let match;
   while ((match = attrRe.exec(html)) !== null) {
     const [, attr, , rawValue] = match;
+    if (rawValue === "${item.img}" || rawValue.includes("{{")) {
+      errors.push(`${relPath}: unresolved template expression in ${attr}: ${rawValue}`);
+      continue;
+    }
+    if (/^["'](?:https?:|tel:)/i.test(rawValue) || /["']\/$/.test(rawValue)) {
+      errors.push(`${relPath}: malformed quoted ${attr}: ${rawValue}`);
+      continue;
+    }
     if (attr === "content" && !/\.(jpe?g|png|webp|gif|svg)$/i.test(rawValue)) continue;
     const localRef = attr === "href" ? cleanUrlPathFromHtmlHref(rawValue) : normalizeLocalRef(rawValue);
     if (!localRef) continue;
     if (!fileExistsForRoute(localRef)) {
       errors.push(`${relPath}: missing local ${attr} target: ${rawValue}`);
     }
+  }
+  if (/\b(?:href|src)\s*=\s*(["'])\1(?:https?:|tel:)/i.test(html)) {
+    errors.push(`${relPath}: contains a doubly quoted link target`);
   }
 
   const pictureRe = /<picture\b[\s\S]*?<source\b[^>]*srcset=["']([^"']+)["'][^>]*>[\s\S]*?<\/picture>/gi;
@@ -470,8 +511,10 @@ function validateRescueRequest(htmlByPath, sitemapUrls, errors) {
 
   const required = [
     'id="year"', 'id="brand"', 'id="model"', 'id="location"',
-    'name="issue"', 'name="photos"', 'id="notes"',
+    'name="issue"', 'name="haskey"', 'name="canstart"', 'name="parking"',
+    'name="photos"', 'id="notes"',
     'https://line.me/R/oaMessage/@420gknem/?', 'tel:0909277670',
+    '來源頁：', '詢問識別碼：', "'CKW-'", "new URLSearchParams(location.search)",
     'id="include-notes"', 'id="make-draft"', 'id="copy-draft"',
     'id="clear-draft"', 'id="back-edit"', "'#draft='", 'history.replaceState',
     '草稿只放在網址的 # 片段，不會送到伺服器', '連結仍可能被他人看到',
@@ -493,8 +536,14 @@ function validateRescueRequest(htmlByPath, sitemapUrls, errors) {
   }
   for (const source of ["index.html", "service-areas.html", "vcard.html"]) {
     const sourceHtml = htmlByPath.get(source) || "";
-    if (!sourceHtml.includes('href="/rescue-request"')) {
+    if (!/href=["']\/rescue-request(?:["']|\?source=[a-z0-9-]+["'])/.test(sourceHtml)) {
       errors.push(`${source}: missing rescue request entry link`);
+    }
+  }
+  for (const source of ["index.html", "cases.html"]) {
+    const sourceHtml = htmlByPath.get(source) || "";
+    if (/blog\.json\?t=/.test(sourceHtml)) {
+      errors.push(`${source}: blog registry fetch must not create crawlable timestamp URLs`);
     }
   }
   const vcard = htmlByPath.get("vcard.html") || "";
