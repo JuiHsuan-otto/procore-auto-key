@@ -1454,7 +1454,7 @@
  }
 
  try {
- const response = await fetch('/blog.json?t=' + new Date().getTime());
+ const response = await fetch('/blog.json', { cache: 'no-store' });
  const data = await response.json();
 
  const filtered = data.filter(item =>
@@ -1521,7 +1521,7 @@
  return;
  }
  try {
- const response = await fetch('/blog.json?t=' + new Date().getTime());
+ const response = await fetch('/blog.json', { cache: 'no-store' });
  const data = await response.json();
  const filtered = data.filter(item =>
  item.title.toLowerCase().includes(query) ||

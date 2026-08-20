@@ -69,6 +69,14 @@
     return /(^https?:)?\/\/(line\.me|lin\.ee)\//i.test(href || "");
   }
 
+  function isRescueRequestHref(href) {
+    try {
+      return new URL(href, window.location.href).pathname === "/rescue-request";
+    } catch (error) {
+      return false;
+    }
+  }
+
   function getSanitizedPageLocation() {
     try {
       var url = new URL(window.location.href);
@@ -79,13 +87,13 @@
   }
 
   function getSanitizedLinkUrl(href) {
-    if (!/(^https?:)?\/\//i.test(href || "")) {
+    if (/^(tel|mailto|sms):/i.test(href || "")) {
       return href;
     }
 
     try {
       var url = new URL(href, window.location.href);
-      return url.origin + url.pathname;
+      return /(^https?:)?\/\//i.test(href || "") ? url.origin + url.pathname : url.pathname;
     } catch (error) {
       return (href || "").split(/[?#]/)[0];
     }
@@ -242,6 +250,12 @@
     if (isLineHref(href)) {
       payload = getBasePayload(link, "procore_line_click", "line");
       pushClickEvents(payload, "line_click");
+      return;
+    }
+
+    if (isRescueRequestHref(href)) {
+      payload = getBasePayload(link, "procore_rescue_request_start", "structured_inquiry");
+      pushClickEvents(payload, "rescue_request_start");
     }
   }
 
