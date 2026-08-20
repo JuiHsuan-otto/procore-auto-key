@@ -20,6 +20,7 @@ Status: release candidate for the Owner-authorized Draft PR and Preview phase. M
 - Add static guards against the historical `${item.img}` and doubly quoted link failures.
 - Add structured inquiry fields, privacy guards, anonymous request reference, validated source page, and `rescue_request_start` tracking.
 - Route the primary CTA on the homepage and highest-traffic troubleshooting/service pages through the structured inquiry while retaining direct phone and LINE choices elsewhere.
+- Pin every intentionally changed schema-registered HTML page to its reviewed SHA-256 release bytes so the historical schema comparator remains fail-closed without rejecting this authorized content release.
 
 ## Measurement semantics
 
