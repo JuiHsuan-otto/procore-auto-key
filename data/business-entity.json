@@ -3,13 +3,20 @@
   "entity_id": "carkey-business",
   "schema_identity": {
     "id": "https://www.carkey.com.tw/#business",
-    "types": ["Organization", "LocalBusiness"],
+    "types": [
+      "Organization",
+      "LocalBusiness"
+    ],
     "rule": "Generate one multi-typed node with this shared @id; pages reference it instead of defining competing business nodes."
   },
   "publication_policy": {
     "default": "unpublished",
     "eligible_status": "verified",
-    "required_evidence_fields": ["source", "verified_by", "verified_at"],
+    "required_evidence_fields": [
+      "source",
+      "verified_by",
+      "verified_at"
+    ],
     "pilot_before_rollout": true
   },
   "observed_brand_variants": [
@@ -765,16 +772,13 @@
             "stage_id": "location-page-batch-1",
             "status": "implemented",
             "files": [
+              "hsinchu-car-key.html",
+              "chiayi-car-key.html",
+              "offshore-islands-car-key.html",
               "changhua-car-key.html",
-              "chiayi-city-car-key.html",
-              "chiayi-county-car-key.html",
-              "hsinchu-city-car-key.html",
-              "hsinchu-county-car-key.html",
               "hualien-car-key.html",
               "kaohsiung-car-key.html",
               "keelung-car-key.html",
-              "kinmen-car-key.html",
-              "lienchiang-car-key.html",
               "miaoli-car-key.html"
             ]
           },
@@ -784,7 +788,6 @@
             "files": [
               "nantou-car-key.html",
               "new-taipei-car-key.html",
-              "penghu-car-key.html",
               "pingtung-car-key.html",
               "taichung-car-key.html",
               "tainan-car-key.html",

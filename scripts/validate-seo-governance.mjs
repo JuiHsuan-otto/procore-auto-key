@@ -649,13 +649,13 @@ function validateBusinessEntity(data, errors, warnings) {
         stages[7]?.stage_id !== "remaining-article-case-batch-2" || stages[7]?.files?.length !== 15 ||
         stages[8]?.stage_id !== "remaining-article-case-batch-3" || stages[8]?.files?.length !== 15 ||
         stages[9]?.stage_id !== "remaining-article-case-batch-4" || stages[9]?.files?.length !== 13 ||
-        stages[10]?.stage_id !== "location-page-batch-1" || stages[10]?.files?.length !== 11 ||
-        stages[11]?.stage_id !== "location-page-batch-2" || stages[11]?.files?.length !== 11 ||
+        stages[10]?.stage_id !== "location-page-batch-1" || stages[10]?.files?.length !== 8 ||
+        stages[11]?.stage_id !== "location-page-batch-2" || stages[11]?.files?.length !== 10 ||
         stages[12]?.stage_id !== "utility-page-batch" || stages[12]?.files?.length !== 5) {
       errors.push(`${BUSINESS_FILE}: priceRange migration must record all thirteen controlled stages`);
     }
-    if (removedFiles.length !== 134 || new Set(removedFiles).size !== removedFiles.length) {
-      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 134 unique files`);
+    if (removedFiles.length !== 130 || new Set(removedFiles).size !== removedFiles.length) {
+      errors.push(`${BUSINESS_FILE}: priceRange removal stages must identify exactly 130 unique files`);
     }
     if (migration.rollout_status !== "price_range_closed") {
       errors.push(`${BUSINESS_FILE}: priceRange migration status must be price_range_closed`);

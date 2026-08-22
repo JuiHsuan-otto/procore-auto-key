@@ -17,13 +17,10 @@ import {
 
 const ROOT = process.cwd();
 const LOCATION_FILES = new Set([
-  "taipei-car-key.html", "new-taipei-car-key.html", "keelung-car-key.html", "taoyuan-car-key.html",
-  "hsinchu-city-car-key.html", "hsinchu-county-car-key.html", "miaoli-car-key.html", "taichung-car-key.html",
-  "changhua-car-key.html", "nantou-car-key.html", "yunlin-car-key.html", "chiayi-city-car-key.html",
-  "chiayi-county-car-key.html", "tainan-car-key.html", "kaohsiung-car-key.html", "pingtung-car-key.html",
-  "yilan-car-key.html", "hualien-car-key.html", "taitung-car-key.html", "penghu-car-key.html",
-  "kinmen-car-key.html", "lienchiang-car-key.html",
-]);
+  "hsinchu-car-key.html", "chiayi-car-key.html", "offshore-islands-car-key.html", "taipei-car-key.html", "new-taipei-car-key.html", "keelung-car-key.html", "taoyuan-car-key.html",
+  "miaoli-car-key.html", "taichung-car-key.html",
+  "changhua-car-key.html", "nantou-car-key.html", "yunlin-car-key.html", "tainan-car-key.html", "kaohsiung-car-key.html", "pingtung-car-key.html",
+  "yilan-car-key.html", "hualien-car-key.html", "taitung-car-key.html", ]);
 const SERVICE_FILES = new Set([
   "all-keys-lost-service.html", "car-key-duplication-service.html", "car-key-lost-service.html",
   "car-key-shell-replacement-service.html", "chip-key-copy-by-mail-service.html", "key-not-detected-service.html",

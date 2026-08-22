@@ -17,28 +17,24 @@ const EXCLUDED_DIRS = new Set([
 ]);
 
 const COUNTY_PAGE_LABELS = new Map([
+  ["hsinchu-car-key.html", "新竹縣市汽車鑰匙服務"],
+  ["chiayi-car-key.html", "嘉義縣市汽車鑰匙服務"],
+  ["offshore-islands-car-key.html", "離島地區汽車鑰匙服務"],
   ["taipei-car-key.html", "台北市汽車鑰匙服務"],
   ["new-taipei-car-key.html", "新北市汽車鑰匙服務"],
   ["keelung-car-key.html", "基隆市汽車鑰匙服務"],
   ["taoyuan-car-key.html", "桃園市汽車鑰匙服務"],
-  ["hsinchu-city-car-key.html", "新竹市汽車鑰匙服務"],
-  ["hsinchu-county-car-key.html", "新竹縣汽車鑰匙服務"],
   ["miaoli-car-key.html", "苗栗縣汽車鑰匙服務"],
   ["taichung-car-key.html", "台中市汽車鑰匙服務"],
   ["changhua-car-key.html", "彰化縣汽車鑰匙服務"],
   ["nantou-car-key.html", "南投縣汽車鑰匙服務"],
   ["yunlin-car-key.html", "雲林縣汽車鑰匙服務"],
-  ["chiayi-city-car-key.html", "嘉義市汽車鑰匙服務"],
-  ["chiayi-county-car-key.html", "嘉義縣汽車鑰匙服務"],
   ["tainan-car-key.html", "台南市汽車鑰匙服務"],
   ["kaohsiung-car-key.html", "高雄市汽車鑰匙服務"],
   ["pingtung-car-key.html", "屏東縣汽車鑰匙服務"],
   ["yilan-car-key.html", "宜蘭縣汽車鑰匙服務"],
   ["hualien-car-key.html", "花蓮縣汽車鑰匙服務"],
   ["taitung-car-key.html", "台東縣汽車鑰匙服務"],
-  ["penghu-car-key.html", "澎湖縣汽車鑰匙服務"],
-  ["kinmen-car-key.html", "金門縣汽車鑰匙服務"],
-  ["lienchiang-car-key.html", "連江縣汽車鑰匙服務"],
 ]);
 
 function toPosix(value) {
