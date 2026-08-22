@@ -35,7 +35,7 @@ const APPROVED_CONTENT_RELEASE_SHA256 = new Map([
   ["chiayi-car-key.html", "155a64958a88dda8824243ee4d986b545e4b3eba31009878b6225d4f60d94572"],
   ["hsinchu-car-key.html", "7229cab78e473d8d7e8b5c66a87bd09e51fd3c3b4e99f7d998d4a41a6df5c1ba"],
   ["hualien-car-key.html", "0333e3e69281a8438066ccf0a02b3d4ea62a53057073aaef0b004e96d8fb73e1"],
-  ["index.html", "db14a976c06fdc1b2af652b7fe89c14a6ce3febef5ed26b3aafd942641f364d9"],
+  ["index.html", "3ba1670ba99c115609af300bb7d89ee13fad90abdb0e7efadcab76ae1c76e861"],
   ["kaohsiung-car-key.html", "7177a3944b1b538e1d3d4030a1607c8b2a2a83bcaed7443916bd1eb46047a04d"],
   ["keelung-car-key.html", "36ac090d0ef9b5592efd22f813d9be36079be95ee1dbea317f8be8b9dc173acc"],
   ["key-not-detected-service.html", "dfc83f7b24a544932dc80842562bc34edf4858f914a3e8488b2e44791c15daf5"],
