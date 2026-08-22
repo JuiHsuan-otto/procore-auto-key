@@ -31,10 +31,29 @@ const APPROVED_CONTENT_RELEASE_SHA256 = new Map([
   ["car-key-duplication-service.html", "ea6af32eec7e0ee801fc27a7397f38dbcb5dbb9ab7574713db5c96b021cf619b"],
   ["car-key-lost-service.html", "8b8b08504fc7dcf6a138d0a2fad624f6747937a06300b34917987fbe674cc589"],
   ["cases.html", "45779370146993d6e725811257893695137d0d3c1f184128b67b84323d631f5e"],
-  ["index.html", "582bc4e568cd0fdc7957a0ea10253d993cd21947c6684835adbfd3dfc42c2e69"],
+  ["changhua-car-key.html", "9b3bbfb7582653cf0af9c5250bab6c24b831c6ccf15bd337c8a5f92a05140541"],
+  ["chiayi-car-key.html", "155a64958a88dda8824243ee4d986b545e4b3eba31009878b6225d4f60d94572"],
+  ["hsinchu-car-key.html", "7229cab78e473d8d7e8b5c66a87bd09e51fd3c3b4e99f7d998d4a41a6df5c1ba"],
+  ["hualien-car-key.html", "0333e3e69281a8438066ccf0a02b3d4ea62a53057073aaef0b004e96d8fb73e1"],
+  ["index.html", "db14a976c06fdc1b2af652b7fe89c14a6ce3febef5ed26b3aafd942641f364d9"],
+  ["kaohsiung-car-key.html", "7177a3944b1b538e1d3d4030a1607c8b2a2a83bcaed7443916bd1eb46047a04d"],
+  ["keelung-car-key.html", "36ac090d0ef9b5592efd22f813d9be36079be95ee1dbea317f8be8b9dc173acc"],
   ["key-not-detected-service.html", "dfc83f7b24a544932dc80842562bc34edf4858f914a3e8488b2e44791c15daf5"],
+  ["miaoli-car-key.html", "345693a9166b8edd61929009b923a5dc9f5c7fea8c97d0a8cda809c44f08aa95"],
+  ["nantou-car-key.html", "b55bcb9a6ee7ddf4b79026734b2179affc128af14320e11dde7f0e00cea9f797"],
+  ["new-taipei-car-key.html", "8529997935208b17e1e77795708170665ece6c7834ea466ee90ec2a3951e94c4"],
+  ["offshore-islands-car-key.html", "d0c37fe3804671d76ebb5c08b5bdb229933201b367b526835282a5d8ecc9bc41"],
+  ["pingtung-car-key.html", "93bc26721f0143dad364676a25ca515ad627d8d70ae7d16f3ff7223e94021a59"],
+  ["service-areas.html", "c856d0f4f5c0e2d1e73d538847cf93db0ffdac2423fad4d97f766b52535faf31"],
   ["smart-key-lost-service.html", "43ea96d149f8f1db6c1b7e537ac1a3a50835d32080b45a036b6f15a08cb71968"],
   ["spare-car-key-service.html", "5b19f96984870bb27fc5d7034913f668f5bc09edad1c594b3508326c1d9a35ad"],
+  ["taichung-car-key.html", "50403946190996e6a32f0f23d8a77366a7f3cc12ef8d70acfd9186e8a8edfd0a"],
+  ["tainan-car-key.html", "6d8c1ca599c3fd2a1063d0c77b8464a5b8bae623564e83982a4b416c5bdb03bd"],
+  ["taipei-car-key.html", "de485543d41f0d4a66ee24a8bdc89afeafabf78b9ab92cb029668715c5eae8bf"],
+  ["taitung-car-key.html", "04711eb37bc3a6c6514014239365f96bcfe081e56966c8ed3b57aee8cb07aee3"],
+  ["taoyuan-car-key.html", "31e046f2951f6520017014a1aa0d8b45a9e2a9badd0d9d987fb6a7de25c6866f"],
+  ["yilan-car-key.html", "72a11e93409d7182ceab9b428628dfe2fac1970b4a944147df8230745f7ab393"],
+  ["yunlin-car-key.html", "7537cec16d7fbe7a77aa525d157f31264749cee145602f6b4a2a16cec48d49f4"]
 ]);
 const IMAGE_PILOT_FILES = [
   "index.html",
@@ -380,19 +399,15 @@ AREA_SERVED_HTML_REMOVALS.set(
   '      "areaServed": [\n        "彰化縣",\n        "彰化市",\n        "員林",\n        "和美",\n        "鹿港",\n        "溪州",\n        "北斗",\n        "田中",\n        "花壇"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
-  "chiayi-city-car-key.html",
   '      "areaServed": [\n        "嘉義市",\n        "東區",\n        "西區",\n        "嘉義市區",\n        "後火車站周邊"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
-  "chiayi-county-car-key.html",
   '      "areaServed": [\n        "嘉義縣",\n        "民雄",\n        "太保",\n        "朴子",\n        "水上",\n        "中埔",\n        "大林"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
-  "hsinchu-city-car-key.html",
   '      "areaServed": [\n        "新竹市",\n        "東區",\n        "北區",\n        "香山",\n        "科學園區周邊"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
-  "hsinchu-county-car-key.html",
   '      "areaServed": [\n        "新竹縣",\n        "竹北",\n        "竹東",\n        "湖口",\n        "新豐",\n        "新埔",\n        "關西"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
@@ -408,11 +423,9 @@ AREA_SERVED_HTML_REMOVALS.set(
   '      "areaServed": [\n        "基隆市",\n        "仁愛",\n        "信義",\n        "中正",\n        "中山",\n        "安樂",\n        "暖暖",\n        "七堵"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
-  "kinmen-car-key.html",
   '      "areaServed": [\n        "金門縣",\n        "金城",\n        "金湖",\n        "金沙",\n        "金寧",\n        "烈嶼"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
-  "lienchiang-car-key.html",
   '      "areaServed": [\n        "連江縣",\n        "南竿",\n        "北竿",\n        "莒光",\n        "東引"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
@@ -428,7 +441,6 @@ AREA_SERVED_HTML_REMOVALS.set(
   '      "areaServed": [\n        "新北市",\n        "板橋",\n        "新莊",\n        "中和",\n        "永和",\n        "三重",\n        "新店",\n        "林口",\n        "五股",\n        "淡水"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
-  "penghu-car-key.html",
   '      "areaServed": [\n        "澎湖縣",\n        "馬公",\n        "湖西",\n        "白沙",\n        "西嶼"\n      ],\n',
 );
 AREA_SERVED_HTML_REMOVALS.set(
@@ -702,22 +714,18 @@ const REMAINING_ARTICLE_CASE_SCHEMA_BATCH_4 = [
   "case-hyundai-venue-smartkey-lost.html",
 ];
 const LOCATION_SCHEMA_BATCH_1 = [
+  "hsinchu-car-key.html",
+  "chiayi-car-key.html",
+  "offshore-islands-car-key.html",
   "changhua-car-key.html",
-  "chiayi-city-car-key.html",
-  "chiayi-county-car-key.html",
-  "hsinchu-city-car-key.html",
-  "hsinchu-county-car-key.html",
   "hualien-car-key.html",
   "kaohsiung-car-key.html",
   "keelung-car-key.html",
-  "kinmen-car-key.html",
-  "lienchiang-car-key.html",
   "miaoli-car-key.html",
 ];
 const LOCATION_SCHEMA_BATCH_2 = [
   "nantou-car-key.html",
   "new-taipei-car-key.html",
-  "penghu-car-key.html",
   "pingtung-car-key.html",
   "taichung-car-key.html",
   "tainan-car-key.html",
@@ -2003,7 +2011,7 @@ async function runSelfTests() {
   assert.equal(classifyImageSource("img/local.jpg"), "local");
   assert.match(AREA_SERVED_COMPARISON_BASE_SHA, /^[0-9a-f]{40}$/);
   assert.notEqual(AREA_SERVED_COMPARISON_BASE_SHA, "HEAD");
-  assert.equal(APPROVED_CONTENT_RELEASE_SHA256.size, 17);
+  assert.equal(APPROVED_CONTENT_RELEASE_SHA256.size, 36);
   assert.equal(
     [...APPROVED_CONTENT_RELEASE_SHA256.keys()].every((file) => SCHEMA_FILES.includes(file)),
     true,

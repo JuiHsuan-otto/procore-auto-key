@@ -22,28 +22,24 @@ const SITE_HOSTS = new Set(["carkey.com.tw", "www.carkey.com.tw"]);
 const CONVERSION_TRACKING_SCRIPT = "/assets/js/procore-conversion-tracking.js";
 const LOCAL_ONLY_PAGES = new Set(["rescue-request.html", "service-areas.html"]);
 const COUNTY_AREA_PAGES = new Set([
+  "hsinchu-car-key.html",
+  "chiayi-car-key.html",
+  "offshore-islands-car-key.html",
   "taipei-car-key.html",
   "new-taipei-car-key.html",
   "keelung-car-key.html",
   "taoyuan-car-key.html",
-  "hsinchu-city-car-key.html",
-  "hsinchu-county-car-key.html",
   "miaoli-car-key.html",
   "taichung-car-key.html",
   "changhua-car-key.html",
   "nantou-car-key.html",
   "yunlin-car-key.html",
-  "chiayi-city-car-key.html",
-  "chiayi-county-car-key.html",
   "tainan-car-key.html",
   "kaohsiung-car-key.html",
   "pingtung-car-key.html",
   "yilan-car-key.html",
   "hualien-car-key.html",
   "taitung-car-key.html",
-  "penghu-car-key.html",
-  "kinmen-car-key.html",
-  "lienchiang-car-key.html",
 ]);
 const SENSITIVE_PUBLIC_TERMS = [
   "解碼實績",
