@@ -1,6 +1,6 @@
 # Traffic attribution reliability — 2026-08-26
 
-Status: implemented and verified locally on `fix/analytics-attribution-20260826`; not committed, pushed, merged, or deployed.
+Status: released through PR #19 and verified on Production. Squash merge `2a13a44a4a499fff88cc2ff81be47105e4a62abb` reached `main` and the public tracking asset on 2026-08-26.
 
 ## Decision
 
@@ -88,11 +88,20 @@ Result: `fix_measurement_and_monitor_engagement`. It does not classify the curre
 - `npm run report:traffic-health`: reproduces the current classification from `reports/traffic-health-observation-2026-08-26.json`.
 - Full SEO, site, governance, schema, and diff gates are run before handoff.
 
+## Production rollout evidence
+
+- Source commit: `f28c562795fc6b1abaef39219f2298b77ea677d6` on `fix/analytics-attribution-20260826`.
+- Draft PR #19 was marked ready after local gates, then squash-merged to `main` as `2a13a44a4a499fff88cc2ff81be47105e4a62abb` at `2026-08-26T15:53:18Z`.
+- Both GitHub-linked Vercel deployment contexts (`procore-auto-key` and `repo`) reported success for the merge commit. No direct CLI deployment or protection bypass was used.
+- `https://www.carkey.com.tw/`, `robots.txt`, `sitemap.xml`, the tracking asset, and a representative article returned successful HTTP responses after rollout.
+- Production `assets/js/procore-conversion-tracking.js` SHA-256 was `d4f451282440939c8abf13f3dd9fb691390f6fbef867727127a405ce3d77d27a`, exactly matching the file at live `origin/main`.
+- The production asset contains `ATTRIBUTION_QUERY_PARAMS` and `getAttributionSafePageLocation`. No real phone/LINE click or controlled GA4 event was emitted during post-deploy verification.
+
 ## Release and observation runbook
 
-1. Review and explicitly approve the local diff.
-2. Commit/push/PR/deploy through the project's normal governed path; this task does not perform those external changes.
-3. In GA4 DebugView or Realtime, open a controlled URL containing approved UTM values plus a disposable private query value. Confirm page view and CTA events preserve only approved fields.
+1. Completed: local diff reviewed and explicitly approved.
+2. Completed: commit, push, PR, squash merge, and Git-integrated Vercel Production rollout.
+3. Completed without emitting a production Analytics test event: runtime regression plus exact Production-to-main asset hashing verified the released code. Use GA4 DebugView with a controlled URL only if later report evidence requires an end-to-end event observation.
 4. After three complete days, export aligned same-weekday GA4 and GSC windows and replace the observation JSON with the new totals.
 5. If search sessions and clicks both decline by at least 20%, open an SEO incident investigation. If only engagement remains weak, prioritize the highest-volume troubleshooting landing pages for UX/content experiments.
 
@@ -100,4 +109,4 @@ Result: `fix_measurement_and_monitor_engagement`. It does not classify the curre
 
 The change is limited to Analytics payload construction and local reporting scripts; it does not change the public UI. The residual privacy risk is campaign operators placing personal data inside an approved UTM value. Campaign governance must prohibit that practice; the code also caps values at 160 characters.
 
-Before commit, rollback is restoring the four modified tracked files and deleting the new script, observation JSON, and this document. After a future commit, revert that isolated commit. There is no production rollback yet because nothing has been deployed.
+Production rollback is to revert merge commit `2a13a44a4a499fff88cc2ff81be47105e4a62abb` through the governed PR path and allow Vercel Git integration to redeploy the prior tracking asset. Trigger rollback if page views or CTA events stop arriving, approved attribution remains absent, unknown/private query values appear in Analytics, or CTA event volume changes unexpectedly. Engagement or Unassigned metrics alone should first be checked against three complete days because those symptoms were present before this release.
