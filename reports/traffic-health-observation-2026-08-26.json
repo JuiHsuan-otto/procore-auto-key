@@ -1,0 +1,26 @@
+{
+  "observedAt": "2026-08-26T18:57:00+08:00",
+  "periods": {
+    "ga4Current": "2026-08-24/2026-08-25",
+    "ga4Previous": "2026-08-17/2026-08-18",
+    "gscCurrent": "2026-08-22/2026-08-23",
+    "gscPrevious": "2026-08-20/2026-08-21",
+    "note": "GA4 uses same weekdays; GSC uses latest complete two-day window available in the interface. Re-run with aligned complete windows when exports are available."
+  },
+  "current": {
+    "totalSessions": 131,
+    "organicSessions": 103,
+    "organicEngagedSessions": 33,
+    "unassignedSessions": 19,
+    "blankLandingSessions": 14,
+    "gscClicks": 109,
+    "gscImpressions": 2770
+  },
+  "previous": {
+    "totalSessions": 103,
+    "organicSessions": 91,
+    "organicEngagedSessions": 56,
+    "gscClicks": 95,
+    "gscImpressions": 2612
+  }
+}
