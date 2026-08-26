@@ -4,6 +4,22 @@ import vm from "node:vm";
 
 const SOURCE_FILE = new URL("../assets/js/procore-conversion-tracking.js", import.meta.url);
 const TEST_EVENT_VALUE = "generate_lead_98b16f5";
+const ALLOWED_ATTRIBUTION_PARAMS = new Set([
+  "utm_id",
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_term",
+  "utm_content",
+  "utm_source_platform",
+  "utm_creative_format",
+  "utm_marketing_tactic",
+  "gclid",
+  "gclsrc",
+  "dclid",
+  "gbraid",
+  "wbraid",
+]);
 const source = await fsp.readFile(SOURCE_FILE, "utf8");
 
 function runTrackingScenario(urlText, clickHref = "") {
@@ -63,17 +79,21 @@ function runTrackingScenario(urlText, clickHref = "") {
   return { objects, gtagCommands };
 }
 
-function assertNoSensitiveUrlParts(result) {
+function assertAttributionSafeLocations(result) {
   for (const item of result.objects) {
     if (!item.page_location) continue;
-    assert.equal(item.page_location.includes("?"), false, "page_location must omit query strings");
     assert.equal(item.page_location.includes("#"), false, "page_location must omit fragments");
+    for (const name of new URL(item.page_location, "https://www.carkey.com.tw").searchParams.keys()) {
+      assert.equal(ALLOWED_ATTRIBUTION_PARAMS.has(name), true, `unexpected page_location parameter: ${name}`);
+    }
   }
   for (const command of result.gtagCommands) {
     const params = command[2];
     if (!params?.page_location) continue;
-    assert.equal(params.page_location.includes("?"), false, "gtag page_location must omit query strings");
     assert.equal(params.page_location.includes("#"), false, "gtag page_location must omit fragments");
+    for (const name of new URL(params.page_location, "https://www.carkey.com.tw").searchParams.keys()) {
+      assert.equal(ALLOWED_ATTRIBUTION_PARAMS.has(name), true, `unexpected gtag page_location parameter: ${name}`);
+    }
   }
 }
 
@@ -94,14 +114,14 @@ assert.equal(productionPhone.gtagCommands.filter((item) => item[0] === "event" &
 assert.equal(productionPhone.gtagCommands.some((item) => item[1] === "generate_lead"), false);
 assert.equal(productionPhone.objects[0].page_location, "https://www.carkey.com.tw/rescue");
 assertSanitizedConfig(productionPhone, "https://www.carkey.com.tw/rescue");
-assertNoSensitiveUrlParts(productionPhone);
+assertAttributionSafeLocations(productionPhone);
 
 const productionDiagnostic = runTrackingScenario(
   `https://www.carkey.com.tw/?ga4_test=${TEST_EVENT_VALUE}`,
 );
 assert.equal(productionDiagnostic.gtagCommands.some((item) => item[1] === "generate_lead"), false);
 assertSanitizedConfig(productionDiagnostic, "https://www.carkey.com.tw/");
-assertNoSensitiveUrlParts(productionDiagnostic);
+assertAttributionSafeLocations(productionDiagnostic);
 
 const loopbackDiagnostic = runTrackingScenario(
   `http://127.0.0.1:4173/index.html?ga4_test=${TEST_EVENT_VALUE}#ignored`,
@@ -110,10 +130,10 @@ assert.equal(loopbackDiagnostic.objects.filter((item) => item.event === "procore
 assert.equal(loopbackDiagnostic.gtagCommands.filter((item) => item[0] === "event" && item[1] === "generate_lead").length, 1);
 assert.equal(loopbackDiagnostic.objects[0].page_location, "http://127.0.0.1:4173/index.html");
 assertSanitizedConfig(loopbackDiagnostic, "http://127.0.0.1:4173/index.html");
-assertNoSensitiveUrlParts(loopbackDiagnostic);
+assertAttributionSafeLocations(loopbackDiagnostic);
 
 const productionLine = runTrackingScenario(
-  "https://www.carkey.com.tw/article?utm_source=test#section",
+  "https://www.carkey.com.tw/article?utm_source=newsletter&utm_medium=email&utm_campaign=summer&utm_content=hero&gclid=test-click-id&customer_secret=must-not-leak#section",
   "https://line.me/R/ti/p/@420gknem?prefill=customer_secret#ignored",
 );
 assert.equal(productionLine.objects.filter((item) => item.event === "procore_line_click").length, 1);
@@ -121,8 +141,19 @@ assert.equal(productionLine.gtagCommands.filter((item) => item[0] === "event" &&
 assert.equal(productionLine.gtagCommands.some((item) => item[1] === "generate_lead"), false);
 assert.equal(productionLine.objects[0].link_url, "https://line.me/R/ti/p/@420gknem");
 assert.equal(productionLine.gtagCommands.find((item) => item[0] === "event" && item[1] === "line_click")[2].link_url, "https://line.me/R/ti/p/@420gknem");
-assertSanitizedConfig(productionLine, "https://www.carkey.com.tw/article");
-assertNoSensitiveUrlParts(productionLine);
+const expectedCampaignLocation = "https://www.carkey.com.tw/article?utm_source=newsletter&utm_medium=email&utm_campaign=summer&utm_content=hero&gclid=test-click-id";
+assert.equal(productionLine.objects[0].page_location, expectedCampaignLocation);
+assertSanitizedConfig(productionLine, expectedCampaignLocation);
+assert.equal(productionLine.objects[0].page_location.includes("customer_secret"), false);
+assertAttributionSafeLocations(productionLine);
+
+const boundedAttribution = runTrackingScenario(
+  `https://www.carkey.com.tw/article?utm_campaign=${"x".repeat(220)}&fbclid=not-allowlisted`,
+);
+const boundedConfigLocation = boundedAttribution.gtagCommands.find((item) => item[0] === "config")[2].page_location;
+assert.equal(new URL(boundedConfigLocation).searchParams.get("utm_campaign").length, 160);
+assert.equal(new URL(boundedConfigLocation).searchParams.has("fbclid"), false);
+assertAttributionSafeLocations(boundedAttribution);
 
 const structuredInquiry = runTrackingScenario(
   "https://www.carkey.com.tw/article-smart-key-troubleshooting?private=ignored",
@@ -132,6 +163,6 @@ assert.equal(structuredInquiry.objects.filter((item) => item.event === "procore_
 assert.equal(structuredInquiry.gtagCommands.filter((item) => item[0] === "event" && item[1] === "rescue_request_start").length, 1);
 assert.equal(structuredInquiry.gtagCommands.some((item) => item[1] === "generate_lead"), false);
 assert.equal(structuredInquiry.objects[0].link_url, "/rescue-request");
-assertNoSensitiveUrlParts(structuredInquiry);
+assertAttributionSafeLocations(structuredInquiry);
 
-console.log("Conversion tracking runtime tests passed: sanitized page views/events, click-only phone/LINE/structured-intake events, loopback-only diagnostic lead");
+console.log("Conversion tracking runtime tests passed: attribution-safe page views/events, click-only phone/LINE/structured-intake events, loopback-only diagnostic lead");

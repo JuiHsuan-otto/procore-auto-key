@@ -8,6 +8,23 @@
   var TEST_EVENT_PARAM = "ga4_test";
   var TEST_EVENT_VALUE = "generate_lead_98b16f5";
   var TEST_EVENT_STORAGE_KEY = "procore_ga4_test_" + TEST_EVENT_VALUE;
+  var MAX_ATTRIBUTION_VALUE_LENGTH = 160;
+  var ATTRIBUTION_QUERY_PARAMS = [
+    "utm_id",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+    "utm_source_platform",
+    "utm_creative_format",
+    "utm_marketing_tactic",
+    "gclid",
+    "gclsrc",
+    "dclid",
+    "gbraid",
+    "wbraid"
+  ];
 
   function hasGaMeasurementId() {
     return /^G-[A-Z0-9]+$/i.test(GA_MEASUREMENT_ID);
@@ -45,7 +62,7 @@
     window.gtag("js", new Date());
     window.gtag("config", GA_MEASUREMENT_ID, {
       page_path: window.location.pathname,
-      page_location: getSanitizedPageLocation()
+      page_location: getAttributionSafePageLocation()
     });
   }
 
@@ -77,10 +94,20 @@
     }
   }
 
-  function getSanitizedPageLocation() {
+  function getAttributionSafePageLocation() {
     try {
       var url = new URL(window.location.href);
-      return url.origin + url.pathname;
+      var safeUrl = new URL(url.origin + url.pathname);
+
+      ATTRIBUTION_QUERY_PARAMS.forEach(function (name) {
+        var value = url.searchParams.get(name);
+
+        if (value) {
+          safeUrl.searchParams.set(name, value.trim().slice(0, MAX_ATTRIBUTION_VALUE_LENGTH));
+        }
+      });
+
+      return safeUrl.href;
     } catch (error) {
       return window.location.pathname || "/";
     }
@@ -114,7 +141,7 @@
       link_url: trackedHref,
       link_text: cleanText(link.textContent),
       page_path: window.location.pathname,
-      page_location: getSanitizedPageLocation(),
+      page_location: getAttributionSafePageLocation(),
       page_title: document.title
     };
   }
@@ -223,7 +250,7 @@
       link_url: "ga4_test:" + requested,
       link_text: "GA4 generate_lead diagnostic",
       page_path: window.location.pathname,
-      page_location: getSanitizedPageLocation(),
+      page_location: getAttributionSafePageLocation(),
       page_title: document.title,
       debug_mode: true
     };

@@ -16,7 +16,10 @@ const REQUIRED_TRACKING_TOKENS = [
   "rescue_request_start",
   "generate_lead",
   "transport_type",
-  "getSanitizedPageLocation",
+  "getAttributionSafePageLocation",
+  "ATTRIBUTION_QUERY_PARAMS",
+  "utm_source",
+  "gclid",
   "getSanitizedLinkUrl",
   "isLoopbackHost",
 ];
@@ -103,7 +106,7 @@ async function auditTrackingSource(errors) {
     errors.push(`${TRACKING_SOURCE}: CTA click path must not emit generate_lead`);
   }
   if (source.includes("page_location: window.location.href")) {
-    errors.push(`${TRACKING_SOURCE}: Analytics page_location must omit URL query and fragment`);
+    errors.push(`${TRACKING_SOURCE}: Analytics page_location must use the attribution-safe URL builder`);
   }
   if (!source.includes("var trackedHref = getSanitizedLinkUrl(href)")) {
     errors.push(`${TRACKING_SOURCE}: tracked external link URLs must omit query and fragment`);
@@ -111,8 +114,14 @@ async function auditTrackingSource(errors) {
   if (/gtag\("config", GA_MEASUREMENT_ID\);/.test(source)) {
     errors.push(`${TRACKING_SOURCE}: GA4 config must override automatic page_location with a sanitized URL`);
   }
-  if (!/gtag\("config", GA_MEASUREMENT_ID, \{[\s\S]*?page_location: getSanitizedPageLocation\(\)/.test(source)) {
-    errors.push(`${TRACKING_SOURCE}: GA4 page views must use sanitized page_location`);
+  if (!/gtag\("config", GA_MEASUREMENT_ID, \{[\s\S]*?page_location: getAttributionSafePageLocation\(\)/.test(source)) {
+    errors.push(`${TRACKING_SOURCE}: GA4 page views must use attribution-safe page_location`);
+  }
+  if (!/ATTRIBUTION_QUERY_PARAMS\.forEach\([\s\S]*?safeUrl\.searchParams\.set/.test(source)) {
+    errors.push(`${TRACKING_SOURCE}: page_location must copy only allowlisted attribution parameters`);
+  }
+  if (/safeUrl\.search\s*=\s*url\.search|new URL\(window\.location\.href\)\.href/.test(source)) {
+    errors.push(`${TRACKING_SOURCE}: page_location must not copy the full browser query`);
   }
   if (!/if \(!isLoopbackHost\(\) \|\| requested !== TEST_EVENT_VALUE/.test(source)) {
     errors.push(`${TRACKING_SOURCE}: generate_lead diagnostic must be restricted to loopback hosts`);
