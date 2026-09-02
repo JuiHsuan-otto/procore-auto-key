@@ -5,7 +5,7 @@ import path from "node:path";
 const ROOT = process.cwd();
 const TRACKING_SCRIPT = "/assets/js/procore-conversion-tracking.js";
 const TRACKING_SOURCE = "assets/js/procore-conversion-tracking.js";
-const PRIVACY_ONLY_PAGES = new Set(["rescue-request.html", "service-areas.html"]);
+const PRIVACY_ONLY_PAGES = new Set(["service-areas.html"]);
 const REQUIRED_TRACKING_TOKENS = [
   "G-KW1LHLVQHL",
   "procore_phone_click",
@@ -14,6 +14,7 @@ const REQUIRED_TRACKING_TOKENS = [
   "click_to_call",
   "line_click",
   "rescue_request_start",
+  "rescue_message_ready",
   "generate_lead",
   "transport_type",
   "getAttributionSafePageLocation",
