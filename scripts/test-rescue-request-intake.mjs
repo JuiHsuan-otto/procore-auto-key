@@ -27,6 +27,11 @@ for (const marker of ["【汽車鑰匙詢問】", "來源頁：", "詢問識別�
   check(`message contract: ${marker}`, html.includes(marker));
 }
 check("official LINE message endpoint", html.includes("https://line.me/R/oaMessage/@420gknem/?"));
+check("direct LINE recovery path", html.includes('href="https://line.me/R/ti/p/@420gknem"'));
+check("direct phone recovery path", html.includes('href="tel:0909277670"'));
+check("conversion tracking is present", html.includes('/assets/js/procore-conversion-tracking.js'));
+check("privacy-safe message-ready signal", html.includes("procore:rescue-message-ready"));
+check("message-ready signal survives delayed tracking load", html.includes("procoreRescueMessageReady"));
 check("message is URI encoded", html.includes("encodeURIComponent(text)"));
 check("source accepts only a local slug", html.includes("/^[a-z0-9]+(?:-[a-z0-9]+)*$/"));
 check("homepage source maps to the canonical root", html.includes("sourceSlug==='home'?'/'"));

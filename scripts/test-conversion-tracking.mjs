@@ -22,11 +22,11 @@ const ALLOWED_ATTRIBUTION_PARAMS = new Set([
 ]);
 const source = await fsp.readFile(SOURCE_FILE, "utf8");
 
-function runTrackingScenario(urlText, clickHref = "") {
+function runTrackingScenario(urlText, clickHref = "", documentEvent = "") {
   const url = new URL(urlText);
   const dataLayer = [];
   const storage = new Map();
-  let clickHandler = null;
+  const documentHandlers = new Map();
 
   const window = {
     dataLayer,
@@ -55,7 +55,7 @@ function runTrackingScenario(urlText, clickHref = "") {
       return null;
     },
     addEventListener(name, handler) {
-      if (name === "click") clickHandler = handler;
+      documentHandlers.set(name, handler);
     },
   };
 
@@ -68,8 +68,16 @@ function runTrackingScenario(urlText, clickHref = "") {
       },
       textContent: clickHref.startsWith("tel:") ? "電話諮詢" : "LINE 諮詢",
     };
+    const clickHandler = documentHandlers.get("click");
     assert.equal(typeof clickHandler, "function", "click handler must be registered");
     clickHandler({ target: { closest: () => link } });
+  }
+
+  if (documentEvent) {
+    const documentHandler = documentHandlers.get(documentEvent);
+    assert.equal(typeof documentHandler, "function", `${documentEvent} handler must be registered`);
+    documentHandler();
+    documentHandler();
   }
 
   const objects = dataLayer.filter((item) => item && !Array.isArray(item) && typeof item === "object" && !(Symbol.iterator in item));
@@ -165,4 +173,15 @@ assert.equal(structuredInquiry.gtagCommands.some((item) => item[1] === "generate
 assert.equal(structuredInquiry.objects[0].link_url, "/rescue-request");
 assertAttributionSafeLocations(structuredInquiry);
 
-console.log("Conversion tracking runtime tests passed: attribution-safe page views/events, click-only phone/LINE/structured-intake events, loopback-only diagnostic lead");
+const rescueMessageReady = runTrackingScenario(
+  "https://www.carkey.com.tw/rescue-request?source=article-smart-key-troubleshooting",
+  "",
+  "procore:rescue-message-ready",
+);
+assert.equal(rescueMessageReady.objects.filter((item) => item.event === "procore_rescue_message_ready").length, 1);
+assert.equal(rescueMessageReady.gtagCommands.filter((item) => item[0] === "event" && item[1] === "rescue_message_ready").length, 1);
+assert.equal(rescueMessageReady.gtagCommands.some((item) => item[1] === "generate_lead"), false);
+assert.equal(rescueMessageReady.objects[0].page_location, "https://www.carkey.com.tw/rescue-request");
+assertAttributionSafeLocations(rescueMessageReady);
+
+console.log("Conversion tracking runtime tests passed: attribution-safe page views/events, click-only phone/LINE/structured-intake events, privacy-safe rescue message readiness, loopback-only diagnostic lead");

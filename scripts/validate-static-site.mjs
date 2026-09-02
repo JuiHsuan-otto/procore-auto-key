@@ -20,7 +20,7 @@ const EXCLUDED_DIRS = new Set([
 ]);
 const SITE_HOSTS = new Set(["carkey.com.tw", "www.carkey.com.tw"]);
 const CONVERSION_TRACKING_SCRIPT = "/assets/js/procore-conversion-tracking.js";
-const LOCAL_ONLY_PAGES = new Set(["rescue-request.html", "service-areas.html"]);
+const NO_TRACKING_PAGES = new Set(["service-areas.html"]);
 const COUNTY_AREA_PAGES = new Set([
   "hsinchu-car-key.html",
   "chiayi-car-key.html",
@@ -439,7 +439,7 @@ function validateHtml(relPath, html, errors, warnings) {
   if (/unsafe-eval/i.test(html)) {
     errors.push(`${relPath}: CSP contains unsafe-eval`);
   }
-  if (LOCAL_ONLY_PAGES.has(relPath)) {
+  if (NO_TRACKING_PAGES.has(relPath)) {
     if (html.includes(CONVERSION_TRACKING_SCRIPT) || /\b(fetch|XMLHttpRequest|WebSocket)\s*\(|localStorage|sessionStorage|google\.maps/i.test(html)) {
       errors.push(`${relPath}: local-only utility references tracking, storage, or a network API`);
     }
@@ -514,18 +514,23 @@ function validateRescueRequest(htmlByPath, sitemapUrls, errors) {
     'id="include-notes"', 'id="make-draft"', 'id="copy-draft"',
     'id="clear-draft"', 'id="back-edit"', "'#draft='", 'history.replaceState',
     '草稿只放在網址的 # 片段，不會送到伺服器', '連結仍可能被他人看到',
+    CONVERSION_TRACKING_SCRIPT, 'procore:rescue-message-ready',
   ];
   for (const marker of required) {
     if (!html.includes(marker)) errors.push(`${relPath}: missing required marker: ${marker}`);
   }
   const forbidden = [
-    /<form\b[^>]*\baction=/i, /<script\b[^>]*\bsrc=/i,
+    /<form\b[^>]*\baction=/i,
     /\bfetch\s*\(/, /XMLHttpRequest/, /WebSocket/, /sendBeacon/,
     /localStorage/, /sessionStorage/, /document\.cookie/,
     /[?&]draft=/,
   ];
   for (const pattern of forbidden) {
     if (pattern.test(html)) errors.push(`${relPath}: contains forbidden network/storage capability: ${pattern}`);
+  }
+  const externalScripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)].map((match) => match[1]);
+  if (externalScripts.length !== 1 || externalScripts[0] !== CONVERSION_TRACKING_SCRIPT) {
+    errors.push(`${relPath}: only the fixed ProCore conversion tracking script may load externally`);
   }
   if (!sitemapUrls.has("https://www.carkey.com.tw/rescue-request")) {
     errors.push("sitemap.xml: missing rescue request clean URL");

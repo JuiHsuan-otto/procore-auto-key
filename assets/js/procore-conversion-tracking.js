@@ -8,6 +8,7 @@
   var TEST_EVENT_PARAM = "ga4_test";
   var TEST_EVENT_VALUE = "generate_lead_98b16f5";
   var TEST_EVENT_STORAGE_KEY = "procore_ga4_test_" + TEST_EVENT_VALUE;
+  var rescueMessageReadyTracked = false;
   var MAX_ATTRIBUTION_VALUE_LENGTH = 160;
   var ATTRIBUTION_QUERY_PARAMS = [
     "utm_id",
@@ -204,6 +205,25 @@
     pushToGtag(payload, gtagEventName);
   }
 
+  function trackRescueMessageReady() {
+    var payload = {
+      event: "procore_rescue_message_ready",
+      conversion_type: "structured_inquiry",
+      link_url: "",
+      link_text: "",
+      page_path: window.location.pathname,
+      page_location: getAttributionSafePageLocation(),
+      page_title: document.title
+    };
+
+    if (rescueMessageReadyTracked) {
+      return;
+    }
+
+    rescueMessageReadyTracked = true;
+    pushClickEvents(payload, "rescue_message_ready");
+  }
+
   function pushDiagnosticLeadEvent(payload) {
     pushToDataLayer(payload);
     pushToGtag(payload, LEAD_EVENT_NAME);
@@ -289,4 +309,8 @@
   loadGa4();
   runGa4TestIfRequested();
   document.addEventListener("click", trackClick, true);
+  document.addEventListener("procore:rescue-message-ready", trackRescueMessageReady);
+  if (window.procoreRescueMessageReady === true) {
+    trackRescueMessageReady();
+  }
 })();
