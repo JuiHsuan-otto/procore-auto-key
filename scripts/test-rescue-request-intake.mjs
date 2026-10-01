@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 import { readFile } from "node:fs/promises";
+import { webcrypto } from "node:crypto";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import vm from "node:vm";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(path.join(root, "rescue-request.html"), "utf8");
@@ -60,6 +62,74 @@ if (unsafeSource && addressSource) {
 check("draft remains in fragment", html.includes("'#draft='"));
 check("draft schema v2", html.includes("draft.v!==2"));
 check("notes require explicit opt-in", html.includes("include-notes"));
+
+// Run the page's actual submit handler without loading Analytics or opening LINE.
+// This covers recoverable missing information and the existing privacy boundary.
+const inlineScript = html.match(/<script>\s*([\s\S]*?)<\/script>/)?.[1];
+check("intake runtime is available", Boolean(inlineScript));
+
+function submitInquiry(overrides = {}) {
+  const nodes = new Map();
+  const events = [];
+  const values = {
+    year: "2020", brand: "Toyota", model: "Corolla Cross",
+    location: "台中市西屯區", notes: "", ...overrides
+  };
+  const selections = {
+    issue: "鑰匙全丟", haskey: "完全沒有可用鑰匙", canstart: "無法發動",
+    parking: "路邊或戶外", photos: "目前不方便補照片"
+  };
+  function node(selector) {
+    if (!nodes.has(selector)) {
+      nodes.set(selector, {
+        value: values[selector.slice(1)] ?? "", textContent: "", hidden: true,
+        listeners: {}, dataset: {}, attributes: {},
+        addEventListener(name, handler) { this.listeners[name] = handler; },
+        setAttribute(name, value) { this.attributes[name] = value; },
+        focus() { this.focused = true; }
+      });
+    }
+    return nodes.get(selector);
+  }
+  const form = node("#request-form");
+  form.querySelector = selector => {
+    const name = selector.match(/^input\[name="([^"]+)"\]:checked$/)?.[1];
+    return name ? { value: selections[name] } : node(selector);
+  };
+  const context = {
+    document: {
+      querySelector: node,
+      dispatchEvent(event) { events.push(event.type); }
+    },
+    location: { search: "?source=home", hash: "", origin: "https://www.carkey.com.tw", pathname: "/rescue-request" },
+    window: {}, crypto: webcrypto, URLSearchParams,
+    CustomEvent: class { constructor(type) { this.type = type; } }
+  };
+  vm.runInNewContext(inlineScript, context);
+  form.listeners.submit({ preventDefault() {} });
+  return { node, events };
+}
+
+if (inlineScript) {
+  const missingYear = submitInquiry({ year: "" });
+  check("unknown year can produce an inquiry", !missingYear.node("#message").hidden);
+  check("unknown year is explicit in the message", missingYear.node("#message").value.includes("年份：不確定／稍後補"));
+  check("unknown year preserves source and reference", /來源頁：\/\n詢問識別碼：CKW-\d{8}-[A-Z0-9]{6}\n/.test(missingYear.node("#message").value));
+  check("unknown year preserves encoded LINE handoff", missingYear.node("#line").href === "https://line.me/R/oaMessage/@420gknem/?" + encodeURIComponent(missingYear.node("#message").value));
+  check("unknown year produces the message-ready event", missingYear.events.join(",") === "procore:rescue-message-ready");
+
+  const knownYear = submitInquiry();
+  check("known year remains intact", knownYear.node("#message").value.includes("年份：2020\n"));
+
+  const malformedYear = submitInquiry({ year: "202" });
+  check("malformed nonempty year is still rejected", malformedYear.node("#message").hidden && malformedYear.node("#year").attributes["aria-invalid"] === "true" && malformedYear.events.length === 0);
+
+  const privateInput = submitInquiry({ year: "", notes: "電話 0912345678" });
+  check("unknown year does not bypass privacy validation", privateInput.node("#message").hidden && privateInput.node("#notes").attributes["aria-invalid"] === "true" && privateInput.events.length === 0);
+
+  const missingBrand = submitInquiry({ year: "", brand: "" });
+  check("other required fields still block incomplete input", missingBrand.node("#message").hidden && missingBrand.node("#brand").attributes["aria-invalid"] === "true" && missingBrand.events.length === 0);
+}
 
 console.log(`CarKey structured inquiry gates: ${checks - failures}/${checks} passed`);
 if (failures) process.exit(1);
