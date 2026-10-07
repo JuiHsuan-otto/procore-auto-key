@@ -19,13 +19,13 @@ const AREA_SERVED_COMPARISON_BASE_POLICY = "immutable_pre_current_rollout_commit
  */
 const APPROVED_CONTENT_RELEASE_SHA256 = new Map([
   ["all-keys-lost-service.html", "995865d858cd54b3ff05876608d3b568fe77af39e33b6ca3126441f8b898dcff"],
-  ["article-car-key-not-detected-troubleshooting.html", "474bbddd03960ad9a1795907bb7f9f18d762a79a39786e79e56d0b422b474bf0"],
-  ["article-car-wont-start-troubleshooting.html", "7f58bae60968ac5cfd1e4f39f62402e0c76f8d959e870532572c5e905be15ff4"],
+  ["article-car-key-not-detected-troubleshooting.html", "1e61aff5267340f759582ba86f74d32300566156cbcd51622f5e21572e1fc898"],
+  ["article-car-wont-start-troubleshooting.html", "6b099a8d8b4a29474dd41d4255ee25aa5b3b96da5ea3409f0a5a65a791fdedf8"],
   ["article-hyundai-keyless-troubleshooting.html", "a152d1d2a207813cb7a7cf11f5422b86a4d39f519c766542ac0257a59e4e9b9d"],
   ["article-keyless-troubleshooting-guide.html", "2afbc9a3e1ad2a3e2f735572686afca7bfa8bdbcb93600f50229d4da1ba1291e"],
   ["article-keyless-troubleshooting.html", "71e8bea24e37f6c3b36d5b67d588381df802ed6318dc9f220b47906cd93d8736"],
   ["article-lost-key-rescue-guide.html", "f283f801a081027ce1a9e5df79339feeeb1d128a3bd425873fc02d7a1f3a8419"],
-  ["article-smart-key-troubleshooting.html", "b6e0c4c78fc9289af7ba2163f9582916974b5153de5c0eaa2a7918a9d9befb59"],
+  ["article-smart-key-troubleshooting.html", "714bd32b24347cd66c7be6fb31c980a9908bb123af8fad9a6bdff096dc9795a5"],
   ["article-vw-ignition-repair.html", "d3a4ad09dcfbe134b16829696d1857c2fe73a206d836aa666f6892d322c9f069"],
   ["blog.html", "0be488a865d056e1439901820a412e394a9dff70339a440408b3e23e483c4c01"],
   ["car-key-duplication-service.html", "ea6af32eec7e0ee801fc27a7397f38dbcb5dbb9ab7574713db5c96b021cf619b"],

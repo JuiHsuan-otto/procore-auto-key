@@ -25,6 +25,15 @@
  .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 2rem; border-radius: 16px; margin: 2rem 0; }
  .emergency-box { border-left: 4px solid #D4AF37; background: rgba(212, 175, 55, 0.05); padding: 1.5rem; margin: 1.5rem 0; }
  .btn-call { background-color: #D4AF37; color: black; font-weight: bold; padding: 1rem 2rem; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 320px; white-space: nowrap; text-decoration: none; }
+ .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 12px; }
+ .contact-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 20px; border: 1px solid #D4AF37; border-radius: 9999px; color: #f1d978; font-size: 17px; font-weight: 700; text-decoration: none; }
+ .contact-button.primary { background: #D4AF37; color: #050505; }
+ .contact-option { margin: 0; color: #c7c7c7; font-size: 15px; }
+ .contact-option a { display: inline-block; padding: 8px 4px; color: #f1d978; text-decoration: underline; text-underline-offset: 4px; }
+ .contact-triage { margin: 12px 0 0; color: #c7c7c7; font-size: 15px; }
+ .contact-actions.centered { justify-content: center; }
+ a:focus-visible { outline: 2px solid #f1d978; outline-offset: 4px; }
+ @media (max-width: 720px) { .contact-button { width: 100%; } }
  </style>
  <script type="application/ld+json" data-seo="procore">
 {
@@ -126,6 +135,13 @@
  <h1 class="text-3xl md:text-5xl font-bold text-white mt-6 mb-8 leading-tight">
  汽車鑰匙轉不動或方向盤鎖住？<br><span class="gold-accent">車子無法發動先看這五項</span>
  </h1>
+ <p>若同時出現未偵測到鑰匙、遙控器沒反應或鑰匙轉不動，可直接傳車款、所在行政區與儀表／鑰匙照片詢問。</p>
+ <div class="contact-actions">
+ <a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener noreferrer" class="contact-button primary">LINE 傳照片詢問</a>
+ <a href="tel:0909277670" class="contact-button">直接電話詢問</a>
+ </div>
+ <p class="contact-option">也可先用<a href="/rescue-request?source=article-car-wont-start-troubleshooting">選填表整理狀況</a>，不必填完才能聯絡。</p>
+ <p class="contact-triage">儀表不亮或疑似供電問題，可先看下方電瓶與保修判斷。</p>
  </header>
 
  <section class="article-content text-gray-300">
@@ -182,10 +198,11 @@
  <div class="my-16 p-8 border border-gold-accent/20 bg-white/5 text-center rounded-2xl">
  <h3 class="text-2xl font-bold text-white mb-4">何時需要詢問 ProCore？</h3>
  <p class="mb-8">如果車子無法發動時同時出現鑰匙符號、未偵測到鑰匙、遙控器沒反應，或只剩一支鑰匙，請先提供車款年份、所在地、儀表訊息與現場照片，ProCore 會協助判斷是否屬於鑰匙感應或備份風險。</p>
- <div class="flex flex-col md:flex-row justify-center gap-4">
- <a href="tel:0909277670" class="btn-call transition transform hover:scale-105">救援熱線：0909-277-670</a>
- <a href="/rescue-request?source=article-car-wont-start-troubleshooting" class="border border-white/20 px-10 py-4 text-[10px] tracking-widest text-white uppercase hover:bg-white/5 transition">整理狀況後傳 LINE</a>
+ <div class="contact-actions centered">
+ <a href="https://line.me/R/ti/p/@420gknem" target="_blank" rel="noopener noreferrer" class="contact-button primary">LINE 傳照片詢問</a>
+ <a href="tel:0909277670" class="contact-button">直接電話詢問</a>
  </div>
+ <p class="contact-option">也可先用<a href="/rescue-request?source=article-car-wont-start-troubleshooting">選填表整理狀況</a>，不必填完才能聯絡。</p>
  </div>
  </section>
 
