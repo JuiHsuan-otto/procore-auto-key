@@ -18,7 +18,7 @@ const AREA_SERVED_COMPARISON_BASE_POLICY = "immutable_pre_current_rollout_commit
  * update instead of silently bypassing the historical comparator.
  */
 const APPROVED_CONTENT_RELEASE_SHA256 = new Map([
-  ["all-keys-lost-service.html", "ce3c8303307a9133605a0ae320c5e764376ce5d70574bf5df20895dd765277a3"],
+  ["all-keys-lost-service.html", "ad3f360a4f74dcd36e826d3bdbc92f3937eedc89c758aa565c40b9434d069f79"],
   ["article-car-key-not-detected-troubleshooting.html", "871b80f3a3206683fe4a03910216dfb0f4e903805322b303547140a80649dae6"],
   ["article-car-wont-start-troubleshooting.html", "6481cb25233726a74ca7e49379c49cee1829792de911c6b114b2af271569ec13"],
   ["article-hyundai-keyless-troubleshooting.html", "a152d1d2a207813cb7a7cf11f5422b86a4d39f519c766542ac0257a59e4e9b9d"],
@@ -27,7 +27,7 @@ const APPROVED_CONTENT_RELEASE_SHA256 = new Map([
   ["article-lost-key-rescue-guide.html", "f283f801a081027ce1a9e5df79339feeeb1d128a3bd425873fc02d7a1f3a8419"],
   ["article-smart-key-troubleshooting.html", "6ce96fbb70874a3476ee1a6f6579ec85fd45b1ddec669bfebe529bf6647886ed"],
   ["article-vw-ignition-repair.html", "d3a4ad09dcfbe134b16829696d1857c2fe73a206d836aa666f6892d322c9f069"],
-  ["blog.html", "0be488a865d056e1439901820a412e394a9dff70339a440408b3e23e483c4c01"],
+  ["blog.html", "dcac9e2fbe530d51466e3a50aef1c0ffcf956548e577d5cf385e36fd646d8daa"],
   ["car-key-duplication-service.html", "ea6af32eec7e0ee801fc27a7397f38dbcb5dbb9ab7574713db5c96b021cf619b"],
   ["car-key-lost-service.html", "a7ccf4d9d547376ed8c58f7a7f1b4ea47cea8c64046d62287c59e1550a6ef0f0"],
   ["cases.html", "45779370146993d6e725811257893695137d0d3c1f184128b67b84323d631f5e"],
