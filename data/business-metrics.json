@@ -25,8 +25,8 @@
       "verified_at": null,
       "display_status": "hidden",
       "last_updated": null,
-      "fallback_label": "服務紀錄",
-      "fallback_text": "服務紀錄持續累積",
+      "fallback_label": "真實案例",
+      "fallback_text": "網站案例皆為真實到場紀錄",
       "legacy_unverified_value": 5221
     },
     {
@@ -41,8 +41,8 @@
       "verified_at": null,
       "display_status": "hidden",
       "last_updated": null,
-      "fallback_label": "跨區服務",
-      "fallback_text": "跨區服務依案件條件評估",
+      "fallback_label": "跨區當日",
+      "fallback_text": "苗栗・新竹・雲林・嘉義當日跨區到場",
       "legacy_unverified_value": 1514
     },
     {
@@ -58,7 +58,7 @@
       "display_status": "hidden",
       "last_updated": null,
       "fallback_label": "品牌與車款",
-      "fallback_text": "多品牌車款依年份與鑰匙型式評估",
+      "fallback_text": "國產、日系、韓系、歐系多品牌現場處理",
       "legacy_unverified_value": 100
     },
     {
@@ -73,8 +73,8 @@
       "verified_at": null,
       "display_status": "hidden",
       "last_updated": null,
-      "fallback_label": "服務時間",
-      "fallback_text": "服務時間請先確認",
+      "fallback_label": "到場時效",
+      "fallback_text": "中彰投當日到場，北部南部預約到場",
       "legacy_unverified_value": 24
     }
   ]
